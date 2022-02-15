@@ -1,0 +1,20 @@
+#subscribe_popup, .overlays {
+   
+    color: #212529;
+    text-align: left;
+    background: #fff !important;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    width: 97%;
+    
+}
+
+    #subscribe_popup, .overlays a, #subscribe_popup, .overlays a:hover, #subscribe_popup, .overlays a:visited {
+        text-decoration: none;
+    }
+
+#subs-container {
+    position: relative;
+    padding: 35px 0 30px;
+}

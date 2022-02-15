@@ -1,0 +1,59 @@
+﻿@import '../app/_variables.scss';
+
+/* Start Module: App Wrap */
+.app_wrap {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+
+    .app_body {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        height: 100%;
+
+        .app_main {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow-y: auto;
+
+            &__content {
+                flex: 1;
+                padding: 20px 5px;
+            }
+
+            .app_footer {
+                display: flex;
+                justify-content: space-between;
+                background-color: $footer-bg-color;
+                padding: 15px 0;
+
+                &__copyright,
+                &__menu {
+                    padding: 0 25px;
+                }
+
+                &__menu {
+                    list-style: none;
+                    padding: 0 25px;
+                    margin: 0;
+
+                    &__item {
+                        display: inline-block;
+
+                        &:not(:last-child) {
+                            margin-right: 20px;
+                        }
+
+                        &__text {
+                            text-decoration: none;
+                            color: inherit;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/* End Module: App Wrap */

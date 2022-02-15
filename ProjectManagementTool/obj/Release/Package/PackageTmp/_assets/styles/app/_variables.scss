@@ -1,0 +1,27 @@
+// Fonts
+$font-serif: Georgia, "Times New Roman";
+$font-san-serif: Arial, $font-serif;
+$font-primary: 'Roboto', $font-san-serif;
+
+// Sizes
+$root-font-size: 16px;
+$navbar-height: 50px;
+
+// Colors
+$theme-color--blue: #536be2;
+$body-bg-color: #efeff5;
+$body-fg-color: #48465b;
+$header-bg-color: #242939;
+$header-fg-color: white;
+$header-menu-fg-color: #c0c4d1;
+$header-menu-fg-active-color: white;
+$header-menu-bg-color: $header-bg-color;
+$header-menu-bg-active-color: #424c6d;
+$header-menu-icon-color: #434d6b;
+$header-menu-icon-active-color: $theme-color--blue;
+/*$header-bg-color: white;*/
+$footer-bg-color: white;
+
+// Viewport settings
+/*$viewport-width-tablet: 768px;
+$viewport-width-desktop: $app-max-width;*/

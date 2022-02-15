@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<RABills>
+  <RABillAbstract>
+    <RABillUID>854D098B-50A5-473B-AF6D-DE797A1C30D8</RABillUID>
+    <ProjectName>CP-09</ProjectName>
+    <WorkpacageName>CTM Eastern Route</WorkpacageName>
+    <RABillNumber>01</RABillNumber>
+    <RaBillDate>2021-10-18</RaBillDate>
+  </RABillAbstract>
+  <BOQData>
+    <Item>
+      <UID>C2941CAE-B981-45A9-8C42-B40DBE7F853A</UID>
+      <BOQUID>F6589AC9-9C29-4007-BE80-30753B410081</BOQUID>
+      <RABillUID>854D098B-50A5-473B-AF6D-DE797A1C30D8</RABillUID>
+      <ItemNumber>1.1</ItemNumber>
+      <ItemDescription>Providing non-shrink grout of approved make for anchor bolt pockets below base plates, pipe sleeves etc., as shown in drawings complete as per specifications.</ItemDescription>
+      <CreatedDate>2021-10-18 09:16:59.237</CreatedDate>
+    </Item>
+    <Item>
+      <UID>6B9D35A6-AABC-42D9-8913-0051CE445F2E</UID>
+      <BOQUID>C04FB6D4-22BA-475D-A2F9-32863CFA31A5</BOQUID>
+      <RABillUID>854D098B-50A5-473B-AF6D-DE797A1C30D8</RABillUID>
+      <ItemNumber>(d)</ItemNumber>
+      <ItemDescription>> 6 m depth</ItemDescription>
+      <CreatedDate>2021-10-18 09:16:59.237</CreatedDate>
+    </Item>
+  </BOQData>
+</RABills>
+

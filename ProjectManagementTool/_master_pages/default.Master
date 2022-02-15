@@ -1,0 +1,411 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="default.master.cs" Inherits="ProjectManager._master_pages._default" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Project Monitoring Tool"/>
+    <title>Project Monitoring Tool</title>
+    <link href="../_assets/images/favicon.png" rel="icon" />
+    <link href="/_assets/styles/app.min.css" rel="stylesheet" />
+    <script src="/_assets/scripts/libs/jquery/jquery-3.5.1.min.js"></script>
+    <script src="/_assets/scripts/libs/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/_assets/scripts/libs/bootstrap/bs-custom-file-input.min.js"></script>
+
+      <style type="text/css">
+        .lblCss {
+            font-size:1rem;font-weight:400;
+        }
+          #loader {  
+    position: fixed;  
+    left: 0px;  
+    top: 0px;  
+    width: 100%;  
+    height: 100%;  
+    z-index: 9999;  
+    background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;  
+    background-size: 242px 200px;
+}  
+          #spinner {
+position: fixed;
+left: 0px;
+top: 0px;
+width: 100%;
+height: 100%;
+z-index: 9999;
+background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;  
+    background-size: 242px 200px;
+}
+          .modal{
+    pointer-events: none;
+}
+
+.modal-dialog{
+    pointer-events: all;
+ }
+
+.dashboard {
+  background-image:url('/_assets/images/dashboard1.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+    </style>
+    <%--<script src="http://code.jquery.com/jquery-1.8.2.js"></script>--%>
+    <%--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>--%>
+    <script type="text/javascript">
+        //$(window).load(function () { $("#spinner").fadeOut(1000); });
+        //$(window).load(function () { $('#loader').fadeOut(2000); });
+        $(document).ready(function () {
+
+          var _intervalId;
+    
+    function fadeInLastImg()
+    {
+        var backImg = $('.container img:first');
+        backImg.hide();
+        backImg.remove();
+        $('.container' ).append( backImg );
+        backImg.fadeIn()
+    };
+        
+    _intervalId = setInterval( function() {
+        fadeInLastImg();
+    }, 4000 );
+
+
+            $('#loader').fadeOut();
+
+            $("#navlinkchangePassword").click(function (e) {
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $("#ModChangePassword iframe").attr("src", url);
+        $("#ModChangePassword").modal("show");
+               });
+
+            $("#navlinkProfile").click(function (e) {
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $("#ModProfile iframe").attr("src", url);
+        $("#ModProfile").modal("show");
+            });
+
+
+        });
+
+          function closepopup() {
+            window.location.reload();
+        }
+</script>
+    <asp:ContentPlaceHolder ID="default_master_head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div id="loader"></div>
+    <form id="frmMasterDefault" runat="server">
+        <!-- Preloader -->
+<%--<div id="spinner"></div>--%>
+       
+        <div class="app_wrap">
+            <div class="app_body">
+                <nav class="navbar it-navbar navbar-expand-xl navbar-dark bg-dark">
+	                <a class="navbar-brand" href="/_content_pages/dashboard" title="Project Manager">
+                        <span class="navbar-brand--logo">
+                            <i id="ONTBLogo" runat="server" class="far fa-dot-circle"></i>
+                            <asp:Image ID="sLogo" runat="server" Width="40" />
+                            <%--<img id="NJSEILogo" runat="server" src="/_assets/images/NJSEI Logo.jpg" alt="NJSEI" width="40" />--%>
+                        </span>
+                        <span class="navbar-brand--name">
+                            <%--<span class="brand">i-Trust</span>--%>
+                            <span style="font-size:12px;" class="brand"><asp:Label ID="LblTitle" runat="server"></asp:Label> </span>
+                            <%--<span id="ONTB" runat="server" style="font-size:12px;" class="brand">ONTB-BWSSB Stage 5</span>--%>
+                            <span class="product">Project Monitoring Tool</span>
+                        </span>
+	                </a>
+                    <button aria-controls="headerNavbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#headerNavbar" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+                     <div class="collapse navbar-collapse" id="headerNavbar">
+		                <ul class="navbar-nav flex-grow-1">
+			                <li class="nav-item">
+                                <a id="navLinkDashboard" href="/_content_pages/dashboard" title="Dashboard" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/dashboard") ? "nav-link active" : "nav-link" %>">
+                                    <i class="nav-link--icon fas fa-tachometer-alt"></i>
+                                    <span class="nav-link--text">Dashboard</span>
+                                </a>
+			                </li>
+
+                             <%--<li class="nav-item dropdown">
+                                <a id="navLinkReports" href="/_content_pages/reports" title="Reports" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/reports") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
+                                    <i class="nav-link--icon fas fa-chart-line"></i>
+                                    <span class="nav-link--text">Reports</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navLinkReports">
+                                    <asp:HyperLink CssClass="dropdown-item" ID="navLinkReports_Issues" runat="server" NavigateUrl="javascript:void(0)" ToolTip="Issues">Issues</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="navLinkReports_FinandialProgress" runat="server" NavigateUrl="javascript:void(0)" ToolTip="Financial Progress">Financial Progress</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="navLinkReports_DocumentProgress" runat="server" NavigateUrl="javascript:void(0)" ToolTip="Document Progress">Document Progress</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="navLinkReports_MeasurementBook" runat="server" NavigateUrl="javascript:void(0)" ToolTip="Measurement Book">Measurement Book</asp:HyperLink>
+                                </div>
+			                </li>--%>
+
+			                <li class="nav-item dropdown">
+                                <a id="navLinkWorkPackages" href="/_content_pages/engineering-workpackage" title="Work packages" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/engineering-workpackage") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/financial-workpackage") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/work-packages") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
+                                    <i class="nav-link--icon fas fa-box-open"></i>
+                                    <span class="nav-link--text">Work Packages</span>
+                                </a>
+                                 <div class="dropdown-menu" aria-labelledby="navLinkWorkPackages">
+                                     <asp:HyperLink CssClass="dropdown-item" ID="ViewWorkpackage" runat="server" NavigateUrl="/_content_pages/work-packages" ToolTip="View WorkPackages">View WorkPackages</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Engineering" runat="server" NavigateUrl="/_content_pages/engineering-workpackage" ToolTip="Engineering">Engineering</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="FinanceWorkpackage" runat="server" NavigateUrl="/_content_pages/financial-workpackage" ToolTip="Financial">Financial</asp:HyperLink>
+                                     <asp:HyperLink CssClass="dropdown-item" ID="BOQ" runat="server" NavigateUrl="/_content_pages/boqdetails-summary" ToolTip="BOQ Details">BOQ Details</asp:HyperLink>
+                                     <asp:HyperLink CssClass="dropdown-item" ID="RAbill" runat="server" NavigateUrl="/_content_pages/rabill-summary" ToolTip="RA Bills">RA Bills</asp:HyperLink>
+                                     <asp:HyperLink CssClass="dropdown-item" ID="RAbillPriceAdj" runat="server" NavigateUrl="/_content_pages/rabill-priceadj" ToolTip="RA Bills Price Adj">RA Bills Price Adj</asp:HyperLink>
+                                     <asp:HyperLink CssClass="dropdown-item" ID="Invoice" runat="server" NavigateUrl="/_content_pages/invoice" ToolTip="Invoice">Invoice</asp:HyperLink>
+                                </div>
+			                </li>
+
+                            <li class="nav-item dropdown" id="ProjectTracking" runat="server">
+                                <a id="navLinkProjectTracking" href="/_content_pages/gantt-chart" title="Project Tracking" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/gantt-chart") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/communication-tracking") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
+                                    <i class="nav-link--icon fas fa-thumbtack"></i>
+                                    <span class="nav-link--text">Project Tracking</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navLinkProjectTracking">
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink3" runat="server" NavigateUrl="/_content_pages/gantt-chart" ToolTip="Gantt Chart">Gantt Chart</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink4" runat="server" NavigateUrl="/_content_pages/communication-tracking" ToolTip="Communication Tracking">Communication Tracking</asp:HyperLink>
+                                </div>
+			                </li>
+
+                            <li class="nav-item dropdown">
+                                <a id="navLinkDocuments" href="/_content_pages/documents" title="Documents" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/documents") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/document-history") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
+                                    <i class="nav-link--icon fas fa-file-contract"></i>
+                                    <span class="nav-link--text">Documents</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navLinkDocuments">
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink14" runat="server" NavigateUrl="/_content_pages/documents" ToolTip="View Documents">View Documents</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink36" runat="server" NavigateUrl="/_content_pages/document-search-updatepanel" ToolTip="Search Documents">Search Documents</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="AccessedDocsHistory" runat="server" NavigateUrl="/_content_pages/document-history" ToolTip="Document History">History of Accessed Documents</asp:HyperLink>
+                                    
+                                </div>
+			                </li>
+
+                           
+
+                            <li class="nav-item dropdown" id="ViewReports" runat="server">
+                                <a id="navLinkReport" href="/_content_pages/reports" title="Reports" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/report-const-drawing-status") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/document-user-count") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-documents") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-Financial-Progress") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-MonthlyPhysical-Progress") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/project-progress") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-contractdata") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-issues") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-physicalprogress") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/claims-CAAA_JICA") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/complaints-mom") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/payment-underprocess") ? "nav-link dropdown-toggle active" :
+                                        Page.Request.Url.LocalPath.Contains("/_content_pages/status-wastewater") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/other-pointsfordiscussion") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-wkpg-master-datasettings") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/other-pointsfordiscussion") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-wkpg-master-data") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
+                                    <i class="nav-link--icon fas fa-file-alt"></i>
+                                    <span class="nav-link--text">Reports</span>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navLinkReport">
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportContractData" runat="server" NavigateUrl="/_content_pages/report-contractdata" ToolTip="Contract Details">Contract Details</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportDocumentStatus" runat="server" NavigateUrl="/_content_pages/report-documents" ToolTip="Status of Documents">Status of Documents</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportConstructionDrawingStatus" runat="server" NavigateUrl="/_content_pages/report-const-drawing-status" ToolTip="Status of Construction Drawings">Status of Construction Drawings</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportUserDocumentProgress" runat="server" NavigateUrl="/_content_pages/document-user-count" ToolTip="User/Project Wise Documents Upload">User/Project Wise Documents Upload</asp:HyperLink>
+                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportWkgMasterDataSettings" runat="server" NavigateUrl="/_content_pages/report-wkpg-master-datasettings" ToolTip="WorkPackage Master Data Update Settings">WorkPackage Master Data Update Settings</asp:HyperLink>
+                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportWkgMasterData" runat="server" NavigateUrl="/_content_pages/report-wkpg-master-data" ToolTip="WorkPackage Master Data">WorkPackage Master Data Update</asp:HyperLink>
+                                    
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportProjectPhysicalProgress" runat="server" NavigateUrl="/_content_pages/report-physicalprogress" ToolTip="Project Physical Progress">Physical Progress Monitoring</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportMonthlyPhysicalProgress" runat="server" NavigateUrl="/_content_pages/report-MonthlyPhysical-Progress" ToolTip="Monthly Physical Progress Report(%)">Monthly Physical Progress Report(%)</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportMonthlyFinancialProgress" runat="server" NavigateUrl="/_content_pages/report-Financial-Progress" ToolTip="Monthly Financial Progress Report">Monthly Financial Progress Report</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportProjectStatusofWorkProgress" runat="server" NavigateUrl="/_content_pages/project-progress" ToolTip="Project Status of Work Progress">Project Status of Work Progress</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportResourceDeployment" runat="server" NavigateUrl="/_content_pages/report-resourcedeployment" ToolTip="Status of Resource Deployment">Status of Resource Deployment</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportIssues" runat="server" NavigateUrl="/_content_pages/report-issues" ToolTip="Issues">Issues</asp:HyperLink>
+                                    
+                                    
+                                    
+                                </div>
+
+			                </li>
+
+                            <li class="nav-item dropdown" id="ReviewReports" runat="server">
+                                <a id="navLinkReviewReports" href="/_content_pages/reports" title="Review Reports" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/report-const-drawing-status") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/document-user-count") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-documents") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-Financial-Progress") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-MonthlyPhysical-Progress") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/project-progress") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-contractdata") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-issues") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/report-physicalprogress") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/claims-CAAA_JICA") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/complaints-mom") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/payment-underprocess") ? "nav-link dropdown-toggle active" :
+                                        Page.Request.Url.LocalPath.Contains("/_content_pages/status-wastewater") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/other-pointsfordiscussion") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
+                                    <i class="nav-link--icon fas fa-file-alt"></i>
+                                    <span class="nav-link--text">Review Reports</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navLinkReviewReports">
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink31" runat="server" NavigateUrl="/_content_pages/report-projectphysicalprogress" ToolTip="Project Physical Progress">Project Physical Progress</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink211" runat="server" NavigateUrl="/_content_pages/project-progress" ToolTip="Project Status of Work Progress">Project Status of Work Progress</asp:HyperLink>
+                                    <%--<asp:HyperLink CssClass="dropdown-item" ID="HyperLink201" runat="server" NavigateUrl="/_content_pages/claims-CAAA_JICA" ToolTip="Claims CAAA/JICA">Claims CAAA/JICA</asp:HyperLink>--%>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink28" runat="server" NavigateUrl="/_content_pages/payment-underprocess" ToolTip="Claims sent to CAAA/JICA">Claims sent to CAAA/JICA</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink23" runat="server" NavigateUrl="/_content_pages/complaints-mom" ToolTip="Compliance of MOM">Compliance of MOM</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink26" runat="server" NavigateUrl="/_content_pages/Rpt-Budget-disbursement" ToolTip="Budget vs Disbursement">Budget vs Disbursement</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink27" runat="server" NavigateUrl="/_content_pages/Rpt-Bwssb-Jica" ToolTip="BWSSB vs JICA">BWSSB vs JICA</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink29" runat="server" NavigateUrl="/_content_pages/Rpt-status-wastewater" ToolTip="Status of Waste Water Cotract Packages">Status of Waste Water Cotract Packages</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink30" runat="server" NavigateUrl="/_content_pages/other-pointsfordiscussion" ToolTip="Other points for Discussion">Other points for Discussion</asp:HyperLink>
+                                    </div>
+                            </li>
+
+			                <li class="nav-item dropdown" id="StatusUpdate" runat="server">
+                                <a id="navLinkUpdateStatus" href="/_content_pages/engineering-status-update" title="Status Update" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/engineering-status-update") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/financial-status-update") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
+                                    <i class="nav-link--icon far fa-edit"></i>
+                                    <span class="nav-link--text">Status Update</span>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navLinkUpdateStatus">
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink5" runat="server" NavigateUrl="/_content_pages/engineering-status-update" ToolTip="Engineering">Engineering</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink6" runat="server" NavigateUrl="/_content_pages/financial-status-update" ToolTip="Financial">Financial</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="AddProjectStatusofWorkProgress" runat="server" NavigateUrl="/_content_pages/consolidated-monthly-activities" ToolTip="Project Status of Work Progress">Project Status of Work Progress</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="AddViewSitePhotographs" runat="server" NavigateUrl="~/_content_pages/choose-sitephotographs" ToolTip="Site Photographs">Site Photographs</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="AddViewConsolidatedActivities" runat="server" NavigateUrl="/_content_pages/consolidated-activities" ToolTip="Consolidated Activities">Consolidated Activities</asp:HyperLink>
+                                </div>
+
+			                </li>
+
+                            <li class="nav-item dropdown" id="Master" runat="server">
+                                <a id="navLinkMasters" href="/_content_pages/masters" title="Masters" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/projects-master") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/contractors-master") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/Workpackage-master") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/project-category") ? "nav-link dropdown-toggle active" : 
+                                        Page.Request.Url.LocalPath.Contains("/_content_pages/resources") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/boq-details") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
+                                    <i class="nav-link--icon fas fa-database"></i>
+                                    <span class="nav-link--text">Masters</span>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navLinkMasters">
+                                    <asp:HyperLink CssClass="dropdown-item" ID="hlprojects" runat="server" NavigateUrl="/_content_pages/projects-master" ToolTip="Projects">Project</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink16" runat="server" NavigateUrl="/_content_pages/contractors-master" ToolTip="Contractors">Contractor</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink17" runat="server" NavigateUrl="/_content_pages/Workpackage-master" ToolTip="Workpackage">Workpackage</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="HyperLink19" runat="server" NavigateUrl="/_content_pages/resources" ToolTip="Resources">Resources</asp:HyperLink>
+                                    <%--<asp:HyperLink CssClass="dropdown-item" ID="HyperLink31" runat="server" NavigateUrl="/_content_pages/boq-details" ToolTip="BOQ Details">BOQ Details</asp:HyperLink>--%>
+                                </div>
+
+			                </li>
+
+			                <li class="nav-item dropdown">
+                                <a id="navLinkOthers" href="/_content_pages/reviews" title="Reviews" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/reviews") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/issues") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/bank-guarantee") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/measurement-book") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/camera") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/project-physicalprogress") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/choose-sitephotographs") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
+                                    <i class="nav-link--icon fas fa-tasks"></i>
+                                    <span class="nav-link--text">Miscellaneous</span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navLinkOthers">
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Camera" runat="server" NavigateUrl="/_content_pages/camera" ToolTip="Camera">Camera</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Issues" runat="server" NavigateUrl="/_content_pages/issues" ToolTip="Issues">Issues</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Reviews" runat="server" NavigateUrl="/_content_pages/reviews" ToolTip="Reviews">Reviews</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="BankGuarantee" runat="server" NavigateUrl="/_content_pages/bank-guarantee" ToolTip="Bank Guarantee">Bank Guarantee</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Insurance" runat="server" NavigateUrl="/_content_pages/insurance" ToolTip="Insurance">Insurance</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Measurement" runat="server" NavigateUrl="/_content_pages/measurement-book" ToolTip="Measurement Book">Measurement Book</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Review_Meeting" runat="server" NavigateUrl="/_content_pages/review-meetingmaster" ToolTip="Review Meeting Master">Review Meeting Master</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Project_PhysicalPrg" runat="server" NavigateUrl="/_content_pages/project-physicalprogress" ToolTip="Physical Progress">Project Physical Progress</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Project_Status" runat="server" NavigateUrl="/_content_pages/consolidated-monthly-activities" ToolTip="Project Status of Work Progress">Project Status of Work Progress</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Site_Photos" runat="server" NavigateUrl="~/_content_pages/choose-sitephotographs" ToolTip="Site Photographs">Site Photographs</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Claims" runat="server" NavigateUrl="/_content_pages/reports-RA" ToolTip="Claims sent to CAAA/JICA">Claims sent to CAAA/JICA</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Budget_Disb" runat="server" NavigateUrl="/_content_pages/forms-update" ToolTip="Budget vs Disbursement">Budget vs Disbursement</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Budget_JICA" runat="server" NavigateUrl="/_content_pages/bwssb-jica" ToolTip="BWSSB vs JICA">BWSSB vs JICA</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_MOM" runat="server" NavigateUrl="/_content_pages/view-compliancemom" ToolTip="Compliance of M.O.M">Compliance of M.O.M</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Consolidated" runat="server" NavigateUrl="/_content_pages/consolidated-activities" ToolTip="Consolidated Activities">Consolidated Activities</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Misc_Status_WasteWater" runat="server" NavigateUrl="/_content_pages/status-wastewater-forms" ToolTip="Status WasteWater ContractPackage">Status WasteWater ContractPackage</asp:HyperLink>
+                                     <asp:HyperLink CssClass="dropdown-item" ID="Misc_OtherPoints" runat="server" NavigateUrl="~/_content_pages/other-points-discussion-insert" ToolTip="Other points for Discussion">Other points for Discussion</asp:HyperLink>
+                                  
+                                    <%--<asp:HyperLink CssClass="dropdown-item" ID="HyperLink13" runat="server" NavigateUrl="/_content_pages/masters" ToolTip="Masters">Masters</asp:HyperLink>--%>
+                                </div>
+			                </li>
+
+			                <li class="nav-item dropdown ml-auto">
+                                <a class="nav-link dropdown-toggle user" id="navLinkUser" href="javascript:void(0)" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true" role="button">
+                                    <span class="user--name" id="lblUserGreeting" runat="server"></span>
+                                    <img class="user--avatar" alt="Avatar" src="/_assets/images/icon-user-avatar-placeholder.jpg" />
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navLinkUser">
+                                    <%--<a class="dropdown-item" id="navLinkUser_MyAccount" href="/_content_pages/my-account" title="My Accoount">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span class="d-inline-block ml-1">My Account</span>
+                                    </a>--%>
+                                   <%-- <a class="dropdown-item" id="navLinkUser_Settings" runat="server" href="/_content_pages/settings" title="Settings">
+                                        <i class="fas fa-cog"></i>
+                                        <span class="d-inline-block ml-1">Settings</span>
+                                    </a>--%>
+                                   
+                                      <a class="dropdown-item" id="navlinkProfile" href="/_modal_pages/add-user.aspx?type=user" title="Profile">
+                                        <i class="fas fa-user"></i>
+                                        <span class="d-inline-block ml-1">Profile</span>
+                                    </a>
+                                     <a class="dropdown-item" id="navlinkchangePassword" href="/_modal_pages/change-password.aspx" title="Change Password">
+                                        <i class="fas fa-lock"></i>
+                                        <span class="d-inline-block ml-1">Change Password</span>
+                                    </a>
+                                    <a class="dropdown-item" id="navLinkUser_UserManagement" runat="server" href="/_content_pages/users" title="User Management">
+                                        <i class="fas fa-user-cog"></i>
+                                        <span class="d-inline-block ml-1">User Management</span>
+                                    </a>
+                                     <a class="dropdown-item" id="ProfileManagement" runat="server" href="/_content_pages/user-mapping" title="Profile Management">
+                                        <i class="fas fa-user-cog"></i>
+                                        <span class="d-inline-block ml-1">Profile Management</span>
+                                    </a>
+                                     <a class="dropdown-item" id="navLinkAssignProject" runat="server" href="/_content_pages/assign-projects" title="Assign Projects">
+                                        <i class="fas fa-tasks"></i>
+                                        <span class="d-inline-block ml-1">Assign Projects</span>
+                                    </a>
+
+                                    
+
+                                    <a class="dropdown-item" id="navLinkHelp" href="/_content_pages/help" title="Help">
+                                        <i class="fas fa-info-circle"></i>
+                                        <span class="d-inline-block ml-1">Help</span>
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+
+                                    <asp:LinkButton class="dropdown-item" ID="LinkButton1" runat="server" OnClick="LnkBtnSignOut_Click">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <span class="d-inline-block ml-1">Sign out</span>
+                                    </asp:LinkButton>
+                                </div>
+			                </li>
+		                </ul>
+	                </div>
+                </nav>
+                <div class="app_main">
+                    <div class="app_main__content">
+                        <asp:ContentPlaceHolder ID="default_master_body" runat="server"></asp:ContentPlaceHolder>
+                    </div>
+                    <footer class="app_footer container-fluid">
+                        <div class="row">
+                            <div class="app_footer__copyright col-md-6 py-2">&copy; 2022 i-Trust Informatics</div>
+                            <ul class="app_footer__menu col-md-6 py-2 text-md-right">
+                                <li class="app_footer__menu__item">
+                                    <a class="app_footer__menu__item__text" href="#" title="About">About</a>
+                                </li>
+                                <li class="app_footer__menu__item">
+                                    <a class="app_footer__menu__item__text" href="#" title="">Legals</a>
+                                </li>
+                                <li class="app_footer__menu__item">
+                                    <a class="app_footer__menu__item__text" href="#" title="Contact">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+
+            <div id="ModChangePassword" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">Change Password</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:400px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
+    </div>
+            <%--add Edit Project Class modal--%>
+    <div id="ModProfile" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">View/Edit Profile</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:450px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
+    </div>
+
+        </div>       
+    </form>
+     <script src="/_assets/scripts/app/app.js"></script>
+</body>
+</html>

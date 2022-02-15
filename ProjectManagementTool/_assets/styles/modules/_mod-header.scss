@@ -1,0 +1,244 @@
+/* Start Module: Header */
+.app_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $header-bg-color;
+    box-shadow: 0px 0px 40px 0px rgba(82, 63, 105, 0.1);
+
+    &__menu_trigger {
+        display: flex;
+        align-items: center;
+        height: $navbar-height;
+        padding: 0 20px;
+        margin-right: -15px;
+
+        .icon-hamburg {
+            display: flex;
+            position: relative;
+            align-items: center;
+            width: 26px;
+            height: 3px;
+            border-radius: 2px;
+            background-color: white;
+
+            &::before,
+            &::after {
+                display: block;
+                position: absolute;
+                content: '';
+                background-color: white;
+                left: 0;
+                right: 0;
+                top: -7px;
+                height: 3px;
+                border-radius: 2px;
+            }
+
+            &::after {
+                top: auto;
+                bottom: -7px;
+            }
+        }
+    }
+
+    &__brand {
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        text-decoration: none;
+        color: white;
+        line-height: 1;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+        &__logo {
+            font-size: 25px;
+            margin-right: 10px;
+            transition: transform 300ms ease-in-out;
+        }
+
+        &__name {
+            transition: color 300ms ease-in-out;
+
+            .brand {
+                display: block;
+                font-size: 10px;
+                font-weight: 300;
+            }
+
+            .product {
+                font-size: 15px;
+                font-weight: 700;
+            }
+        }
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+
+            .app_header__brand__logo {
+                transform: scale(1.15)
+            }
+
+            .app_header__brand__name {
+                color: $theme-color--blue;
+            }
+        }
+    }
+
+    &__navbar {
+        flex: 1;
+        overflow: auto;
+
+        .navbar_menu {
+            display: none;
+            align-items: center;
+            list-style: none;
+            margin: 0 20px;
+            padding: 0;
+            height: $navbar-height;
+
+            &__item {
+                height: 100%;
+
+                &__link {
+                    display: flex;
+                    align-items: center;
+                    padding: 0 20px;
+                    height: 100%;
+                    font-size: 0;
+                    font-weight: 300;
+                    text-decoration: none;
+                    white-space: nowrap;
+                    transition-property: color background-color;
+                    transition-duration: 300ms;
+                    transition-timing-function: ease-in-out;
+
+                    &__icon {
+                        display: none;
+                        color: $header-menu-fg-color;
+                        margin-right: 5px;
+                        font-size: 18px;
+                        opacity: 0.75;
+                        transition: inherit;
+                    }
+
+                    &__text {
+                        font-size: 14px;
+                        color: $header-menu-fg-color;
+                        transition: inherit;
+                    }
+
+                    &:hover,
+                    &:focus {
+                        background-color: $header-menu-bg-active-color;
+
+                        .navbar_menu__item__link {
+                            &__icon {
+                                color: $header-menu-fg-active-color;
+                            }
+
+                            &__text {
+                                color: $header-menu-fg-active-color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &__topbar {
+        &__menu {
+            height: $navbar-height;
+
+            &__item {
+                height: 100%;
+
+                a {
+                    display: flex;
+                    align-items: center;
+                    padding: 0 20px;
+                    height: 100%;
+                    text-decoration: none;
+                    color: $header-menu-fg-color;
+
+                    &:hover,
+                    &:focus {
+                        background-color: $header-menu-bg-active-color;
+                        color: $header-menu-fg-active-color;
+                    }
+                }
+
+                .user {
+                    display: flex;
+                    align-items: center;
+                    height: $navbar-height;
+
+                    &__name {
+                        display: none;
+                    }
+
+                    &__avatar {
+                        width: 28px;
+                        height: 28px;
+                        margin-left: 15px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                }
+            }
+        }
+    }
+}
+/* End Module: Header */
+
+@include media-breakpoint-up(sm) {
+    .app_header {
+        &__topbar {
+            &__menu {
+                &__item {
+                    .user {
+                        &__name {
+                            display: inline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-up(xl) {
+    .app_header {
+        &__menu_trigger {
+            display: none;
+        }
+
+        &__navbar {
+            .navbar_menu {
+                display: flex;
+            }
+        }
+    }
+}
+
+@media (min-width: 1440px) {
+    .app_header {
+        &__navbar {
+            .navbar_menu {
+                &__item {
+                    &__link {
+                        &__icon {
+                            display: inline-block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
