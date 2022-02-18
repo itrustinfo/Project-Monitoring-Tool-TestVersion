@@ -1223,9 +1223,9 @@ D:\Projects\NJS_Prj_New\2022-02-14_zuber\Latest-ProjectMonitoring-Tool-Oct-main\
 D:\Projects\NJS_Prj_New\2022-02-14_zuber\Latest-ProjectMonitoring-Tool-Oct-main\ProjectManagementTool\bin\Ionic.Zip.dll
 D:\Projects\NJS_Prj_New\2022-02-14_zuber\Latest-ProjectMonitoring-Tool-Oct-main\ProjectManagementTool\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\Projects\NJS_Prj_New\2022-02-14_zuber\Latest-ProjectMonitoring-Tool-Oct-main\ProjectManagementTool\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Projects\NJS_Prj_New\2022-02-14_zuber\Latest-ProjectMonitoring-Tool-Oct-main\ProjectManagementTool\obj\Debug\ProjectManagementTool.csprojAssemblyReference.cache
 D:\Projects\NJS_Prj_New\2022-02-14_zuber\Latest-ProjectMonitoring-Tool-Oct-main\ProjectManagementTool\obj\Debug\ProjectManagementTool.csproj.ResolveComReference.cache
 D:\Projects\NJS_Prj_New\2022-02-14_zuber\Latest-ProjectMonitoring-Tool-Oct-main\ProjectManagementTool\obj\Debug\ProjectManagementTool.csproj.CoreCompileInputs.cache
 D:\Projects\NJS_Prj_New\2022-02-14_zuber\Latest-ProjectMonitoring-Tool-Oct-main\ProjectManagementTool\obj\Debug\ProjectManagementTool.csproj.CopyComplete
 D:\Projects\NJS_Prj_New\2022-02-14_zuber\Latest-ProjectMonitoring-Tool-Oct-main\ProjectManagementTool\obj\Debug\ProjectManagementTool.dll
 D:\Projects\NJS_Prj_New\2022-02-14_zuber\Latest-ProjectMonitoring-Tool-Oct-main\ProjectManagementTool\obj\Debug\ProjectManagementTool.pdb
+D:\Projects\NJS_Prj_New\2022-02-14_zuber\Latest-ProjectMonitoring-Tool-Oct-main\ProjectManagementTool\obj\Debug\ProjectManagementTool.csprojAssemblyReference.cache

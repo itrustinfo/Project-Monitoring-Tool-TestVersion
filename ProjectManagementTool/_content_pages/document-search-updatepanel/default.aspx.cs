@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using ProjectManager.DAL;
 
@@ -573,11 +574,23 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 DataSet ds = getdt.getTop1_DocumentStatusSelect(new Guid(e.Row.Cells[0].Text));
+                Label lblDocumentName = (Label)e.Row.FindControl("lblDocumentName");
+                
                 if (ds != null)
                 {
                     if (ds.Tables[0].Rows[0]["DocumentType"].ToString() == "General Document")
                     {
                         e.Row.Cells[8].Text = "No History";
+                    }
+                    //
+                    if (ds.Tables[0].Rows[0]["ActivityType"].ToString() != "" && ds.Tables[0].Rows[0]["TopVersion"].ToString() != "")
+                    {
+                        //e.Row.Cells[1].Text = ds.Tables[0].Rows[0]["TopVersion"].ToString();
+
+                      
+                        string newVersionFileName = Path.GetFileNameWithoutExtension(Server.MapPath(ds.Tables[0].Rows[0]["Doc_Path"].ToString()));
+                        lblDocumentName.Text = newVersionFileName.Substring(0, (newVersionFileName.Length - 2)) + " [ Ver. " + ds.Tables[0].Rows[0]["TopVersion"].ToString() + " ]"; ;
+                       
                     }
                 }
 

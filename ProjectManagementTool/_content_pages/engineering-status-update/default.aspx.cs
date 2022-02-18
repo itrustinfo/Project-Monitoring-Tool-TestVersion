@@ -539,8 +539,11 @@ namespace ProjectManagementTool._content_pages.engineering_status_update
             else
             {
                 ActivitySchedule.Visible = false;
-                LblNotDataTaskSchedule.Text = "No Records Found.";
+                TaskScheduleHistory.HRef = "/_modal_pages/view-measurement.aspx?TaskUID=" + TreeView1.SelectedNode.Value;
                 TaskScheduleHistory.Visible = false;
+                LblNotDataTaskSchedule.Text = "";
+                //LblNotDataTaskSchedule.Text = "No Records Found.";
+                //TaskScheduleHistory.Visible = false;
                 //TaskScheduleHistory1.HRef = "/_modal_pages/task-schedulehistory.aspx?TaskUID=" + TaskUID;
             }
             //GrdTaskSchedule.DataSource = ds;
@@ -1273,6 +1276,7 @@ namespace ProjectManagementTool._content_pages.engineering_status_update
                 else
                 {
                     LblTragetValue.Text = "0";
+                    btnScheduleUpdate.Visible = true;
                 }
             }
         }

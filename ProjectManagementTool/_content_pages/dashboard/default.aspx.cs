@@ -37,10 +37,13 @@ namespace ProjectManager._content_pages
                     // added on 17/11/2020
                     DataSet dscheck = new DataSet();
                     dscheck = getdt.GetUsertypeFunctionality_Mapping(Session["TypeOfUser"].ToString());
-                    RdList.Items[1].Attributes.CssStyle.Add("display", "none");
-                    rdSelect.Items[1].Attributes.CssStyle.Add("display", "none");
-                    rdSelect.Items[2].Attributes.CssStyle.Add("display", "none");
-                    divCamera.Visible = false;
+                    // RdList.Items[1].Attributes.CssStyle.Add("display", "none");
+                    //   rdSelect.Items[1].Attributes.CssStyle.Add("display", "none");
+                    // rdSelect.Items[2].Attributes.CssStyle.Add("display", "none");
+                    RdList.Items[1].Enabled = false;
+                    rdSelect.Items[1].Enabled = false;
+                    rdSelect.Items[2].Enabled = false;
+                     divCamera.Visible = false;
                     if (dscheck.Tables[0].Rows.Count > 0)
                     {
                         foreach (DataRow dr in dscheck.Tables[0].Rows)
@@ -48,14 +51,17 @@ namespace ProjectManager._content_pages
 
                             if (dr["Code"].ToString() == "FS" || dr["Code"].ToString() == "FT" || dr["Code"].ToString() == "FZ") // VIEW FINANCIAL PROGRESS OF PROJECT-INDIVIDUAL REGIONS // ALL // INDIVIDUAL PROJECT //
                             {
-                                RdList.Items[1].Attributes.CssStyle.Add("display", "block");
-                                rdSelect.Items[2].Attributes.CssStyle.Add("display", "block");
+                                // RdList.Items[1].Attributes.CssStyle.Add("display", "block");
+                                //  rdSelect.Items[2].Attributes.CssStyle.Add("display", "block");
+                                RdList.Items[1].Enabled = true;
+                                rdSelect.Items[2].Enabled = true;
 
                             }
                             if (dr["Code"].ToString() == "FX" || Session["TypeOfUser"].ToString() == "U") //Project progress tracking
                             {
 
-                                rdSelect.Items[1].Attributes.CssStyle.Add("display", "block");
+                                // rdSelect.Items[1].Attributes.CssStyle.Add("display", "block");
+                                rdSelect.Items[1].Enabled = true;
                             }
                             if (Session["TypeOfUser"].ToString() != "U")
                             {
