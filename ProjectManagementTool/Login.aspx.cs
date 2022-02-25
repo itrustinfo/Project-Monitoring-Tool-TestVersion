@@ -99,7 +99,7 @@ namespace ProjectManagementTool
                             Session["Username"] = ds.Tables[0].Rows[0]["FirstName"].ToString();
                             Session["UserUID"] = ds.Tables[0].Rows[0]["UserUID"].ToString();
                             Session["TypeOfUser"] = ds.Tables[0].Rows[0]["TypeOfUser"].ToString();
-
+                            Session["IsContractor"] = ds.Tables[0].Rows[0]["IsContractor"].ToString();
                             string sessionId = HttpContext.Current.Session.SessionID;
                             getdt.UsersLogInStatus(txtusername.Value, HttpContext.Current.Session.SessionID, "Success");
                             if (Application["UsersCount"] != null)

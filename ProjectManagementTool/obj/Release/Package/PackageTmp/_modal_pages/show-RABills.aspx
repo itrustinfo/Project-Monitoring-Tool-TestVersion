@@ -70,11 +70,32 @@
             document.getElementById("error").style.display = ret ? "none" : "inline";
             return ret;
         }
+
+        //
+          function ShowProgressBar(status) {
+               if (status == "true") {
+                    document.getElementById('dvProgressBar').style.visibility = 'visible';
+            }
+            else {
+                document.getElementById('dvProgressBar').style.visibility = 'hidden';
+            }
+          }
+
+
+         $(document).ready(function () {
+
+         document.getElementById('dvProgressBar').style.visibility = 'hidden';
+
+        });
+      
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="modal_master_body" runat="server">
     <form id="frmAddDocumentModal" runat="server">
     <div class="container-fluid" style="overflow-y:auto; min-height:90vh; max-height:90vh;">
+        <div id="dvProgressBar" style=" text-align:center; position:relative; visibility:visible;" >
+                     <img src="../_assets/images/progress.gif" width="40" alt="loading"  /> <span style="color:#006699; font-weight:bold;">Processing please wait...</span>
+                     </div> 
         <%--<div class="row">
            <div class="col-sm-6">
                 <div class="form-group">
@@ -124,7 +145,9 @@
             <div class="col-sm-12">
                 <div class="table-responsive">
                     <%--<br /><br />--%>
+                    <asp:Button ID="btngetData" CssClass="btn btn-primary" runat="server" Text="Get RABill Items" OnClientClick="ShowProgressBar('true')" OnClick="btngetData_Click" />
                     <h6 class="text-muted">
+
                                                         <asp:Label id="LblRABillItems" CssClass="text-uppercase font-weight-bold" runat="server" Text="List of RA Bill Items" />
                                                         <%--<asp:Label Text="Foo bar" CssClass="pl-1" runat="server" />--%>
                                                     </h6>

@@ -428,7 +428,7 @@ namespace ProjectManagementTool._content_pages.invoice
                     {
                         if (getdt.checkInvoiceMasterSynced(new Guid(e.Row.Cells[6].Text)) > 0)
                         {
-                            e.Row.BackColor = System.Drawing.Color.Orange;
+                            e.Row.BackColor = System.Drawing.Color.White;
                         }
                         else
                         {
@@ -495,7 +495,7 @@ namespace ProjectManagementTool._content_pages.invoice
                     {
                         if (getdt.checkInvoice_DeductionSynced(new Guid(e.Row.Cells[5].Text)) > 0)
                         {
-                            e.Row.BackColor = System.Drawing.Color.Orange;
+                            e.Row.BackColor = System.Drawing.Color.White;
                         }
                         else
                         {
@@ -541,7 +541,7 @@ namespace ProjectManagementTool._content_pages.invoice
                     {
                         if (getdt.checkInvoiceRABillSynced(new Guid(e.Row.Cells[3].Text)) > 0)
                         {
-                            e.Row.BackColor = System.Drawing.Color.Orange;
+                            e.Row.BackColor = System.Drawing.Color.White;
                         }
                         else
                         {

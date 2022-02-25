@@ -283,7 +283,7 @@ namespace ProjectManagementTool._modal_pages
                                     Guid InspectionDocumentUID = Guid.NewGuid();
                                     string Extn = System.IO.Path.GetExtension(uploadedFile.FileName);
 
-                                    if (Extn.ToLower() != ".exe" && Extn.ToLower() != ".msi" && Extn.ToLower() != ".db")
+                                    if (Extn.ToLower() != ".exe" && Extn.ToLower() != ".msi" && Extn.ToLower() != ".db" && Extn!="")
                                     {
                                         DocumentFor = "General Document";
                                         sDocumentPath = "~/" + Request.QueryString["ProjectUID"] + "/Documents";
@@ -372,13 +372,16 @@ namespace ProjectManagementTool._modal_pages
 
                         }
 
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");
                     }
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");
+
                 }
             }
             catch (Exception ex)
             {
-                Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error Code : AJIR-01. Description=" + ex.Message + "');</script>");
+                Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");
+
+               // Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error Code : AJIR-01. Description :" + ex.Message + "');</script>");
             }
         }
 

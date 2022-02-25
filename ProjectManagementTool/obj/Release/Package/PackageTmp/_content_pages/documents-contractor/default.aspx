@@ -70,7 +70,7 @@
      width = DivMC.offsetWidth;
  //*** Set divheaderRow Properties ****
  DivHR.style.height = headerHeight + 'px';
- DivHR.style.width = (parseInt(width) - 16) + 'px';
+ DivHR.style.width = (parseInt(width) - 21) + 'px';
  DivHR.style.position = 'relative';
  DivHR.style.top = '0px';
  DivHR.style.zIndex = '10';
@@ -84,7 +84,7 @@
  DivMC.style.zIndex = '1';
 
  //*** Set divFooterRow Properties ****
- DivFR.style.width = (parseInt(width) - 16) + 'px';
+ DivFR.style.width = (parseInt(width) - 21) + 'px';
  DivFR.style.position = 'relative';
  DivFR.style.top = -headerHeight + 'px';
  DivFR.style.verticalAlign = 'top';
@@ -118,7 +118,7 @@
      width = DivMC.offsetWidth;
  //*** Set divheaderRow Properties ****
  DivHR.style.height = headerHeight + 'px';
- DivHR.style.width = (parseInt(width) - 16) + 'px';
+ DivHR.style.width = (parseInt(width) - 18) + 'px';
  DivHR.style.position = 'relative';
  DivHR.style.top = '0px';
  DivHR.style.zIndex = '10';
@@ -132,7 +132,7 @@
  DivMC.style.zIndex = '1';
 
  //*** Set divFooterRow Properties ****
- DivFR.style.width = (parseInt(width) - 16) + 'px';
+ DivFR.style.width = (parseInt(width) - 18) + 'px';
  DivFR.style.position = 'relative';
  DivFR.style.top = -headerHeight + 'px';
  DivFR.style.verticalAlign = 'top';
@@ -233,6 +233,7 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                        <%--<asp:Label Text="Foo bar" CssClass="pl-1" runat="server" />--%>
                                </h6>
                                <div class="col-md-6 col-lg-4 form-group text-right">
+                                   <asp:Button ID="btnSubmit" runat="server" Text="Submit" Visible="false" CssClass="btn btn-primary"></asp:Button>
                     <asp:Button ID="btnback" runat="server" Text="Back To Dashboard" CssClass="btn btn-primary" PostBackUrl="/_content_pages/dashboard/"></asp:Button>
                                   
                 </div>
@@ -295,6 +296,21 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                                                         <a class="showModalDocumentView" href="/_modal_pages/view-documentdetails.aspx?DocID=<%#Eval("ActualDocumentUID")%>&ProjectUID=<%#Eval("ProjectUID")%>">View Details</a>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                            <ItemTemplate>
+                                                                <asp:RadioButtonList ID="rdActionsList" runat="server" RepeatDirection="Horizontal">
+                                                                    <asp:ListItem>Accept</asp:ListItem>
+                                                                    <asp:ListItem>Reject</asp:ListItem>
+                                                                </asp:RadioButtonList>
+
+                                                            </ItemTemplate>
+
+                                                        </asp:TemplateField>
+                                             <asp:TemplateField HeaderText="Remarks">
+                                                 <ItemTemplate>
+                                                 <asp:TextBox ID="txtremarks" TextMode="MultiLine" runat="server"></asp:TextBox>
+                                                     </ItemTemplate>
+                                                        </asp:TemplateField>
                                            <%--   <asp:TemplateField>
                                                                     <ItemTemplate>
                                                                         <a class="showModalDocumentEdit" href="/_modal_pages/edit-document.aspx?DocID=<%#Eval("ActualDocumentUID")%>&pUID=<%#Eval("ProjectUID")%>&wUID=<%#Eval("WorkPackageUID")%>&type=search"><span title="Edit" class="fas fa-edit"></span></a>

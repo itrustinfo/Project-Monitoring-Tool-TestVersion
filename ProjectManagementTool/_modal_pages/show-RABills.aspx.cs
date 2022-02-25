@@ -23,7 +23,7 @@ namespace ProjectManagementTool._modal_pages
             }
             else
             {
-                if(! IsPostBack)
+                if (!IsPostBack)
                 {
                     if (Request.QueryString["type"] != null)
                     {
@@ -34,9 +34,9 @@ namespace ProjectManagementTool._modal_pages
                     {
                         //Session["rabilluid"] = Request.QueryString["RABillUid"];
                         //string s = Request.QueryString["RABillUid"].ToString();
-                        BindRABills();
+                        // BindRABills();
                         //AddRABillItem.HRef = "/_modal_pages/add-rabillitem.aspx?From=Item&RABillUid=" + Request.QueryString["RABillUid"] + "&WorkpackageUID=" + Request.QueryString["WorkpackageUID"];
-                        LinkBOQData.HRef = "/_modal_pages/boq-treeview.aspx?ProjectUID=" + dbgetdata.getProjectUIDby_WorkpackgeUID(new Guid(Request.QueryString["WorkpackageUID"]));
+                        // LinkBOQData.HRef = "/_modal_pages/boq-treeview.aspx?ProjectUID=" + dbgetdata.getProjectUIDby_WorkpackgeUID(new Guid(Request.QueryString["WorkpackageUID"]));
                     }
 
                     //if (Session["BOQData"] != null)
@@ -60,7 +60,7 @@ namespace ProjectManagementTool._modal_pages
                     //        btnAddItem.Visible = true;
                     //        AddJointInspectionItem.HRef = "/_modal_pages/add-jointinspection-to-rabill.aspx?itemUId=" + Session["BOQData"].ToString() + "&WorkpackageUID=" + Request.QueryString["WorkpackageUID"] + "&RABillUid=" + Request.QueryString["RABillUid"] + "";
                     //    }
-                        
+
                     //}
                     //else
                     //{
@@ -70,7 +70,7 @@ namespace ProjectManagementTool._modal_pages
                     //    LnkChangeItem.Visible = false;
                     //}
                 }
-                
+
             }
         }
 
@@ -79,22 +79,47 @@ namespace ProjectManagementTool._modal_pages
             //DataTable dtRaBills = dbgetdata.GetRABills(Request.QueryString["RABillUid"]);
             //grdRaBills.DataSource = dtRaBills;
             //grdRaBills.DataBind();
+            // old code
+            //DataTable dt = new DataTable();
+            //dt.Columns.Add("WorkpackageUID");
+            //dt.Columns.Add("itemUId");
+            //dt.Columns.Add("item_number");
+            //dt.Columns.Add("item_desc");
+            //dt.Columns.Add("RABillUid");
 
+            //string ProjectUID = dbgetdata.getProjectUIDby_WorkpackgeUID(new Guid(Request.QueryString["WorkpackageUID"]));
+            //DataTable ds = dbgetdata.getBOQParent_Details(new Guid(ProjectUID), "Project");
+            //for (int i = 0; i < ds.Rows.Count; i++)
+            //{
+            //    BindRABillItems(dt, ds.Rows[i]["BOQDetailsUID"].ToString(), Request.QueryString["WorkpackageUID"], Request.QueryString["RABillUid"]);
+            //}
+            //grdRaBills.DataSource = dt;
+            //grdRaBills.DataBind();
+            //--------------------------
+
+
+            // new code added on  25/02/2022
             DataTable dt = new DataTable();
             dt.Columns.Add("WorkpackageUID");
             dt.Columns.Add("itemUId");
             dt.Columns.Add("item_number");
             dt.Columns.Add("item_desc");
             dt.Columns.Add("RABillUid");
-
-            string ProjectUID = dbgetdata.getProjectUIDby_WorkpackgeUID(new Guid(Request.QueryString["WorkpackageUID"]));
-            DataTable ds = dbgetdata.getBOQParent_Details(new Guid(ProjectUID), "Project");
+            DataTable ds = dbgetdata.GetBOQWithJIR(new Guid(Request.QueryString["WorkpackageUID"].ToString()));
             for (int i = 0; i < ds.Rows.Count; i++)
             {
-                BindRABillItems(dt, ds.Rows[i]["BOQDetailsUID"].ToString(), Request.QueryString["WorkpackageUID"], Request.QueryString["RABillUid"]);
+                DataRow dtrow = dt.NewRow();
+                dtrow["itemUId"] = ds.Rows[i]["BOQDetailsUID"].ToString();
+                dtrow["WorkpackageUID"] = Request.QueryString["WorkpackageUID"].ToString();
+                dtrow["item_number"] = itemnumberwithParent(ds.Rows[i]["Item_Number"].ToString(), ds.Rows[i]["ParentBOQUID"].ToString());
+                dtrow["RABillUid"] = Request.QueryString["RABillUid"].ToString();
+                dtrow["item_desc"] = ds.Rows[i]["Description"].ToString();
+                dt.Rows.Add(dtrow);
             }
+            //
             grdRaBills.DataSource = dt;
             grdRaBills.DataBind();
+            //-------------------------
         }
 
         protected void grdRaBills_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -119,12 +144,12 @@ namespace ProjectManagementTool._modal_pages
         protected void grdRaBills_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             //Finding the controls from Gridview for the row which is going to update  
-            HiddenField itemUId = grdRaBills.Rows[e.RowIndex].FindControl("hidUid") as HiddenField ;
+            HiddenField itemUId = grdRaBills.Rows[e.RowIndex].FindControl("hidUid") as HiddenField;
             HiddenField oldCost = grdRaBills.Rows[e.RowIndex].FindControl("hidCost") as HiddenField;
             TextBox txtCost = grdRaBills.Rows[e.RowIndex].FindControl("txtItemCost") as TextBox;
-           if(double.TryParse(txtCost.Text ,out double newCost))
+            if (double.TryParse(txtCost.Text, out double newCost))
             {
-                double costDiff = newCost -Convert.ToDouble(oldCost.Value);
+                double costDiff = newCost - Convert.ToDouble(oldCost.Value);
                 dbgetdata.UpdateItemCostData(itemUId.Value, newCost, costDiff);
             }
             grdRaBills.EditIndex = -1;
@@ -167,7 +192,7 @@ namespace ProjectManagementTool._modal_pages
                 Label lblApprovedQuan = (Label)e.Row.FindControl("LblApprovedQuantity");
                 Label lblApprovedRate = (Label)e.Row.FindControl("LblApprovedRate");
 
-                string ItemUID= grdRaBills.DataKeys[e.Row.RowIndex].Values[0].ToString();
+                string ItemUID = grdRaBills.DataKeys[e.Row.RowIndex].Values[0].ToString();
 
                 DataSet ds = dbgetdata.GetBOQDetails_by_BOQDetailsUID(new Guid(ItemUID));
                 if (ds.Tables[0].Rows.Count > 0)
@@ -175,18 +200,19 @@ namespace ProjectManagementTool._modal_pages
                     string CurrencySymbol = "";
                     if (ds.Tables[0].Rows[0]["Currency"].ToString() == "&#x20B9;")
                     {
-                       
+
                         CurrencySymbol = "₹";
                     }
                     else if (ds.Tables[0].Rows[0]["Currency"].ToString() == "&#36;")
                     {
-                        
+
                         CurrencySymbol = "$";
                     }
                     else
                     {
-                        
-                        CurrencySymbol = "¥";
+
+                        // CurrencySymbol = "¥";
+                        CurrencySymbol = "₹";
                     }
                     string Cul_Info = "";
                     if (ds.Tables[0].Rows[0]["Currency_CultureInfo"].ToString() != "")
@@ -325,7 +351,7 @@ namespace ProjectManagementTool._modal_pages
             txtradescription.Text = "";
         }
 
-        private void BindRABillItems(DataTable dt,string ParentUID,string WorkpackageUID,string RAbillUID)
+        private void BindRABillItems(DataTable dt, string ParentUID, string WorkpackageUID, string RAbillUID)
         {
             DataTable dschild = dbgetdata.getBoq_Details(new Guid(ParentUID));
             for (int j = 0; j < dschild.Rows.Count; j++)
@@ -341,5 +367,48 @@ namespace ProjectManagementTool._modal_pages
                 BindRABillItems(dt, dschild.Rows[j]["BOQDetailsUID"].ToString(), WorkpackageUID, RAbillUID);
             }
         }
+
+        protected void btngetData_Click(object sender, EventArgs e)
+        {
+            BindRABills();
+            //AddRABillItem.HRef = "/_modal_pages/add-rabillitem.aspx?From=Item&RABillUid=" + Request.QueryString["RABillUid"] + "&WorkpackageUID=" + Request.QueryString["WorkpackageUID"];
+            LinkBOQData.HRef = "/_modal_pages/boq-treeview.aspx?ProjectUID=" + dbgetdata.getProjectUIDby_WorkpackgeUID(new Guid(Request.QueryString["WorkpackageUID"]));
+
+        }
+
+        // added on 25/02/2022
+        private string itemnumberwithParent(string sitemNo, string BOQUID)
+        {
+            string resultItemNo = "";
+            string itemNo = sitemNo;
+            string ParentUID = BOQUID;
+            while (ParentUID != "")
+            {
+                DataTable dschild = dbgetdata.GetBOQDetails_by_BOQDetailsUID(new Guid(ParentUID)).Tables[0];
+
+                for (int j = 0; j < dschild.Rows.Count; j++)
+                {
+                    itemNo = itemNo + "/" + dschild.Rows[j]["Item_Number"].ToString();
+                    ParentUID = dschild.Rows[0]["ParentBOQUID"].ToString();
+                }
+
+            }
+            
+            string[] data = itemNo.Split('/');
+            if (itemNo.Contains("/"))
+            {
+                for(int i=data.Length-1;i>=0;i--)
+                {
+                    resultItemNo = resultItemNo + "/" + data[i];
+                }
+                resultItemNo = resultItemNo.Remove(0, 1);
+            }
+            else
+            {
+                resultItemNo = itemNo;
+            }
+            return resultItemNo;
+        }
+    
     }
 }

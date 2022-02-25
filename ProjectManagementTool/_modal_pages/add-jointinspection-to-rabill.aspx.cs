@@ -100,6 +100,7 @@ namespace ProjectManagementTool._modal_pages
                 if (i == 0)
                 {
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Please check atleast one item in the List');</script>");
+                    Page.ClientScript.RegisterStartupScript(this.GetType(), "Progress Bar", "ShowProgressBar('false')", true);
                 }
                 else
                 {

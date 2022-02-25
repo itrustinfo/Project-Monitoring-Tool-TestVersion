@@ -18666,7 +18666,24 @@ namespace ProjectManager.DAL
             }
         }
 
-
+        //added on 25/02/2022
+        internal DataTable GetBOQWithJIR(Guid WorkPackageUID)
+        {
+            DataTable ds = new DataTable();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetBOQWithJIR", con);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
 
     }
 }

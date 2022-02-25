@@ -982,14 +982,14 @@ namespace ProjectManagementTool._content_pages.engineering_status_update
                     {
                         Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Current Quantity cannot be empty.');</script>");
                     }
-                    else if (txtachieved.Text == "0")
-                    {
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Current Quantity cannot be zero.');</script>");
-                    }
-                    else if (Convert.ToDouble(txtAchievedCurrent.Text) > Convert.ToDouble(txtachieved.Text))
-                    {
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Current Quantity should be less than max Quantity.');</script>");
-                    }
+                    //else if (txtachieved.Text == "0")
+                    //{
+                    //    Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Current Quantity cannot be zero.');</script>");
+                    //}
+                    //else if (Convert.ToDouble(txtAchievedCurrent.Text) > Convert.ToDouble(txtachieved.Text))
+                    //{
+                    //    Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Current Quantity should be less than max Quantity.');</script>");
+                    //}
                     else if (TaskUID == string.Empty)
                     {
                         Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Please select a task to update measurement.');</script>");
@@ -1276,6 +1276,7 @@ namespace ProjectManagementTool._content_pages.engineering_status_update
                 else
                 {
                     LblTragetValue.Text = "0";
+                    txtachieved.Text = "0";
                     btnScheduleUpdate.Visible = true;
                 }
             }

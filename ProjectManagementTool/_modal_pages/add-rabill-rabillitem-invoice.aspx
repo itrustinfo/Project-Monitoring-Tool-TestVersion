@@ -48,6 +48,24 @@
                  dateFormat: 'dd/mm/yy'
              });
          });
+
+           function ShowProgressBar(status) {
+               if (status == "true") {
+                   
+                if (document.getElementById("txtaddrabillnumber").value != "" && document.getElementById("txtDate").value != "") {
+                    
+                    document.getElementById('dvProgressBar').style.visibility = 'visible';
+                    
+                }
+                    else {
+                document.getElementById('dvProgressBar').style.visibility = 'hidden';
+            }
+                
+            }
+            else {
+                document.getElementById('dvProgressBar').style.visibility = 'hidden';
+            }
+        }
      </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="modal_master_body" runat="server">
@@ -136,8 +154,11 @@
                 
         </div>
             </div>
+             <div id="dvProgressBar" style=" text-align:center; position:relative; visibility:hidden;" >
+                     <img src="../_assets/images/progress.gif" width="40" alt="loading"  /> <span style="color:#006699; font-weight:bold;">Processing please wait...</span>
+                     </div> 
         <div class="modal-footer">
-            <asp:Button ID="btnaddrabill" runat="server" Text="Continue" CssClass="btn btn-primary" OnClick="btnaddrabill_Click"  />
+            <asp:Button ID="btnaddrabill" runat="server" Text="Continue" CssClass="btn btn-primary" OnClientClick="ShowProgressBar('true')" OnClick="btnaddrabill_Click"  />
             
                 </div>
             </div>

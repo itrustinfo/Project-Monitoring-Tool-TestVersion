@@ -34,10 +34,11 @@
                         <div class="card-title">
                         <div class="d-flex justify-content-between">
                               <h6 class="text-muted">
-                                   <asp:Label ID="LblDocumentHeading" Text="Mesaurments List for Contractor -> ONTB" CssClass="text-uppercase font-weight-bold" runat="server" />
+                                   <asp:Label ID="LblDocumentHeading" Text="Measurments List for Contractor -> ONTB" CssClass="text-uppercase font-weight-bold" runat="server" />
                                        <%--<asp:Label Text="Foo bar" CssClass="pl-1" runat="server" />--%>
                                </h6>
                                <div class="col-md-6 col-lg-4 form-group text-right">
+                                   <%--<asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary"></asp:Button>--%>
                     <asp:Button ID="btnback" runat="server" Text="Back To Dashboard" CssClass="btn btn-primary" PostBackUrl="/_content_pages/dashboard/"></asp:Button>
                                   
                 </div>
@@ -74,6 +75,14 @@
                                                         <asp:BoundField DataField="Achieved_Date" HeaderText="Achieved Date"  DataFormatString="{0:dd/MM/yyyy}">
                                                             <HeaderStyle HorizontalAlign="Left" />
                                                             </asp:BoundField>
+                                                       <%-- <asp:TemplateField>
+                                                            <ItemTemplate>
+                                                                <asp:RadioButtonList ID="rdActionsList" runat="server" RepeatDirection="Horizontal">
+                                                                    <asp:ListItem>Accept</asp:ListItem>
+                                                                    <asp:ListItem>Reject</asp:ListItem>
+                                                                </asp:RadioButtonList>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>--%>
                                                       <%--  <asp:TemplateField>
                                                         <ItemTemplate>
                                                             <a id="EditMeasurement" href="/_modal_pages/edit-measurement.aspx?UID=<%#Eval("UID")%>" class="showEditMeasurementModel"><span title="Edit" class="fas fa-edit"></span></a> 

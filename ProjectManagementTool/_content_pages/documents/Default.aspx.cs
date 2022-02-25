@@ -768,231 +768,470 @@ namespace ProjectManager._content_pages.documents
                     }
                     else if (Level == 3)
                     {
-                        treeNode.ChildNodes.Add(child);
-
-                        DataSet dssubmittal = getdata.getDocumentsForTasks(new Guid(child.Value));
-                        if (dssubmittal.Tables[0].Rows.Count > 0)
+                       
+                        if (Session["IsContractor"].ToString() == "Y")
                         {
-                            for (int i = 0; i < dssubmittal.Tables[0].Rows.Count; i++)
+                            if (row["WorkpackageSelectedOption_Name"].ToString() != "Design")
                             {
-                                TreeNode subdoc = new TreeNode
+                                if (row["WorkpackageSelectedOption_Name"].ToString() == "PMC")
                                 {
-                                    Text = "<div style='color:#007bff;'>" + dssubmittal.Tables[0].Rows[i]["DocName"].ToString() + "</div>",
-                                    Value = dssubmittal.Tables[0].Rows[i]["DocumentUID"].ToString(),
-                                    Target = "Submittal",
-                                    ToolTip = dssubmittal.Tables[0].Rows[i]["DocName"].ToString(),
-                                    ImageUrl = "~/_assets/images/submittal.png"
-                                };
-                                child.ChildNodes.Add(subdoc);
-
-
-                                int SplitNodeCount = 0;
-                                DataSet documents = getdata.ActualDocuments_SelectBy_DocumentUID(new Guid(dssubmittal.Tables[0].Rows[i]["DocumentUID"].ToString()));
-                                for (int k = 0; k < documents.Tables[0].Rows.Count; k++)
+                                    child.Text = "Construction & Execution";
+                                }
+                                treeNode.ChildNodes.Add(child);
+                                DataSet dssubmittal = getdata.getDocumentsForTasks(new Guid(child.Value));
+                                if (dssubmittal.Tables[0].Rows.Count > 0)
                                 {
-                                    if (documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString() != "")
+                                    for (int i = 0; i < dssubmittal.Tables[0].Rows.Count; i++)
                                     {
-                                        SplitNodeCount = 0;
-                                        string[] relativepath = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString().Split('/');
-                                        if (relativepath.Length > 0)
+                                        TreeNode subdoc = new TreeNode
                                         {
-                                            List<string> list = new List<string>(relativepath);
-                                            TreeNode SubFolder = new TreeNode();
-                                            TreeNode SubFolder1 = new TreeNode();
-                                            TreeNode SubFolder2 = new TreeNode();
-                                            TreeNode SubFolder3 = new TreeNode();
-                                            TreeNode SubFolder4 = new TreeNode();
-                                            TreeNode SubFolder5 = new TreeNode();
-                                            TreeNode SubFolder6 = new TreeNode();
-                                            TreeNode SubFolder7 = new TreeNode();
-                                            if (SplitNodeCount < list.Count)
+                                            Text = "<div style='color:#007bff;'>" + dssubmittal.Tables[0].Rows[i]["DocName"].ToString() + "</div>",
+                                            Value = dssubmittal.Tables[0].Rows[i]["DocumentUID"].ToString(),
+                                            Target = "Submittal",
+                                            ToolTip = dssubmittal.Tables[0].Rows[i]["DocName"].ToString(),
+                                            ImageUrl = "~/_assets/images/submittal.png"
+                                        };
+                                        child.ChildNodes.Add(subdoc);
+
+
+                                        int SplitNodeCount = 0;
+                                        DataSet documents = getdata.ActualDocuments_SelectBy_DocumentUID(new Guid(dssubmittal.Tables[0].Rows[i]["DocumentUID"].ToString()));
+                                        for (int k = 0; k < documents.Tables[0].Rows.Count; k++)
+                                        {
+                                            if (documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString() != "")
                                             {
-
-                                                //if (!CheckChildNode(subdoc, list[SplitNodeCount].ToString()))
-                                                //{
-                                                //    
-                                                //}
-
-                                                TreeNode trnode = SearchNode(subdoc, list[SplitNodeCount].ToString());
-                                                if (trnode != null)
+                                                SplitNodeCount = 0;
+                                                string[] relativepath = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString().Split('/');
+                                                if (relativepath.Length > 0)
                                                 {
-                                                    SubFolder = trnode;
+                                                    List<string> list = new List<string>(relativepath);
+                                                    TreeNode SubFolder = new TreeNode();
+                                                    TreeNode SubFolder1 = new TreeNode();
+                                                    TreeNode SubFolder2 = new TreeNode();
+                                                    TreeNode SubFolder3 = new TreeNode();
+                                                    TreeNode SubFolder4 = new TreeNode();
+                                                    TreeNode SubFolder5 = new TreeNode();
+                                                    TreeNode SubFolder6 = new TreeNode();
+                                                    TreeNode SubFolder7 = new TreeNode();
+                                                    if (SplitNodeCount < list.Count)
+                                                    {
+
+                                                        //if (!CheckChildNode(subdoc, list[SplitNodeCount].ToString()))
+                                                        //{
+                                                        //    
+                                                        //}
+
+                                                        TreeNode trnode = SearchNode(subdoc, list[SplitNodeCount].ToString());
+                                                        if (trnode != null)
+                                                        {
+                                                            SubFolder = trnode;
+                                                        }
+                                                        else
+                                                        {
+                                                            SubFolder = new TreeNode();
+                                                            SubFolder.Text = list[SplitNodeCount].ToString();
+                                                            SubFolder.Target = "Folder";
+                                                            SubFolder.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                            SubFolder.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                            SubFolder.ImageUrl = "~/_assets/images/submittal.png";
+                                                            subdoc.ChildNodes.Add(SubFolder);
+                                                        }
+
+                                                    }
+                                                    SplitNodeCount = SplitNodeCount + 1;
+
+                                                    if (SplitNodeCount < list.Count)
+                                                    {
+
+
+                                                        TreeNode trnode1 = SearchNode(SubFolder, list[SplitNodeCount].ToString());
+                                                        if (trnode1 != null)
+                                                        {
+                                                            SubFolder1 = trnode1;
+                                                        }
+                                                        else
+                                                        {
+                                                            SubFolder1 = new TreeNode();
+                                                            SubFolder1.Text = list[SplitNodeCount].ToString();
+                                                            SubFolder1.Target = "SubFolder";
+                                                            SubFolder1.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                            SubFolder1.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                            SubFolder.ChildNodes.Add(SubFolder1);
+                                                        }
+                                                    }
+                                                    SplitNodeCount = SplitNodeCount + 1;
+
+                                                    if (SplitNodeCount < list.Count)
+                                                    {
+
+                                                        TreeNode trnode2 = SearchNode(SubFolder1, list[SplitNodeCount].ToString());
+                                                        if (trnode2 != null)
+                                                        {
+                                                            SubFolder2 = trnode2;
+                                                        }
+                                                        else
+                                                        {
+                                                            SubFolder2 = new TreeNode();
+                                                            SubFolder2.Text = list[SplitNodeCount].ToString();
+                                                            SubFolder2.Target = "SubFolder";
+                                                            SubFolder2.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                            SubFolder2.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                            SubFolder1.ChildNodes.Add(SubFolder2);
+                                                        }
+
+
+                                                    }
+                                                    SplitNodeCount = SplitNodeCount + 1;
+
+                                                    if (SplitNodeCount < list.Count)
+                                                    {
+
+                                                        TreeNode trnode3 = SearchNode(SubFolder2, list[SplitNodeCount].ToString());
+                                                        if (trnode3 != null)
+                                                        {
+                                                            SubFolder3 = trnode3;
+                                                        }
+                                                        else
+                                                        {
+                                                            SubFolder3 = new TreeNode();
+                                                            SubFolder3.Text = list[SplitNodeCount].ToString();
+                                                            SubFolder3.Target = "SubFolder";
+                                                            SubFolder3.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                            SubFolder3.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                            SubFolder2.ChildNodes.Add(SubFolder3);
+                                                        }
+
+
+                                                    }
+                                                    SplitNodeCount = SplitNodeCount + 1;
+
+                                                    if (SplitNodeCount < list.Count)
+                                                    {
+
+                                                        TreeNode trnode4 = SearchNode(SubFolder3, list[SplitNodeCount].ToString());
+                                                        if (trnode4 != null)
+                                                        {
+                                                            SubFolder4 = trnode4;
+                                                        }
+                                                        else
+                                                        {
+                                                            SubFolder4 = new TreeNode();
+                                                            SubFolder4.Text = list[SplitNodeCount].ToString();
+                                                            SubFolder4.Target = "SubFolder";
+                                                            SubFolder4.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                            SubFolder4.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                            SubFolder3.ChildNodes.Add(SubFolder4);
+                                                        }
+
+
+                                                    }
+                                                    SplitNodeCount = SplitNodeCount + 1;
+
+                                                    if (SplitNodeCount < list.Count)
+                                                    {
+
+                                                        TreeNode trnode = SearchNode(SubFolder4, list[SplitNodeCount].ToString());
+                                                        if (trnode != null)
+                                                        {
+                                                            SubFolder5 = trnode;
+                                                        }
+                                                        else
+                                                        {
+                                                            SubFolder5 = new TreeNode();
+                                                            SubFolder5.Text = list[SplitNodeCount].ToString();
+                                                            SubFolder5.Target = "SubFolder";
+                                                            SubFolder5.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                            SubFolder5.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                            SubFolder4.ChildNodes.Add(SubFolder5);
+                                                        }
+                                                    }
+                                                    SplitNodeCount = SplitNodeCount + 1;
+
+                                                    if (SplitNodeCount < list.Count)
+                                                    {
+
+                                                        TreeNode trnode = SearchNode(SubFolder5, list[SplitNodeCount].ToString());
+                                                        if (trnode != null)
+                                                        {
+                                                            SubFolder6 = trnode;
+                                                        }
+                                                        else
+                                                        {
+                                                            SubFolder6 = new TreeNode();
+                                                            SubFolder6.Text = list[SplitNodeCount].ToString();
+                                                            SubFolder6.Target = "SubFolder";
+                                                            SubFolder6.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                            SubFolder6.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                            SubFolder5.ChildNodes.Add(SubFolder6);
+                                                        }
+                                                    }
+
+                                                    SplitNodeCount = SplitNodeCount + 1;
+
+                                                    if (SplitNodeCount < list.Count)
+                                                    {
+
+                                                        TreeNode trnode = SearchNode(SubFolder6, list[SplitNodeCount].ToString());
+                                                        if (trnode != null)
+                                                        {
+                                                            SubFolder7 = trnode;
+                                                        }
+                                                        else
+                                                        {
+                                                            SubFolder7 = new TreeNode();
+                                                            SubFolder7.Text = list[SplitNodeCount].ToString();
+                                                            SubFolder7.Target = "SubFolder";
+                                                            SubFolder7.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                            SubFolder7.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                            SubFolder6.ChildNodes.Add(SubFolder7);
+                                                        }
+                                                    }
+
                                                 }
-                                                else
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                //DataSet dschild = getdata.GetTasksForWorkPackages(child.Parent.Value);
+                                DataSet dschild = getdata.GetTasks_by_WorkpackageOptionUID(new Guid(child.Parent.Value), new Guid(child.Value));
+                                //DataTable dtChild = TreeViewBAL.BL.TreeViewBL.GetData("Select ID,Name from Module where ProjID=" + child.Value);
+                                //DataSet dschild=dbgetdata.
+                                if (dschild.Tables[0].Rows.Count > 0)
+                                {
+                                    PopulateTreeView(dschild, child, child.Value, 4);
+                                }
+                            }
+                        
+                        }
+                        else
+                        {
+                            treeNode.ChildNodes.Add(child);
+                            DataSet dssubmittal = getdata.getDocumentsForTasks(new Guid(child.Value));
+                            if (dssubmittal.Tables[0].Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dssubmittal.Tables[0].Rows.Count; i++)
+                                {
+                                    TreeNode subdoc = new TreeNode
+                                    {
+                                        Text = "<div style='color:#007bff;'>" + dssubmittal.Tables[0].Rows[i]["DocName"].ToString() + "</div>",
+                                        Value = dssubmittal.Tables[0].Rows[i]["DocumentUID"].ToString(),
+                                        Target = "Submittal",
+                                        ToolTip = dssubmittal.Tables[0].Rows[i]["DocName"].ToString(),
+                                        ImageUrl = "~/_assets/images/submittal.png"
+                                    };
+                                    child.ChildNodes.Add(subdoc);
+
+
+                                    int SplitNodeCount = 0;
+                                    DataSet documents = getdata.ActualDocuments_SelectBy_DocumentUID(new Guid(dssubmittal.Tables[0].Rows[i]["DocumentUID"].ToString()));
+                                    for (int k = 0; k < documents.Tables[0].Rows.Count; k++)
+                                    {
+                                        if (documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString() != "")
+                                        {
+                                            SplitNodeCount = 0;
+                                            string[] relativepath = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString().Split('/');
+                                            if (relativepath.Length > 0)
+                                            {
+                                                List<string> list = new List<string>(relativepath);
+                                                TreeNode SubFolder = new TreeNode();
+                                                TreeNode SubFolder1 = new TreeNode();
+                                                TreeNode SubFolder2 = new TreeNode();
+                                                TreeNode SubFolder3 = new TreeNode();
+                                                TreeNode SubFolder4 = new TreeNode();
+                                                TreeNode SubFolder5 = new TreeNode();
+                                                TreeNode SubFolder6 = new TreeNode();
+                                                TreeNode SubFolder7 = new TreeNode();
+                                                if (SplitNodeCount < list.Count)
                                                 {
-                                                    SubFolder = new TreeNode();
-                                                    SubFolder.Text = list[SplitNodeCount].ToString();
-                                                    SubFolder.Target = "Folder";
-                                                    SubFolder.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
-                                                    SubFolder.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
-                                                    SubFolder.ImageUrl = "~/_assets/images/submittal.png";
-                                                    subdoc.ChildNodes.Add(SubFolder);
+
+                                                    //if (!CheckChildNode(subdoc, list[SplitNodeCount].ToString()))
+                                                    //{
+                                                    //    
+                                                    //}
+
+                                                    TreeNode trnode = SearchNode(subdoc, list[SplitNodeCount].ToString());
+                                                    if (trnode != null)
+                                                    {
+                                                        SubFolder = trnode;
+                                                    }
+                                                    else
+                                                    {
+                                                        SubFolder = new TreeNode();
+                                                        SubFolder.Text = list[SplitNodeCount].ToString();
+                                                        SubFolder.Target = "Folder";
+                                                        SubFolder.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                        SubFolder.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                        SubFolder.ImageUrl = "~/_assets/images/submittal.png";
+                                                        subdoc.ChildNodes.Add(SubFolder);
+                                                    }
+
+                                                }
+                                                SplitNodeCount = SplitNodeCount + 1;
+
+                                                if (SplitNodeCount < list.Count)
+                                                {
+
+
+                                                    TreeNode trnode1 = SearchNode(SubFolder, list[SplitNodeCount].ToString());
+                                                    if (trnode1 != null)
+                                                    {
+                                                        SubFolder1 = trnode1;
+                                                    }
+                                                    else
+                                                    {
+                                                        SubFolder1 = new TreeNode();
+                                                        SubFolder1.Text = list[SplitNodeCount].ToString();
+                                                        SubFolder1.Target = "SubFolder";
+                                                        SubFolder1.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                        SubFolder1.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                        SubFolder.ChildNodes.Add(SubFolder1);
+                                                    }
+                                                }
+                                                SplitNodeCount = SplitNodeCount + 1;
+
+                                                if (SplitNodeCount < list.Count)
+                                                {
+
+                                                    TreeNode trnode2 = SearchNode(SubFolder1, list[SplitNodeCount].ToString());
+                                                    if (trnode2 != null)
+                                                    {
+                                                        SubFolder2 = trnode2;
+                                                    }
+                                                    else
+                                                    {
+                                                        SubFolder2 = new TreeNode();
+                                                        SubFolder2.Text = list[SplitNodeCount].ToString();
+                                                        SubFolder2.Target = "SubFolder";
+                                                        SubFolder2.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                        SubFolder2.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                        SubFolder1.ChildNodes.Add(SubFolder2);
+                                                    }
+
+
+                                                }
+                                                SplitNodeCount = SplitNodeCount + 1;
+
+                                                if (SplitNodeCount < list.Count)
+                                                {
+
+                                                    TreeNode trnode3 = SearchNode(SubFolder2, list[SplitNodeCount].ToString());
+                                                    if (trnode3 != null)
+                                                    {
+                                                        SubFolder3 = trnode3;
+                                                    }
+                                                    else
+                                                    {
+                                                        SubFolder3 = new TreeNode();
+                                                        SubFolder3.Text = list[SplitNodeCount].ToString();
+                                                        SubFolder3.Target = "SubFolder";
+                                                        SubFolder3.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                        SubFolder3.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                        SubFolder2.ChildNodes.Add(SubFolder3);
+                                                    }
+
+
+                                                }
+                                                SplitNodeCount = SplitNodeCount + 1;
+
+                                                if (SplitNodeCount < list.Count)
+                                                {
+
+                                                    TreeNode trnode4 = SearchNode(SubFolder3, list[SplitNodeCount].ToString());
+                                                    if (trnode4 != null)
+                                                    {
+                                                        SubFolder4 = trnode4;
+                                                    }
+                                                    else
+                                                    {
+                                                        SubFolder4 = new TreeNode();
+                                                        SubFolder4.Text = list[SplitNodeCount].ToString();
+                                                        SubFolder4.Target = "SubFolder";
+                                                        SubFolder4.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                        SubFolder4.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                        SubFolder3.ChildNodes.Add(SubFolder4);
+                                                    }
+
+
+                                                }
+                                                SplitNodeCount = SplitNodeCount + 1;
+
+                                                if (SplitNodeCount < list.Count)
+                                                {
+
+                                                    TreeNode trnode = SearchNode(SubFolder4, list[SplitNodeCount].ToString());
+                                                    if (trnode != null)
+                                                    {
+                                                        SubFolder5 = trnode;
+                                                    }
+                                                    else
+                                                    {
+                                                        SubFolder5 = new TreeNode();
+                                                        SubFolder5.Text = list[SplitNodeCount].ToString();
+                                                        SubFolder5.Target = "SubFolder";
+                                                        SubFolder5.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                        SubFolder5.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                        SubFolder4.ChildNodes.Add(SubFolder5);
+                                                    }
+                                                }
+                                                SplitNodeCount = SplitNodeCount + 1;
+
+                                                if (SplitNodeCount < list.Count)
+                                                {
+
+                                                    TreeNode trnode = SearchNode(SubFolder5, list[SplitNodeCount].ToString());
+                                                    if (trnode != null)
+                                                    {
+                                                        SubFolder6 = trnode;
+                                                    }
+                                                    else
+                                                    {
+                                                        SubFolder6 = new TreeNode();
+                                                        SubFolder6.Text = list[SplitNodeCount].ToString();
+                                                        SubFolder6.Target = "SubFolder";
+                                                        SubFolder6.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                        SubFolder6.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                        SubFolder5.ChildNodes.Add(SubFolder6);
+                                                    }
+                                                }
+
+                                                SplitNodeCount = SplitNodeCount + 1;
+
+                                                if (SplitNodeCount < list.Count)
+                                                {
+
+                                                    TreeNode trnode = SearchNode(SubFolder6, list[SplitNodeCount].ToString());
+                                                    if (trnode != null)
+                                                    {
+                                                        SubFolder7 = trnode;
+                                                    }
+                                                    else
+                                                    {
+                                                        SubFolder7 = new TreeNode();
+                                                        SubFolder7.Text = list[SplitNodeCount].ToString();
+                                                        SubFolder7.Target = "SubFolder";
+                                                        SubFolder7.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
+                                                        SubFolder7.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
+                                                        SubFolder6.ChildNodes.Add(SubFolder7);
+                                                    }
                                                 }
 
                                             }
-                                            SplitNodeCount = SplitNodeCount + 1;
-
-                                            if (SplitNodeCount < list.Count)
-                                            {
-
-
-                                                TreeNode trnode1 = SearchNode(SubFolder, list[SplitNodeCount].ToString());
-                                                if (trnode1 != null)
-                                                {
-                                                    SubFolder1 = trnode1;
-                                                }
-                                                else
-                                                {
-                                                    SubFolder1 = new TreeNode();
-                                                    SubFolder1.Text = list[SplitNodeCount].ToString();
-                                                    SubFolder1.Target = "SubFolder";
-                                                    SubFolder1.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
-                                                    SubFolder1.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
-                                                    SubFolder.ChildNodes.Add(SubFolder1);
-                                                }
-                                            }
-                                            SplitNodeCount = SplitNodeCount + 1;
-
-                                            if (SplitNodeCount < list.Count)
-                                            {
-
-                                                TreeNode trnode2 = SearchNode(SubFolder1, list[SplitNodeCount].ToString());
-                                                if (trnode2 != null)
-                                                {
-                                                    SubFolder2 = trnode2;
-                                                }
-                                                else
-                                                {
-                                                    SubFolder2 = new TreeNode();
-                                                    SubFolder2.Text = list[SplitNodeCount].ToString();
-                                                    SubFolder2.Target = "SubFolder";
-                                                    SubFolder2.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
-                                                    SubFolder2.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
-                                                    SubFolder1.ChildNodes.Add(SubFolder2);
-                                                }
-
-
-                                            }
-                                            SplitNodeCount = SplitNodeCount + 1;
-
-                                            if (SplitNodeCount < list.Count)
-                                            {
-
-                                                TreeNode trnode3 = SearchNode(SubFolder2, list[SplitNodeCount].ToString());
-                                                if (trnode3 != null)
-                                                {
-                                                    SubFolder3 = trnode3;
-                                                }
-                                                else
-                                                {
-                                                    SubFolder3 = new TreeNode();
-                                                    SubFolder3.Text = list[SplitNodeCount].ToString();
-                                                    SubFolder3.Target = "SubFolder";
-                                                    SubFolder3.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
-                                                    SubFolder3.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
-                                                    SubFolder2.ChildNodes.Add(SubFolder3);
-                                                }
-
-
-                                            }
-                                            SplitNodeCount = SplitNodeCount + 1;
-
-                                            if (SplitNodeCount < list.Count)
-                                            {
-
-                                                TreeNode trnode4 = SearchNode(SubFolder3, list[SplitNodeCount].ToString());
-                                                if (trnode4 != null)
-                                                {
-                                                    SubFolder4 = trnode4;
-                                                }
-                                                else
-                                                {
-                                                    SubFolder4 = new TreeNode();
-                                                    SubFolder4.Text = list[SplitNodeCount].ToString();
-                                                    SubFolder4.Target = "SubFolder";
-                                                    SubFolder4.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
-                                                    SubFolder4.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
-                                                    SubFolder3.ChildNodes.Add(SubFolder4);
-                                                }
-
-
-                                            }
-                                            SplitNodeCount = SplitNodeCount + 1;
-
-                                            if (SplitNodeCount < list.Count)
-                                            {
-
-                                                TreeNode trnode = SearchNode(SubFolder4, list[SplitNodeCount].ToString());
-                                                if (trnode != null)
-                                                {
-                                                    SubFolder5 = trnode;
-                                                }
-                                                else
-                                                {
-                                                    SubFolder5 = new TreeNode();
-                                                    SubFolder5.Text = list[SplitNodeCount].ToString();
-                                                    SubFolder5.Target = "SubFolder";
-                                                    SubFolder5.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
-                                                    SubFolder5.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
-                                                    SubFolder4.ChildNodes.Add(SubFolder5);
-                                                }
-                                            }
-                                            SplitNodeCount = SplitNodeCount + 1;
-
-                                            if (SplitNodeCount < list.Count)
-                                            {
-
-                                                TreeNode trnode = SearchNode(SubFolder5, list[SplitNodeCount].ToString());
-                                                if (trnode != null)
-                                                {
-                                                    SubFolder6 = trnode;
-                                                }
-                                                else
-                                                {
-                                                    SubFolder6 = new TreeNode();
-                                                    SubFolder6.Text = list[SplitNodeCount].ToString();
-                                                    SubFolder6.Target = "SubFolder";
-                                                    SubFolder6.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
-                                                    SubFolder6.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
-                                                    SubFolder5.ChildNodes.Add(SubFolder6);
-                                                }
-                                            }
-
-                                            SplitNodeCount = SplitNodeCount + 1;
-
-                                            if (SplitNodeCount < list.Count)
-                                            {
-
-                                                TreeNode trnode = SearchNode(SubFolder6, list[SplitNodeCount].ToString());
-                                                if (trnode != null)
-                                                {
-                                                    SubFolder7 = trnode;
-                                                }
-                                                else
-                                                {
-                                                    SubFolder7 = new TreeNode();
-                                                    SubFolder7.Text = list[SplitNodeCount].ToString();
-                                                    SubFolder7.Target = "SubFolder";
-                                                    SubFolder7.Value = documents.Tables[0].Rows[k]["ActualDocumentUID"].ToString();
-                                                    SubFolder7.ToolTip = documents.Tables[0].Rows[k]["ActualDocument_RelativePath"].ToString();// list[SplitNodeCount].ToString();
-                                                    SubFolder6.ChildNodes.Add(SubFolder7);
-                                                }
-                                            }
-
                                         }
                                     }
                                 }
+
                             }
 
-                        }
-
-                        //DataSet dschild = getdata.GetTasksForWorkPackages(child.Parent.Value);
-                        DataSet dschild = getdata.GetTasks_by_WorkpackageOptionUID(new Guid(child.Parent.Value), new Guid(child.Value));
-                        //DataTable dtChild = TreeViewBAL.BL.TreeViewBL.GetData("Select ID,Name from Module where ProjID=" + child.Value);
-                        //DataSet dschild=dbgetdata.
-                        if (dschild.Tables[0].Rows.Count > 0)
-                        {
-                            PopulateTreeView(dschild, child, child.Value, 4);
+                            //DataSet dschild = getdata.GetTasksForWorkPackages(child.Parent.Value);
+                            DataSet dschild = getdata.GetTasks_by_WorkpackageOptionUID(new Guid(child.Parent.Value), new Guid(child.Value));
+                            //DataTable dtChild = TreeViewBAL.BL.TreeViewBL.GetData("Select ID,Name from Module where ProjID=" + child.Value);
+                            //DataSet dschild=dbgetdata.
+                            if (dschild.Tables[0].Rows.Count > 0)
+                            {
+                                PopulateTreeView(dschild, child, child.Value, 4);
+                            }
                         }
 
                     }
@@ -2022,9 +2261,9 @@ namespace ProjectManager._content_pages.documents
                 //GrdTreeView.DataSource = ds;
                 //GrdTreeView.DataBind();
                 //DataSet ds = getdata.GetWorkPackages_By_WorkPackageUID(new Guid(TreeView1.SelectedNode.Value));
-                DataSet ds = getdata.GetSelectedOption_By_WorkpackageUID(new Guid(TreeView1.SelectedNode.Value));
-                GrdOptions.DataSource = ds;
-                GrdOptions.DataBind();
+               // DataSet ds = getdata.GetSelectedOption_By_WorkpackageUID(new Guid(TreeView1.SelectedNode.Value));
+              //  GrdOptions.DataSource = ds;
+              //  GrdOptions.DataBind();
                 DocumentGrid.Visible = false;
                 GrdNewDocument.Visible = true;
                 GrdActualDocuments_new.Visible = false;
@@ -2605,7 +2844,7 @@ namespace ProjectManager._content_pages.documents
                     bool isset = getdata.checkdbsyncflag(new Guid(DocumentUID), "Documents", "DocumentUID");
                     if (isset == true)
                     {
-                        e.Row.BackColor = System.Drawing.Color.Orange;
+                        e.Row.BackColor = System.Drawing.Color.White;
                     }
                     else
                     {
@@ -3074,7 +3313,7 @@ namespace ProjectManager._content_pages.documents
                                 {
                                     if (getdata.checkDocumentsFlagdbsync(new Guid(ActualDocumentUID)) == 1)
                                     {
-                                        e.Row.BackColor = System.Drawing.Color.Orange;
+                                        e.Row.BackColor = System.Drawing.Color.White;
                                     }
                                     else
                                     {
@@ -3670,7 +3909,7 @@ namespace ProjectManager._content_pages.documents
                                     {
                                         if (getdata.checkDocumentsFlagdbsync(new Guid(ActualDocumentUID)) == 1)
                                         {
-                                            e.Row.BackColor = System.Drawing.Color.Orange;
+                                            e.Row.BackColor = System.Drawing.Color.White;
                                         }
                                         else
                                         {
@@ -4358,7 +4597,7 @@ namespace ProjectManager._content_pages.documents
                             {
                                 if (getdata.checkDocumentsFlagdbsync(new Guid(ActualDocumentUID)) == 1)
                                 {
-                                    e.Row.BackColor = System.Drawing.Color.Orange;
+                                    e.Row.BackColor = System.Drawing.Color.White;
                                 }
                                 else
                                 {
@@ -5091,7 +5330,7 @@ namespace ProjectManager._content_pages.documents
 
         private void BindTreeView_GeneralDocuments()
         {
-            if(WebConfigurationManager.AppSettings["Domain"] == "ONTB")
+            if(WebConfigurationManager.AppSettings["Domain"] == "ONTB" && Session["IsContractor"].ToString() != "Y")
             { 
             TreeView3.Nodes.Clear();
             DataSet ds = GD.GetGeneralDocumentStructure_TopLevel();
@@ -5594,7 +5833,7 @@ namespace ProjectManager._content_pages.documents
                                     {
                                         if (getdata.checkDocumentsFlagdbsync(new Guid(ActualDocumentUID)) == 1)
                                         {
-                                            e.Row.BackColor = System.Drawing.Color.Orange;
+                                            e.Row.BackColor = System.Drawing.Color.White;
                                         }
                                         else
                                         {
@@ -5668,7 +5907,7 @@ namespace ProjectManager._content_pages.documents
                     bool isset = getdata.checkdbsyncflag(new Guid(DocumentUID), "Documents", "DocumentUID");
                     if (isset == true)
                     {
-                        e.Row.BackColor = System.Drawing.Color.Orange;
+                        e.Row.BackColor = System.Drawing.Color.White;
                     }
                     else
                     {

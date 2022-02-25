@@ -41,6 +41,7 @@ namespace ProjectManagementTool._modal_pages
                             DDlProject_SelectedIndexChanged(sender, e);
                             LoadTaskDetails();
                             parenttask.Visible = false;
+                            LnkChangeItem.Visible = false;
                         }
                         else if (Request.QueryString["type"] == "add")
                         {
@@ -55,7 +56,7 @@ namespace ProjectManagementTool._modal_pages
                         {
                             lblActivityName.Visible = true;
                             LinkBOQData.Visible = false;
-                            LnkChangeItem.Visible = true;
+                           // LnkChangeItem.Visible = true;
                             txtquantity.Disabled = true;
                             txtGST.Disabled = true;
                             txtprice.Disabled = true;

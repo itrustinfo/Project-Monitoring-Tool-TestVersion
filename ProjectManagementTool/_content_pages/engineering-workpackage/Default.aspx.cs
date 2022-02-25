@@ -293,7 +293,7 @@ namespace ProjectManager._content_pages.work_packages
                 //        dsworkPackage = dbgetdata.GetWorkPackages_ForUser_by_ProjectUID(new Guid(Session["UserUID"].ToString()), new Guid(child.Value));
                 //    }
 
-                    
+
 
                 //    if (dsworkPackage.Tables[0].Rows.Count > 0)
                 //    {
@@ -301,6 +301,7 @@ namespace ProjectManager._content_pages.work_packages
                 //    }
                 //}
                 //else 
+                //child.SelectAction = TreeNodeSelectAction.None;
                 if (Level == 2)
                 {
                     //treeNode.ChildNodes.Add(child);
@@ -315,15 +316,39 @@ namespace ProjectManager._content_pages.work_packages
                 }
                 else if (Level == 3)
                 {
-                    treeNode.ChildNodes.Add(child);
-                    DataSet dschild = dbgetdata.GetTasks_by_WorkpackageOptionUID(new Guid(child.Parent.Value), new Guid(child.Value));
-                    //DataSet dschild = dbgetdata.GetTasksForWorkPackages(child.Parent.Value);
-                    //DataSet dschild = gettk.GetTasks_by_Workpackage_Option(new Guid(child.Value), new Guid(child.Parent.Value));
-                    //DataTable dtChild = TreeViewBAL.BL.TreeViewBL.GetData("Select ID,Name from Module where ProjID=" + child.Value);
-                    //DataSet dschild=dbgetdata.
-                    if (dschild.Tables[0].Rows.Count > 0)
+                    if (Session["IsContractor"].ToString() == "Y")
                     {
-                        PopulateTreeView(dschild, child, child.Value, 4);
+                       if( row["WorkpackageSelectedOption_Name"].ToString() != "Design")
+                       {
+                            if (row["WorkpackageSelectedOption_Name"].ToString() == "PMC")
+                            {
+                                child.Text = "Construction & Execution";
+                            }
+
+                            treeNode.ChildNodes.Add(child);
+                            DataSet dschild = dbgetdata.GetTasks_by_WorkpackageOptionUID(new Guid(child.Parent.Value), new Guid(child.Value));
+                            //DataSet dschild = dbgetdata.GetTasksForWorkPackages(child.Parent.Value);
+                            //DataSet dschild = gettk.GetTasks_by_Workpackage_Option(new Guid(child.Value), new Guid(child.Parent.Value));
+                            //DataTable dtChild = TreeViewBAL.BL.TreeViewBL.GetData("Select ID,Name from Module where ProjID=" + child.Value);
+                            //DataSet dschild=dbgetdata.
+                            if (dschild.Tables[0].Rows.Count > 0)
+                            {
+                                PopulateTreeView(dschild, child, child.Value, 4);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        treeNode.ChildNodes.Add(child);
+                        DataSet dschild = dbgetdata.GetTasks_by_WorkpackageOptionUID(new Guid(child.Parent.Value), new Guid(child.Value));
+                        //DataSet dschild = dbgetdata.GetTasksForWorkPackages(child.Parent.Value);
+                        //DataSet dschild = gettk.GetTasks_by_Workpackage_Option(new Guid(child.Value), new Guid(child.Parent.Value));
+                        //DataTable dtChild = TreeViewBAL.BL.TreeViewBL.GetData("Select ID,Name from Module where ProjID=" + child.Value);
+                        //DataSet dschild=dbgetdata.
+                        if (dschild.Tables[0].Rows.Count > 0)
+                        {
+                            PopulateTreeView(dschild, child, child.Value, 4);
+                        }
                     }
 
                 }
@@ -373,7 +398,7 @@ namespace ProjectManager._content_pages.work_packages
                     }
                 }
             }
-
+           
         }
 
         private void LoadProjectDetails(string ProjectUID)
@@ -483,11 +508,12 @@ namespace ProjectManager._content_pages.work_packages
                 UploadSitePhotograph.HRef = "/_modal_pages/upload-sitephotograph.aspx?PrjUID=" + DDlProject.SelectedValue + "&WorkPackage=" + TreeView1.SelectedNode.Value;
                 ViewSitePhotograph.HRef = "/_modal_pages/view-sitephotographs.aspx?PrjUID=" + DDlProject.SelectedValue + "&WorkPackage=" + TreeView1.SelectedNode.Value;
 
-                ActivityHeading.Text = "Option";
+                //ActivityHeading.Text = "Option";
                 //DataSet ds = gettk.GetTasks_by_WorkPackage(TreeView1.SelectedNode.Value);
                 //GrdTreeView.DataSource = ds;
                 //GrdTreeView.DataBind();
-                GrdOptions.Visible = true;
+                GrdOptions.Visible = false;
+
                 DataSet ds = dbgetdata.GetSelectedOption_By_WorkpackageUID(new Guid(TreeView1.SelectedNode.Value));
                 //DataSet ds = dbgetdata.GetWorkPackages_By_WorkPackageUID(new Guid(TreeView1.SelectedNode.Value));
                 GrdOptions.DataSource = ds;
@@ -1131,10 +1157,10 @@ namespace ProjectManager._content_pages.work_packages
                     MeasurementDetails.Visible = true;
                     LblMeasurementUnit.Text = ds.Rows[0]["UnitforProgress"].ToString();
                     LblMeasurementTotalQuantity.Text= ds.Rows[0]["UnitQuantity"].ToString();
-                    double CumulativeQuan = dbgetdata.GetMeasurementCumulativeQuantity(new Guid(TaskUID));
-                    if (CumulativeQuan !=null)
+                    //double CumulativeQuan = dbgetdata.GetMeasurementCumulativeQuantity(new Guid(TaskUID));
+                    if (ds.Rows[0]["CumulativeAchvQuantity"] != DBNull.Value)
                     {
-                        LblMeasurementCumulativeQuantity.Text = Convert.ToString(CumulativeQuan);
+                        LblMeasurementCumulativeQuantity.Text = ds.Rows[0]["CumulativeAchvQuantity"].ToString();
                     }
                     else
                     {

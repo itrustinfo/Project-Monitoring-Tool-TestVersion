@@ -318,7 +318,7 @@
 		    <div class="modal-content">
 			    <div class="modal-header">
 				    <h5 class="modal-title">RA Bill Number</h5>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button" onclick="javascript:closepopup();"><span aria-hidden="true">&times;</span></button>
 			    </div>
 			    <div class="modal-body">
                     <iframe class="border-0 w-100" style="height:450px;" loading="lazy"></iframe>

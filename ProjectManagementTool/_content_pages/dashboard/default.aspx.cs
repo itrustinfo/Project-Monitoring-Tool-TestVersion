@@ -624,7 +624,7 @@ namespace ProjectManager._content_pages
                 google.charts.setOnLoadCallback(drawBasic);
                 function drawBasic() {
                 var data = google.visualization.arrayToDataTable([
-                ['Task', 'Target', 'Culumative'],");
+                ['Task', 'Target', 'Cumulative achieved'],");
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
                         string tName = ds.Tables[0].Rows[i]["Name"].ToString();

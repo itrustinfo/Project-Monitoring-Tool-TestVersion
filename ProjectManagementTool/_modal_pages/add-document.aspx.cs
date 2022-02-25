@@ -156,10 +156,17 @@ namespace ProjectManager._modal_pages
             RBLOriginator.DataValueField = "Originator_Name";
             RBLOriginator.DataSource = ds;
             RBLOriginator.DataBind();
+            // added by zuber on 22/02/2022 for KIADB
+          //  RBLOriginator.Items.Insert(0, new ListItem(getdata.GetClientCodebyWorkpackageUID(new Guid(Request.QueryString["wUID"].ToString())), getdata.GetClientCodebyWorkpackageUID(new Guid(Request.QueryString["wUID"].ToString()))));
+
+
             if (ds.Tables[0].Rows.Count > 0)
             {
                 RBLOriginator.Items[0].Selected = true;
             }
+          
+           
+
         }
 
         private void BindDocuments()

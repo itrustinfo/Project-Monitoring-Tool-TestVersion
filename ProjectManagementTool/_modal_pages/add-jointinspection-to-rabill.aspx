@@ -6,7 +6,19 @@
                 return true;
             }
             return false;
-    }
+        }
+
+         function ShowProgressBar(status) {
+               if (status == "true") {
+               document.getElementById('dvProgressBar').style.visibility = 'visible';
+
+            }
+                
+            
+            else {
+                document.getElementById('dvProgressBar').style.visibility = 'hidden';
+            }
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="modal_master_body" runat="server">
@@ -93,9 +105,12 @@
                     </div>
                 </div>
             </div>
+           <div id="dvProgressBar" style=" text-align:center; position:relative; visibility:hidden;" >
+                     <img src="../_assets/images/progress.gif" width="40" alt="loading"  /> <span style="color:#006699; font-weight:bold;">Processing please wait...</span>
+                     </div> 
         <div class="modal-footer">
                     <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
-            <asp:Button ID="btnAdd" runat="server" CssClass="btn btn-primary" Text="Submit" OnClick="btnAdd_Click" />
+            <asp:Button ID="btnAdd" runat="server" CssClass="btn btn-primary" Text="Submit" OnClientClick="ShowProgressBar('true')" OnClick="btnAdd_Click" />
                     <%--<button type="button" class="btn btn-primary">Save changes</button>--%>
                 </div>
         </form>

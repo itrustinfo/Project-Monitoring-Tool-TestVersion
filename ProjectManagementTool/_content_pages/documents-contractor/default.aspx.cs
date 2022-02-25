@@ -30,7 +30,9 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                         GrdDocuments.DataBind();
                         LblDocumentHeading.Text = "Document List";
                         lblTotalcount.Visible = false;
-                      //  lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
+                        GrdDocuments.Columns[10].Visible = false;
+                        GrdDocuments.Columns[11].Visible = false;
+                        //  lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                         //if (GrdDocuments.Rows.Count > 15)
                         //{
                         //    ScriptManager.RegisterStartupScript(Page, this.GetType(), "Key", "<script>MakeStaticHeader('" + GrdDocuments.ClientID + "', 700, 1300 , 45 ,true); </script>", false);
@@ -43,6 +45,17 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             GrdDocuments.DataSource = getdt.GetDashboardContractotDocsSubmitted_Details(new Guid(Request.QueryString["PrjUID"]));
                             GrdDocuments.DataBind();
                             LblDocumentHeading.Text = "Document List for Contractor -> ONTB";
+                            if (Session["IsContractor"].ToString() == "Y")
+                            {
+                                GrdDocuments.Columns[10].Visible = false;
+                                GrdDocuments.Columns[11].Visible = false;
+                            }
+                            else
+                            {
+                                GrdDocuments.Columns[10].Visible = true;
+                                GrdDocuments.Columns[11].Visible = true;
+                                btnSubmit.Visible = true;
+                            }
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                             if (GrdDocuments.Rows.Count > 15)
                             {
@@ -55,6 +68,8 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             GrdDocuments.DataBind();
                             LblDocumentHeading.Text = "Document List for ONTB -> Contractor";
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
+                            GrdDocuments.Columns[10].Visible = false;
+                            GrdDocuments.Columns[11].Visible = false;
                             if (GrdDocuments.Rows.Count > 15)
                             {
                                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "Key", "<script>MakeStaticHeader('" + GrdDocuments.ClientID + "', 700, 1300 , 45 ,true); </script>", false);
