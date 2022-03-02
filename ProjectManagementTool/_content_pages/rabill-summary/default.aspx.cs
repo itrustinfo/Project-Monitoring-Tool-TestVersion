@@ -283,7 +283,7 @@ namespace ProjectManagementTool._content_pages.rabill_summary
                     {
                         if (dbgetdata.checkRABillsSynced(new Guid(RABillUID)) > 0)
                         {
-                            e.Row.BackColor = System.Drawing.Color.White;
+                            e.Row.BackColor = System.Drawing.Color.LightYellow;
                         }
                         else
                         {

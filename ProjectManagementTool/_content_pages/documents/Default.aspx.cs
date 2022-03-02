@@ -2844,7 +2844,7 @@ namespace ProjectManager._content_pages.documents
                     bool isset = getdata.checkdbsyncflag(new Guid(DocumentUID), "Documents", "DocumentUID");
                     if (isset == true)
                     {
-                        e.Row.BackColor = System.Drawing.Color.White;
+                        e.Row.BackColor = System.Drawing.Color.LightYellow;
                     }
                     else
                     {
@@ -3313,7 +3313,7 @@ namespace ProjectManager._content_pages.documents
                                 {
                                     if (getdata.checkDocumentsFlagdbsync(new Guid(ActualDocumentUID)) == 1)
                                     {
-                                        e.Row.BackColor = System.Drawing.Color.White;
+                                        e.Row.BackColor = System.Drawing.Color.LightYellow;
                                     }
                                     else
                                     {
@@ -3909,7 +3909,7 @@ namespace ProjectManager._content_pages.documents
                                     {
                                         if (getdata.checkDocumentsFlagdbsync(new Guid(ActualDocumentUID)) == 1)
                                         {
-                                            e.Row.BackColor = System.Drawing.Color.White;
+                                            e.Row.BackColor = System.Drawing.Color.LightYellow;
                                         }
                                         else
                                         {
@@ -4597,7 +4597,7 @@ namespace ProjectManager._content_pages.documents
                             {
                                 if (getdata.checkDocumentsFlagdbsync(new Guid(ActualDocumentUID)) == 1)
                                 {
-                                    e.Row.BackColor = System.Drawing.Color.White;
+                                    e.Row.BackColor = System.Drawing.Color.LightYellow;
                                 }
                                 else
                                 {
@@ -5833,7 +5833,7 @@ namespace ProjectManager._content_pages.documents
                                     {
                                         if (getdata.checkDocumentsFlagdbsync(new Guid(ActualDocumentUID)) == 1)
                                         {
-                                            e.Row.BackColor = System.Drawing.Color.White;
+                                            e.Row.BackColor = System.Drawing.Color.LightYellow;
                                         }
                                         else
                                         {
@@ -5907,7 +5907,7 @@ namespace ProjectManager._content_pages.documents
                     bool isset = getdata.checkdbsyncflag(new Guid(DocumentUID), "Documents", "DocumentUID");
                     if (isset == true)
                     {
-                        e.Row.BackColor = System.Drawing.Color.White;
+                        e.Row.BackColor = System.Drawing.Color.LightYellow;
                     }
                     else
                     {

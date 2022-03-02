@@ -602,10 +602,13 @@ namespace ProjectManagementTool._modal_pages
             RBLOriginator.DataValueField = "Originator_Name";
             RBLOriginator.DataSource = ds;
             RBLOriginator.DataBind();
-            // added by zuber on 22/02/2022 for KIADB
-         //   string[] selectedValue = Session["Project_Workpackage"].ToString().Split('_');
-          //  RBLOriginator.Items.Insert(0, new ListItem(getdata.GetClientCodebyWorkpackageUID(new Guid(selectedValue[1])), getdata.GetClientCodebyWorkpackageUID(new Guid(selectedValue[1]))));
-
+            // added by zuber on 02/03/2022 for KIADB
+            string wkpgUId = getdata.GetWkpkgUIDbyDocUID(new Guid(Request.QueryString["DocID"].ToString()));
+            if (getdata.GetClientCodebyWorkpackageUID(new Guid(wkpgUId)) != "")
+            {
+                RBLOriginator.Items.Insert(0, new ListItem(getdata.GetClientCodebyWorkpackageUID(new Guid(wkpgUId)), getdata.GetClientCodebyWorkpackageUID(new Guid(wkpgUId))));
+            }
+            //
             if (ds.Tables[0].Rows.Count > 0)
             {
                 RBLOriginator.Items[0].Selected = true;

@@ -198,7 +198,7 @@ namespace ProjectManagementTool._modal_pages
                     {
                         if (e.Row.Cells[7].Text == "N" || e.Row.Cells[8].Text == "N")
                         {
-                            e.Row.BackColor = System.Drawing.Color.White;
+                            e.Row.BackColor = System.Drawing.Color.LightYellow;
                         }
                         else
                         {

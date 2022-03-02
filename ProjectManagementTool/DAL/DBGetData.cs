@@ -18685,5 +18685,28 @@ namespace ProjectManager.DAL
             return ds;
         }
 
+        // added on 02/03/2022
+        public string GetWkpkgUIDbyDocUID(Guid ActualDocumentUID)
+        {
+            string UserUID = "";
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+
+                if (con.State == ConnectionState.Closed) con.Open();
+                SqlCommand cmd = new SqlCommand("usp_GetWkpkgUIDbyDocUID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ActualDocumentUID", ActualDocumentUID);
+                UserUID = (string)cmd.ExecuteScalar();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                UserUID = "Error : " + ex.Message;
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+            return UserUID;
+        }
+
     }
 }

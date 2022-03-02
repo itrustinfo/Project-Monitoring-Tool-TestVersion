@@ -407,7 +407,7 @@ namespace ProjectManagementTool._content_pages.issues
                     {
                         if (getdt.checkIssuesSynced(new Guid(e.Row.Cells[12].Text)) > 0)
                         {
-                            e.Row.BackColor = System.Drawing.Color.White;
+                            e.Row.BackColor = System.Drawing.Color.LightYellow;
                         }
                         else
                         {
