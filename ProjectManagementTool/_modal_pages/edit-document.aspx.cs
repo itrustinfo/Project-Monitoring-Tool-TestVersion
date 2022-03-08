@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -131,12 +132,45 @@ namespace ProjectManagementTool._modal_pages
 
         private void BindOriginator()
         {
-            DataSet ds = getdata.GetOriginatorMaster();
-            RBLOriginator.DataTextField = "Originator_Name";
-            RBLOriginator.DataValueField = "Originator_Name";
-            RBLOriginator.DataSource = ds;
-            RBLOriginator.DataBind();
+            if (WebConfigurationManager.AppSettings["Domain"] == "ONTB" || WebConfigurationManager.AppSettings["Domain"] == "LNT" || WebConfigurationManager.AppSettings["Domain"] == "Suez")
+            {
+                RBLOriginator.Items.Insert(0, new ListItem("Contractor", "Contractor"));
+                RBLOriginator.Items.Insert(1, new ListItem("ONTB", "ONTB"));
+                RBLOriginator.Items.Insert(2, new ListItem("BWSSB", "BWSSB"));
+                RBLOriginator.Items.Insert(3, new ListItem("Others", "Others"));
+                
+            }
+            else
+            {
+                DataSet ds = getdata.GetOriginatorMaster();
+                RBLOriginator.DataTextField = "Originator_Name";
+                RBLOriginator.DataValueField = "Originator_Name";
+                RBLOriginator.DataSource = ds;
+                RBLOriginator.DataBind();
+                // added by zuber on 22/02/2022 for KIADB
+                if (getdata.GetClientCodebyWorkpackageUID(new Guid(Request.QueryString["wUID"].ToString())) != "")
+                {
+                    RBLOriginator.Items.Insert(0, new ListItem(getdata.GetClientCodebyWorkpackageUID(new Guid(Request.QueryString["wUID"].ToString())), getdata.GetClientCodebyWorkpackageUID(new Guid(Request.QueryString["wUID"].ToString()))));
+                }
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    RBLOriginator.Items[0].Selected = true;
+                }
+            }
+
+
+
+
         }
+        //private void BindOriginator()
+        //{
+        //    DataSet ds = getdata.GetOriginatorMaster();
+        //    RBLOriginator.DataTextField = "Originator_Name";
+        //    RBLOriginator.DataValueField = "Originator_Name";
+        //    RBLOriginator.DataSource = ds;
+        //    RBLOriginator.DataBind();
+        //}
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {

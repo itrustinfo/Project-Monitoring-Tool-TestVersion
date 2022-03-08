@@ -1,0 +1,687 @@
+------- table changes for flow changes-----
+1) DocumentFlowDisplayMaster   - DONE
+2) Documents Table (Submittal table) -- DONE
+3) Actualdocumenst table( Documents)   - 
+4) Documentflow data (not to be changed now)
+
+5) USerTypeStatus...
+
+7) New tables to be created (Holiday list table)
+6) Console program for bypass users
+
+
+
+table creation  - 5 Hours
+submittals ---- display ..... 10 hours
+actual documents === 10 hours
+documents status - 5 hrs
+storing mails for netxt user / add status for each user should work = 4 hrs
+showing the pending documents - 3 hrs
+
+
+---- table chnages-------- added on 03/03/2022
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep7_DisplayName	varchar(75)	NULL ,FlowStep7_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep8_DisplayName	varchar(75)	NULL ,FlowStep8_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep9_DisplayName	varchar(75)	NULL ,FlowStep9_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep10_DisplayName	varchar(75)	NULL ,FlowStep10_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep11_DisplayName	varchar(75)	NULL ,FlowStep11_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep12_DisplayName	varchar(75)	NULL ,FlowStep12_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep13_DisplayName	varchar(75)	NULL ,FlowStep13_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep14_DisplayName	varchar(75)	NULL ,FlowStep14_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep15_DisplayName	varchar(75)	NULL ,FlowStep15_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep16_DisplayName	varchar(75)	NULL ,FlowStep16_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep17_DisplayName	varchar(75)	NULL ,FlowStep17_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep18_DisplayName	varchar(75)	NULL ,FlowStep18_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep19_DisplayName	varchar(75)	NULL ,FlowStep19_Duration int NULL
+Alter table [dbo].[DocumentFlowDisplayMaster] Add FlowStep20_DisplayName	varchar(75)	NULL ,FlowStep20_Duration int NULL
+
+
+---------------
+ALTER Table [dbo].[Documents] ADD FlowStep6_UserUID	uniqueidentifier NULL,FlowStep6_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep7_UserUID	uniqueidentifier NULL,FlowStep7_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep8_UserUID	uniqueidentifier NULL,FlowStep8_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep9_UserUID	uniqueidentifier NULL,FlowStep9_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep10_UserUID	uniqueidentifier NULL,FlowStep10_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep11_UserUID	uniqueidentifier NULL,FlowStep11_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep12_UserUID	uniqueidentifier NULL,FlowStep12_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep13_UserUID	uniqueidentifier NULL,FlowStep13_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep14_UserUID	uniqueidentifier NULL,FlowStep14_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep15_UserUID	uniqueidentifier NULL,FlowStep15_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep16_UserUID	uniqueidentifier NULL,FlowStep16_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep17_UserUID	uniqueidentifier NULL,FlowStep17_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep18_UserUID	uniqueidentifier NULL,FlowStep18_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep19_UserUID	uniqueidentifier NULL,FlowStep19_TargetDate	datetime NULL
+ALTER Table [dbo].[Documents] ADD FlowStep20_UserUID	uniqueidentifier NULL,FlowStep20_TargetDate	datetime NULL
+
+-----
+
+Alter Table [dbo].[ActualDocuments] add FlowStep6_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep7_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep8_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep9_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep10_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep11_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep12_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep13_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep14_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep15_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep16_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep17_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep18_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep19_TargetDate datetime NULL
+Alter Table [dbo].[ActualDocuments] add FlowStep20_TargetDate datetime NULL
+
+-----------
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[HolidayList](
+	[SrNo] [int] IDENTITY(1,1) NOT NULL,
+	[HolidayDate] [date] NULL,
+	[CreatedDate] [datetime] NULL,
+ CONSTRAINT [PK_HolidayList] PRIMARY KEY CLUSTERED 
+(
+	[SrNo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+--- added on 04/03/2022---------
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[DoumentMaster_Insert_or_Update_FlowAll]
+@DocumentUID uniqueidentifier,
+@WorkPackageUID uniqueidentifier,
+@ProjectUID uniqueidentifier,
+@TaskUID uniqueidentifier,
+@DocName varchar(500),
+@Doc_Category varchar(50),
+@Doc_RefNumber varchar(50),
+@Doc_Type varchar(50),
+@Doc_Budget float,
+@FlowUID uniqueidentifier,
+@Flow_StartDate datetime,
+@FlowStep1_UserUID uniqueidentifier,
+@FlowStep1_TargetDate datetime,
+@FlowStep2_UserUID uniqueidentifier,
+@FlowStep2_TargetDate datetime,
+@FlowStep3_UserUID uniqueidentifier,
+@FlowStep3_TargetDate datetime,
+@FlowStep4_UserUID uniqueidentifier,
+@FlowStep4_TargetDate datetime,
+@FlowStep5_UserUID uniqueidentifier,
+@FlowStep5_TargetDate datetime,
+@FlowStep6_UserUID uniqueidentifier,
+@FlowStep6_TargetDate datetime,
+@FlowStep7_UserUID uniqueidentifier =null,
+@FlowStep7_TargetDate datetime =null,
+@FlowStep8_UserUID uniqueidentifier =null,
+@FlowStep8_TargetDate datetime =null,
+@FlowStep9_UserUID uniqueidentifier =null,
+@FlowStep9_TargetDate datetime =null,
+@FlowStep10_UserUID uniqueidentifier =null,
+@FlowStep10_TargetDate datetime =null,
+@FlowStep11_UserUID uniqueidentifier =null,
+@FlowStep11_TargetDate datetime =null,
+@FlowStep12_UserUID uniqueidentifier =null,
+@FlowStep12_TargetDate datetime =null,
+@FlowStep13_UserUID uniqueidentifier =null,
+@FlowStep13_TargetDate datetime =null,
+@FlowStep14_UserUID uniqueidentifier =null,
+@FlowStep14_TargetDate datetime =null,
+@FlowStep15_UserUID uniqueidentifier =null,
+@FlowStep15_TargetDate datetime =null,
+@FlowStep16_UserUID uniqueidentifier =null,
+@FlowStep16_TargetDate datetime =null,
+@FlowStep17_UserUID uniqueidentifier =null,
+@FlowStep17_TargetDate datetime =null,
+@FlowStep18_UserUID uniqueidentifier =null,
+@FlowStep18_TargetDate datetime =null,
+@FlowStep19_UserUID uniqueidentifier =null,
+@FlowStep19_TargetDate datetime =null,
+@FlowStep20_UserUID uniqueidentifier =null,
+@FlowStep20_TargetDate datetime =null,
+@EstimatedDocuments as int,
+@Remarks as varchar(250),
+@DocumentSearchType as varchar(50),
+@IsSync as varchar(1)
+as
+begin
+if not Exists(select DocumentUID from Documents where DocumentUID=@DocumentUID)
+begin
+	if not exists(select @DocumentUID from Documents where DocName=@DocName and TaskUID=@TaskUID and Delete_Flag='N')
+	begin
+		insert into Documents(DocumentUID,WorkPackageUID,ProjectUID,TaskUID,DocName,Doc_Category,Doc_RefNumber,Doc_Type,Doc_Budget,FlowUID,Flow_StartDate,
+		FlowStep1_UserUID,FlowStep1_TargetDate,FlowStep2_UserUID,FlowStep2_TargetDate,FlowStep3_UserUID,FlowStep3_TargetDate,FlowStep4_UserUID,FlowStep4_TargetDate,
+		FlowStep5_UserUID,FlowStep5_TargetDate,Delete_Flag,CreatedDate,EstimatedDocuments,Remarks,DocumentSearchType,IsSync ,[FlowStep6_UserUID]
+           ,[FlowStep6_TargetDate]
+           ,[FlowStep7_UserUID]
+           ,[FlowStep7_TargetDate]
+           ,[FlowStep8_UserUID]
+           ,[FlowStep8_TargetDate]
+           ,[FlowStep9_UserUID]
+           ,[FlowStep9_TargetDate]
+           ,[FlowStep10_UserUID]
+           ,[FlowStep10_TargetDate]
+           ,[FlowStep11_UserUID]
+           ,[FlowStep11_TargetDate]
+           ,[FlowStep12_UserUID]
+           ,[FlowStep12_TargetDate]
+           ,[FlowStep13_UserUID]
+           ,[FlowStep13_TargetDate]
+           ,[FlowStep14_UserUID]
+           ,[FlowStep14_TargetDate]
+           ,[FlowStep15_UserUID]
+           ,[FlowStep15_TargetDate]
+           ,[FlowStep16_UserUID]
+           ,[FlowStep16_TargetDate]
+           ,[FlowStep17_UserUID]
+           ,[FlowStep17_TargetDate]
+           ,[FlowStep18_UserUID]
+           ,[FlowStep18_TargetDate]
+           ,[FlowStep19_UserUID]
+           ,[FlowStep19_TargetDate]
+           ,[FlowStep20_UserUID]
+           ,[FlowStep20_TargetDate])
+		values(@DocumentUID,@WorkPackageUID,@ProjectUID,@TaskUID,@DocName,@Doc_Category,@Doc_RefNumber,@Doc_Type,@Doc_Budget,@FlowUID,@Flow_StartDate,
+		@FlowStep1_UserUID,@FlowStep1_TargetDate,@FlowStep2_UserUID,@FlowStep2_TargetDate,@FlowStep3_UserUID,@FlowStep3_TargetDate,@FlowStep4_UserUID,@FlowStep4_TargetDate,
+		@FlowStep5_UserUID,@FlowStep5_TargetDate,'N',GETDATE(),@EstimatedDocuments,@Remarks,@DocumentSearchType,@IsSync,
+		@FlowStep6_UserUID
+           ,@FlowStep6_TargetDate
+           ,@FlowStep7_UserUID
+           ,@FlowStep7_TargetDate
+		   ,@FlowStep8_UserUID
+           ,@FlowStep8_TargetDate
+		  , @FlowStep9_UserUID
+           ,@FlowStep9_TargetDate
+           ,@FlowStep10_UserUID
+           ,@FlowStep10_TargetDate
+		   ,@FlowStep11_UserUID
+           ,@FlowStep11_TargetDate
+		   ,@FlowStep12_UserUID
+           ,@FlowStep12_TargetDate
+		    ,@FlowStep13_UserUID
+           ,@FlowStep13_TargetDate
+		    ,@FlowStep14_UserUID
+           ,@FlowStep14_TargetDate
+		    ,@FlowStep15_UserUID
+           ,@FlowStep15_TargetDate
+		    ,@FlowStep16_UserUID
+           ,@FlowStep16_TargetDate
+		    ,@FlowStep17_UserUID
+           ,@FlowStep17_TargetDate
+		    ,@FlowStep18_UserUID
+           ,@FlowStep18_TargetDate
+		    ,@FlowStep19_UserUID
+           ,@FlowStep19_TargetDate
+		    ,@FlowStep20_UserUID
+           ,@FlowStep20_TargetDate)
+	end
+	else
+	begin
+		select -1;
+	end
+end
+else
+begin
+	update Documents set DocName=@DocName,Doc_Category=@Doc_Category,Doc_RefNumber=@Doc_RefNumber,FlowUID=@FlowUID,
+	Flow_StartDate=@Flow_StartDate,FlowStep1_UserUID=@FlowStep1_UserUID,FlowStep1_TargetDate=@FlowStep1_TargetDate,
+	FlowStep2_UserUID=@FlowStep2_UserUID,FlowStep2_TargetDate=@FlowStep2_TargetDate,FlowStep3_UserUID=@FlowStep3_UserUID,
+	FlowStep3_TargetDate=@FlowStep3_TargetDate,FlowStep4_UserUID=@FlowStep4_UserUID,FlowStep4_TargetDate=@FlowStep4_TargetDate,
+	FlowStep5_UserUID=@FlowStep5_UserUID,FlowStep5_TargetDate=@FlowStep5_TargetDate,
+	EstimatedDocuments=@EstimatedDocuments,Remarks=@Remarks,DocumentSearchType=@DocumentSearchType,IsSync=@IsSync,
+	FlowStep6_UserUID=@FlowStep6_UserUID,FlowStep6_TargetDate=@FlowStep6_TargetDate,
+	FlowStep7_UserUID=@FlowStep7_UserUID,FlowStep7_TargetDate=@FlowStep7_TargetDate,
+	FlowStep8_UserUID=@FlowStep8_UserUID,FlowStep8_TargetDate=@FlowStep8_TargetDate,
+	FlowStep9_UserUID=@FlowStep9_UserUID,FlowStep9_TargetDate=@FlowStep9_TargetDate,
+	FlowStep10_UserUID=@FlowStep10_UserUID,FlowStep10_TargetDate=@FlowStep10_TargetDate,
+	FlowStep11_UserUID=@FlowStep11_UserUID,FlowStep11_TargetDate=@FlowStep11_TargetDate,
+	FlowStep12_UserUID=@FlowStep12_UserUID,FlowStep12_TargetDate=@FlowStep12_TargetDate,
+	FlowStep13_UserUID=@FlowStep13_UserUID,FlowStep13_TargetDate=@FlowStep13_TargetDate,
+	FlowStep14_UserUID=@FlowStep14_UserUID,FlowStep14_TargetDate=@FlowStep14_TargetDate,
+	FlowStep15_UserUID=@FlowStep15_UserUID,FlowStep15_TargetDate=@FlowStep15_TargetDate,
+	FlowStep16_UserUID=@FlowStep16_UserUID,FlowStep16_TargetDate=@FlowStep16_TargetDate,
+	FlowStep17_UserUID=@FlowStep17_UserUID,FlowStep17_TargetDate=@FlowStep17_TargetDate,
+	FlowStep18_UserUID=@FlowStep18_UserUID,FlowStep18_TargetDate=@FlowStep18_TargetDate,
+	FlowStep19_UserUID=@FlowStep19_UserUID,FlowStep19_TargetDate=@FlowStep19_TargetDate,
+	FlowStep20_UserUID=@FlowStep20_UserUID,FlowStep20_TargetDate=@FlowStep20_TargetDate
+	where DocumentUID=@DocumentUID;
+end
+end
+
+--- added on 07/03/2022---------
+
+USE [ONTB_Flow_Changes]
+GO
+/****** Object:  StoredProcedure [dbo].[Document_Insert_or_Update_with_RelativePath_Flow5]    Script Date: 3/7/2022 12:05:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[Document_Insert_or_Update_with_RelativePath_FlowAll]
+@ActualDocumentUID uniqueidentifier,
+@ProjectUID uniqueidentifier,
+@WorkPackageUID uniqueidentifier,
+@DocumentUID uniqueidentifier,
+@ProjectRef_Number varchar(50),
+@Ref_Number varchar(75),
+@Doc_Type varchar(50),
+@IncomingRec_Date datetime,
+@FlowUID uniqueidentifier,
+@ActualDocument_Name varchar(250),
+@Description varchar(max),
+@ActualDocument_Version float,
+@ActualDocument_Type varchar(50),
+@Media_HC varchar(50),
+@Media_SC varchar(50),
+@Media_SCEF varchar(50),
+@Media_HCR varchar(50),
+@Media_SCR varchar(50),
+@Media_NA varchar(50),
+@ActualDocument_Path varchar(500),
+@Remarks varchar(max),
+@FileRef_Number varchar(100),
+@ActualDocument_CurrentStatus varchar(100),
+@Step1UserUID uniqueidentifier,
+@Step1User_TargetDate datetime,
+@Step2UserUID uniqueidentifier,
+@Step2User_TargetDate datetime,
+@Step3UserUID uniqueidentifier,
+@Step3User_TargetDate datetime,
+@Step4UserUID uniqueidentifier,
+@Step4User_TargetDate datetime,
+@Step5UserUID uniqueidentifier,
+@Step5User_TargetDate datetime,
+@Step6UserUID uniqueidentifier,
+@Step6User_TargetDate datetime,
+@Step7UserUID uniqueidentifier=null,
+@Step7User_TargetDate datetime=null,
+@Step8UserUID uniqueidentifier=null,
+@Step8User_TargetDate datetime=null,
+@Step9UserUID uniqueidentifier=null,
+@Step9User_TargetDate datetime=null,
+@Step10UserUID uniqueidentifier=null,
+@Step10User_TargetDate datetime=null,
+@Step11UserUID uniqueidentifier=null,
+@Step11User_TargetDate datetime=null,
+@Step12UserUID uniqueidentifier=null,
+@Step12User_TargetDate datetime=null,
+@Step13UserUID uniqueidentifier=null,
+@Step13User_TargetDate datetime=null,
+@Step14UserUID uniqueidentifier=null,
+@Step14User_TargetDate datetime=null,
+@Step15UserUID uniqueidentifier=null,
+@Step15User_TargetDate datetime=null,
+@Step16UserUID uniqueidentifier=null,
+@Step16User_TargetDate datetime=null,
+@Step17UserUID uniqueidentifier=null,
+@Step17User_TargetDate datetime=null,
+@Step18UserUID uniqueidentifier=null,
+@Step18User_TargetDate datetime=null,
+@Step19UserUID uniqueidentifier=null,
+@Step19User_TargetDate datetime=null,
+@Step20UserUID uniqueidentifier=null,
+@Step20User_TargetDate datetime=null,
+@ActualDocument_Originator varchar(50),
+@Document_Date datetime,
+@ActualDocument_RelativePath varchar(500),
+@ActualDocument_DirectoryName varchar(100),
+@UploadFilePhysicalpath varchar(1000),
+@CoverLetterUID uniqueidentifier,
+@SubmissionType varchar(50),
+@Steps as int
+as
+begin
+if not exists (select ActualDocument_Name from ActualDocuments where ActualDocumentUID=@ActualDocumentUID)
+begin
+	insert into ActualDocuments(ActualDocumentUID,ProjectUID,WorkPackageUID,DocumentUID,ProjectRef_Number,Ref_Number,
+	Doc_Type,IncomingRec_Date,FlowUID,ActualDocument_Name,Description,ActualDocument_Version,ActualDocument_Type,
+	Media_HC,Media_SC,Media_SCEF,Media_HCR,Media_SCR,Media_NA,ActualDocument_Path,Remarks,FileRef_Number,
+	ActualDocument_CreatedDate,ActualDocument_CurrentStatus,Delete_Flag,ActualDocument_Originator,Document_Date,ActualDocument_RelativePath,ActualDocument_DirectoryName,FlowStep1_TargetDate,FlowStep2_TargetDate,FlowStep3_TargetDate,FlowStep4_TargetDate,FlowStep5_TargetDate,CoverLetterUID,SubmissionType,
+	[FlowStep6_TargetDate]
+           ,[FlowStep7_TargetDate]
+           ,[FlowStep8_TargetDate]
+           ,[FlowStep9_TargetDate]
+           ,[FlowStep10_TargetDate]
+           ,[FlowStep11_TargetDate]
+           ,[FlowStep12_TargetDate]
+           ,[FlowStep13_TargetDate]
+           ,[FlowStep14_TargetDate]
+           ,[FlowStep15_TargetDate]
+           ,[FlowStep16_TargetDate]
+           ,[FlowStep17_TargetDate]
+           ,[FlowStep18_TargetDate]
+           ,[FlowStep19_TargetDate]
+           ,[FlowStep20_TargetDate])
+	values(@ActualDocumentUID,@ProjectUID,@WorkPackageUID,@DocumentUID,@ProjectRef_Number,@Ref_Number,
+	@Doc_Type,@IncomingRec_Date,@FlowUID,@ActualDocument_Name,@Description,@ActualDocument_Version,@ActualDocument_Type,
+	@Media_HC,@Media_SC,@Media_SCEF,@Media_HCR,@Media_SCR,@Media_NA,@ActualDocument_Path,@Remarks,@FileRef_Number,
+	GETDATE(),@ActualDocument_CurrentStatus,'N',@ActualDocument_Originator,@Document_Date,@ActualDocument_RelativePath,@ActualDocument_DirectoryName,@Step1User_TargetDate,@Step2User_TargetDate,@Step3User_TargetDate,@Step4User_TargetDate,@Step5User_TargetDate,@CoverLetterUID,@SubmissionType,
+	@Step6User_TargetDate
+           ,@Step7User_TargetDate
+           ,@Step8User_TargetDate
+           ,@Step9User_TargetDate
+           ,@Step10User_TargetDate
+           ,@Step11User_TargetDate
+           ,@Step12User_TargetDate
+           ,@Step13User_TargetDate
+           ,@Step14User_TargetDate
+          ,@Step15User_TargetDate
+           ,@Step16User_TargetDate
+          ,@Step17User_TargetDate
+          ,@Step18User_TargetDate
+          ,@Step19User_TargetDate
+           ,@Step20User_TargetDate)
+
+
+	declare @SubmitTargetDate datetime;
+		  set @SubmitTargetDate=(select FlowStep1_TargetDate from Documents where DocumentUID=@DocumentUID);
+
+		  if(GETDATE() > @SubmitTargetDate)
+		  begin
+			declare @Step1Days int=0;
+			declare @Step2Days int=0;
+			declare @Step3Days int=0;
+			declare @Step4Days int=0;
+			declare @Step5Days int=0;
+			declare @Step6Days int=0;
+			declare @Step7Days int=0;
+			declare @Step8Days int=0;
+			declare @Step9Days int=0;
+			declare @Step10Days int=0;
+			declare @Step11Days int=0;
+			declare @Step12Days int=0;
+			declare @Step13Days int=0;
+			declare @Step14Days int=0;
+			declare @Step15Days int=0;
+			declare @Step16Days int=0;
+			declare @Step17Days int=0;
+			declare @Step18Days int=0;
+			declare @Step19Days int=0;
+			declare @Step20Days int=0;
+
+			set @Step1Days=(select FlowStep1_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			set @Step2Days=(select FlowStep2_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			set @Step3Days=(select FlowStep3_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			set @Step4Days=(select FlowStep4_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			set @Step5Days=(select FlowStep5_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			set @Step6Days=(select FlowStep6_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+
+			if @Steps >=7
+			Begin
+			  set @Step7Days=(select FlowStep7_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+
+			if @Steps >=8
+			Begin
+			  set @Step8Days=(select FlowStep8_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+
+		   if @Steps >=9
+			Begin
+			  set @Step9Days=(select FlowStep9_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+			if @Steps >=10
+			Begin
+			  set @Step10Days=(select FlowStep10_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+
+			if @Steps >=11
+			Begin
+			  set @Step11Days=(select FlowStep11_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+
+			if @Steps >=12
+			Begin
+			  set @Step12Days=(select FlowStep12_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+
+			if @Steps >=13
+			Begin
+			  set @Step13Days=(select FlowStep13_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+
+			if @Steps >=14
+			Begin
+			  set @Step14Days=(select FlowStep14_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+			if @Steps >=15
+			Begin
+			  set @Step15Days=(select FlowStep15_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+
+				if @Steps >=16
+			Begin
+			  set @Step16Days=(select FlowStep16_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+
+				if @Steps >=17
+			Begin
+			  set @Step17Days=(select FlowStep17_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+
+				if @Steps >=18
+			Begin
+			  set @Step18Days=(select FlowStep18_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+				if @Steps >=19
+			Begin
+			  set @Step19Days=(select FlowStep19_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+
+				if @Steps =20
+			Begin
+			  set @Step20Days=(select FlowStep20_Duration from DocumentFlowDisplayMaster where FlowMasterUID=@FlowUID);
+			END
+
+			--update Documents set FlowStep1_TargetDate=GETDATE(),FlowStep2_TargetDate=DATEADD(DAY, @Step2Days, GETDATE()),
+			--FlowStep3_TargetDate=DATEADD(DAY, @Step3Days, GETDATE()),FlowStep4_TargetDate=DATEADD(DAY, @Step4Days, GETDATE()), 
+			--FlowStep5_TargetDate=DATEADD(DAY, @Step5Days, GETDATE())  where DocumentUID=@DocumentUID;
+			update ActualDocuments set FlowStep1_TargetDate=GETDATE(),FlowStep2_TargetDate=DATEADD(DAY, @Step2Days, GETDATE()),
+			FlowStep3_TargetDate=DATEADD(DAY, @Step3Days, GETDATE()),FlowStep4_TargetDate=DATEADD(DAY, @Step4Days, GETDATE()),FlowStep5_TargetDate=DATEADD(DAY, @Step5Days, GETDATE()),
+			FlowStep6_TargetDate=DATEADD(DAY, @Step6Days, GETDATE()),
+			FlowStep7_TargetDate=DATEADD(DAY, @Step7Days, GETDATE()),
+			FlowStep8_TargetDate=DATEADD(DAY, @Step8Days, GETDATE()),
+			FlowStep9_TargetDate=DATEADD(DAY, @Step9Days, GETDATE()),
+			FlowStep10_TargetDate=DATEADD(DAY, @Step10Days, GETDATE()),
+			FlowStep11_TargetDate=DATEADD(DAY, @Step11Days, GETDATE()),
+			FlowStep12_TargetDate=DATEADD(DAY, @Step12Days, GETDATE()),
+			FlowStep13_TargetDate=DATEADD(DAY, @Step13Days, GETDATE()),
+			FlowStep14_TargetDate=DATEADD(DAY, @Step14Days, GETDATE()),
+			FlowStep15_TargetDate=DATEADD(DAY, @Step15Days, GETDATE()),
+			FlowStep16_TargetDate=DATEADD(DAY, @Step16Days, GETDATE()),
+			FlowStep17_TargetDate=DATEADD(DAY, @Step17Days, GETDATE()),
+			FlowStep18_TargetDate=DATEADD(DAY, @Step18Days, GETDATE()),
+			FlowStep19_TargetDate=DATEADD(DAY, @Step19Days, GETDATE()),
+			FlowStep20_TargetDate=DATEADD(DAY, @Step20Days, GETDATE())
+			where ActualDocumentUID=@ActualDocumentUID;
+		  end
+
+		  -- Insert to WordDocRead table
+		  declare @strPath varchar(500)=@ActualDocument_Path;
+		  set @strPath = (select reverse(left(reverse(@strPath),CHARINDEX('.',reverse(@strPath))-1)))
+
+		  if(@strPath = 'doc' or @strPath = 'docx')
+		  begin
+			  insert into WordDocRead(UID,Doc_path,Status,CreatedDate,DocumemtUID,Encrypted)
+			  values(NEWID(),@UploadFilePhysicalpath,'Pending',GETDATE(),@ActualDocumentUID,'Y')
+		  end
+
+	if @Doc_Type ='Document'
+	begin
+		declare @StatusUID uniqueidentifier;
+		  set @StatusUID=NEWID();
+
+		  declare @CoverLetterPath varchar(max);
+		  if @ActualDocument_CurrentStatus='Submitted'
+		  begin
+			set @CoverLetterPath=(select top 1 ActualDocument_Path from ActualDocuments where DocumentUID=@DocumentUID and ActualDocument_CurrentStatus='Submitted' and Doc_Type='Cover Letter')
+		  end
+
+		insert into DocumentStatus(StatusUID,DocumentUID,AcivityUserUID,Version,ActivityType,ActivityDate,Current_Status,CoverLetterFile,Origin,Status_Comments,Ref_Number) 
+		  values(@StatusUID,@ActualDocumentUID,@Step1UserUID,1.0,@ActualDocument_CurrentStatus,@IncomingRec_Date,@ActualDocument_CurrentStatus,@CoverLetterPath,@ActualDocument_Originator,@Remarks,@Ref_Number)
+
+		   -- Insert to Document Version table
+		  insert into DocumentVesrion(DocVersion_UID,DocStatus_UID,DocumentUID,Doc_Version,Doc_Type,Doc_FileName,Doc_Status,Doc_StatusDate)
+		  values(NEWID(),@StatusUID,@ActualDocumentUID,1.0,@ActualDocument_Type,@ActualDocument_Path,'Checked In',GETDATE())
+
+		  
+		  
+	end
+end
+else
+begin
+	update ActualDocuments set ProjectRef_Number=@ProjectRef_Number,Ref_Number=@Ref_Number,Doc_Type=@Doc_Type,
+	IncomingRec_Date=@IncomingRec_Date,FlowUID=@FlowUID,ActualDocument_Name=@ActualDocument_Name,Description=@Description,
+	ActualDocument_Type=@ActualDocument_Type,Media_HC=@Media_HC,Media_SC=@Media_SC,Media_SCEF=@Media_SCEF,
+	Media_HCR=@Media_HCR,Media_SCR=@Media_SCR,Media_NA=@Media_NA,Remarks=@Remarks,FileRef_Number=@FileRef_Number,
+	ActualDocument_Originator=@ActualDocument_Originator,Document_Date=@Document_Date where ActualDocumentUID=@ActualDocumentUID
+	if not exists (select StatusUID from DocumentStatus where DocumentUID=@ActualDocumentUID and ActivityType='Submitted')
+	begin
+		insert into DocumentStatus(StatusUID,DocumentUID,AcivityUserUID,Version,ActivityType,ActivityDate,Current_Status,Origin,Status_Comments) 
+		values(NEWID(),@ActualDocumentUID,@Step1UserUID,1.0,@ActualDocument_CurrentStatus,@IncomingRec_Date,@ActualDocument_CurrentStatus,@ActualDocument_Originator,@Remarks)
+	End
+end
+end
+
+
+// added on 07/03/2022
+
+USE [ONTB_Flow_Changes]
+GO
+/****** Object:  StoredProcedure [dbo].[GetNextUser_By_DocumentUID]    Script Date: 3/7/2022 5:59:46 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[GetNextUser_By_DocumentUID]
+@ActualDocumentUID uniqueidentifier,
+@step as int
+as
+begin
+declare @DocUID uniqueidentifier;
+set @DocUID=(select DocumentUID from ActualDocuments where ActualDocumentUID=@ActualDocumentUID);
+
+if @step = 2
+begin
+select Cast(FlowStep2_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+end
+else if @step = 3
+begin
+
+select Cast(FlowStep3_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+end
+else if @step = 4
+begin
+
+select Cast(FlowStep4_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 5
+begin
+
+select Cast(FlowStep5_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 6
+begin
+
+select Cast(FlowStep6_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 7
+begin
+
+select Cast(FlowStep7_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 8
+begin
+
+select Cast(FlowStep8_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 9
+begin
+
+select Cast(FlowStep9_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 10
+begin
+
+select Cast(FlowStep10_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 11
+begin
+
+select Cast(FlowStep11_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 12
+begin
+
+select Cast(FlowStep12_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 13
+begin
+
+select Cast(FlowStep13_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 14
+begin
+
+select Cast(FlowStep14_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 15
+begin
+
+select Cast(FlowStep15_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 16
+begin
+
+select Cast(FlowStep16_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 17
+begin
+
+select Cast(FlowStep17_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 18
+begin
+
+select Cast(FlowStep18_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 19
+begin
+
+select Cast(FlowStep19_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+else if @step = 20
+begin
+
+select Cast(FlowStep20_UserUID as varchar(75)) as Approver from Documents where DocumentUID=@DocUID;
+
+end
+
+end
+
+
+

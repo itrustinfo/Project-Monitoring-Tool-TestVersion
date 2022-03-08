@@ -91,6 +91,81 @@
       changeMonth: true,
         changeYear: true,
       dateFormat:'dd/mm/yy'
+     });
+      $("input[id$='dtTargetDate6']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate7']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate8']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate9']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate10']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate11']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate12']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate13']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate14']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate15']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate16']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate17']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate18']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate19']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
+      });
+      $("input[id$='dtTargetDate20']").datepicker({
+      changeMonth: true,
+        changeYear: true,
+      dateFormat:'dd/mm/yy'
       });
     });
 </script>
@@ -244,6 +319,173 @@
                         <asp:Label ID="lblStep5Date" CssClass="lblCss" runat="server"></asp:Label>
                        <asp:TextBox ID="dtAppTargetDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
                     </div>
+
+                  <%-- new items --%>
+                      <div class="form-group" id="S6Display" runat="server">
+                        <asp:Label ID="lblStep6Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser6" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S6Date" runat="server">
+                        <asp:Label ID="lblStep6Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate6" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                     <div class="form-group" id="S7Display" runat="server">
+                        <asp:Label ID="lblStep7Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser7" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S7Date" runat="server">
+                        <asp:Label ID="lblStep7Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate7" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                     <div class="form-group" id="S8Display" runat="server">
+                        <asp:Label ID="lblStep8Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser8" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S8Date" runat="server">
+                        <asp:Label ID="lblStep8Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate8" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                     <div class="form-group" id="S9Display" runat="server">
+                        <asp:Label ID="lblStep9Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser9" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S9Date" runat="server">
+                        <asp:Label ID="lblStep9Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate9" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                     <div class="form-group" id="S10Display" runat="server">
+                        <asp:Label ID="lblStep10Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser10" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S10Date" runat="server">
+                        <asp:Label ID="lblStep10Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate10" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                    <div class="form-group" id="S11Display" runat="server">
+                        <asp:Label ID="lblStep11Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser11" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S11Date" runat="server">
+                        <asp:Label ID="lblStep11Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate11" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                     <div class="form-group" id="S12Display" runat="server">
+                        <asp:Label ID="lblStep12Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser12" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S12Date" runat="server">
+                        <asp:Label ID="lblStep12Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate12" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                     <div class="form-group" id="S13Display" runat="server">
+                        <asp:Label ID="lblStep13Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser13" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S13Date" runat="server">
+                        <asp:Label ID="lblStep13Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate13" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                     <div class="form-group" id="S14Display" runat="server">
+                        <asp:Label ID="lblStep14Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser14" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S14Date" runat="server">
+                        <asp:Label ID="lblStep14Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate14" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                    <div class="form-group" id="S15Display" runat="server">
+                        <asp:Label ID="lblStep15Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser15" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S15Date" runat="server">
+                        <asp:Label ID="lblStep15Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate15" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                     <div class="form-group" id="S16Display" runat="server">
+                        <asp:Label ID="lblStep16Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser16" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S16Date" runat="server">
+                        <asp:Label ID="lblStep16Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate16" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                      <div class="form-group" id="S17Display" runat="server">
+                        <asp:Label ID="lblStep17Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser17" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S17Date" runat="server">
+                        <asp:Label ID="lblStep17Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate17" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                      <div class="form-group" id="S18Display" runat="server">
+                        <asp:Label ID="lblStep18Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser18" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S18Date" runat="server">
+                        <asp:Label ID="lblStep18Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate18" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                     <div class="form-group" id="S19Display" runat="server">
+                        <asp:Label ID="lblStep19Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser19" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S19Date" runat="server">
+                        <asp:Label ID="lblStep19Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate19" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
+                    <div class="form-group" id="S20Display" runat="server">
+                        <asp:Label ID="lblStep20Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
+                        <asp:DropDownList ID="dlUser20" runat="server" CssClass="form-control" required>
+                     </asp:DropDownList>
+                    </div>
+
+                    <div class="form-group" id="S20Date" runat="server">
+                        <asp:Label ID="lblStep20Date" CssClass="lblCss" runat="server"></asp:Label>
+                       <asp:TextBox ID="dtTargetDate20" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+
                       <div class="form-group">
                         <label class="lblCss" for="txtremarks">Remarks</label> &nbsp;<span style="color:red; font-size:1rem;"></span>
                         <asp:TextBox ID="txtremarks" CssClass="form-control" runat="server" autocomplete="off" ClientIDMode="Static" TextMode="MultiLine"></asp:TextBox>

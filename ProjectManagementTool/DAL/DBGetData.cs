@@ -18708,5 +18708,333 @@ namespace ProjectManager.DAL
             return UserUID;
         }
 
+        //added on 04/03/2022
+        public int DoumentMaster_Insert_or_Update_FlowAll(Guid DocumentUID, Guid WorkPackageUID, Guid ProjectUID, Guid TaskUID, string DocName,
+          Guid Doc_Category, string Doc_RefNumber, string Doc_Type, double Doc_Budget, Guid FlowUID, DateTime Flow_StartDate,
+          Guid FlowStep1_UserUID, DateTime FlowStep1_TargetDate, Guid FlowStep2_UserUID, DateTime FlowStep2_TargetDate,
+          Guid FlowStep3_UserUID, DateTime FlowStep3_TargetDate, Guid FlowStep4_UserUID, DateTime FlowStep4_TargetDate, Guid FlowStep5_UserUID, DateTime FlowStep5_TargetDate, int EstimatedDocuments, string Remarks, string DocumentSearchType, string IsSynch,
+          Guid FlowSte6_UserUID, DateTime FlowStep6_TargetDate,
+          Guid FlowStep7_UserUID, DateTime FlowStep7_TargetDate,
+          Guid FlowStep8_UserUID, DateTime FlowStep8_TargetDate,
+          Guid FlowStep9_UserUID, DateTime FlowStep9_TargetDate,
+          Guid FlowStep10_UserUID, DateTime FlowStep10_TargetDate,
+          Guid FlowStep11_UserUID, DateTime FlowStep11_TargetDate,
+          Guid FlowStep12_UserUID, DateTime FlowStep12_TargetDate,
+          Guid FlowStep13_UserUID, DateTime FlowStep13_TargetDate,
+          Guid FlowStep14_UserUID, DateTime FlowStep14_TargetDate,
+          Guid FlowStep15_UserUID, DateTime FlowStep15_TargetDate,
+          Guid FlowStep16_UserUID, DateTime FlowStep16_TargetDate,
+          Guid FlowStep17_UserUID, DateTime FlowStep17_TargetDate,
+          Guid FlowStep18_UserUID, DateTime FlowStep18_TargetDate,
+          Guid FlowStep19_UserUID, DateTime FlowStep19_TargetDate,
+          Guid FlowStep20_UserUID, DateTime FlowStep20_TargetDate,int step)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("DoumentMaster_Insert_or_Update_FlowAll"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@DocumentUID", DocumentUID);
+                        cmd.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                        cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                        cmd.Parameters.AddWithValue("@TaskUID", TaskUID);
+                        cmd.Parameters.AddWithValue("@DocName", DocName);
+                        cmd.Parameters.AddWithValue("@Doc_Category", Doc_Category);
+                        cmd.Parameters.AddWithValue("@Doc_RefNumber", Doc_RefNumber);
+                        cmd.Parameters.AddWithValue("@Doc_Type", Doc_Type);
+                        cmd.Parameters.AddWithValue("@Doc_Budget", Doc_Budget);
+                        cmd.Parameters.AddWithValue("@FlowUID", FlowUID);
+                        cmd.Parameters.AddWithValue("@Flow_StartDate", Flow_StartDate);
+                        cmd.Parameters.AddWithValue("@FlowStep1_UserUID", FlowStep1_UserUID);
+                        cmd.Parameters.AddWithValue("@FlowStep1_TargetDate", FlowStep1_TargetDate);
+                        cmd.Parameters.AddWithValue("@FlowStep2_UserUID", FlowStep2_UserUID);
+                        cmd.Parameters.AddWithValue("@FlowStep2_TargetDate", FlowStep2_TargetDate);
+                        cmd.Parameters.AddWithValue("@FlowStep3_UserUID", FlowStep3_UserUID);
+                        cmd.Parameters.AddWithValue("@FlowStep3_TargetDate", FlowStep3_TargetDate);
+                        cmd.Parameters.AddWithValue("@FlowStep4_UserUID", FlowStep4_UserUID);
+                        cmd.Parameters.AddWithValue("@FlowStep4_TargetDate", FlowStep4_TargetDate);
+                        cmd.Parameters.AddWithValue("@FlowStep5_UserUID", FlowStep5_UserUID);
+                        cmd.Parameters.AddWithValue("@FlowStep5_TargetDate", FlowStep5_TargetDate);
+                        cmd.Parameters.AddWithValue("@EstimatedDocuments", EstimatedDocuments);
+                        cmd.Parameters.AddWithValue("@Remarks", Remarks);
+                        cmd.Parameters.AddWithValue("@DocumentSearchType", DocumentSearchType);
+                        cmd.Parameters.AddWithValue("@IsSync", IsSynch);
+                        //
+                        cmd.Parameters.AddWithValue("@FlowStep6_UserUID", FlowStep1_UserUID);
+                        cmd.Parameters.AddWithValue("@FlowStep6_TargetDate", FlowStep1_TargetDate);
+                        if (step >= 7)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep7_UserUID", FlowStep7_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep7_TargetDate", FlowStep7_TargetDate);
+                        }
+                        if (step >= 8)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep8_UserUID", FlowStep8_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep8_TargetDate", FlowStep8_TargetDate);
+                        }
+                        if (step >= 9)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep9_UserUID", FlowStep9_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep9_TargetDate", FlowStep9_TargetDate);
+                        }
+                        if (step >= 10)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep10_UserUID", FlowStep10_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep10_TargetDate", FlowStep10_TargetDate);
+                        }
+                        if (step >= 11)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep11_UserUID", FlowStep11_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep11_TargetDate", FlowStep11_TargetDate);
+                        }
+                        if (step >= 12)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep12_UserUID", FlowStep12_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep12_TargetDate", FlowStep12_TargetDate);
+                        }
+                        if (step >= 13)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep13_UserUID", FlowStep13_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep13_TargetDate", FlowStep13_TargetDate);
+                        }
+                        if (step >= 14)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep14_UserUID", FlowStep14_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep14_TargetDate", FlowStep14_TargetDate);
+                        }
+                        if (step >= 15)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep15_UserUID", FlowStep15_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep15_TargetDate", FlowStep15_TargetDate);
+                        }
+                        if (step >= 16)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep16_UserUID", FlowStep16_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep16_TargetDate", FlowStep16_TargetDate);
+                        }
+                        if (step >= 17)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep17_UserUID", FlowStep17_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep17_TargetDate", FlowStep17_TargetDate);
+                        }
+                        if (step >= 18)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep18_UserUID", FlowStep18_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep18_TargetDate", FlowStep18_TargetDate);
+                        }
+                        if (step >= 19)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep19_UserUID", FlowStep19_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep19_TargetDate", FlowStep19_TargetDate);
+                        }
+                        if (step == 20)
+                        {
+                            cmd.Parameters.AddWithValue("@FlowStep20_UserUID", FlowStep20_UserUID);
+                            cmd.Parameters.AddWithValue("@FlowStep20_TargetDate", FlowStep20_TargetDate);
+                        }
+                        con.Open();
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = 0;
+            }
+        }
+
+        // added on 07/03/2022
+
+        public int Document_Insert_or_Update_with_RelativePath_FlowAll(Guid ActualDocumentUID, Guid ProjectUID, Guid WorkPackageUID, Guid DocumentUID, string ProjectRef_Number,
+           string Ref_Number, string Doc_Type, DateTime IncomingRec_Date, Guid FlowUID, string ActualDocument_Name, string Description, double ActualDocument_Version, string ActualDocument_Type,
+           string Media_HC, string Media_SC, string Media_SCEF, string Media_HCR, string Media_SCR, string Media_NA, string ActualDocument_Path, string Remarks,
+           string FileRef_Number, string ActualDocument_CurrentStatus, Guid Step1UserUID, DateTime Step1User_TargetDate, Guid Step2UserUID, DateTime Step2User_TargetDate,
+           Guid Step3UserUID, DateTime Step3User_TargetDate, Guid Step4UserUID, DateTime Step4User_TargetDate, Guid Step5UserUID, DateTime Step5User_TargetDate,
+           Guid Step6UserUID, DateTime Step6User_TargetDate,
+           Guid Step7UserUID, DateTime Step7User_TargetDate,
+           Guid Step8UserUID, DateTime Step8User_TargetDate,
+           Guid Step9UserUID, DateTime Step9User_TargetDate,
+           Guid Step10UserUID, DateTime Step10User_TargetDate,
+           Guid Step11UserUID, DateTime Step11User_TargetDate,
+             Guid Step12UserUID, DateTime Step12User_TargetDate,
+           Guid Step13UserUID, DateTime Step13User_TargetDate,
+           Guid Step14UserUID, DateTime Step14User_TargetDate,
+           Guid Step15UserUID, DateTime Step15User_TargetDate,
+           Guid Step16UserUID, DateTime Step16User_TargetDate,
+           Guid Step17UserUID, DateTime Step17User_TargetDate,
+           Guid Step18UserUID, DateTime Step18User_TargetDate,
+           Guid Step19UserUID, DateTime Step19User_TargetDate,
+           Guid Step20UserUID, DateTime Step20User_TargetDate,
+ string ActualDocument_Originator, DateTime Document_Date, string ActualDocument_RelativePath, string ActualDocument_DirectoryName, string UploadFilePhysicalpath, string CoverLetterUID, string SubmissionType,int steps)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("Document_Insert_or_Update_with_RelativePath_FlowAll"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@ActualDocumentUID", ActualDocumentUID);
+                        cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                        cmd.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                        cmd.Parameters.AddWithValue("@DocumentUID", DocumentUID);
+                        cmd.Parameters.AddWithValue("@ProjectRef_Number", ProjectRef_Number);
+                        cmd.Parameters.AddWithValue("@Ref_Number", Ref_Number);
+                        cmd.Parameters.AddWithValue("@Doc_Type", Doc_Type);
+                        cmd.Parameters.AddWithValue("@IncomingRec_Date", IncomingRec_Date);
+                        cmd.Parameters.AddWithValue("@FlowUID", FlowUID);
+                        cmd.Parameters.AddWithValue("@ActualDocument_Name", ActualDocument_Name);
+                        cmd.Parameters.AddWithValue("@Description", Description);
+                        cmd.Parameters.AddWithValue("@ActualDocument_Version", ActualDocument_Version);
+                        cmd.Parameters.AddWithValue("@ActualDocument_Type", ActualDocument_Type);
+                        cmd.Parameters.AddWithValue("@Media_HC", Media_HC);
+                        cmd.Parameters.AddWithValue("@Media_SC", Media_SC);
+                        cmd.Parameters.AddWithValue("@Media_SCEF", Media_SCEF);
+                        cmd.Parameters.AddWithValue("@Media_HCR", Media_HCR);
+                        cmd.Parameters.AddWithValue("@Media_SCR", Media_SCR);
+                        cmd.Parameters.AddWithValue("@Media_NA", Media_NA);
+                        cmd.Parameters.AddWithValue("@ActualDocument_Path", ActualDocument_Path);
+                        cmd.Parameters.AddWithValue("@Remarks", Remarks);
+                        cmd.Parameters.AddWithValue("@FileRef_Number", FileRef_Number);
+                        cmd.Parameters.AddWithValue("@ActualDocument_CurrentStatus", ActualDocument_CurrentStatus);
+                        cmd.Parameters.AddWithValue("@Step1UserUID", Step1UserUID);
+                        cmd.Parameters.AddWithValue("@Step1User_TargetDate", Step1User_TargetDate);
+                        cmd.Parameters.AddWithValue("@Step2UserUID", Step2UserUID);
+                        cmd.Parameters.AddWithValue("@Step2User_TargetDate", Step2User_TargetDate);
+                        cmd.Parameters.AddWithValue("@Step3UserUID", Step3UserUID);
+                        cmd.Parameters.AddWithValue("@Step3User_TargetDate", Step3User_TargetDate);
+                        cmd.Parameters.AddWithValue("@Step4UserUID", Step4UserUID);
+                        cmd.Parameters.AddWithValue("@Step4User_TargetDate", Step4User_TargetDate);
+                        cmd.Parameters.AddWithValue("@Step5UserUID", Step5UserUID);
+                        cmd.Parameters.AddWithValue("@Step5User_TargetDate", Step5User_TargetDate);
+                        cmd.Parameters.AddWithValue("@Step6UserUID", Step6UserUID);
+                        cmd.Parameters.AddWithValue("@Step6User_TargetDate", Step6User_TargetDate);
+
+                        if (steps >= 7)
+                        {
+                            cmd.Parameters.AddWithValue("@Step7UserUID", Step7UserUID);
+                            cmd.Parameters.AddWithValue("@Step7User_TargetDate", Step7User_TargetDate);
+                        }
+
+                        if (steps >= 8)
+                        {
+                            cmd.Parameters.AddWithValue("@Step8UserUID", Step8UserUID);
+                            cmd.Parameters.AddWithValue("@Step8User_TargetDate", Step8User_TargetDate);
+                        }
+
+                        if (steps >= 9)
+                        {
+                            cmd.Parameters.AddWithValue("@Step9UserUID", Step9UserUID);
+                            cmd.Parameters.AddWithValue("@Step9User_TargetDate", Step9User_TargetDate);
+                        }
+
+                        if (steps >= 10)
+                        {
+                            cmd.Parameters.AddWithValue("@Step10UserUID", Step10UserUID);
+                            cmd.Parameters.AddWithValue("@Step10User_TargetDate", Step10User_TargetDate);
+                        }
+
+                        if (steps >= 11)
+                        {
+                            cmd.Parameters.AddWithValue("@Step11UserUID", Step11UserUID);
+                            cmd.Parameters.AddWithValue("@Step11User_TargetDate", Step11User_TargetDate);
+                        }
+
+                        if (steps >= 12)
+                        {
+                            cmd.Parameters.AddWithValue("@Step12UserUID", Step12UserUID);
+                            cmd.Parameters.AddWithValue("@Step12User_TargetDate", Step12User_TargetDate);
+                        }
+
+                        if (steps >= 13)
+                        {
+                            cmd.Parameters.AddWithValue("@Step13UserUID", Step13UserUID);
+                            cmd.Parameters.AddWithValue("@Step13User_TargetDate", Step13User_TargetDate);
+                        }
+
+                        if (steps >= 14)
+                        {
+                            cmd.Parameters.AddWithValue("@Step14UserUID", Step14UserUID);
+                            cmd.Parameters.AddWithValue("@Step14User_TargetDate", Step14User_TargetDate);
+                        }
+
+                        if (steps >= 15)
+                        {
+                            cmd.Parameters.AddWithValue("@Step15UserUID", Step15UserUID);
+                            cmd.Parameters.AddWithValue("@Step15User_TargetDate", Step15User_TargetDate);
+                        }
+
+                        if (steps >= 16)
+                        {
+                            cmd.Parameters.AddWithValue("@Step16UserUID", Step16UserUID);
+                            cmd.Parameters.AddWithValue("@Step16User_TargetDate", Step16User_TargetDate);
+                        }
+
+                        if (steps >= 17)
+                        {
+                            cmd.Parameters.AddWithValue("@Step17UserUID", Step17UserUID);
+                            cmd.Parameters.AddWithValue("@Step17User_TargetDate", Step17User_TargetDate);
+                        }
+
+                        if (steps >= 18)
+                        {
+                            cmd.Parameters.AddWithValue("@Step18UserUID", Step18UserUID);
+                            cmd.Parameters.AddWithValue("@Step18User_TargetDate", Step18User_TargetDate);
+                        }
+
+                        if (steps >= 19)
+                        {
+                            cmd.Parameters.AddWithValue("@Step19UserUID", Step19UserUID);
+                            cmd.Parameters.AddWithValue("@Step19User_TargetDate", Step19User_TargetDate);
+                        }
+
+                        if (steps >= 20)
+                        {
+                            cmd.Parameters.AddWithValue("@Step20UserUID", Step20UserUID);
+                            cmd.Parameters.AddWithValue("@Step20User_TargetDate", Step20User_TargetDate);
+                        }
+
+
+                        cmd.Parameters.AddWithValue("@ActualDocument_Originator", ActualDocument_Originator);
+                        cmd.Parameters.AddWithValue("@Document_Date", Document_Date);
+                        cmd.Parameters.AddWithValue("@ActualDocument_RelativePath", ActualDocument_RelativePath);
+                        cmd.Parameters.AddWithValue("@ActualDocument_DirectoryName", ActualDocument_DirectoryName);
+                        cmd.Parameters.AddWithValue("@UploadFilePhysicalpath", UploadFilePhysicalpath);
+                        if (CoverLetterUID != "")
+                        {
+                            cmd.Parameters.AddWithValue("@CoverLetterUID", CoverLetterUID);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@CoverLetterUID", DBNull.Value);
+                        }
+                        cmd.Parameters.AddWithValue("@SubmissionType", SubmissionType);
+                        cmd.Parameters.AddWithValue("@Steps", steps);
+                        con.Open();
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = 0;
+            }
+        }
+
+
+
     }
 }

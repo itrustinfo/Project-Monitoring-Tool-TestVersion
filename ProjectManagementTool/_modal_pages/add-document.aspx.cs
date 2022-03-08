@@ -19,8 +19,8 @@ namespace ProjectManager._modal_pages
         DBGetData getdata = new DBGetData();
         TaskUpdate TKUpdate = new TaskUpdate();
         protected static string content;
-        protected static bool inProcess = false;
-        protected static bool processComplete = false;
+       // protected static bool inProcess = false;
+       // protected static bool processComplete = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Username"] == null)
@@ -151,21 +151,33 @@ namespace ProjectManager._modal_pages
 
         private void BindOriginator()
         {
-            DataSet ds = getdata.GetOriginatorMaster();
-            RBLOriginator.DataTextField = "Originator_Name";
-            RBLOriginator.DataValueField = "Originator_Name";
-            RBLOriginator.DataSource = ds;
-            RBLOriginator.DataBind();
-            // added by zuber on 22/02/2022 for KIADB
-            if (getdata.GetClientCodebyWorkpackageUID(new Guid(Request.QueryString["wUID"].ToString())) != "")
+            if (WebConfigurationManager.AppSettings["Domain"] == "ONTB" || WebConfigurationManager.AppSettings["Domain"] == "LNT" || WebConfigurationManager.AppSettings["Domain"] == "Suez")
             {
-                RBLOriginator.Items.Insert(0, new ListItem(getdata.GetClientCodebyWorkpackageUID(new Guid(Request.QueryString["wUID"].ToString())), getdata.GetClientCodebyWorkpackageUID(new Guid(Request.QueryString["wUID"].ToString()))));
-            }
-
-            if (ds.Tables[0].Rows.Count > 0)
-            {
+                RBLOriginator.Items.Insert(0, new ListItem("Contractor","Contractor"));
+                RBLOriginator.Items.Insert(1, new ListItem("ONTB", "ONTB"));
+                RBLOriginator.Items.Insert(2, new ListItem("BWSSB", "BWSSB"));
+                RBLOriginator.Items.Insert(3, new ListItem("Others", "Others"));
                 RBLOriginator.Items[0].Selected = true;
             }
+            else
+            {
+                DataSet ds = getdata.GetOriginatorMaster();
+                RBLOriginator.DataTextField = "Originator_Name";
+                RBLOriginator.DataValueField = "Originator_Name";
+                RBLOriginator.DataSource = ds;
+                RBLOriginator.DataBind();
+                // added by zuber on 22/02/2022 for KIADB
+                if (getdata.GetClientCodebyWorkpackageUID(new Guid(Request.QueryString["wUID"].ToString())) != "")
+                {
+                    RBLOriginator.Items.Insert(0, new ListItem(getdata.GetClientCodebyWorkpackageUID(new Guid(Request.QueryString["wUID"].ToString())), getdata.GetClientCodebyWorkpackageUID(new Guid(Request.QueryString["wUID"].ToString()))));
+                }
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    RBLOriginator.Items[0].Selected = true;
+                }
+            }
+            
           
            
 
@@ -334,8 +346,8 @@ namespace ProjectManager._modal_pages
                     string projectId = Request.QueryString["pUID"].ToString();
                     string workpackageid = Request.QueryString["wUID"].ToString();
                     string sDocumentUID = Request.QueryString["dUID"].ToString();
-                    string sDate1 = "", sDate2 = "", sDate3 = "", sDate4 = "", sDate5 = "", CoverPagePath = "";
-                    DateTime CDate1 = DateTime.Now, CDate2 = DateTime.Now, CDate3 = DateTime.Now, CDate4 = DateTime.Now, CDate5 = DateTime.Now, DocStartDate = DateTime.Now;
+                    string sDate1 = "", sDate2 = "", sDate3 = "", sDate4 = "", sDate5 = "", CoverPagePath = "", sDate6 = "", sDate7 = "", sDate8 = "", sDate9 = "", sDate10 = "", sDate11 = "", sDate12 = "", sDate13 = "", sDate14 = "", sDate15 = "", sDate16 = "", sDate17 = "", sDate18 = "", sDate19 = "", sDate20 = "";
+                    DateTime CDate1 = DateTime.Now, CDate2 = DateTime.Now, CDate3 = DateTime.Now, CDate4 = DateTime.Now, CDate5 = DateTime.Now, DocStartDate = DateTime.Now, CDate6 = DateTime.Now, CDate7 = DateTime.Now, CDate8 = DateTime.Now, CDate9 = DateTime.Now, CDate10 = DateTime.Now, CDate11 = DateTime.Now, CDate12 = DateTime.Now, CDate13 = DateTime.Now, CDate14 = DateTime.Now, CDate15 = DateTime.Now, CDate16 = DateTime.Now, CDate17 = DateTime.Now, CDate18 = DateTime.Now, CDate19 = DateTime.Now, CDate20 = DateTime.Now;
                     DataSet ds = getdata.getDocumentsbyDocID(new Guid(Request.QueryString["dUID"]));
                     DateTime startdate;
                     DateTime endate;
@@ -697,7 +709,7 @@ namespace ProjectManager._modal_pages
                                                 }
 
                                             }
-                                            else
+                                            else if (dsFlow.Tables[0].Rows[0]["Steps_Count"].ToString() == "5")
                                             {
                                                 Flow1DisplayName = dsFlow.Tables[0].Rows[0]["FlowStep1_DisplayName"].ToString();
                                                 Flow2DisplayName = dsFlow.Tables[0].Rows[0]["FlowStep2_DisplayName"].ToString();
@@ -727,7 +739,7 @@ namespace ProjectManager._modal_pages
                                                 sDate4 = getdata.ConvertDateFormat(sDate4);
                                                 CDate4 = Convert.ToDateTime(sDate4);
 
-                                                sDate5 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep4_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                sDate5 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep5_TargetDate"].ToString()).ToString("dd/MM/yyyy");
                                                 //sDate5 = sDate5.Split('/')[1] + "/" + sDate5.Split('/')[0] + "/" + sDate5.Split('/')[2];
                                                 sDate5 = getdata.ConvertDateFormat(sDate5);
                                                 CDate5 = Convert.ToDateTime(sDate5);
@@ -738,6 +750,183 @@ namespace ProjectManager._modal_pages
                                                   DDLDocumentMedia.Items[4].Selected == true ? "true" : "false", DDLDocumentMedia.Items[5].Selected == true ? "true" : "false", CoverPagePath, txtremarks.Text, txtFileRefNumber.Text, cStatus,
                                                   new Guid(ds.Tables[0].Rows[0]["FlowStep1_UserUID"].ToString()), CDate1, new Guid(ds.Tables[0].Rows[0]["FlowStep2_UserUID"].ToString()), CDate2, new Guid(ds.Tables[0].Rows[0]["FlowStep3_UserUID"].ToString()), CDate3, new Guid(ds.Tables[0].Rows[0]["FlowStep4_UserUID"].ToString()), CDate4, new Guid(ds.Tables[0].Rows[0]["FlowStep5_UserUID"].ToString()), CDate5,
                                                   Flow1DisplayName, Flow2DisplayName, Flow3DisplayName, Flow4DisplayName, Flow5DisplayName, RBLOriginator.SelectedValue, Document_Date, "", "", UploadFilePhysicalpath, CoverLetterUID, RBLSubmissionType.SelectedValue);
+                                                if (cnt <= 0)
+                                                {
+                                                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Error", "<script language='javascript'>alert('Error:11,There is some problem while inserting document. Please contact administrator');</script>");
+                                                }
+                                            }
+                                            else // for all flows with step > 5 ( 6 to 20) added on 07/03/2022
+                                            {
+                                                
+
+                                                sDate1 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep1_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                //sDate1 = sDate1.Split('/')[1] + "/" + sDate1.Split('/')[0] + "/" + sDate1.Split('/')[2];
+                                                sDate1 = getdata.ConvertDateFormat(sDate1);
+                                                CDate1 = Convert.ToDateTime(sDate1);
+
+
+                                                sDate2 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep2_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                //sDate2 = sDate2.Split('/')[1] + "/" + sDate2.Split('/')[0] + "/" + sDate2.Split('/')[2];
+                                                sDate2 = getdata.ConvertDateFormat(sDate2);
+                                                CDate2 = Convert.ToDateTime(sDate2);
+
+                                                sDate3 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep3_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                //sDate3 = sDate3.Split('/')[1] + "/" + sDate3.Split('/')[0] + "/" + sDate3.Split('/')[2];
+                                                sDate3 = getdata.ConvertDateFormat(sDate3);
+                                                CDate3 = Convert.ToDateTime(sDate3);
+
+
+                                                sDate4 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep4_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                //sDate4 = sDate4.Split('/')[1] + "/" + sDate4.Split('/')[0] + "/" + sDate4.Split('/')[2];
+                                                sDate4 = getdata.ConvertDateFormat(sDate4);
+                                                CDate4 = Convert.ToDateTime(sDate4);
+
+                                                sDate5 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep5_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                //sDate5 = sDate5.Split('/')[1] + "/" + sDate5.Split('/')[0] + "/" + sDate5.Split('/')[2];
+                                                sDate5 = getdata.ConvertDateFormat(sDate5);
+                                                CDate5 = Convert.ToDateTime(sDate5);
+
+                                                sDate6 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep6_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                //sDate5 = sDate5.Split('/')[1] + "/" + sDate5.Split('/')[0] + "/" + sDate5.Split('/')[2];
+                                                sDate6 = getdata.ConvertDateFormat(sDate6);
+                                                CDate6 = Convert.ToDateTime(sDate6);
+
+                                                int steps = int.Parse(dsFlow.Tables[0].Rows[0]["Steps_Count"].ToString());
+                                                Guid User7 = Guid.NewGuid(), User8 = Guid.NewGuid(), User9 = Guid.NewGuid(), User10 = Guid.NewGuid(), User11 = Guid.NewGuid(), User12 = Guid.NewGuid(), User13 = Guid.NewGuid(), User14 = Guid.NewGuid(), User15 = Guid.NewGuid(), User16 = Guid.NewGuid(), User17 = Guid.NewGuid(), User18 = Guid.NewGuid(), User19 = Guid.NewGuid(), User20 = Guid.NewGuid();
+
+                                                if (steps >= 7)
+                                                {
+                                                    sDate7 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep7_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate7 = getdata.ConvertDateFormat(sDate7);
+                                                    CDate7 = Convert.ToDateTime(sDate7);
+                                                    User7 = new Guid(ds.Tables[0].Rows[0]["FlowStep7_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 8)
+                                                {
+                                                    sDate8 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep8_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate8 = getdata.ConvertDateFormat(sDate8);
+                                                    CDate8 = Convert.ToDateTime(sDate8);
+                                                    User8= new Guid(ds.Tables[0].Rows[0]["FlowStep8_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 9)
+                                                {
+                                                    sDate9 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep9_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate9 = getdata.ConvertDateFormat(sDate9);
+                                                    CDate9 = Convert.ToDateTime(sDate9);
+                                                    User9 = new Guid(ds.Tables[0].Rows[0]["FlowStep9_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 10)
+                                                {
+                                                    sDate10 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep10_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate10 = getdata.ConvertDateFormat(sDate10);
+                                                    CDate10 = Convert.ToDateTime(sDate10);
+                                                    User10 = new Guid(ds.Tables[0].Rows[0]["FlowStep10_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 11)
+                                                {
+                                                    sDate11 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep11_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate11 = getdata.ConvertDateFormat(sDate11);
+                                                    CDate11 = Convert.ToDateTime(sDate11);
+                                                    User11 = new Guid(ds.Tables[0].Rows[0]["FlowStep11_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 12)
+                                                {
+                                                    sDate12 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep12_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate12 = getdata.ConvertDateFormat(sDate12);
+                                                    CDate12 = Convert.ToDateTime(sDate12);
+                                                    User12 = new Guid(ds.Tables[0].Rows[0]["FlowStep12_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 13)
+                                                {
+                                                    sDate13 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep13_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate13 = getdata.ConvertDateFormat(sDate13);
+                                                    CDate13 = Convert.ToDateTime(sDate13);
+                                                    User13 = new Guid(ds.Tables[0].Rows[0]["FlowStep13_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 14)
+                                                {
+                                                    sDate14 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep14_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate14 = getdata.ConvertDateFormat(sDate14);
+                                                    CDate14 = Convert.ToDateTime(sDate14);
+                                                    User14 = new Guid(ds.Tables[0].Rows[0]["FlowStep14_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 15)
+                                                {
+                                                    sDate15 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep15_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate15 = getdata.ConvertDateFormat(sDate15);
+                                                    CDate15 = Convert.ToDateTime(sDate15);
+                                                    User15 = new Guid(ds.Tables[0].Rows[0]["FlowStep15_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 16)
+                                                {
+                                                    sDate16 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep16_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate16 = getdata.ConvertDateFormat(sDate16);
+                                                    CDate16 = Convert.ToDateTime(sDate16);
+                                                    User16 = new Guid(ds.Tables[0].Rows[0]["FlowStep16_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 17)
+                                                {
+                                                    sDate17 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep17_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate17 = getdata.ConvertDateFormat(sDate17);
+                                                    CDate17 = Convert.ToDateTime(sDate17);
+                                                    User17 = new Guid(ds.Tables[0].Rows[0]["FlowStep17_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 18)
+                                                {
+                                                    sDate18 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep18_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate18 = getdata.ConvertDateFormat(sDate18);
+                                                    CDate18 = Convert.ToDateTime(sDate18);
+                                                    User18 = new Guid(ds.Tables[0].Rows[0]["FlowStep18_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 19)
+                                                {
+                                                    sDate19 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep19_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate19 = getdata.ConvertDateFormat(sDate19);
+                                                    CDate19 = Convert.ToDateTime(sDate19);
+                                                    User19 = new Guid(ds.Tables[0].Rows[0]["FlowStep19_UserUID"].ToString());
+                                                }
+
+                                                if (steps >= 20)
+                                                {
+                                                    sDate20 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep20_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                    sDate20 = getdata.ConvertDateFormat(sDate20);
+                                                    CDate20 = Convert.ToDateTime(sDate20);
+                                                    User20 = new Guid(ds.Tables[0].Rows[0]["FlowStep20_UserUID"].ToString());
+                                                }
+
+                                                int cnt = getdata.Document_Insert_or_Update_with_RelativePath_FlowAll(ActualDocumentUID, new Guid(projectId), new Guid(workpackageid), new Guid(sDocumentUID), txtprefnumber.Text, txtRefNumber.Text,
+                                                  DocumentFor, IncomingRec_Date, new Guid(ds.Tables[0].Rows[0]["FlowUID"].ToString()), sFileName, txtdesc.Text, 1, Extn,
+                                                  DDLDocumentMedia.Items[0].Selected == true ? "true" : "false", DDLDocumentMedia.Items[1].Selected == true ? "true" : "false", DDLDocumentMedia.Items[2].Selected == true ? "true" : "false", DDLDocumentMedia.Items[3].Selected == true ? "true" : "false",
+                                                  DDLDocumentMedia.Items[4].Selected == true ? "true" : "false", DDLDocumentMedia.Items[5].Selected == true ? "true" : "false", CoverPagePath, txtremarks.Text, txtFileRefNumber.Text, cStatus,
+                                                  new Guid(ds.Tables[0].Rows[0]["FlowStep1_UserUID"].ToString()), CDate1, new Guid(ds.Tables[0].Rows[0]["FlowStep2_UserUID"].ToString()), CDate2, new Guid(ds.Tables[0].Rows[0]["FlowStep3_UserUID"].ToString()), CDate3, new Guid(ds.Tables[0].Rows[0]["FlowStep4_UserUID"].ToString()), CDate4, new Guid(ds.Tables[0].Rows[0]["FlowStep5_UserUID"].ToString()), CDate5,
+                                                  new Guid(ds.Tables[0].Rows[0]["FlowStep6_UserUID"].ToString()), CDate6,
+                                                  User7, CDate7,
+                                                  User8, CDate8,
+                                                  User9, CDate9,
+                                                  User10, CDate10,
+                                                  User11, CDate11,
+                                                  User12, CDate12,
+                                                  User13, CDate13,
+                                                  User14, CDate14,
+                                                  User15, CDate15,
+                                                  User16, CDate16,
+                                                  User17, CDate17,
+                                                  User18, CDate18,
+                                                  User19, CDate19,
+                                                  User20, CDate20,
+                                                  RBLOriginator.SelectedValue, Document_Date, "", "", UploadFilePhysicalpath, CoverLetterUID, RBLSubmissionType.SelectedValue,steps);
                                                 if (cnt <= 0)
                                                 {
                                                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "Error", "<script language='javascript'>alert('Error:11,There is some problem while inserting document. Please contact administrator');</script>");
@@ -978,7 +1167,7 @@ namespace ProjectManager._modal_pages
                                             sDate4 = getdata.ConvertDateFormat(sDate4);
                                             CDate4 = Convert.ToDateTime(sDate4);
 
-                                            sDate5 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep4_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                            sDate5 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep5_TargetDate"].ToString()).ToString("dd/MM/yyyy");
                                             //sDate5 = sDate5.Split('/')[1] + "/" + sDate5.Split('/')[0] + "/" + sDate5.Split('/')[2];
                                             sDate5 = getdata.ConvertDateFormat(sDate5);
                                             CDate5 = Convert.ToDateTime(sDate5);
@@ -1229,7 +1418,7 @@ namespace ProjectManager._modal_pages
                                                             Page.ClientScript.RegisterStartupScript(Page.GetType(), "Error", "<script language='javascript'>alert('Error:11,There is some problem while inserting document. Please contact administrator');</script>");
                                                         }
                                                     }
-                                                    else
+                                                    else if (dsFlow.Tables[0].Rows[0]["Steps_Count"].ToString() == "5")
                                                     {
                                                         Flow1DisplayName = dsFlow.Tables[0].Rows[0]["FlowStep1_DisplayName"].ToString();
                                                         Flow2DisplayName = dsFlow.Tables[0].Rows[0]["FlowStep2_DisplayName"].ToString();
@@ -1253,7 +1442,7 @@ namespace ProjectManager._modal_pages
                                                         sDate3 = getdata.ConvertDateFormat(sDate3);
                                                         CDate3 = Convert.ToDateTime(sDate3);
 
-                                                        sDate4 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep4_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                        sDate4 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep5_TargetDate"].ToString()).ToString("dd/MM/yyyy");
                                                         //sDate4 = sDate4.Split('/')[1] + "/" + sDate4.Split('/')[0] + "/" + sDate4.Split('/')[2];
                                                         sDate4 = getdata.ConvertDateFormat(sDate4);
                                                         CDate4 = Convert.ToDateTime(sDate4);
@@ -1275,6 +1464,185 @@ namespace ProjectManager._modal_pages
                                                             Page.ClientScript.RegisterStartupScript(this.GetType(), "Progress Bar", "ShowProgressBar('false')", true);
                                                         }
                                                     }
+                                                    else // for all flows with step > 5 ( 6 to 20) added on 07/03/2022
+                                                    {
+
+
+                                                        sDate1 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep1_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                        //sDate1 = sDate1.Split('/')[1] + "/" + sDate1.Split('/')[0] + "/" + sDate1.Split('/')[2];
+                                                        sDate1 = getdata.ConvertDateFormat(sDate1);
+                                                        CDate1 = Convert.ToDateTime(sDate1);
+
+
+                                                        sDate2 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep2_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                        //sDate2 = sDate2.Split('/')[1] + "/" + sDate2.Split('/')[0] + "/" + sDate2.Split('/')[2];
+                                                        sDate2 = getdata.ConvertDateFormat(sDate2);
+                                                        CDate2 = Convert.ToDateTime(sDate2);
+
+                                                        sDate3 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep3_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                        //sDate3 = sDate3.Split('/')[1] + "/" + sDate3.Split('/')[0] + "/" + sDate3.Split('/')[2];
+                                                        sDate3 = getdata.ConvertDateFormat(sDate3);
+                                                        CDate3 = Convert.ToDateTime(sDate3);
+
+
+                                                        sDate4 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep4_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                        //sDate4 = sDate4.Split('/')[1] + "/" + sDate4.Split('/')[0] + "/" + sDate4.Split('/')[2];
+                                                        sDate4 = getdata.ConvertDateFormat(sDate4);
+                                                        CDate4 = Convert.ToDateTime(sDate4);
+
+                                                        sDate5 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep5_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                        //sDate5 = sDate5.Split('/')[1] + "/" + sDate5.Split('/')[0] + "/" + sDate5.Split('/')[2];
+                                                        sDate5 = getdata.ConvertDateFormat(sDate5);
+                                                        CDate5 = Convert.ToDateTime(sDate5);
+
+                                                        sDate6 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep6_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                        //sDate5 = sDate5.Split('/')[1] + "/" + sDate5.Split('/')[0] + "/" + sDate5.Split('/')[2];
+                                                        sDate6 = getdata.ConvertDateFormat(sDate6);
+                                                        CDate6 = Convert.ToDateTime(sDate6);
+
+                                                        int steps = int.Parse(dsFlow.Tables[0].Rows[0]["Steps_Count"].ToString());
+                                                        Guid User7 = Guid.NewGuid(), User8 = Guid.NewGuid(), User9 = Guid.NewGuid(), User10 = Guid.NewGuid(), User11 = Guid.NewGuid(), User12 = Guid.NewGuid(), User13 = Guid.NewGuid(), User14 = Guid.NewGuid(), User15 = Guid.NewGuid(), User16 = Guid.NewGuid(), User17 = Guid.NewGuid(), User18 = Guid.NewGuid(), User19 = Guid.NewGuid(), User20 = Guid.NewGuid();
+
+                                                        if (steps >= 7)
+                                                        {
+                                                            sDate7 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep7_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate7 = getdata.ConvertDateFormat(sDate7);
+                                                            CDate7 = Convert.ToDateTime(sDate7);
+                                                            User7 = new Guid(ds.Tables[0].Rows[0]["FlowStep7_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 8)
+                                                        {
+                                                            sDate8 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep8_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate8 = getdata.ConvertDateFormat(sDate8);
+                                                            CDate8 = Convert.ToDateTime(sDate8);
+                                                            User8 = new Guid(ds.Tables[0].Rows[0]["FlowStep8_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 9)
+                                                        {
+                                                            sDate9 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep9_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate9 = getdata.ConvertDateFormat(sDate9);
+                                                            CDate9 = Convert.ToDateTime(sDate9);
+                                                            User9 = new Guid(ds.Tables[0].Rows[0]["FlowStep9_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 10)
+                                                        {
+                                                            sDate10 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep10_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate10 = getdata.ConvertDateFormat(sDate10);
+                                                            CDate10 = Convert.ToDateTime(sDate10);
+                                                            User10 = new Guid(ds.Tables[0].Rows[0]["FlowStep10_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 11)
+                                                        {
+                                                            sDate11 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep11_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate11 = getdata.ConvertDateFormat(sDate11);
+                                                            CDate11 = Convert.ToDateTime(sDate11);
+                                                            User11 = new Guid(ds.Tables[0].Rows[0]["FlowStep11_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 12)
+                                                        {
+                                                            sDate12 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep12_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate12 = getdata.ConvertDateFormat(sDate12);
+                                                            CDate12 = Convert.ToDateTime(sDate12);
+                                                            User12 = new Guid(ds.Tables[0].Rows[0]["FlowStep12_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 13)
+                                                        {
+                                                            sDate13 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep13_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate13 = getdata.ConvertDateFormat(sDate13);
+                                                            CDate13 = Convert.ToDateTime(sDate13);
+                                                            User13 = new Guid(ds.Tables[0].Rows[0]["FlowStep13_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 14)
+                                                        {
+                                                            sDate14 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep14_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate14 = getdata.ConvertDateFormat(sDate14);
+                                                            CDate14 = Convert.ToDateTime(sDate14);
+                                                            User14 = new Guid(ds.Tables[0].Rows[0]["FlowStep14_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 15)
+                                                        {
+                                                            sDate15 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep15_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate15 = getdata.ConvertDateFormat(sDate15);
+                                                            CDate15 = Convert.ToDateTime(sDate15);
+                                                            User15 = new Guid(ds.Tables[0].Rows[0]["FlowStep15_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 16)
+                                                        {
+                                                            sDate16 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep16_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate16 = getdata.ConvertDateFormat(sDate16);
+                                                            CDate16 = Convert.ToDateTime(sDate16);
+                                                            User16 = new Guid(ds.Tables[0].Rows[0]["FlowStep16_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 17)
+                                                        {
+                                                            sDate17 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep17_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate17 = getdata.ConvertDateFormat(sDate17);
+                                                            CDate17 = Convert.ToDateTime(sDate17);
+                                                            User17 = new Guid(ds.Tables[0].Rows[0]["FlowStep17_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 18)
+                                                        {
+                                                            sDate18 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep18_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate18 = getdata.ConvertDateFormat(sDate18);
+                                                            CDate18 = Convert.ToDateTime(sDate18);
+                                                            User18 = new Guid(ds.Tables[0].Rows[0]["FlowStep18_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 19)
+                                                        {
+                                                            sDate19 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep19_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate19 = getdata.ConvertDateFormat(sDate19);
+                                                            CDate19 = Convert.ToDateTime(sDate19);
+                                                            User19 = new Guid(ds.Tables[0].Rows[0]["FlowStep19_UserUID"].ToString());
+                                                        }
+
+                                                        if (steps >= 20)
+                                                        {
+                                                            sDate20 = Convert.ToDateTime(ds.Tables[0].Rows[0]["FlowStep20_TargetDate"].ToString()).ToString("dd/MM/yyyy");
+                                                            sDate20 = getdata.ConvertDateFormat(sDate20);
+                                                            CDate20 = Convert.ToDateTime(sDate20);
+                                                            User20 = new Guid(ds.Tables[0].Rows[0]["FlowStep20_UserUID"].ToString());
+                                                        }
+
+                                                        int cnt = getdata.Document_Insert_or_Update_with_RelativePath_FlowAll(ActualDocumentUID, new Guid(projectId), new Guid(workpackageid), new Guid(sDocumentUID), txtprefnumber.Text, txtRefNumber.Text,
+                                                          DocumentFor, IncomingRec_Date, new Guid(ds.Tables[0].Rows[0]["FlowUID"].ToString()), sFileName, txtdesc.Text, 1, Extn,
+                                                          DDLDocumentMedia.Items[0].Selected == true ? "true" : "false", DDLDocumentMedia.Items[1].Selected == true ? "true" : "false", DDLDocumentMedia.Items[2].Selected == true ? "true" : "false", DDLDocumentMedia.Items[3].Selected == true ? "true" : "false",
+                                                          DDLDocumentMedia.Items[4].Selected == true ? "true" : "false", DDLDocumentMedia.Items[5].Selected == true ? "true" : "false", CoverPagePath, txtremarks.Text, txtFileRefNumber.Text, cStatus,
+                                                          new Guid(ds.Tables[0].Rows[0]["FlowStep1_UserUID"].ToString()), CDate1, new Guid(ds.Tables[0].Rows[0]["FlowStep2_UserUID"].ToString()), CDate2, new Guid(ds.Tables[0].Rows[0]["FlowStep3_UserUID"].ToString()), CDate3, new Guid(ds.Tables[0].Rows[0]["FlowStep4_UserUID"].ToString()), CDate4, new Guid(ds.Tables[0].Rows[0]["FlowStep5_UserUID"].ToString()), CDate5,
+                                                          new Guid(ds.Tables[0].Rows[0]["FlowStep6_UserUID"].ToString()), CDate6,
+                                                          User7, CDate7,
+                                                          User8, CDate8,
+                                                          User9, CDate9,
+                                                          User10, CDate10,
+                                                          User11, CDate11,
+                                                          User12, CDate12,
+                                                          User13, CDate13,
+                                                          User14, CDate14,
+                                                          User15, CDate15,
+                                                          User16, CDate16,
+                                                          User17, CDate17,
+                                                          User18, CDate18,
+                                                          User19, CDate19,
+                                                          User20, CDate20,
+                                                          RBLOriginator.SelectedValue, Document_Date, "", "", UploadFilePhysicalpath, CoverLetterUID, RBLSubmissionType.SelectedValue, steps);
+                                                        if (cnt <= 0)
+                                                        {
+                                                            Page.ClientScript.RegisterStartupScript(Page.GetType(), "Error", "<script language='javascript'>alert('Error:11,There is some problem while inserting document. Please contact administrator');</script>");
+                                                            Page.ClientScript.RegisterStartupScript(this.GetType(), "Progress Bar", "ShowProgressBar('false')", true);
+                                                        }
+                                                    }
+
 
                                                 }
 
