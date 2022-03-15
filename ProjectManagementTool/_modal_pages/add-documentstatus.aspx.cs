@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ProjectManager;
 
 namespace ProjectManagementTool._modal_pages
 {
@@ -144,13 +145,14 @@ namespace ProjectManagementTool._modal_pages
 
         protected void btnSubmit_Click(object sender, EventArgs e) //final submit
         {
-            if (DDlStatus.SelectedItem.ToString() == "Closed")
+            if (DDlStatus.SelectedItem.ToString() == "Closed" || DDlStatus.SelectedItem.ToString().Contains("AE Approval") || DDlStatus.SelectedItem.ToString().Contains("AEE Approval") || DDlStatus.SelectedItem.ToString().Contains("EE Approval") || DDlStatus.SelectedItem.ToString().Contains("ACE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString().Contains("Meeting with EE or CE") || DDlStatus.SelectedItem.ToString().Contains("Rejected"))
             {
                 try
                 {
                     if (dtStartdate.Text == "" || dtStartdate.Text == "dd/MM/YYYY")
                     {
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Please enter Actual Date.');</script>");
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Please enter Incmg Recived Date/Approval Date.');</script>");
+                        dtStartdate.Focus();
                         return;
                     }
                     string DocPath = "";
@@ -168,8 +170,30 @@ namespace ProjectManagementTool._modal_pages
                         StatusUID = Guid.NewGuid();
                         Subject = Session["Username"].ToString() + " added a new Status";
                     }
+                    //
+                    if (DDlStatus.SelectedItem.ToString().Contains("AE Approval") || DDlStatus.SelectedItem.ToString().Contains("EE Approval") || DDlStatus.SelectedItem.ToString().Contains("ACE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval"))
+                    {
+                        divPassword.Visible = true;
 
-                    string sDate1 = "";
+                        if (txtPassword.Text == "")
+                        {
+                            Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Please enter your Password to go ahead !.');</script>");
+                            txtPassword.Focus();
+                            return;
+                        }
+                        else
+                        {
+                            DataSet ds = getdata.CheckLogin(Session["UserID"].ToString(), Security.Encrypt(txtPassword.Text));
+                            if (ds.Tables[0].Rows.Count == 0)
+                            {
+                                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Password is wrong !.');</script>");
+                                txtPassword.Focus();
+                                return;
+                            }
+                        }
+                    }
+
+                        string sDate1 = "";
                     DateTime CDate1 = DateTime.Now;
                     //
                     sDate1 = dtStartdate.Text;
@@ -180,11 +204,33 @@ namespace ProjectManagementTool._modal_pages
                     DateTime lastUpdated = getdata.GetDocumentMax_ActualDate(new Guid(Request.QueryString["DocID"]));
                     if (lastUpdated.Date > CDate1.Date)
                     {
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Actual Date should be greater than previous date.');</script>");
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Actual Date/Incmg Recieved Date should be greater than previous date.');</script>");
                     }
                     else
                     {
+                        //---------------------------------------------------
+                        if (FileUploadDoc.HasFile)
+                        {
+                            //string projectName = getdata.getProjectNameby_ProjectUID(new Guid(Request.QueryString["PrjUID"].ToString()));
+                            string LinkPath = Request.QueryString["ProjectUID"] + "/" + StatusUID + "/Link Document";
+                            if (!Directory.Exists(Server.MapPath(LinkPath)))
+                            {
+                                Directory.CreateDirectory(Server.MapPath(LinkPath));
+                            }
+                            string sFileName = Path.GetFileNameWithoutExtension(FileUploadDoc.FileName);
+                            string Extn = System.IO.Path.GetExtension(FileUploadDoc.FileName);
 
+                            FileUploadDoc.SaveAs(Server.MapPath(LinkPath + "/" + sFileName + "_1_copy" + Extn));
+                            //FileUploadDoc.SaveAs(Server.MapPath("~/Documents/Encrypted/" + StatusUID + "_" + "1" + "_enp" + InputFile));
+                            string savedPath = LinkPath + "/" + sFileName + "_1_copy" + Extn;
+                            DocPath = LinkPath + "/" + sFileName + "_1" + Extn;
+                            getdata.EncryptFile(Server.MapPath(savedPath), Server.MapPath(DocPath));
+
+                            //DocPath = "~/Documents/" + projectName + "/" + StatusUID + "_" + "1" + InputFile;
+                            //EncryptFile(Server.MapPath(savedPath), Server.MapPath(DocPath));
+                            //  File.Encrypt(Server.MapPath(DocPath));
+                        }
+                        //-------------------------------------------
                         string DocumentDate = string.Empty;
                         if (dtDocumentDate.Text != "")
                         {
@@ -263,8 +309,22 @@ namespace ProjectManagementTool._modal_pages
                                         {
                                             CC += ds.Tables[0].Rows[i]["EmailID"].ToString() + ",";
                                         }
+                                       
                                     }
                                 }
+                                // added on 14/03/2022 to store mail for Contractor........
+                                if (DDlStatus.SelectedItem.ToString().Contains("AE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString() == "PMC Specialist Review")
+                                {
+                                    DataSet dsMUSers = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 1);
+                                    if (dsMUSers.Tables[0].Rows.Count > 0)
+                                    {
+                                        foreach (DataRow druser in dsMUSers.Tables[0].Rows)
+                                        {
+                                            CC += getdata.GetUserEmail_By_UserUID_New(new Guid(druser["Approver"].ToString())) + ",";
+                                        }
+                                    }
+                                }
+                                //
                                 CC = CC.TrimEnd(',');
                                 sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
                                   "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "<style>table, th, td {border: 1px solid black; padding:6px;}</style></head>" +
@@ -342,7 +402,7 @@ namespace ProjectManagementTool._modal_pages
                 }
                 if (dtStartdate.Text == "" || dtStartdate.Text == "dd/MM/YYYY")
                 {
-                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Please enter Actual Date.');</script>");
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Please enter Incmg Recived Date/Approval Date.');</script>");
                     return;
                 }
 
@@ -484,8 +544,22 @@ namespace ProjectManagementTool._modal_pages
                                             {
                                                 CC += ds.Tables[0].Rows[i]["EmailID"].ToString() + ",";
                                             }
+                                           
                                         }
                                     }
+                                    // added on 14/03/2022 to store mail for Contractor........
+                                    if (DDlStatus.SelectedItem.ToString().Contains("AEE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString() == "PMC Specialist Review")
+                                    {
+                                        DataSet dsMUSers = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 1);
+                                        if (dsMUSers.Tables[0].Rows.Count > 0)
+                                        {
+                                            foreach (DataRow druser in dsMUSers.Tables[0].Rows)
+                                            {
+                                                CC += getdata.GetUserEmail_By_UserUID_New(new Guid(druser["Approver"].ToString())) + ",";
+                                            }
+                                        }
+                                    }
+                                    //
                                     CC = CC.TrimEnd(',');
                                     sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
                                       "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "<style>table, th, td {border: 1px solid black; padding:6px;}</style></head>" +
@@ -559,17 +633,17 @@ namespace ProjectManagementTool._modal_pages
                                     sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Monitoring Tool.</div></div></body></html>";
                                     Subject = Subject + ".Kindly complete the next step !";
                                     string next = string.Empty;
+                                    DataSet dsNxtUser = new DataSet();
                                     foreach (DataRow dr in dsNext.Tables[0].Rows)
                                     {
-                                        string NextUser = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"]), int.Parse(dr["ForFlow_Step"].ToString()));
-                                        if (!string.IsNullOrEmpty(NextUser))
+                                        dsNxtUser = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"]), int.Parse(dr["ForFlow_Step"].ToString()));
+                                        foreach (DataRow druser in dsNxtUser.Tables[0].Rows)
                                         {
-                                            ToEmailID = getdata.GetUserEmail_By_UserUID_New(new Guid(NextUser));
-                                            if (ToEmailID != next)
+                                            ToEmailID = getdata.GetUserEmail_By_UserUID_New(new Guid(druser["Approver"].ToString()));
+                                            if (!next.Contains(ToEmailID))
                                             {
-                                                
                                                 getdata.StoreEmaildataToMailQueue(Guid.NewGuid(), new Guid(Session["UserUID"].ToString()), dtemailCred.Rows[0][0].ToString(), ToEmailID, Subject, sHtmlString, "", "");
-                                                next = ToEmailID;
+                                                next += ToEmailID;
                                             }
                                            
                                         }

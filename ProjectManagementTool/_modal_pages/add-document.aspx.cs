@@ -355,6 +355,14 @@ namespace ProjectManager._modal_pages
                     if (ds.Tables[0].Rows.Count > 0)
                     {
                         string cStatus = "Submitted";
+                        DataSet dsFlowcheck =getdata.GetDocumentFlows_by_UID(new Guid(ds.Tables[0].Rows[0]["FlowUID"].ToString()));
+                        if (dsFlowcheck.Tables[0].Rows[0]["Type"] != DBNull.Value)
+                        {
+                            if (dsFlowcheck.Tables[0].Rows[0]["Type"].ToString() == "STP")
+                            {
+                                cStatus = "Reconciliation";
+                            }
+                        }
                         string FileDatetime = DateTime.Now.ToString("dd MMM yyyy hh-mm-ss tt");
                         string sDocumentPath = string.Empty;
                         string DocumentFor = "";
@@ -1795,17 +1803,17 @@ namespace ProjectManager._modal_pages
                             sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Monitoring Tool.</div></div></body></html>";
                             
                             string next = string.Empty;
+                            DataSet dsNxtUser = new DataSet();
                             foreach (DataRow dr in dsNext.Tables[0].Rows)
                             {
-                                string NextUser = getdata.GetNextUser_By_DocumentUID(ActualDocumentUID, int.Parse(dr["ForFlow_Step"].ToString()));
-                                if (!string.IsNullOrEmpty(NextUser))
+                                dsNxtUser = getdata.GetNextUser_By_DocumentUID(ActualDocumentUID, int.Parse(dr["ForFlow_Step"].ToString()));
+                                foreach (DataRow druser in dsNxtUser.Tables[0].Rows)
                                 {
-                                    ToEmailID = getdata.GetUserEmail_By_UserUID_New(new Guid(NextUser));
-                                    if (ToEmailID != next)
+                                    ToEmailID = getdata.GetUserEmail_By_UserUID_New(new Guid(druser["Approver"].ToString()));
+                                    if (!next.Contains(ToEmailID))
                                     {
-
                                         getdata.StoreEmaildataToMailQueue(Guid.NewGuid(), new Guid(Session["UserUID"].ToString()), dtemailCred.Rows[0][0].ToString(), ToEmailID, "Documents Uploaded !.Kindly complete the next step !", sHtmlString, "", "");
-                                        next = ToEmailID;
+                                        next += ToEmailID;
                                     }
 
                                 }

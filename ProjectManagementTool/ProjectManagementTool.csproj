@@ -191,6 +191,7 @@
     <Content Include="_modal_pages\add-conactivity.aspx" />
     <Content Include="_modal_pages\add-domaindetails.aspx" />
     <Content Include="_modal_pages\add-Fin-Month-data.aspx" />
+    <Content Include="_modal_pages\add-flow-master.aspx" />
     <Content Include="_modal_pages\add-general-document.aspx" />
     <Content Include="_modal_pages\add-generaldocumentstructure.aspx" />
     <Content Include="_modal_pages\add-Insurance.aspx" />
@@ -856,6 +857,13 @@
     </Compile>
     <Compile Include="_modal_pages\add-Fin-Month-data.aspx.designer.cs">
       <DependentUpon>add-Fin-Month-data.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_modal_pages\add-flow-master.aspx.cs">
+      <DependentUpon>add-flow-master.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_modal_pages\add-flow-master.aspx.designer.cs">
+      <DependentUpon>add-flow-master.aspx</DependentUpon>
     </Compile>
     <Compile Include="_modal_pages\add-general-document.aspx.cs">
       <DependentUpon>add-general-document.aspx</DependentUpon>

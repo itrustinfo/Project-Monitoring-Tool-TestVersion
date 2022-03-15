@@ -109,6 +109,7 @@ namespace ProjectManager._content_pages
                     //    lblONTBTo_No.Text = ds.Tables[0].Rows[0]["SourceDocCount"].ToString() != "" ? ds.Tables[0].Rows[0]["SourceDocCount"].ToString() : "0";
 
                     //}
+                    lblReconDocsNo.Text = getdt.GetDashboardReconciliationDocs(new Guid(DDlProject.SelectedValue)).ToString();
                     lblContractorToNo.Text = getdt.GetDashboardContractotDocsSubmitted(new Guid(DDlProject.SelectedValue)).ToString();
                     lblONTBTo_No.Text = getdt.GetDashboardONTBtoContractorDocs(new Guid(DDlProject.SelectedValue)).ToString();
                     //lblONTBTo_No.Text = (int.Parse(lblONTBTo_No.Text) - int.Parse(lblContractorToNo.Text)) > 0  ? (int.Parse(lblONTBTo_No.Text) - int.Parse(lblContractorToNo.Text)).ToString() : "0";
@@ -124,6 +125,7 @@ namespace ProjectManager._content_pages
                     hlBankGuarantee.HRef = "~/_content_pages/bank-guarantee/?&PrjUID=" + DDlProject.SelectedValue;
                     hlInsurance.HRef = "~/_content_pages/insurance/?&PrjUID=" + DDlProject.SelectedValue;
                     hlContractor.HRef = "~/_content_pages/documents-contractor/?&type=Contractor&PrjUID=" + DDlProject.SelectedValue;
+                    hlReconciliationdocs.HRef = "~/_content_pages/documents-contractor/?&type=Recon&PrjUID=" + DDlProject.SelectedValue;
                     hlONTB.HRef = "~/_content_pages/documents-contractor/?&type=Ontb&PrjUID=" + DDlProject.SelectedValue;
                     hlMeasurement.HRef = "~/_content_pages/dashboard-measurment/?&WorkPackageUID=" + DDLWorkPackage.SelectedValue;
                 }
@@ -1234,6 +1236,7 @@ vAxes: {
             string[] selectedValue = HttpContext.Current.Session["Project_Workpackage"].ToString().Split('_');
             
             DataSet ds = dbget.GetNextUserDocuments(new Guid(selectedValue[0]), new Guid(selectedValue[1]));
+            DataSet dsNxtUser = new DataSet();
             foreach (DataRow drnext in ds.Tables[0].Rows)
             {
                 DataSet dsTop = dbget.getTop1_DocumentStatusSelect(new Guid(drnext["ActualDocumentUID"].ToString()));
@@ -1241,24 +1244,25 @@ vAxes: {
 
                 foreach (DataRow dr in dsNext.Tables[0].Rows)
                 {
-                    string NextUser = dbget.GetNextUser_By_DocumentUID(new Guid(drnext["ActualDocumentUID"].ToString()), int.Parse(dr["ForFlow_Step"].ToString()));
-                    if (!string.IsNullOrEmpty(NextUser))
+                    dsNxtUser = new DataSet();
+                    dsNxtUser = dbget.GetNextUser_By_DocumentUID(new Guid(drnext["ActualDocumentUID"].ToString()), int.Parse(dr["ForFlow_Step"].ToString()));
+                    if (dsNxtUser.Tables[0].Rows.Count > 0)
                     {
-                        if (HttpContext.Current.Session["UserUID"].ToString().ToUpper() == NextUser.ToUpper())
+                        foreach (DataRow druser in dsNxtUser.Tables[0].Rows)
                         {
-                            docscount = docscount + 1;
-                            goto afterloop;
-                        }
-                        else
-                        {
-                            
+                            if (HttpContext.Current.Session["UserUID"].ToString().ToUpper() == druser["Approver"].ToString().ToUpper())
+                            {
+                                docscount = docscount + 1;
+                                goto afterloop;
+                            }
+                            else
+                            {
 
+
+                            }
                         }
                     }
-                    else
-                    {
-                       
-                    }
+                   
                 }
 
                 afterloop:

@@ -97,6 +97,7 @@ namespace ProjectManagementTool
                         if (login)
                         {
                             Session["Username"] = ds.Tables[0].Rows[0]["FirstName"].ToString();
+                            Session["UserID"] = ds.Tables[0].Rows[0]["UserName"].ToString();
                             Session["UserUID"] = ds.Tables[0].Rows[0]["UserUID"].ToString();
                             Session["TypeOfUser"] = ds.Tables[0].Rows[0]["TypeOfUser"].ToString();
                             Session["IsContractor"] = ds.Tables[0].Rows[0]["IsContractor"].ToString();

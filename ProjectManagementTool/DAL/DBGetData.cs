@@ -9140,7 +9140,7 @@ namespace ProjectManager.DAL
             try
             {
                 SqlConnection con = new SqlConnection(db.GetConnectionString());
-                SqlDataAdapter cmd = new SqlDataAdapter("GetUsers_under_ProjectUID", con);
+                SqlDataAdapter cmd = new SqlDataAdapter("GetUsers_under_WorkpackageUID", con);
                 cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
                 cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
                 cmd.Fill(ds);
@@ -18119,27 +18119,24 @@ namespace ProjectManager.DAL
         }
 
         // added on 06/01/2022
-        public string GetNextUser_By_DocumentUID(Guid ActualDocumentUID,int step)
+        public DataSet GetNextUser_By_DocumentUID(Guid ActualDocumentUID,int step)
         {
-            string UserUID = "";
-            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            DataSet ds = new DataSet();
             try
             {
-
-                if (con.State == ConnectionState.Closed) con.Open();
-                SqlCommand cmd = new SqlCommand("GetNextUser_By_DocumentUID", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ActualDocumentUID", ActualDocumentUID);
-                cmd.Parameters.AddWithValue("@step", step);
-                UserUID = (string)cmd.ExecuteScalar();
-                con.Close();
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("GetNextUser_By_DocumentUID", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ActualDocumentUID", ActualDocumentUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@step", step);
+                cmd.Fill(ds);
             }
             catch (Exception ex)
             {
-                UserUID = "Error : " + ex.Message;
-                if (con.State == ConnectionState.Open) con.Close();
+                ds = null;
             }
-            return UserUID;
+            return ds;
+            
         }
 
         public DataSet GetNextStep_By_DocumentUID(Guid ActualDocumentUID,string CurrentStatus)
@@ -18713,7 +18710,7 @@ namespace ProjectManager.DAL
           Guid Doc_Category, string Doc_RefNumber, string Doc_Type, double Doc_Budget, Guid FlowUID, DateTime Flow_StartDate,
           Guid FlowStep1_UserUID, DateTime FlowStep1_TargetDate, Guid FlowStep2_UserUID, DateTime FlowStep2_TargetDate,
           Guid FlowStep3_UserUID, DateTime FlowStep3_TargetDate, Guid FlowStep4_UserUID, DateTime FlowStep4_TargetDate, Guid FlowStep5_UserUID, DateTime FlowStep5_TargetDate, int EstimatedDocuments, string Remarks, string DocumentSearchType, string IsSynch,
-          Guid FlowSte6_UserUID, DateTime FlowStep6_TargetDate,
+          Guid FlowStep6_UserUID, DateTime FlowStep6_TargetDate,
           Guid FlowStep7_UserUID, DateTime FlowStep7_TargetDate,
           Guid FlowStep8_UserUID, DateTime FlowStep8_TargetDate,
           Guid FlowStep9_UserUID, DateTime FlowStep9_TargetDate,
@@ -18727,7 +18724,26 @@ namespace ProjectManager.DAL
           Guid FlowStep17_UserUID, DateTime FlowStep17_TargetDate,
           Guid FlowStep18_UserUID, DateTime FlowStep18_TargetDate,
           Guid FlowStep19_UserUID, DateTime FlowStep19_TargetDate,
-          Guid FlowStep20_UserUID, DateTime FlowStep20_TargetDate,int step)
+          Guid FlowStep20_UserUID, DateTime FlowStep20_TargetDate,int step,string FlowStep1_IsMUser,
+          string FlowStep2_IsMUser,
+          string FlowStep3_IsMUser,
+          string FlowStep4_IsMUser,
+          string FlowStep5_IsMUser,
+          string FlowStep6_IsMUser,
+          string FlowStep7_IsMUser,
+          string FlowStep8_IsMUser,
+          string FlowStep9_IsMUser,
+          string FlowStep10_IsMUser,
+          string FlowStep11_IsMUser,
+          string FlowStep12_IsMUser,
+          string FlowStep13_IsMUser,
+          string FlowStep14_IsMUser,
+          string FlowStep15_IsMUser,
+          string FlowStep16_IsMUser,
+          string FlowStep17_IsMUser,
+          string FlowStep18_IsMUser,
+          string FlowStep19_IsMUser,
+          string FlowStep20_IsMUser)
         {
             int sresult = 0;
             try
@@ -18765,77 +18781,97 @@ namespace ProjectManager.DAL
                         cmd.Parameters.AddWithValue("@DocumentSearchType", DocumentSearchType);
                         cmd.Parameters.AddWithValue("@IsSync", IsSynch);
                         //
-                        cmd.Parameters.AddWithValue("@FlowStep6_UserUID", FlowStep1_UserUID);
-                        cmd.Parameters.AddWithValue("@FlowStep6_TargetDate", FlowStep1_TargetDate);
+                        cmd.Parameters.AddWithValue("@FlowStep1_IsMUser", FlowStep1_IsMUser);
+                        cmd.Parameters.AddWithValue("@FlowStep2_IsMUser", FlowStep2_IsMUser);
+                        cmd.Parameters.AddWithValue("@FlowStep3_IsMUser", FlowStep3_IsMUser);
+                        cmd.Parameters.AddWithValue("@FlowStep4_IsMUser", FlowStep4_IsMUser);
+                        cmd.Parameters.AddWithValue("@FlowStep5_IsMUser", FlowStep5_IsMUser);
+                        cmd.Parameters.AddWithValue("@FlowStep6_IsMUser", FlowStep6_IsMUser);
+                        cmd.Parameters.AddWithValue("@FlowStep6_UserUID", FlowStep6_UserUID);
+                        cmd.Parameters.AddWithValue("@FlowStep6_TargetDate", FlowStep6_TargetDate);
                         if (step >= 7)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep7_UserUID", FlowStep7_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep7_TargetDate", FlowStep7_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep7_IsMUser", FlowStep7_IsMUser); 
                         }
                         if (step >= 8)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep8_UserUID", FlowStep8_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep8_TargetDate", FlowStep8_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep8_IsMUser", FlowStep8_IsMUser);
                         }
                         if (step >= 9)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep9_UserUID", FlowStep9_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep9_TargetDate", FlowStep9_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep9_IsMUser", FlowStep9_IsMUser);
                         }
                         if (step >= 10)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep10_UserUID", FlowStep10_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep10_TargetDate", FlowStep10_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep10_IsMUser", FlowStep10_IsMUser);
                         }
                         if (step >= 11)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep11_UserUID", FlowStep11_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep11_TargetDate", FlowStep11_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep11_IsMUser", FlowStep11_IsMUser);
                         }
                         if (step >= 12)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep12_UserUID", FlowStep12_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep12_TargetDate", FlowStep12_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep12_IsMUser", FlowStep12_IsMUser);
                         }
                         if (step >= 13)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep13_UserUID", FlowStep13_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep13_TargetDate", FlowStep13_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep13_IsMUser", FlowStep13_IsMUser);
                         }
                         if (step >= 14)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep14_UserUID", FlowStep14_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep14_TargetDate", FlowStep14_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep14_IsMUser", FlowStep14_IsMUser);
                         }
                         if (step >= 15)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep15_UserUID", FlowStep15_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep15_TargetDate", FlowStep15_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep15_IsMUser", FlowStep15_IsMUser);
                         }
                         if (step >= 16)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep16_UserUID", FlowStep16_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep16_TargetDate", FlowStep16_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep16_IsMUser", FlowStep16_IsMUser);
                         }
                         if (step >= 17)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep17_UserUID", FlowStep17_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep17_TargetDate", FlowStep17_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep17_IsMUser", FlowStep17_IsMUser);
                         }
                         if (step >= 18)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep18_UserUID", FlowStep18_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep18_TargetDate", FlowStep18_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep18_IsMUser", FlowStep18_IsMUser);
                         }
                         if (step >= 19)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep19_UserUID", FlowStep19_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep19_TargetDate", FlowStep19_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep19_IsMUser", FlowStep19_IsMUser);
                         }
                         if (step == 20)
                         {
                             cmd.Parameters.AddWithValue("@FlowStep20_UserUID", FlowStep20_UserUID);
                             cmd.Parameters.AddWithValue("@FlowStep20_TargetDate", FlowStep20_TargetDate);
+                            cmd.Parameters.AddWithValue("@FlowStep20_IsMUser", FlowStep20_IsMUser);
                         }
                         con.Open();
                         sresult = (int)cmd.ExecuteNonQuery();
@@ -19034,6 +19070,283 @@ namespace ProjectManager.DAL
             }
         }
 
+
+        // added on 09/03/2022
+        public int InsertSubmittal_MultipleUsers(Guid UID, Guid SubmittalUID, Int16 Step, Guid UserUID)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_InsertSubmittal_MultipleUsers"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        con.Open();
+                        cmd.Parameters.AddWithValue("@UID", UID);
+                        cmd.Parameters.AddWithValue("@SubmittalUID", SubmittalUID);
+                        cmd.Parameters.AddWithValue("@Step", Step);
+                        cmd.Parameters.AddWithValue("@UserUID", UserUID);
+                        sresult = cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                sresult = 0;
+            }
+            return sresult;
+        }
+
+        public int DeleteSubmittal_MultipleUsers(Guid SubmittalUID, Int16 Steps)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_DeleteSubmittal_MultipleUsers"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@SubmittalUID", SubmittalUID);
+                        cmd.Parameters.AddWithValue("@Step", Steps);
+                        con.Open();
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = 0;
+            }
+        }
+
+        // added on 10/03/2022
+        public DataTable FlowMasterUser_Select(Guid FlowUID, Guid WorkPackageUID, Guid WorkPackageCategory_UID, int Step)
+        {
+            DataTable ds = new DataTable();
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_Flow_Master_User_Select", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@FlowUID", FlowUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageCategory_UID", WorkPackageCategory_UID);
+                cmd.SelectCommand.Parameters.AddWithValue("@Step", Step);
+                cmd.Fill(ds);
+
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+
+            }
+            return ds;
+        }
+
+        // added on 10/03/2022
+        public DataSet GetMultipleUsers_By_DocumentUID(Guid DocumentUID, int step)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("GetMultipleUsers_By_DocumentUID", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentUID", DocumentUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@step", step);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+
+        }
+
+        // added on 11/03/2022 (Nakib)
+
+        public DataTable GetDocumentFlow()
+        {
+            DataTable ds = new DataTable();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+                    SqlDataAdapter cmd = new SqlDataAdapter("usp_GetDocumentFlow", con);
+                    cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    cmd.Fill(ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+        public DataTable GetWorkpackageCategory(Guid WorkPackageUID)
+        {
+            DataTable ds = new DataTable();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+                    SqlDataAdapter cmd = new SqlDataAdapter("usp_GetWorkpackageCategory", con);
+                    cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                    cmd.Fill(ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+
+            }
+            return ds;
+        }
+
+        public DataTable GetUserDetails_By_WorkpackageCategory(Guid WorkPackageCategory_UID)
+        {
+            DataTable ds = new DataTable();
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetUserDetail_by_WorkPackageCategory", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageCategory_UID", WorkPackageCategory_UID);
+                cmd.Fill(ds);
+
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+
+            }
+            return ds;
+        }
+       
+
+        internal int FlowMasterUser_InsertUpdate(Guid UID, Guid FlowUID, Guid ProjectUID, Guid WorkPackageUID, Guid WorkPackageCategory_UID, int Step, Guid UserUID)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_Flow_Master_User_InsertUpdate"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@UID", UID);
+                        cmd.Parameters.AddWithValue("@FlowUID", FlowUID);
+                        cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                        cmd.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                        cmd.Parameters.AddWithValue("@WorkPackageCategory_UID", WorkPackageCategory_UID);
+                        cmd.Parameters.AddWithValue("@Step", Step);
+                        cmd.Parameters.AddWithValue("@UserUID", UserUID);
+                        cmd.Parameters.AddWithValue("@Created_Date", DateTime.Now);
+                        con.Open();
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = 0;
+            }
+        }
+
+        internal int FlowMasterUser_Delete(Guid UID)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_Flow_Master_User_Delete"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@UID", UID);
+                        con.Open();
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = 0;
+            }
+        }
+
+        // added on 12/03/2022
+        public int GetDashboardReconciliationDocs(Guid ProjectUID)
+        {
+            int result = 0;
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+
+
+                SqlCommand cmd = new SqlCommand("usp_GetDashboardReconciliationDocs", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                SqlParameter parmOUT = new SqlParameter("@Count", SqlDbType.Int);
+                parmOUT.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(parmOUT);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                int returnVALUE = (int)cmd.Parameters["@Count"].Value;
+                result = returnVALUE;
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+
+            }
+            return result;
+        }
+
+        public DataSet GetDashboardReconciliationDocs_Details(Guid ProjectUID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetDashboardReconciliationDocs_Details", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
 
 
     }

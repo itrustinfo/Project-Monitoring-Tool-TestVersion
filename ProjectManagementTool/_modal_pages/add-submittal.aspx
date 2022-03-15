@@ -203,7 +203,7 @@
 
                     <div class="form-group">
                         <label class="lblCss" for="DDlDiscipline">Submittal Category</label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="DDLDocumentCategory" runat="server" CssClass="form-control" required>
+                        <asp:DropDownList ID="DDLDocumentCategory" runat="server" CssClass="form-control" required AutoPostBack="True" OnSelectedIndexChanged="DDLDocumentCategory_SelectedIndexChanged">
                             
                    </asp:DropDownList>
                     </div>
@@ -278,8 +278,9 @@
 
                     <div class="form-group" id="S2Display" runat="server">
                         <asp:Label ID="lblStep2Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="ddlQualityEngg" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                        <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                        <asp:CheckBoxList runat="server" CssClass="form-control" ID="ddlQualityEngg" Height="100px" required></asp:CheckBoxList>
+                            </div>
                     </div>
 
                     <div class="form-group" id="S2Date" runat="server">
@@ -289,8 +290,9 @@
 
                     <div class="form-group" id="S3Display" runat="server">
                         <asp:Label ID="lblStep3Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="ddlReviewer_B" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                       <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                        <asp:CheckBoxList runat="server" CssClass="form-control" ID="ddlReviewer_B" Height="100px" required></asp:CheckBoxList>
+                           </div>
                     </div>
 
                     <div class="form-group" id="S3Date" runat="server">
@@ -300,8 +302,9 @@
 
                     <div class="form-group" id="S4Display" runat="server">
                         <asp:Label ID="lblStep4Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="ddlReviewer" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                         <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                            <asp:CheckBoxList runat="server" CssClass="form-control" ID="ddlReviewer" Height="100px" required></asp:CheckBoxList>
+                           </div>
                     </div>
 
                     <div class="form-group" id="S4Date" runat="server">
@@ -311,8 +314,10 @@
 
                     <div class="form-group" id="S5Display" runat="server">
                         <asp:Label ID="lblStep5Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="ddlApproval" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                       <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                             <asp:CheckBoxList runat="server" CssClass="form-control" ID="ddlApproval" Height="100px" required></asp:CheckBoxList>
+                           </div>
+                  
                     </div>
 
                     <div class="form-group" id="S5Date" runat="server">
@@ -323,8 +328,9 @@
                   <%-- new items --%>
                       <div class="form-group" id="S6Display" runat="server">
                         <asp:Label ID="lblStep6Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser6" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                           <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                            <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser6" Height="100px" required></asp:CheckBoxList>
+                               </div>
                     </div>
 
                     <div class="form-group" id="S6Date" runat="server">
@@ -334,8 +340,10 @@
 
                      <div class="form-group" id="S7Display" runat="server">
                         <asp:Label ID="lblStep7Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser7" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                        <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                             <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser7" Height="100px" required></asp:CheckBoxList>
+                            </div>
+                   
                     </div>
 
                     <div class="form-group" id="S7Date" runat="server">
@@ -345,8 +353,10 @@
 
                      <div class="form-group" id="S8Display" runat="server">
                         <asp:Label ID="lblStep8Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser8" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                        <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                             <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser8" Height="100px" required></asp:CheckBoxList>
+                            </div>
+                   
                     </div>
 
                     <div class="form-group" id="S8Date" runat="server">
@@ -356,8 +366,9 @@
 
                      <div class="form-group" id="S9Display" runat="server">
                         <asp:Label ID="lblStep9Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser9" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                         <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser9" Height="100px" required></asp:CheckBoxList>
+                             </div>
                     </div>
 
                     <div class="form-group" id="S9Date" runat="server">
@@ -367,8 +378,11 @@
 
                      <div class="form-group" id="S10Display" runat="server">
                         <asp:Label ID="lblStep10Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser10" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                        
+                             <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser10" Height="100px" required></asp:CheckBoxList>
+                             </div>
+                   
                     </div>
 
                     <div class="form-group" id="S10Date" runat="server">
@@ -378,8 +392,11 @@
 
                     <div class="form-group" id="S11Display" runat="server">
                         <asp:Label ID="lblStep11Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser11" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                       
+                          <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser11" Height="100px" required></asp:CheckBoxList>
+                             </div>
+                   
                     </div>
 
                     <div class="form-group" id="S11Date" runat="server">
@@ -389,8 +406,10 @@
 
                      <div class="form-group" id="S12Display" runat="server">
                         <asp:Label ID="lblStep12Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser12" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                     
+                           <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser12" Height="100px" required></asp:CheckBoxList>
+                             </div>
                     </div>
 
                     <div class="form-group" id="S12Date" runat="server">
@@ -400,8 +419,10 @@
 
                      <div class="form-group" id="S13Display" runat="server">
                         <asp:Label ID="lblStep13Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser13" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                        
+                          <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser13" Height="100px" required></asp:CheckBoxList>
+                             </div>
                     </div>
 
                     <div class="form-group" id="S13Date" runat="server">
@@ -411,8 +432,10 @@
 
                      <div class="form-group" id="S14Display" runat="server">
                         <asp:Label ID="lblStep14Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser14" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                      
+                         <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser14" Height="100px" required></asp:CheckBoxList>
+                             </div>
                     </div>
 
                     <div class="form-group" id="S14Date" runat="server">
@@ -422,8 +445,10 @@
 
                     <div class="form-group" id="S15Display" runat="server">
                         <asp:Label ID="lblStep15Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser15" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                       
+                        <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser15" Height="100px" required></asp:CheckBoxList>
+                             </div>
                     </div>
 
                     <div class="form-group" id="S15Date" runat="server">
@@ -433,8 +458,10 @@
 
                      <div class="form-group" id="S16Display" runat="server">
                         <asp:Label ID="lblStep16Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser16" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                      
+                         <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser16" Height="100px" required></asp:CheckBoxList>
+                             </div>
                     </div>
 
                     <div class="form-group" id="S16Date" runat="server">
@@ -444,8 +471,10 @@
 
                       <div class="form-group" id="S17Display" runat="server">
                         <asp:Label ID="lblStep17Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser17" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                      
+                          <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser17" Height="100px" required></asp:CheckBoxList>
+                             </div>
                     </div>
 
                     <div class="form-group" id="S17Date" runat="server">
@@ -455,8 +484,10 @@
 
                       <div class="form-group" id="S18Display" runat="server">
                         <asp:Label ID="lblStep18Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser18" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                     
+                          <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser18" Height="100px" required></asp:CheckBoxList>
+                             </div>
                     </div>
 
                     <div class="form-group" id="S18Date" runat="server">
@@ -466,8 +497,10 @@
 
                      <div class="form-group" id="S19Display" runat="server">
                         <asp:Label ID="lblStep19Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser19" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                      
+                          <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser19" Height="100px" required></asp:CheckBoxList>
+                             </div>
                     </div>
 
                     <div class="form-group" id="S19Date" runat="server">
@@ -477,8 +510,10 @@
 
                     <div class="form-group" id="S20Display" runat="server">
                         <asp:Label ID="lblStep20Display" CssClass="lblCss" runat="server"></asp:Label> &nbsp;<span style="color:red; font-size:1rem;">*</span>
-                        <asp:DropDownList ID="dlUser20" runat="server" CssClass="form-control" required>
-                     </asp:DropDownList>
+                       
+                        <div style="OVERFLOW-Y:scroll; HEIGHT:100px">
+                           <asp:CheckBoxList runat="server" CssClass="form-control" ID="dlUser20" Height="100px" required></asp:CheckBoxList>
+                             </div>
                     </div>
 
                     <div class="form-group" id="S20Date" runat="server">

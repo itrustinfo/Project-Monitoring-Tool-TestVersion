@@ -166,7 +166,7 @@
                         <asp:TextBox ID="dtDocumentDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
                     </div>
                     <div class="form-group" >
-                        <label class="lblCss" for="dtStartdate">Incoming Recv. Date</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
+                        <label class="lblCss" for="dtStartdate">Incoming Recv. Date/Approval Date</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
                         <asp:TextBox ID="dtStartdate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
                     </div>
 
@@ -193,6 +193,10 @@
                     <div class="form-group">
                         <label class="lblCss" for="txtcomments">Comments</label>
                         <asp:TextBox ID="txtcomments" CssClass="form-control" TextMode="MultiLine" runat="server" ClientIDMode="Static"></asp:TextBox>
+                    </div>
+                     <div class="form-group" id="divPassword" runat="server" visible="false">
+                        <label class="lblCss" for="txtcomments">Enter Password</label>
+                        <asp:TextBox ID="txtPassword" CssClass="form-control" TextMode="Password" runat="server" ClientIDMode="Static"></asp:TextBox>
                     </div>
                 </div>
             </div> 

@@ -45,6 +45,20 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             GrdDocuments.DataSource = getdt.GetDashboardContractotDocsSubmitted_Details(new Guid(Request.QueryString["PrjUID"]));
                             GrdDocuments.DataBind();
                             LblDocumentHeading.Text = "Document List for Contractor -> ONTB";
+                            GrdDocuments.Columns[10].Visible = false;
+                            GrdDocuments.Columns[11].Visible = false;
+                            lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
+                            if (GrdDocuments.Rows.Count > 15)
+                            {
+                                ScriptManager.RegisterStartupScript(Page, this.GetType(), "Key", "<script>MakeStaticHeader('" + GrdDocuments.ClientID + "', 700, 1300 , 45 ,true); </script>", false);
+                            }
+                        }
+                        else if (Request.QueryString["type"].ToString() == "Recon")
+                        {
+                            GrdDocuments.DataSource = getdt.GetDashboardReconciliationDocs_Details(new Guid(Request.QueryString["PrjUID"]));
+                            GrdDocuments.DataBind();
+                            LblDocumentHeading.Text = "Document List for Reconciliation Docs";
+                            lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                             if (Session["IsContractor"].ToString() == "Y")
                             {
                                 GrdDocuments.Columns[10].Visible = false;
@@ -52,11 +66,10 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             }
                             else
                             {
-                                GrdDocuments.Columns[10].Visible = true;
-                                GrdDocuments.Columns[11].Visible = true;
-                                btnSubmit.Visible = true;
+                                GrdDocuments.Columns[10].Visible = false;
+                                GrdDocuments.Columns[11].Visible = false;
+                               // btnSubmit.Visible = true;
                             }
-                            lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                             if (GrdDocuments.Rows.Count > 15)
                             {
                                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "Key", "<script>MakeStaticHeader('" + GrdDocuments.ClientID + "', 700, 1300 , 45 ,true); </script>", false);
@@ -156,21 +169,24 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                 {
                     e.Row.Visible = false;
                     DataSet dsNext = getdt.GetNextStep_By_DocumentUID(new Guid(e.Row.Cells[0].Text), ds.Tables[0].Rows[0]["ActivityType"].ToString());
-
+                    DataSet dsNxtUser = new DataSet();
                     foreach (DataRow dr in dsNext.Tables[0].Rows)
                     {
-                        string NextUser = getdt.GetNextUser_By_DocumentUID(new Guid(e.Row.Cells[0].Text), int.Parse(dr["ForFlow_Step"].ToString()));
-                        if (!string.IsNullOrEmpty(NextUser))
+                        dsNxtUser = getdt.GetNextUser_By_DocumentUID(new Guid(e.Row.Cells[0].Text), int.Parse(dr["ForFlow_Step"].ToString()));
+                        if (dsNxtUser.Tables[0].Rows.Count > 0)
                         {
-                            if (Session["UserUID"].ToString().ToUpper() == NextUser.ToUpper())
+                            foreach (DataRow druser in dsNxtUser.Tables[0].Rows)
                             {
-                                e.Row.Visible = true;
-                                return;
-                            }
-                            else
-                            {
-                                e.Row.Visible = false;
+                                if (Session["UserUID"].ToString().ToUpper() == druser["Approver"].ToString().ToUpper())
+                                {
+                                    e.Row.Visible = true;
+                                    return;
+                                }
+                                else
+                                {
+                                    e.Row.Visible = false;
 
+                                }
                             }
                         }
                         else

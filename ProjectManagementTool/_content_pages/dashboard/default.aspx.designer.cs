@@ -229,6 +229,33 @@ namespace ProjectManager._content_pages {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divsyncdetails;
         
         /// <summary>
+        /// hlReconciliationdocs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor hlReconciliationdocs;
+        
+        /// <summary>
+        /// lblReconDocs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblReconDocs;
+        
+        /// <summary>
+        /// lblReconDocsNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblReconDocsNo;
+        
+        /// <summary>
         /// hlContractor control.
         /// </summary>
         /// <remarks>

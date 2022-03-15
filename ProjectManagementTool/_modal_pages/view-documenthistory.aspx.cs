@@ -147,7 +147,7 @@ namespace ProjectManagementTool._modal_pages
             //    if (ds.Tables[0].Rows[0]["ActivityType"].ToString() == "Code A" || ds.Tables[0].Rows[0]["ActivityType"].ToString() =="Reply" || ds.Tables[0].Rows[0]["ActivityType"].ToString() == "Received")
             //    {
             //        AddStatus.Visible = true;
-            //        string Approver = getdata.GetSubmittal_Approver_By_DocumentUID(new Guid(Request.QueryString["DocID"]));
+                //  string Approver = getdata.GetSubmittal_Approver_By_DocumentUID(new Guid(Request.QueryString["DocID"]));
             //        if (Approver != "")
             //        {
             //            if (Session["UserUID"].ToString().ToUpper() != Approver.ToUpper())
@@ -184,20 +184,24 @@ namespace ProjectManagementTool._modal_pages
             // New Code for next user check for status change on 06/02/2022
             DataSet dsNext = getdata.GetNextStep_By_DocumentUID(new Guid(Request.QueryString["DocID"]), ds.Tables[0].Rows[0]["ActivityType"].ToString());
             AddStatus.Visible = false;
+            DataSet dsUser = new DataSet();
             foreach (DataRow dr in dsNext.Tables[0].Rows)
             {
-                string NextUser = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"]),int.Parse(dr["ForFlow_Step"].ToString()));
-                if (!string.IsNullOrEmpty(NextUser))
+                dsUser = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"]),int.Parse(dr["ForFlow_Step"].ToString()));
+                if (dsUser.Tables[0].Rows.Count > 0)
                 {
-                    if (Session["UserUID"].ToString().ToUpper() == NextUser.ToUpper())
+                    foreach (DataRow druser in dsUser.Tables[0].Rows)
                     {
-                        AddStatus.Visible = true;
-                        return;
-                    }
-                    else
-                    {
-                        AddStatus.Visible = false;
-                        
+                        if (Session["UserUID"].ToString().ToUpper() == druser["Approver"].ToString().ToUpper())
+                        {
+                            AddStatus.Visible = true;
+                            return;
+                        }
+                        else
+                        {
+                            AddStatus.Visible = false;
+
+                        }
                     }
                 }
                 else

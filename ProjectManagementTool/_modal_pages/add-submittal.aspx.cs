@@ -28,7 +28,7 @@ namespace ProjectManagementTool._modal_pages
                 {
                     BindProject();
                     BindWorkPackage();
-                    LoadDropDowns();
+                   // LoadDropDowns();
                     BindDocumentFlows();
                     LoadSubmittalTypeMaster();
                     DDLDocumentFlow_SelectedIndexChanged(sender, e);
@@ -76,6 +76,7 @@ namespace ProjectManagementTool._modal_pages
                         LinkActivity.Visible = true;
                         BindDocument_Category_for_Workpackage(Request.QueryString["WrkUID"]);
                         BindDocument();
+                        DDLDocumentCategory.Enabled = false;
                         LinkActivity.HRef = "/_modal_pages/choose-activity.aspx?WorkUID=" + Request.QueryString["WrkUID"];
                     }
 
@@ -176,148 +177,358 @@ namespace ProjectManagementTool._modal_pages
                 {
                     DDlProject.SelectedValue = Request.QueryString["PrjUID"].ToString();
                 }
-
+                string WorkPackageUID = string.Empty;
                 DataSet ds = new DataSet();
-                if (Session["TypeOfUser"].ToString() == "U" || Session["TypeOfUser"].ToString() =="MD" || Session["TypeOfUser"].ToString() == "VP")
+                DataTable dsMusers = new DataTable();
+                //if (Session["TypeOfUser"].ToString() == "U" || Session["TypeOfUser"].ToString() =="MD" || Session["TypeOfUser"].ToString() == "VP")
+                //{
+                //    ds = getdata.getAllUsers();
+                //}
+                //else if (Session["TypeOfUser"].ToString() == "PA")
+                //{
+                //    //ds = getdata.getUsers_by_ProjectUnder(new Guid(DDlProject.SelectedValue));
+                //    ds = getdata.GetUsers_under_ProjectUID(new Guid(DDlProject.SelectedValue));
+                //}
+                //else
+                //{
+                // ds = getdata.GetUsers_under_ProjectUID(new Guid(DDlProject.SelectedValue));
+                if (Request.QueryString["WorkPackageUID"] != null)
                 {
-                    ds = getdata.getAllUsers();
+                    ds = getdata.GetUsers_under_WorkpackageUID(new Guid(Request.QueryString["WorkPackageUID"].ToString()));
+                    WorkPackageUID = Request.QueryString["WorkPackageUID"].ToString();
                 }
-                else if (Session["TypeOfUser"].ToString() == "PA")
+                else if (Request.QueryString["WrkUID"] != null)
                 {
-                    //ds = getdata.getUsers_by_ProjectUnder(new Guid(DDlProject.SelectedValue));
-                    ds = getdata.GetUsers_under_ProjectUID(new Guid(DDlProject.SelectedValue));
-                }
-                else
-                {
-                    ds = getdata.GetUsers_under_ProjectUID(new Guid(DDlProject.SelectedValue));
+                    ds = getdata.GetUsers_under_WorkpackageUID(new Guid(Request.QueryString["WrkUID"].ToString()));
+                    WorkPackageUID = Request.QueryString["WrkUID"].ToString();
                 }
 
-                //ddlSubmissionUSer.DataSource = getdata.getUsers("S");
-                ddlSubmissionUSer.DataSource = ds;
+                    //}
+
+                    //ddlSubmissionUSer.DataSource = getdata.getUsers("S");
+                    ddlSubmissionUSer.DataSource = ds;
                 ddlSubmissionUSer.DataTextField = "UserName";
                 ddlSubmissionUSer.DataValueField = "UserUID";
                 ddlSubmissionUSer.DataBind();
                 ddlSubmissionUSer.Items.Insert(0, new ListItem("--Select--", ""));
                 //
-                //ddlQualityEngg.DataSource = getdata.getUsers("C");
-                ddlQualityEngg.DataSource = ds;
-                ddlQualityEngg.DataTextField = "UserName";
-                ddlQualityEngg.DataValueField = "UserUID";
-                ddlQualityEngg.DataBind();
-                ddlQualityEngg.Items.Insert(0, new ListItem("--Select--", ""));
+                //ddlQualityEngg.DataSource = getdata.getUsers("C"); /step 2
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 2);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    ddlQualityEngg.DataSource = dsMusers;
+                    ddlQualityEngg.DataTextField = "Name";
+                    ddlQualityEngg.DataValueField = "UserUID";
+                    ddlQualityEngg.DataBind();
+                }
+                else
+                {
+                    ddlQualityEngg.DataSource = ds;
+                    ddlQualityEngg.DataTextField = "UserName";
+                    ddlQualityEngg.DataValueField = "UserUID";
+                    ddlQualityEngg.DataBind();
+                }
+                // ddlQualityEngg.Items.Insert(0, new ListItem("--Select--", ""));
                 //
-                //ddlReviewer.DataSource = getdata.getUsers("R");
-                ddlReviewer.DataSource = ds;
-                ddlReviewer.DataTextField = "UserName";
-                ddlReviewer.DataValueField = "UserUID";
-                ddlReviewer.DataBind();
-                ddlReviewer.Items.Insert(0, new ListItem("--Select--", ""));
+                //ddlReviewer.DataSource = getdata.getUsers("R"); /step 3
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 3);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    ddlReviewer_B.DataSource = dsMusers;
+                    ddlReviewer_B.DataTextField = "Name";
+                    ddlReviewer_B.DataValueField = "UserUID";
+                    ddlReviewer_B.DataBind();
+                }
+                else
+                {
+                    ddlReviewer_B.DataSource = ds;
+                    ddlReviewer_B.DataTextField = "UserName";
+                    ddlReviewer_B.DataValueField = "UserUID";
+                    ddlReviewer_B.DataBind();
+                }
+               
+                //  ddlReviewer.Items.Insert(0, new ListItem("--Select--", ""));
 
                 //
-                //ddlReviewer_B.DataSource = getdata.getUsers("R");
-                ddlReviewer_B.DataSource = ds;
-                ddlReviewer_B.DataTextField = "UserName";
-                ddlReviewer_B.DataValueField = "UserUID";
-                ddlReviewer_B.DataBind();
-                ddlReviewer_B.Items.Insert(0, new ListItem("--Select--", ""));
+                //ddlReviewer_B.DataSource = getdata.getUsers("R"); //step 4
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 4);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    ddlReviewer.DataSource = dsMusers;
+                    ddlReviewer.DataTextField = "Name";
+                    ddlReviewer.DataValueField = "UserUID";
+                    ddlReviewer.DataBind();
+                }
+                else
+                {
+                    ddlReviewer.DataSource = ds;
+                    ddlReviewer.DataTextField = "UserName";
+                    ddlReviewer.DataValueField = "UserUID";
+                    ddlReviewer.DataBind();
+                }
+                //  ddlReviewer_B.Items.Insert(0, new ListItem("--Select--", ""));
                 //
-                //ddlApproval.DataSource = getdata.getUsers("A");
-                ddlApproval.DataSource = ds;
-                ddlApproval.DataTextField = "UserName";
-                ddlApproval.DataValueField = "UserUID";
-                ddlApproval.DataBind();
-                ddlApproval.Items.Insert(0, new ListItem("--Select--", ""));
+                //ddlApproval.DataSource = getdata.getUsers("A"); //step 5
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 5);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    ddlApproval.DataSource = dsMusers;
+                    ddlApproval.DataTextField = "Name";
+                    ddlApproval.DataValueField = "UserUID";
+                    ddlApproval.DataBind();
+                }
+                else
+                {
+                    ddlApproval.DataSource = ds;
+                    ddlApproval.DataTextField = "UserName";
+                    ddlApproval.DataValueField = "UserUID";
+                    ddlApproval.DataBind();
+                }
+                // ddlApproval.Items.Insert(0, new ListItem("--Select--", ""));
 
                 // added on 03/03/2022 for new 15 entries
-                dlUser6.DataSource = ds;
-                dlUser6.DataTextField = "UserName";
-                dlUser6.DataValueField = "UserUID";
-                dlUser6.DataBind();
-                dlUser6.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 6);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser6.DataSource = dsMusers;
+                    dlUser6.DataTextField = "Name";
+                    dlUser6.DataValueField = "UserUID";
+                    dlUser6.DataBind();
+                }
+                else
+                {
 
-                dlUser7.DataSource = ds;
-                dlUser7.DataTextField = "UserName";
-                dlUser7.DataValueField = "UserUID";
-                dlUser7.DataBind();
-                dlUser7.Items.Insert(0, new ListItem("--Select--", ""));
+                    dlUser6.DataSource = ds;
+                    dlUser6.DataTextField = "UserName";
+                    dlUser6.DataValueField = "UserUID";
+                    dlUser6.DataBind();
+                }
+                // dlUser6.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 7);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser7.DataSource = dsMusers;
+                    dlUser7.DataTextField = "Name";
+                    dlUser7.DataValueField = "UserUID";
+                    dlUser7.DataBind();
+                }
+                else
+                {
+                    dlUser7.DataSource = ds;
+                    dlUser7.DataTextField = "UserName";
+                    dlUser7.DataValueField = "UserUID";
+                    dlUser7.DataBind();
+                }
+                //  dlUser7.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 8);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser8.DataSource = dsMusers;
+                    dlUser8.DataTextField = "Name";
+                    dlUser8.DataValueField = "UserUID";
+                    dlUser8.DataBind();
+                }
+                else
+                {
+                    dlUser8.DataSource = ds;
+                    dlUser8.DataTextField = "UserName";
+                    dlUser8.DataValueField = "UserUID";
+                    dlUser8.DataBind();
+                }
+                // dlUser8.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 9);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser9.DataSource = dsMusers;
+                    dlUser9.DataTextField = "Name";
+                    dlUser9.DataValueField = "UserUID";
+                    dlUser9.DataBind();
+                }
+                else
+                {
+                    dlUser9.DataSource = ds;
+                    dlUser9.DataTextField = "UserName";
+                    dlUser9.DataValueField = "UserUID";
+                    dlUser9.DataBind();
+                }
+                // dlUser9.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 10);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser10.DataSource = dsMusers;
+                    dlUser10.DataTextField = "Name";
+                    dlUser10.DataValueField = "UserUID";
+                    dlUser10.DataBind();
+                }
+                else
+                {
+                    dlUser10.DataSource = ds;
+                    dlUser10.DataTextField = "UserName";
+                    dlUser10.DataValueField = "UserUID";
+                    dlUser10.DataBind();
+                }
+                // dlUser10.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 11);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser11.DataSource = dsMusers;
+                    dlUser11.DataTextField = "Name";
+                    dlUser11.DataValueField = "UserUID";
+                    dlUser11.DataBind();
+                }
+                else
+                {
+                    dlUser11.DataSource = ds;
+                    dlUser11.DataTextField = "UserName";
+                    dlUser11.DataValueField = "UserUID";
+                    dlUser11.DataBind();
+                }
+                // dlUser11.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 12);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser12.DataSource = dsMusers;
+                    dlUser12.DataTextField = "Name";
+                    dlUser12.DataValueField = "UserUID";
+                    dlUser12.DataBind();
+                }
+                else
+                {
+                    dlUser12.DataSource = ds;
+                    dlUser12.DataTextField = "UserName";
+                    dlUser12.DataValueField = "UserUID";
+                    dlUser12.DataBind();
+                }
+                //  dlUser12.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 13);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser13.DataSource = dsMusers;
+                    dlUser13.DataTextField = "Name";
+                    dlUser13.DataValueField = "UserUID";
+                    dlUser13.DataBind();
+                }
+                else
+                {
+                    dlUser13.DataSource = ds;
+                    dlUser13.DataTextField = "UserName";
+                    dlUser13.DataValueField = "UserUID";
+                    dlUser13.DataBind();
+                }
+                // dlUser13.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 14);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser14.DataSource = dsMusers;
+                    dlUser14.DataTextField = "Name";
+                    dlUser14.DataValueField = "UserUID";
+                    dlUser14.DataBind();
+                }
+                else
+                {
+                    dlUser14.DataSource = ds;
+                    dlUser14.DataTextField = "UserName";
+                    dlUser14.DataValueField = "UserUID";
+                    dlUser14.DataBind();
+                }
+                // dlUser14.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 15);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser15.DataSource = dsMusers;
+                    dlUser15.DataTextField = "Name";
+                    dlUser15.DataValueField = "UserUID";
+                    dlUser15.DataBind();
+                }
+                else
+                {
+                    dlUser15.DataSource = ds;
+                    dlUser15.DataTextField = "UserName";
+                    dlUser15.DataValueField = "UserUID";
+                    dlUser15.DataBind();
+                }
+                // dlUser15.Items.Insert(0, new ListItem("--Select--", ""));
 
-                dlUser8.DataSource = ds;
-                dlUser8.DataTextField = "UserName";
-                dlUser8.DataValueField = "UserUID";
-                dlUser8.DataBind();
-                dlUser8.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser9.DataSource = ds;
-                dlUser9.DataTextField = "UserName";
-                dlUser9.DataValueField = "UserUID";
-                dlUser9.DataBind();
-                dlUser9.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser10.DataSource = ds;
-                dlUser10.DataTextField = "UserName";
-                dlUser10.DataValueField = "UserUID";
-                dlUser10.DataBind();
-                dlUser10.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser11.DataSource = ds;
-                dlUser11.DataTextField = "UserName";
-                dlUser11.DataValueField = "UserUID";
-                dlUser11.DataBind();
-                dlUser11.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser12.DataSource = ds;
-                dlUser12.DataTextField = "UserName";
-                dlUser12.DataValueField = "UserUID";
-                dlUser12.DataBind();
-                dlUser12.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser13.DataSource = ds;
-                dlUser13.DataTextField = "UserName";
-                dlUser13.DataValueField = "UserUID";
-                dlUser13.DataBind();
-                dlUser13.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser14.DataSource = ds;
-                dlUser14.DataTextField = "UserName";
-                dlUser14.DataValueField = "UserUID";
-                dlUser14.DataBind();
-                dlUser14.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser15.DataSource = ds;
-                dlUser15.DataTextField = "UserName";
-                dlUser15.DataValueField = "UserUID";
-                dlUser15.DataBind();
-                dlUser15.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser16.DataSource = ds;
-                dlUser16.DataTextField = "UserName";
-                dlUser16.DataValueField = "UserUID";
-                dlUser16.DataBind();
-                dlUser16.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser17.DataSource = ds;
-                dlUser17.DataTextField = "UserName";
-                dlUser17.DataValueField = "UserUID";
-                dlUser17.DataBind();
-                dlUser17.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser18.DataSource = ds;
-                dlUser18.DataTextField = "UserName";
-                dlUser18.DataValueField = "UserUID";
-                dlUser18.DataBind();
-                dlUser18.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser19.DataSource = ds;
-                dlUser19.DataTextField = "UserName";
-                dlUser19.DataValueField = "UserUID";
-                dlUser19.DataBind();
-                dlUser19.Items.Insert(0, new ListItem("--Select--", ""));
-
-                dlUser20.DataSource = ds;
-                dlUser20.DataTextField = "UserName";
-                dlUser20.DataValueField = "UserUID";
-                dlUser20.DataBind();
-                dlUser20.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 16);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser16.DataSource = dsMusers;
+                    dlUser16.DataTextField = "Name";
+                    dlUser16.DataValueField = "UserUID";
+                    dlUser16.DataBind();
+                }
+                else
+                {
+                    dlUser16.DataSource = ds;
+                    dlUser16.DataTextField = "UserName";
+                    dlUser16.DataValueField = "UserUID";
+                    dlUser16.DataBind();
+                }
+                // dlUser16.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 17);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser17.DataSource = dsMusers;
+                    dlUser17.DataTextField = "Name";
+                    dlUser17.DataValueField = "UserUID";
+                    dlUser17.DataBind();
+                }
+                else
+                {
+                    dlUser17.DataSource = ds;
+                    dlUser17.DataTextField = "UserName";
+                    dlUser17.DataValueField = "UserUID";
+                    dlUser17.DataBind();
+                }
+                // dlUser17.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 18);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser18.DataSource = dsMusers;
+                    dlUser18.DataTextField = "Name";
+                    dlUser18.DataValueField = "UserUID";
+                    dlUser18.DataBind();
+                }
+                else
+                {
+                    dlUser18.DataSource = ds;
+                    dlUser18.DataTextField = "UserName";
+                    dlUser18.DataValueField = "UserUID";
+                    dlUser18.DataBind();
+                }
+                // dlUser18.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 19);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser19.DataSource = dsMusers;
+                    dlUser19.DataTextField = "Name";
+                    dlUser19.DataValueField = "UserUID";
+                    dlUser19.DataBind();
+                }
+                else
+                {
+                    dlUser19.DataSource = ds;
+                    dlUser19.DataTextField = "UserName";
+                    dlUser19.DataValueField = "UserUID";
+                    dlUser19.DataBind();
+                }
+                // dlUser19.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 20);
+                if (dsMusers.Rows.Count > 0)
+                {
+                    dlUser20.DataSource = dsMusers;
+                    dlUser20.DataTextField = "Name";
+                    dlUser20.DataValueField = "UserUID";
+                    dlUser20.DataBind();
+                }
+                else
+                {
+                    dlUser20.DataSource = ds;
+                    dlUser20.DataTextField = "UserName";
+                    dlUser20.DataValueField = "UserUID";
+                    dlUser20.DataBind();
+                }
+              //  dlUser20.Items.Insert(0, new ListItem("--Select--", ""));
 
             }
             catch (Exception ex)
@@ -410,6 +621,7 @@ namespace ProjectManagementTool._modal_pages
 
         public void DocumentFlowChanged()
         {
+            LoadDropDowns();
             //hide all displays at start
             S1Display.Visible = false;
             S1Date.Visible = false;
@@ -1731,7 +1943,7 @@ namespace ProjectManagementTool._modal_pages
                         string sDate1 = "", sDate2 = "", sDate3 = "", sDate4 = "", sDate5 = "", sDate6 = "", sDate7 = "", sDate8 = "", sDate9 = "", sDate10 = "" , sDate11 = "", sDate12 = "", sDate13 = "", sDate14 = "", sDate15 = "", sDate16 = "", sDate17 = "", sDate18 = "", sDate19 = "", sDate20 = "", DocPath = "", DocStartString = "", CoverPagePath = "";
                         DateTime CDate1 = DateTime.Now, CDate2 = DateTime.Now, CDate3 = DateTime.Now, CDate4 = DateTime.Now, CDate5 = DateTime.Now, DocStartDate = DateTime.Now, CDate6 = DateTime.Now, CDate7 = DateTime.Now, CDate8 = DateTime.Now, CDate9 = DateTime.Now, CDate10 = DateTime.Now, CDate11 = DateTime.Now, CDate12 = DateTime.Now, CDate13 = DateTime.Now, CDate14 = DateTime.Now, CDate15 = DateTime.Now, CDate16 = DateTime.Now, CDate17 = DateTime.Now, CDate18 = DateTime.Now, CDate19 = DateTime.Now, CDate20 = DateTime.Now;
 
-
+                        string FlowStep1_IsMUser = "N", FlowStep2_IsMUser = "N", FlowStep3_IsMUser = "N", FlowStep4_IsMUser = "N", FlowStep5_IsMUser = "N", FlowStep6_IsMUser = "N", FlowStep7_IsMUser = "N", FlowStep8_IsMUser = "N", FlowStep9_IsMUser = "N", FlowStep10_IsMUser = "N", FlowStep11_IsMUser = "N", FlowStep12_IsMUser = "N", FlowStep13_IsMUser = "N", FlowStep14_IsMUser = "N", FlowStep15_IsMUser = "N", FlowStep16_IsMUser = "N", FlowStep17_IsMUser = "N", FlowStep18_IsMUser = "N", FlowStep19_IsMUser = "N", FlowStep20_IsMUser = "N";
 
                         int result = 0;
                         //
@@ -1788,7 +2000,7 @@ namespace ProjectManagementTool._modal_pages
                                 CDate1 = Convert.ToDateTime(sDate1);
 
                                 result = getdata.DoumentMaster_Insert_or_Update_Flow_0(sDocumentUID, workpackageid, projectId, TaskUID, txtDocumentName.Text, new Guid(DDLDocumentCategory.SelectedValue),
-                                "", "Submittle Document", 0.0, new Guid(DDLDocumentFlow.SelectedValue), DocStartDate, new Guid(ddlSubmissionUSer.SelectedValue), CDate1,estimateddocs,Remarks,SubDocTypeMaster, IsSync);
+                                "", "Submittle Document", 0.0, new Guid(DDLDocumentFlow.SelectedValue), DocStartDate, new Guid(ddlSubmissionUSer.SelectedValue), CDate1, estimateddocs, Remarks, SubDocTypeMaster, IsSync);
                             }
                             else if (dsFlow.Tables[0].Rows[0]["Steps_Count"].ToString() == "1")
                             {
@@ -1883,6 +2095,9 @@ namespace ProjectManagementTool._modal_pages
                                 sDate2 = getdata.ConvertDateFormat(sDate2);
                                 CDate2 = Convert.ToDateTime(sDate2);
 
+                               
+                            
+
                                 sDate3 = dtRev_B_TargetDate.Text != "" ? dtRev_B_TargetDate.Text : CDate3.ToString("dd/MM/yyyy");
                                 //sDate3 = sDate3.Split('/')[1] + "/" + sDate3.Split('/')[0] + "/" + sDate3.Split('/')[2];
                                 sDate3 = getdata.ConvertDateFormat(sDate3);
@@ -1913,30 +2128,95 @@ namespace ProjectManagementTool._modal_pages
                                 //
 
                                 sDate2 = dtQualTargetDate.Text != "" ? dtQualTargetDate.Text : CDate2.ToString("dd/MM/yyyy");
-                              
                                 sDate2 = getdata.ConvertDateFormat(sDate2);
                                 CDate2 = Convert.ToDateTime(sDate2);
+                                getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 2);
+                                int selectedCount = ddlQualityEngg.Items.Cast<ListItem>().Count(li => li.Selected);
+                                if (selectedCount > 1)
+                                {
+                                   
+                                    FlowStep2_IsMUser = "Y";
+                                    foreach (ListItem listItem in ddlQualityEngg.Items)
+                                    {
+                                        if (listItem.Selected)
+                                        {
+                                            getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 2, new Guid(listItem.Value));
+                                        }
+                                    }
+                                }
 
                                 sDate3 = dtRev_B_TargetDate.Text != "" ? dtRev_B_TargetDate.Text : CDate3.ToString("dd/MM/yyyy");
-                              
                                 sDate3 = getdata.ConvertDateFormat(sDate3);
                                 CDate3 = Convert.ToDateTime(sDate3);
+                                getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 3);
+                                selectedCount = ddlReviewer_B.Items.Cast<ListItem>().Count(li => li.Selected);
+                                if (selectedCount > 1)
+                                {
+                                    
+                                    FlowStep3_IsMUser = "Y";
+                                    foreach (ListItem listItem in ddlReviewer_B.Items)
+                                    {
+                                        if (listItem.Selected)
+                                        {
+                                            getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 3, new Guid(listItem.Value));
+                                        }
+                                    }
+                                }
 
 
                                 sDate4 = dtRevTargetDate.Text != "" ? dtRevTargetDate.Text : CDate4.ToString("dd/MM/yyyy");
-                              
                                 sDate4 = getdata.ConvertDateFormat(sDate4);
                                 CDate4 = Convert.ToDateTime(sDate4);
+                                getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 4);
+                                selectedCount = ddlReviewer.Items.Cast<ListItem>().Count(li => li.Selected);
+                                if (selectedCount > 1)
+                                {
+                                   
+                                    FlowStep4_IsMUser = "Y";
+                                    foreach (ListItem listItem in ddlReviewer.Items)
+                                    {
+                                        if (listItem.Selected)
+                                        {
+                                            getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 4, new Guid(listItem.Value));
+                                        }
+                                    }
+                                }
                                 //
                                 sDate5 = dtAppTargetDate.Text != "" ? dtAppTargetDate.Text : CDate5.ToString("dd/MM/yyyy");
-                               
                                 sDate5 = getdata.ConvertDateFormat(sDate5);
                                 CDate5 = Convert.ToDateTime(sDate5);
+                                getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 5);
+                                selectedCount = ddlApproval.Items.Cast<ListItem>().Count(li => li.Selected);
+                                if (selectedCount > 1)
+                                {
+                                   
+                                    FlowStep5_IsMUser = "Y";
+                                    foreach (ListItem listItem in ddlApproval.Items)
+                                    {
+                                        if (listItem.Selected)
+                                        {
+                                            getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 5, new Guid(listItem.Value));
+                                        }
+                                    }
+                                }
                                 //--------------------------------------------- for new steps
                                 sDate6 = dtTargetDate6.Text != "" ? dtTargetDate6.Text : CDate6.ToString("dd/MM/yyyy");
-                               
                                 sDate6 = getdata.ConvertDateFormat(sDate6);
                                 CDate6 = Convert.ToDateTime(sDate6);
+                                getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 6);
+                                selectedCount = dlUser6.Items.Cast<ListItem>().Count(li => li.Selected);
+                                if (selectedCount > 1)
+                                {
+                                  
+                                    FlowStep6_IsMUser = "Y";
+                                    foreach (ListItem listItem in dlUser6.Items)
+                                    {
+                                        if (listItem.Selected)
+                                        {
+                                            getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 6, new Guid(listItem.Value));
+                                        }
+                                    }
+                                }
 
                                 int steps =int.Parse(dsFlow.Tables[0].Rows[0]["Steps_Count"].ToString());
                                 Guid User7 = Guid.NewGuid(), User8 = Guid.NewGuid(), User9 = Guid.NewGuid(), User10 = Guid.NewGuid(), User11 = Guid.NewGuid(), User12 = Guid.NewGuid(), User13 = Guid.NewGuid(), User14 = Guid.NewGuid(), User15 = Guid.NewGuid(), User16 = Guid.NewGuid(), User17 = Guid.NewGuid(), User18 = Guid.NewGuid(), User19 = Guid.NewGuid(), User20 = Guid.NewGuid();
@@ -1946,6 +2226,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate7 = getdata.ConvertDateFormat(sDate7);
                                     CDate7 = Convert.ToDateTime(sDate7);
                                     User7 = new Guid(dlUser7.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 7);
+                                    selectedCount = dlUser7.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                       
+                                        FlowStep7_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser7.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 7, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
 
                                 }
                                 if (steps >= 8)
@@ -1954,6 +2248,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate8 = getdata.ConvertDateFormat(sDate8);
                                     CDate8 = Convert.ToDateTime(sDate8);
                                     User8 = new Guid(dlUser8.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 8);
+                                    selectedCount = dlUser8.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                      
+                                        FlowStep8_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser8.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 8, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 9)
                                 {
@@ -1961,6 +2269,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate9 = getdata.ConvertDateFormat(sDate9);
                                     CDate9 = Convert.ToDateTime(sDate9);
                                     User9 = new Guid(dlUser9.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 9);
+                                    selectedCount = dlUser9.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                       
+                                        FlowStep9_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser9.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 9, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 10)
                                 {
@@ -1968,6 +2290,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate10 = getdata.ConvertDateFormat(sDate10);
                                     CDate10 = Convert.ToDateTime(sDate10);
                                     User10 = new Guid(dlUser10.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 10);
+                                    selectedCount = dlUser10.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                        
+                                        FlowStep10_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser10.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 10, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 11)
                                 {
@@ -1975,6 +2311,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate11 = getdata.ConvertDateFormat(sDate11);
                                     CDate11 = Convert.ToDateTime(sDate11);
                                     User11 = new Guid(dlUser11.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 11);
+                                    selectedCount = dlUser11.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                   
+                                        FlowStep11_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser11.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 11, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 12)
                                 {
@@ -1982,6 +2332,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate12 = getdata.ConvertDateFormat(sDate12);
                                     CDate12 = Convert.ToDateTime(sDate12);
                                     User12 = new Guid(dlUser12.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 12);
+                                    selectedCount = dlUser12.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                      
+                                        FlowStep12_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser12.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 12, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 13)
                                 {
@@ -1989,6 +2353,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate13 = getdata.ConvertDateFormat(sDate13);
                                     CDate13 = Convert.ToDateTime(sDate13);
                                     User13 = new Guid(dlUser13.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 13);
+                                    selectedCount = dlUser13.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                       
+                                        FlowStep13_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser13.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 13, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 14)
                                 {
@@ -1996,6 +2374,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate14 = getdata.ConvertDateFormat(sDate14);
                                     CDate14 = Convert.ToDateTime(sDate14);
                                     User14 = new Guid(dlUser14.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 14);
+                                    selectedCount = dlUser14.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                        
+                                        FlowStep14_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser14.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 14, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 15)
                                 {
@@ -2003,6 +2395,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate15 = getdata.ConvertDateFormat(sDate15);
                                     CDate15 = Convert.ToDateTime(sDate15);
                                     User15 = new Guid(dlUser15.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 15);
+                                    selectedCount = dlUser15.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                     
+                                        FlowStep15_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser15.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 15, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 16)
                                 {
@@ -2010,6 +2416,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate16 = getdata.ConvertDateFormat(sDate16);
                                     CDate16 = Convert.ToDateTime(sDate16);
                                     User16 = new Guid(dlUser16.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 16);
+                                    selectedCount = dlUser16.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                        
+                                        FlowStep16_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser16.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 16, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 17)
                                 {
@@ -2017,6 +2437,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate17 = getdata.ConvertDateFormat(sDate17);
                                     CDate17 = Convert.ToDateTime(sDate17);
                                     User17 = new Guid(dlUser17.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 17);
+                                    selectedCount = dlUser17.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                        
+                                        FlowStep17_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser17.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 17, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 18)
                                 {
@@ -2024,6 +2458,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate18 = getdata.ConvertDateFormat(sDate18);
                                     CDate18 = Convert.ToDateTime(sDate18);
                                     User18 = new Guid(dlUser18.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 18);
+                                    selectedCount = dlUser18.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                       
+                                        FlowStep18_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser18.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 18, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 19)
                                 {
@@ -2031,6 +2479,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate19 = getdata.ConvertDateFormat(sDate19);
                                     CDate19 = Convert.ToDateTime(sDate19);
                                     User19 = new Guid(dlUser19.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 19);
+                                    selectedCount = dlUser19.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                       
+                                        FlowStep19_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser19.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 19, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
                                 if (steps >= 20)
                                 {
@@ -2038,6 +2500,20 @@ namespace ProjectManagementTool._modal_pages
                                     sDate20 = getdata.ConvertDateFormat(sDate20);
                                     CDate20 = Convert.ToDateTime(sDate20);
                                     User20 = new Guid(dlUser20.SelectedValue);
+                                    getdata.DeleteSubmittal_MultipleUsers(sDocumentUID, 20);
+                                    selectedCount = dlUser20.Items.Cast<ListItem>().Count(li => li.Selected);
+                                    if (selectedCount > 1)
+                                    {
+                                       
+                                        FlowStep20_IsMUser = "Y";
+                                        foreach (ListItem listItem in dlUser20.Items)
+                                        {
+                                            if (listItem.Selected)
+                                            {
+                                                getdata.InsertSubmittal_MultipleUsers(Guid.NewGuid(), sDocumentUID, 20, new Guid(listItem.Value));
+                                            }
+                                        }
+                                    }
                                 }
 
                                 result = getdata.DoumentMaster_Insert_or_Update_FlowAll(sDocumentUID, workpackageid, projectId, TaskUID, txtDocumentName.Text, new Guid(DDLDocumentCategory.SelectedValue),
@@ -2058,7 +2534,24 @@ namespace ProjectManagementTool._modal_pages
                                            User18, CDate18,
                                             User19, CDate19,
                                               User20, CDate20,
-                                              int.Parse(dsFlow.Tables[0].Rows[0]["Steps_Count"].ToString()));
+                                              int.Parse(dsFlow.Tables[0].Rows[0]["Steps_Count"].ToString()),
+                                              FlowStep1_IsMUser, FlowStep2_IsMUser, FlowStep3_IsMUser, FlowStep4_IsMUser
+                                              , FlowStep5_IsMUser
+                                              , FlowStep6_IsMUser
+                                              , FlowStep7_IsMUser
+                                              , FlowStep8_IsMUser
+                                              , FlowStep9_IsMUser
+                                              , FlowStep10_IsMUser
+                                              , FlowStep11_IsMUser
+                                              , FlowStep12_IsMUser
+                                              , FlowStep13_IsMUser
+                                              , FlowStep14_IsMUser
+                                              , FlowStep15_IsMUser
+                                              , FlowStep16_IsMUser
+                                              ,FlowStep17_IsMUser
+                                              , FlowStep18_IsMUser
+                                              , FlowStep19_IsMUser
+                                              , FlowStep20_IsMUser);
                             }
                         }
 
@@ -2178,6 +2671,7 @@ namespace ProjectManagementTool._modal_pages
 
         protected void BindDocument()
         {
+            
             //hide all displays at start
             S1Display.Visible = false;
             S1Date.Visible = false;
@@ -2256,7 +2750,7 @@ namespace ProjectManagementTool._modal_pages
                         chkSync.Checked = true;
                     }
                 }
-               
+                LoadDropDowns();
                 //
                 DataSet dsFlow = getdata.GetDocumentFlows_by_UID(new Guid(DDLDocumentFlow.SelectedValue));
                 if (dsFlow.Tables[0].Rows.Count > 0)
@@ -3235,26 +3729,273 @@ namespace ProjectManagementTool._modal_pages
                     if (dsFlow.Tables[0].Rows[0]["Steps_Count"].ToString() != "-1")
                     {
                         ddlSubmissionUSer.SelectedValue = ds.Tables[0].Rows[0]["FlowStep1_UserUID"].ToString();
-                        ddlQualityEngg.SelectedValue = ds.Tables[0].Rows[0]["FlowStep2_UserUID"].ToString();
-                        ddlReviewer_B.SelectedValue = ds.Tables[0].Rows[0]["FlowStep3_UserUID"].ToString();
-                        ddlReviewer.SelectedValue = ds.Tables[0].Rows[0]["FlowStep4_UserUID"].ToString();
-                        ddlApproval.SelectedValue = ds.Tables[0].Rows[0]["FlowStep5_UserUID"].ToString();
+                       // ddlQualityEngg.SelectedValue = ds.Tables[0].Rows[0]["FlowStep2_UserUID"].ToString();
+                        // step 2
+                        DataSet dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 2);
+                        foreach (ListItem listItem in ddlQualityEngg.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                       // ddlReviewer_B.SelectedValue = ds.Tables[0].Rows[0]["FlowStep3_UserUID"].ToString();
+                        // step 3
+                     dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 3);
+                        foreach (ListItem listItem in ddlReviewer_B.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                       // ddlReviewer.SelectedValue = ds.Tables[0].Rows[0]["FlowStep4_UserUID"].ToString();
+                        // step 4
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 4);
+                        foreach (ListItem listItem in ddlReviewer.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                       // ddlApproval.SelectedValue = ds.Tables[0].Rows[0]["FlowStep5_UserUID"].ToString();
+                        // step 5
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 5);
+                        foreach (ListItem listItem in ddlApproval.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
                         //
-                        dlUser6.SelectedValue = ds.Tables[0].Rows[0]["FlowStep6_UserUID"].ToString();
-                        dlUser7.SelectedValue = ds.Tables[0].Rows[0]["FlowStep7_UserUID"].ToString();
-                        dlUser8.SelectedValue = ds.Tables[0].Rows[0]["FlowStep8_UserUID"].ToString();
-                        dlUser9.SelectedValue = ds.Tables[0].Rows[0]["FlowStep9_UserUID"].ToString();
-                        dlUser10.SelectedValue = ds.Tables[0].Rows[0]["FlowStep10_UserUID"].ToString();
-                        dlUser11.SelectedValue = ds.Tables[0].Rows[0]["FlowStep11_UserUID"].ToString();
-                        dlUser12.SelectedValue = ds.Tables[0].Rows[0]["FlowStep12_UserUID"].ToString();
-                        dlUser13.SelectedValue = ds.Tables[0].Rows[0]["FlowStep13_UserUID"].ToString();
-                        dlUser14.SelectedValue = ds.Tables[0].Rows[0]["FlowStep14_UserUID"].ToString();
-                        dlUser15.SelectedValue = ds.Tables[0].Rows[0]["FlowStep15_UserUID"].ToString();
-                        dlUser16.SelectedValue = ds.Tables[0].Rows[0]["FlowStep16_UserUID"].ToString();
-                        dlUser17.SelectedValue = ds.Tables[0].Rows[0]["FlowStep17_UserUID"].ToString();
-                        dlUser18.SelectedValue = ds.Tables[0].Rows[0]["FlowStep18_UserUID"].ToString();
-                        dlUser19.SelectedValue = ds.Tables[0].Rows[0]["FlowStep19_UserUID"].ToString();
-                        dlUser20.SelectedValue = ds.Tables[0].Rows[0]["FlowStep20_UserUID"].ToString();
+                       // dlUser6.SelectedValue = ds.Tables[0].Rows[0]["FlowStep6_UserUID"].ToString();
+                        // step 6
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 6);
+                        foreach (ListItem listItem in dlUser6.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                       // dlUser7.SelectedValue = ds.Tables[0].Rows[0]["FlowStep7_UserUID"].ToString();
+                        // step 7
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 7);
+                        foreach (ListItem listItem in dlUser7.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                       // dlUser8.SelectedValue = ds.Tables[0].Rows[0]["FlowStep8_UserUID"].ToString();
+                        // step 8
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 8);
+                        foreach (ListItem listItem in dlUser8.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                      //  dlUser9.SelectedValue = ds.Tables[0].Rows[0]["FlowStep9_UserUID"].ToString();
+                        // step 9
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 9);
+                        foreach (ListItem listItem in dlUser9.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                      //  dlUser10.SelectedValue = ds.Tables[0].Rows[0]["FlowStep10_UserUID"].ToString();
+                        // step 10
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 10);
+                        foreach (ListItem listItem in dlUser10.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                      //  dlUser11.SelectedValue = ds.Tables[0].Rows[0]["FlowStep11_UserUID"].ToString();
+                        // step 11
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 11);
+                        foreach (ListItem listItem in dlUser11.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                     //   dlUser12.SelectedValue = ds.Tables[0].Rows[0]["FlowStep12_UserUID"].ToString();
+                        // step 6
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 12);
+                        foreach (ListItem listItem in dlUser12.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                       // dlUser13.SelectedValue = ds.Tables[0].Rows[0]["FlowStep13_UserUID"].ToString();
+                        // step 13
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 13);
+                        foreach (ListItem listItem in dlUser13.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                       // dlUser14.SelectedValue = ds.Tables[0].Rows[0]["FlowStep14_UserUID"].ToString();
+                        // step 14
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 14);
+                        foreach (ListItem listItem in dlUser14.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                       // dlUser15.SelectedValue = ds.Tables[0].Rows[0]["FlowStep15_UserUID"].ToString();
+                        // step 15
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 15);
+                        foreach (ListItem listItem in dlUser15.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                     //   dlUser16.SelectedValue = ds.Tables[0].Rows[0]["FlowStep16_UserUID"].ToString();
+                        // step 16
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 16);
+                        foreach (ListItem listItem in dlUser16.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                     //   dlUser17.SelectedValue = ds.Tables[0].Rows[0]["FlowStep17_UserUID"].ToString();
+                        // step 17
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 17);
+                        foreach (ListItem listItem in dlUser17.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                       // dlUser18.SelectedValue = ds.Tables[0].Rows[0]["FlowStep18_UserUID"].ToString();
+                        // step 18
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 18);
+                        foreach (ListItem listItem in dlUser18.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                        //dlUser19.SelectedValue = ds.Tables[0].Rows[0]["FlowStep19_UserUID"].ToString();
+                        // step 19
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 19);
+                        foreach (ListItem listItem in dlUser19.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
+                       // dlUser20.SelectedValue = ds.Tables[0].Rows[0]["FlowStep20_UserUID"].ToString();
+                        // step 20
+                        dsMUSers = getdata.GetMultipleUsers_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 20);
+                        foreach (ListItem listItem in dlUser20.Items)
+                        {
+                            listItem.Selected = false;
+                            foreach (DataRow dr in dsMUSers.Tables[0].Rows)
+                            {
+                                if (dr["Approver"].ToString() == listItem.Value)
+                                {
+                                    listItem.Selected = true;
+                                }
+                            }
+                        }
                         //
                         if (ds.Tables[0].Rows[0]["FlowStep1_TargetDate"].ToString() != null && ds.Tables[0].Rows[0]["FlowStep1_TargetDate"].ToString() != "")
                         {
@@ -3402,6 +4143,31 @@ namespace ProjectManagementTool._modal_pages
             ddlSubDocType.DataValueField = "Type";
             ddlSubDocType.DataBind();
             ddlSubDocType.Items.Insert(0, new ListItem("--Select--", ""));
+        }
+
+        protected void DDLDocumentCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (DDLDocumentFlow.SelectedIndex > 0)
+                {
+                    //
+                    if (Request.QueryString["type"] == "add")
+                    {
+                        LoadDropDowns();
+                    }
+                    else
+                    {
+
+                        BindDocument();
+                    }
+                       
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

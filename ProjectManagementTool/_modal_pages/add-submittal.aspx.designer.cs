@@ -271,7 +271,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlQualityEngg;
+        protected global::System.Web.UI.WebControls.CheckBoxList ddlQualityEngg;
         
         /// <summary>
         /// S2Date control.
@@ -325,7 +325,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlReviewer_B;
+        protected global::System.Web.UI.WebControls.CheckBoxList ddlReviewer_B;
         
         /// <summary>
         /// S3Date control.
@@ -379,7 +379,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlReviewer;
+        protected global::System.Web.UI.WebControls.CheckBoxList ddlReviewer;
         
         /// <summary>
         /// S4Date control.
@@ -433,7 +433,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlApproval;
+        protected global::System.Web.UI.WebControls.CheckBoxList ddlApproval;
         
         /// <summary>
         /// S5Date control.
@@ -487,7 +487,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser6;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser6;
         
         /// <summary>
         /// S6Date control.
@@ -541,7 +541,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser7;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser7;
         
         /// <summary>
         /// S7Date control.
@@ -595,7 +595,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser8;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser8;
         
         /// <summary>
         /// S8Date control.
@@ -649,7 +649,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser9;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser9;
         
         /// <summary>
         /// S9Date control.
@@ -703,7 +703,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser10;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser10;
         
         /// <summary>
         /// S10Date control.
@@ -757,7 +757,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser11;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser11;
         
         /// <summary>
         /// S11Date control.
@@ -811,7 +811,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser12;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser12;
         
         /// <summary>
         /// S12Date control.
@@ -865,7 +865,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser13;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser13;
         
         /// <summary>
         /// S13Date control.
@@ -919,7 +919,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser14;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser14;
         
         /// <summary>
         /// S14Date control.
@@ -973,7 +973,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser15;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser15;
         
         /// <summary>
         /// S15Date control.
@@ -1027,7 +1027,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser16;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser16;
         
         /// <summary>
         /// S16Date control.
@@ -1081,7 +1081,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser17;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser17;
         
         /// <summary>
         /// S17Date control.
@@ -1135,7 +1135,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser18;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser18;
         
         /// <summary>
         /// S18Date control.
@@ -1189,7 +1189,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser19;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser19;
         
         /// <summary>
         /// S19Date control.
@@ -1243,7 +1243,7 @@ namespace ProjectManagementTool._modal_pages {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dlUser20;
+        protected global::System.Web.UI.WebControls.CheckBoxList dlUser20;
         
         /// <summary>
         /// S20Date control.

@@ -92,6 +92,12 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
         $("#ModProfile").modal("show");
             });
 
+            $("#navlinkFlowMaster").click(function (e) {
+                e.preventDefault();
+                var url = $(this).attr("href");
+                $("#ModFlowMaster iframe").attr("src", url);
+                $("#ModFlowMaster").modal("show");
+            });
 
         });
 
@@ -324,6 +330,10 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
                                         <i class="fas fa-user-cog"></i>
                                         <span class="d-inline-block ml-1">User Management</span>
                                     </a>
+                                    <a class="dropdown-item" id="navlinkFlowMaster" href="/_modal_pages/add-flow-master.aspx" title="User Flow Master">
+                                        <i class="fas fa-tasks"></i>
+                                        <span class="d-inline-block ml-1">User Flow Master</span>
+                                    </a>
                                      <a class="dropdown-item" id="ProfileManagement" runat="server" href="/_content_pages/user-mapping" title="Profile Management">
                                         <i class="fas fa-user-cog"></i>
                                         <span class="d-inline-block ml-1">Profile Management</span>
@@ -394,6 +404,20 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
 		    <div class="modal-content">
 			    <div class="modal-header">
 				    <h5 class="modal-title">View/Edit Profile</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:450px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
+    </div>
+            <div id="ModFlowMaster" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">Flow Master</h5>
                     <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
 			    </div>
 			    <div class="modal-body">
