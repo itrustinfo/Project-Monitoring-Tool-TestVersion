@@ -213,7 +213,17 @@ namespace ProjectManagementTool._modal_pages
 
         protected void GrdDocStatus_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                if (Session["IsContractor"].ToString() == "Y")
+                {
+                    
+                    e.Row.Cells[3].Visible = false;
+                    e.Row.Cells[4].Visible = false;
+
+                }
+            }
+                if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 ImageButton imgShowHide = (ImageButton)e.Row.FindControl("imgProductsShow");
                 Show_Hide_ProductsGrid(imgShowHide, e);
@@ -290,15 +300,35 @@ namespace ProjectManagementTool._modal_pages
                 {
                     LinkButton lnk = (LinkButton)e.Row.FindControl("lnkdown");
                     lnk.Enabled = false;
-                    lnk.Text = "No File";
+                    lnk.Text = "No link review file";
                     //e.Row.Cells[9].Enabled = false;
                 }
                 if (e.Row.Cells[7].Text == "&nbsp;")
                 {
                     LinkButton lnk = (LinkButton)e.Row.FindControl("lnkcoverdownload");
                     lnk.Enabled = false;
-                    lnk.Text = "No File";
+                    lnk.Text = "No cover letter file";
                     //e.Row.Cells[9].Enabled = false;
+                }
+
+                if(Session["IsContractor"].ToString() == "Y")
+                {
+                    string SubmittalUID = getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"].ToString()));
+                    string phase = getdata.GetPhaseforStatus(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[3].Text);
+                    //string phase = getdata.GetPhaseforStatus(new Guid(Request.QueryString["FlowUID"]), e.Row.Cells[3].Text);
+                    e.Row.Cells[1].Text = phase;
+                    e.Row.Cells[3].Visible =false;
+                    e.Row.Cells[4].Visible = false;
+                    if(e.Row.Cells[3].Text == "Code A-CE Approval" || e.Row.Cells[3].Text == "Client CE GFC Approval")
+                    {
+                        e.Row.Cells[1].Text = "Approved";
+
+                    }
+                    else if (e.Row.Cells[3].Text == "Code B-CE Approval" || e.Row.Cells[3].Text == "Code C-CE Approval")
+                    {
+                        e.Row.Cells[1].Text = "Under Client Approval Process";
+                    }
+
                 }
                 //
                

@@ -594,6 +594,32 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
                     }
                 }
 
+                if (Session["IsContractor"].ToString() == "Y")
+                {
+                    string SubmittalUID = getdt.GetSubmittalUID_By_ActualDocumentUID(new Guid(e.Row.Cells[0].Text));
+                    string phase = getdt.GetPhaseforStatus(new Guid(getdt.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[4].Text);
+                    //string phase = getdata.GetPhaseforStatus(new Guid(Request.QueryString["FlowUID"]), e.Row.Cells[3].Text);
+                    if (string.IsNullOrEmpty(phase))
+                    {
+                        
+                        if (e.Row.Cells[4].Text == "Code A-CE Approval" || e.Row.Cells[4].Text == "Client CE GFC Approval")
+                        {
+                            e.Row.Cells[4].Text = "Approved";
+
+                        }
+                        if (e.Row.Cells[4].Text == "Code B-CE Approval" || e.Row.Cells[3].Text == "Code C-CE Approval")
+                        {
+                            e.Row.Cells[4].Text = "Client Approval";
+                        }
+                    }
+                    else
+                    {
+                        e.Row.Cells[4].Text = phase;
+                    }
+
+
+                }
+
             }
         }
 

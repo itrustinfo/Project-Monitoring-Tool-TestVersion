@@ -49,6 +49,33 @@ namespace ProjectManagementTool._modal_pages {
         protected global::System.Web.UI.WebControls.DropDownList DDLDocument;
         
         /// <summary>
+        /// divforward control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divforward;
+        
+        /// <summary>
+        /// chkforward control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkforward;
+        
+        /// <summary>
+        /// divStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divStatus;
+        
+        /// <summary>
         /// DDlStatus control.
         /// </summary>
         /// <remarks>
@@ -76,6 +103,15 @@ namespace ProjectManagementTool._modal_pages {
         protected global::System.Web.UI.WebControls.RadioButtonList RBLOriginator;
         
         /// <summary>
+        /// divUpdateStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divUpdateStatus;
+        
+        /// <summary>
         /// RBLDocumentStatusUpdate control.
         /// </summary>
         /// <remarks>
@@ -83,6 +119,24 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList RBLDocumentStatusUpdate;
+        
+        /// <summary>
+        /// divRef control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divRef;
+        
+        /// <summary>
+        /// spRef control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spRef;
         
         /// <summary>
         /// txtrefNumber control.
@@ -94,6 +148,24 @@ namespace ProjectManagementTool._modal_pages {
         protected global::System.Web.UI.WebControls.TextBox txtrefNumber;
         
         /// <summary>
+        /// divCD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCD;
+        
+        /// <summary>
+        /// spCoverDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spCoverDate;
+        
+        /// <summary>
         /// dtDocumentDate control.
         /// </summary>
         /// <remarks>
@@ -101,6 +173,24 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtDocumentDate;
+        
+        /// <summary>
+        /// divIncmDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divIncmDate;
+        
+        /// <summary>
+        /// spIncmDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spIncmDate;
         
         /// <summary>
         /// dtStartdate control.
@@ -112,6 +202,24 @@ namespace ProjectManagementTool._modal_pages {
         protected global::System.Web.UI.WebControls.TextBox dtStartdate;
         
         /// <summary>
+        /// divCUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCUpload;
+        
+        /// <summary>
+        /// spCUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spCUpload;
+        
+        /// <summary>
         /// FileUploadCoverLetter control.
         /// </summary>
         /// <remarks>
@@ -119,6 +227,15 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload FileUploadCoverLetter;
+        
+        /// <summary>
+        /// divReviewFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divReviewFile;
         
         /// <summary>
         /// FileUploadDoc control.

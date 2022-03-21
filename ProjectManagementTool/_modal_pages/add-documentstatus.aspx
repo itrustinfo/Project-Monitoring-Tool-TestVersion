@@ -132,11 +132,17 @@
         <div class="container-fluid" style="max-height:76vh; overflow-y:auto;">
             <div class="row">
                 <div class="col-sm-12">
+                     
                     <div class="form-group">
                         <label class="lblCss" for="DDLDocument">Document</label>
                          <asp:DropDownList ID="DDLDocument" CssClass="form-control" Enabled="false" runat="server"></asp:DropDownList>
                     </div>
-                    <div class="form-group" >
+                    <div class="form-group" id="divforward" runat="server">
+                       
+                        <asp:CheckBox ID="chkforward" runat="server" Text="&nbsp;forward of document to next level" CssClass="form-control" AutoPostBack="True" OnCheckedChanged="chkforward_CheckedChanged"/>
+                         
+                    </div>
+                    <div class="form-group" id="divStatus" runat="server">
                         <label class="lblCss" for="DDlStatus">Status</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
                         <%--<i class="nav-link--icon fas fa-question-circle"></i>--%>
                          <asp:DropDownList ID="DDlStatus" CssClass="form-control" onchange="getValue(this)" required runat="server"></asp:DropDownList>
@@ -147,7 +153,7 @@
                           <asp:RadioButtonList ID="RBLOriginator" runat="server" Width="100%" CssClass="lblCss" CellPadding="5" RepeatDirection="Horizontal" RepeatColumns="4">
                              </asp:RadioButtonList>
                     </div>
-                    <div class="form-group" id="divUpdateStatus">
+                    <div class="form-group" id="divUpdateStatus" runat="server">
                         <label class="lblCss" for="RBL">Update Status to</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
                         <%--<i class="nav-link--icon fas fa-question-circle"></i>--%>
                          <asp:RadioButtonList ID="RBLDocumentStatusUpdate" runat="server" BorderStyle="None" RepeatDirection="Horizontal" CssClass="form-control" required>
@@ -156,22 +162,22 @@
                          </asp:RadioButtonList>
                     </div>
 
-                    <div class="form-group">
-                        <label class="lblCss" for="txtrefNumber">Ref. Number</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
+                    <div class="form-group" id="divRef" runat="server">
+                        <label class="lblCss" for="txtrefNumber">Ref. Number</label> &nbsp;<span id="spRef" runat="server" style="color:red; font-size:1.1rem;">*</span>
                         <asp:TextBox ID="txtrefNumber" runat="server" autocomplete="off" CssClass="form-control" ClientIDMode="Static"></asp:TextBox>
                        
                     </div>
-                    <div class="form-group" >
-                        <label class="lblCss" for="dtDocumentDate">Cover Letter Date</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
+                    <div class="form-group" id="divCD" runat="server">
+                        <label class="lblCss" for="dtDocumentDate">Cover Letter Date</label> &nbsp;<span id="spCoverDate" runat="server" style="color:red; font-size:1.1rem;">*</span>
                         <asp:TextBox ID="dtDocumentDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
                     </div>
-                    <div class="form-group" >
-                        <label class="lblCss" for="dtStartdate">Incoming Recv. Date/Approval Date</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
+                    <div class="form-group" id="divIncmDate" runat="server" >
+                        <label class="lblCss" for="dtStartdate">Incoming Recv. Date/Approval Date</label> &nbsp;<span id="spIncmDate" runat="server" style="color:red; font-size:1.1rem;">*</span>
                         <asp:TextBox ID="dtStartdate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
                     </div>
 
-                    <div class="form-group">
-                        <label class="lblCss" for="FilCoverLetter">Choose Cover Letter</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
+                    <div class="form-group" id="divCUpload" runat="server">
+                        <label class="lblCss" for="FilCoverLetter">Choose Cover Letter</label> &nbsp;<span id="spCUpload" runat="server" style="color:red; font-size:1.1rem;">*</span>
                         <div class="custom-file">
                             <asp:FileUpload ID="FileUploadCoverLetter" runat="server" CssClass="custom-file-input" />
 
@@ -180,7 +186,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" id="divReviewFile">
+                    <div class="form-group" id="divReviewFile" runat="server">
                         <label class="lblCss" for="FilCoverLetter">Choose Review File</label>
                         <div class="custom-file">
                             <asp:FileUpload ID="FileUploadDoc" runat="server" CssClass="custom-file-input" />

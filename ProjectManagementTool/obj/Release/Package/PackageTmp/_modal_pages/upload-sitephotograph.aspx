@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="modal_master_head" runat="server">
     <style type="text/css">
         .HideItem
+
         {
             display:none;
         }
@@ -37,7 +38,7 @@
                                     <div style="width:200px; float:left; border:1px solid Gray; text-align:center; background-color:#f2f2f2;">
                                         <div style="padding:10px;">
                                             <asp:Image ID="imgEmp" runat="server" Width="150px" ImageUrl='<%# Bind("Site_Image", "{0}") %>' /><br />
-                                                <asp:TextBox ID="txtdesc" runat="server" CssClass="form-control" placeholder="Description" autocomplete="off"></asp:TextBox>
+                                                <asp:TextBox ID="txtdesc" runat="server" CssClass="form-control" placeholder="Description" autocomplete="off" Text='<%#Eval("Description")%>'></asp:TextBox>
                                             <asp:Label ID="LblSitePhotoGraph_UID" runat="server" CssClass="HideItem" Text='<%#Eval("SitePhotoGraph_UID")%>'></asp:Label>
                                         </div>
                                     </div>

@@ -32,7 +32,29 @@ namespace ProjectManagementTool._modal_pages
 
         private void BindSitePhotographs()
         {
-            DataSet ds = getdata.GetSitePhotographs_by_WorkpackageUID(new Guid(Request.QueryString["WorkPackage"]));
+            DataSet ds = new DataSet();
+            if(string.IsNullOrEmpty(txtFromDate.Text) && string.IsNullOrEmpty(txtToDate.Text) && string.IsNullOrEmpty(txtDescription.Text) )
+                ds = getdata.GetSitePhotographs_by_WorkpackageUID(new Guid(Request.QueryString["WorkPackage"]));
+            else
+            {
+                DateTime fromDate = Convert.ToDateTime("01-Jan-1900");
+                DateTime toDate = Convert.ToDateTime("01-Jan-2099");
+
+                if (!string.IsNullOrEmpty(txtFromDate.Text))
+                {
+                    if(!DateTime.TryParse(txtFromDate.Text, out fromDate))
+                    {
+                        fromDate = Convert.ToDateTime("01-Jan-1900");
+                    }
+                }
+                if (!string.IsNullOrEmpty(txtToDate.Text))
+                {
+                    if(!DateTime.TryParse(txtToDate.Text, out toDate))
+                        toDate = Convert.ToDateTime("01-Jan-2099");
+                }
+
+                ds = getdata.GetSitePhotographs_by_WorkpackageUID_BetweenDate(new Guid(Request.QueryString["WorkPackage"]), fromDate, toDate, "%" + txtDescription.Text + "%");
+            }
             GrdSitePhotograph.DataSource = ds;
             GrdSitePhotograph.DataBind();
 
@@ -54,6 +76,31 @@ namespace ProjectManagementTool._modal_pages
             {
                 BindSitePhotographs();
             }
+        }
+
+        protected void btnSearch_Click(object source, EventArgs e)
+        {
+            DateTime fromDate = Convert.ToDateTime("01-Jan-1900");
+            DateTime toDate = Convert.ToDateTime("01-Jan-2099");
+
+            if (!string.IsNullOrEmpty(txtFromDate.Text))
+            {
+                if (!DateTime.TryParse(txtFromDate.Text, out fromDate))
+                {
+                    Response.Write("<script>alert('From date is not correct');</script>");
+                    return;
+                }
+            }
+            if (!string.IsNullOrEmpty(txtToDate.Text))
+            {
+                if (!DateTime.TryParse(txtToDate.Text, out toDate))
+                {
+                    Response.Write("<script>alert('To date is not correct');</script>");
+                    return;
+                }
+            }
+            BindSitePhotographs();
+
         }
     }
 }

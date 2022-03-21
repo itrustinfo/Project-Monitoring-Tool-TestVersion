@@ -40,9 +40,9 @@ namespace ProjectManagementTool._modal_pages
                     {
                         chkSync.Checked = true;
                     }
-                        //
-                        if (Request.QueryString["type"] == "add")
-                     {
+                    //
+                    if (Request.QueryString["type"] == "add")
+                    {
                         if (Request.QueryString["TaskUID"] != null)
                         {
                             DataTable dttasks = getdata.GetTaskDetails_TaskUID(Request.QueryString["TaskUID"]);
@@ -50,7 +50,7 @@ namespace ProjectManagementTool._modal_pages
                             {
                                 txttaskname.Text = dttasks.Rows[0]["Name"].ToString();
                                 HiddenParentTask.Value = dttasks.Rows[0]["ParentTaskID"].ToString();
-                                DDLWorkPackage.SelectedValue= dttasks.Rows[0]["WorkPackageUID"].ToString();
+                                DDLWorkPackage.SelectedValue = dttasks.Rows[0]["WorkPackageUID"].ToString();
                                 //PRefNumber = getdata.GetDocumentSubmittleRef_Number(new Guid(dttasks.Rows[0]["ProjectUID"].ToString()));
                                 //txtReferenceNumber.Text = PRefNumber;
                                 Bind_CategoriesforWorkPackage(new Guid(dttasks.Rows[0]["WorkPackageUID"].ToString()));
@@ -78,9 +78,55 @@ namespace ProjectManagementTool._modal_pages
                         BindDocument();
                         DDLDocumentCategory.Enabled = false;
                         LinkActivity.HRef = "/_modal_pages/choose-activity.aspx?WorkUID=" + Request.QueryString["WrkUID"];
+                        //
+
+                        if (Session["IsContractor"].ToString() == "Y")
+                        {
+                            S1Display.Visible = false;
+                            S1Date.Visible = false;
+                            S2Display.Visible = false;
+                            S2Date.Visible = false;
+                            S3Display.Visible = false;
+                            S3Date.Visible = false;
+                            S4Display.Visible = false;
+                            S4Date.Visible = false;
+                            S5Display.Visible = false;
+                            S5Date.Visible = false;
+                            S6Display.Visible = false;
+                            S6Date.Visible = false;
+                            S7Display.Visible = false;
+                            S7Date.Visible = false;
+                            S8Display.Visible = false;
+                            S8Date.Visible = false;
+                            S9Display.Visible = false;
+                            S9Date.Visible = false;
+                            S10Display.Visible = false;
+                            S10Date.Visible = false;
+                            S11Display.Visible = false;
+                            S11Date.Visible = false;
+                            S12Display.Visible = false;
+                            S12Date.Visible = false;
+                            S13Display.Visible = false;
+                            S13Date.Visible = false;
+                            S14Display.Visible = false;
+                            S14Date.Visible = false;
+                            S15Display.Visible = false;
+                            S15Date.Visible = false;
+                            S16Display.Visible = false;
+                            S16Date.Visible = false;
+                            S17Display.Visible = false;
+                            S17Date.Visible = false;
+                            S18Display.Visible = false;
+                            S18Date.Visible = false;
+                            S19Display.Visible = false;
+                            S19Date.Visible = false;
+                            S20Display.Visible = false;
+                            S20Date.Visible = false;
+                        }
+                        //
                     }
 
-                    if (Session["ActivityUID"] != null)
+                        if (Session["ActivityUID"] != null)
                     {
                         ActivityUID.Value = Session["ActivityUID"].ToString();
                         string ActivityType = Session["ActivityUID"].ToString().Split('*')[0];
@@ -206,11 +252,31 @@ namespace ProjectManagementTool._modal_pages
                     //}
 
                     //ddlSubmissionUSer.DataSource = getdata.getUsers("S");
+                //    ddlSubmissionUSer.DataSource = ds;
+                //ddlSubmissionUSer.DataTextField = "UserName";
+                //ddlSubmissionUSer.DataValueField = "UserUID";
+                //ddlSubmissionUSer.DataBind();
+                //ddlSubmissionUSer.Items.Insert(0, new ListItem("--Select--", ""));
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 1);
+
+                if (dsMusers.Rows.Count > 0)
+                {
+                    ddlSubmissionUSer.DataSource = dsMusers;
+                    ddlSubmissionUSer.DataTextField = "Name";
+                    ddlSubmissionUSer.DataValueField = "UserUID";
+                    ddlSubmissionUSer.DataBind();
+                    ddlSubmissionUSer.SelectedIndex = 0;
+                   
+                }
+                else
+                {
                     ddlSubmissionUSer.DataSource = ds;
-                ddlSubmissionUSer.DataTextField = "UserName";
-                ddlSubmissionUSer.DataValueField = "UserUID";
-                ddlSubmissionUSer.DataBind();
-                ddlSubmissionUSer.Items.Insert(0, new ListItem("--Select--", ""));
+                    ddlSubmissionUSer.DataTextField = "UserName";
+                    ddlSubmissionUSer.DataValueField = "UserUID";
+                    ddlSubmissionUSer.DataBind();
+                    ddlSubmissionUSer.Items.Insert(0, new ListItem("--Select--", ""));
+                }
+
                 //
                 //ddlQualityEngg.DataSource = getdata.getUsers("C"); /step 2
                 dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 2);
@@ -220,6 +286,9 @@ namespace ProjectManagementTool._modal_pages
                     ddlQualityEngg.DataTextField = "Name";
                     ddlQualityEngg.DataValueField = "UserUID";
                     ddlQualityEngg.DataBind();
+                    //
+                    foreach (ListItem item in ddlQualityEngg.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -238,6 +307,9 @@ namespace ProjectManagementTool._modal_pages
                     ddlReviewer_B.DataTextField = "Name";
                     ddlReviewer_B.DataValueField = "UserUID";
                     ddlReviewer_B.DataBind();
+                    //
+                    foreach (ListItem item in ddlReviewer_B.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -258,6 +330,9 @@ namespace ProjectManagementTool._modal_pages
                     ddlReviewer.DataTextField = "Name";
                     ddlReviewer.DataValueField = "UserUID";
                     ddlReviewer.DataBind();
+                    //
+                    foreach (ListItem item in ddlReviewer.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -276,6 +351,8 @@ namespace ProjectManagementTool._modal_pages
                     ddlApproval.DataTextField = "Name";
                     ddlApproval.DataValueField = "UserUID";
                     ddlApproval.DataBind();
+                    foreach (ListItem item in ddlApproval.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -294,6 +371,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser6.DataTextField = "Name";
                     dlUser6.DataValueField = "UserUID";
                     dlUser6.DataBind();
+                    foreach (ListItem item in dlUser6.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -311,6 +390,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser7.DataTextField = "Name";
                     dlUser7.DataValueField = "UserUID";
                     dlUser7.DataBind();
+                    foreach (ListItem item in dlUser7.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -327,6 +408,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser8.DataTextField = "Name";
                     dlUser8.DataValueField = "UserUID";
                     dlUser8.DataBind();
+                    foreach (ListItem item in dlUser8.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -343,6 +426,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser9.DataTextField = "Name";
                     dlUser9.DataValueField = "UserUID";
                     dlUser9.DataBind();
+                    foreach (ListItem item in dlUser9.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -359,6 +444,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser10.DataTextField = "Name";
                     dlUser10.DataValueField = "UserUID";
                     dlUser10.DataBind();
+                    foreach (ListItem item in dlUser10.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -375,6 +462,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser11.DataTextField = "Name";
                     dlUser11.DataValueField = "UserUID";
                     dlUser11.DataBind();
+                    foreach (ListItem item in dlUser11.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -391,6 +480,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser12.DataTextField = "Name";
                     dlUser12.DataValueField = "UserUID";
                     dlUser12.DataBind();
+                    foreach (ListItem item in dlUser12.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -407,6 +498,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser13.DataTextField = "Name";
                     dlUser13.DataValueField = "UserUID";
                     dlUser13.DataBind();
+                    foreach (ListItem item in dlUser13.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -423,6 +516,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser14.DataTextField = "Name";
                     dlUser14.DataValueField = "UserUID";
                     dlUser14.DataBind();
+                    foreach (ListItem item in dlUser14.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -439,6 +534,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser15.DataTextField = "Name";
                     dlUser15.DataValueField = "UserUID";
                     dlUser15.DataBind();
+                    foreach (ListItem item in dlUser15.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -456,6 +553,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser16.DataTextField = "Name";
                     dlUser16.DataValueField = "UserUID";
                     dlUser16.DataBind();
+                    foreach (ListItem item in dlUser16.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -472,6 +571,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser17.DataTextField = "Name";
                     dlUser17.DataValueField = "UserUID";
                     dlUser17.DataBind();
+                    foreach (ListItem item in dlUser17.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -488,6 +589,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser18.DataTextField = "Name";
                     dlUser18.DataValueField = "UserUID";
                     dlUser18.DataBind();
+                    foreach (ListItem item in dlUser18.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -504,6 +607,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser19.DataTextField = "Name";
                     dlUser19.DataValueField = "UserUID";
                     dlUser19.DataBind();
+                    foreach (ListItem item in dlUser19.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -520,6 +625,8 @@ namespace ProjectManagementTool._modal_pages
                     dlUser20.DataTextField = "Name";
                     dlUser20.DataValueField = "UserUID";
                     dlUser20.DataBind();
+                    foreach (ListItem item in dlUser20.Items)
+                        item.Selected = true;
                 }
                 else
                 {
@@ -1836,6 +1943,54 @@ namespace ProjectManagementTool._modal_pages
 
                     }
                 }
+                //
+            //    if(ds.Tables[0].Rows[0]["Type"].ToString() == "STP")
+              //  {
+                    if (Session["IsContractor"].ToString() == "Y")
+                    {
+                        S1Display.Visible = false;
+                        S1Date.Visible = false;
+                        S2Display.Visible = false;
+                        S2Date.Visible = false;
+                        S3Display.Visible = false;
+                        S3Date.Visible = false;
+                        S4Display.Visible = false;
+                        S4Date.Visible = false;
+                        S5Display.Visible = false;
+                        S5Date.Visible = false;
+                        S6Display.Visible = false;
+                        S6Date.Visible = false;
+                        S7Display.Visible = false;
+                        S7Date.Visible = false;
+                        S8Display.Visible = false;
+                        S8Date.Visible = false;
+                        S9Display.Visible = false;
+                        S9Date.Visible = false;
+                        S10Display.Visible = false;
+                        S10Date.Visible = false;
+                        S11Display.Visible = false;
+                        S11Date.Visible = false;
+                        S12Display.Visible = false;
+                        S12Date.Visible = false;
+                        S13Display.Visible = false;
+                        S13Date.Visible = false;
+                        S14Display.Visible = false;
+                        S14Date.Visible = false;
+                        S15Display.Visible = false;
+                        S15Date.Visible = false;
+                        S16Display.Visible = false;
+                        S16Date.Visible = false;
+                        S17Display.Visible = false;
+                        S17Date.Visible = false;
+                        S18Display.Visible = false;
+                        S18Date.Visible = false;
+                        S19Display.Visible = false;
+                        S19Date.Visible = false;
+                        S20Display.Visible = false;
+                        S20Date.Visible = false;
+                    }
+                    //
+               // }
 
             }
         }
@@ -2664,7 +2819,7 @@ namespace ProjectManagementTool._modal_pages
                 {
                     loading.Visible = false;
                     ActivityUID.Value = "";
-                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error:" + ex.Message + "');</script>");
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error:There is a problem with this feature. Please contact Administrator.Please check if users are added for flow :" + ex.Message + "');</script>");
                 }
             }
         }

@@ -19348,6 +19348,206 @@ namespace ProjectManager.DAL
             return ds;
         }
 
+        // added on 17/03/2022
+        public string GetFlowTypeBySubmittalUID(Guid DocumentUID)
+        {
+            string Type = "";
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+                if (con.State == ConnectionState.Closed) con.Open();
+                SqlCommand cmd = new SqlCommand("usp_GetFlowTypeBySubmittalUID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@SubmittalUID", DocumentUID);
+                Type = (string)cmd.ExecuteScalar();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                Type = "Error : " + ex.Message;
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+            return Type;
+        }
+
+        //added on 18/03/2022 for nakib
+        public int SitePhotograph_InsertorUpdate(Guid SitePhotoGraph_UID, Guid ProjectUID, Guid WorkpackageUID, string Site_Image, string Description, DateTime Uploaded_Date, string UploadedBy)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_SitePhotograph_InsertorUpdate"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@SitePhotoGraph_UID", SitePhotoGraph_UID);
+                        cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                        cmd.Parameters.AddWithValue("@WorkpackageUID", WorkpackageUID);
+                        cmd.Parameters.AddWithValue("@Site_Image", Site_Image);
+                        cmd.Parameters.AddWithValue("@Description", Description);
+                        cmd.Parameters.AddWithValue("@Uploaded_Date", Uploaded_Date);
+                        cmd.Parameters.AddWithValue("@UserID", UploadedBy);
+                        con.Open();
+                        cnt = cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+                return cnt;
+            }
+            catch (Exception ex)
+            {
+                return cnt;
+            }
+        }
+        internal int RABill_Document_InsertUpdate(Guid Document_UID, Guid RABillUid, Guid WorkpackageUID, string DocumentPath, string Description, Guid UploadedBy)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_RABill_Document_InsertorUpdate"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@Document_UID", Document_UID);
+                        cmd.Parameters.AddWithValue("@RABillUid", RABillUid);
+                        cmd.Parameters.AddWithValue("@WorkpackageUID", WorkpackageUID);
+                        cmd.Parameters.AddWithValue("@Document_Path", DocumentPath);
+                        cmd.Parameters.AddWithValue("@Description", Description);
+                        cmd.Parameters.AddWithValue("@Uploaded_Date", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@UserID", UploadedBy);
+                        con.Open();
+                        cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
+                        con.Close();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                //  return sresult = false;
+            }
+            return cnt;
+        }
+
+        internal DataTable GetRaBillDocuement(Guid RABillUid)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+                    SqlDataAdapter cmd = new SqlDataAdapter("usp_RABill_Document_Select", con);
+                    cmd.SelectCommand.Parameters.AddWithValue("@RABillUid", RABillUid);
+                    cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    cmd.Fill(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                dt = null;
+            }
+            return dt;
+        }
+
+        public int RaBillDocuement_Delete(Guid Document_UID, Guid UserUID)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_RABill_Document_Delete"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@Document_UID", Document_UID);
+                        cmd.Parameters.AddWithValue("@UserUID", UserUID);
+                        con.Open();
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = 0;
+            }
+        }
+        public DataSet GetSitePhotographs_by_WorkpackageUID_BetweenDate(Guid WorkpackageUID, DateTime FromDate, DateTime ToDate, string Description)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetSitePhotograph_by_WorkpackageUID_BetweenDate", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkpackageUID", WorkpackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@FromDate", FromDate);
+                cmd.SelectCommand.Parameters.AddWithValue("@ToDate", ToDate);
+                cmd.SelectCommand.Parameters.AddWithValue("@Description", Description);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        // added on 19/03/2022
+        public string GetPhaseforStatus(Guid FlowUID,string Current_Status)
+        {
+            string Type = "";
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+                if (con.State == ConnectionState.Closed) con.Open();
+                SqlCommand cmd = new SqlCommand("usp_GetPhaseforStatus", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Current_Status", Current_Status);
+                cmd.Parameters.AddWithValue("@FlowUID", FlowUID);
+                Type = (string)cmd.ExecuteScalar();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                Type = "Error : " + ex.Message;
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+            return Type;
+        }
+
+        public string GetFlowUIDBySubmittalUID(Guid SubmittalUID)
+        {
+            string Type = "";
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+                if (con.State == ConnectionState.Closed) con.Open();
+                SqlCommand cmd = new SqlCommand("usp_GetFlowUIDBySubmittalUID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@SubmittalUID", SubmittalUID);  
+                Type = (string)cmd.ExecuteScalar();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+               
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+            return Type;
+        }
+
+
 
     }
 }

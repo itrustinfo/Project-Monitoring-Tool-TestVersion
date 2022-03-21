@@ -44,8 +44,41 @@ namespace ProjectManagementTool._modal_pages
                         btnSubmit.Text = "Submit";
                         BindStatus();
                     }
-                    
-                }
+
+                    //added on 16/03/2022
+                    if (getdata.GetFlowTypeBySubmittalUID(new Guid(getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"])))) == "STP")
+                    {
+                        dtStartdate.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                        if (DDlStatus.SelectedItem.ToString().Contains("AE Approval") || DDlStatus.SelectedItem.ToString().Contains("AEE Approval") || DDlStatus.SelectedItem.ToString().Contains("EE Approval") || DDlStatus.SelectedItem.ToString().Contains("ACE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE GFC Approval"))
+                        {
+                            divRef.Visible = false;
+                            divCD.Visible = false;
+                            divCUpload.Visible = false;
+                            divReviewFile.Visible = false;
+                            divIncmDate.Visible = false;
+                            divUpdateStatus.Visible = false;
+                        }
+                        else
+                        {
+                            divforward.Visible = false;
+                        }
+                        //if (DDlStatus.SelectedItem.ToString().Contains("Meeting with EE or CE") || DDlStatus.SelectedItem.ToString().Contains("Rejected") || DDlStatus.SelectedItem.ToString().Contains("PMC DTL Review"))
+                        //{
+                            spRef.Visible = false;
+                            spCoverDate.Visible = false;
+                            spCUpload.Visible = false;
+                            spIncmDate.Visible = false;
+                       // }
+                    }
+                    if (DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE GFC Approval"))
+                    {
+                        if(DDlStatus.SelectedItem.ToString().Contains("ACE Approval"))
+                            divforward.Visible = true;
+                        else
+                            divforward.Visible = false;
+                    }
+                        //------------------------------
+                    }
             }
         }
 
@@ -145,7 +178,7 @@ namespace ProjectManagementTool._modal_pages
 
         protected void btnSubmit_Click(object sender, EventArgs e) //final submit
         {
-            if (DDlStatus.SelectedItem.ToString() == "Closed" || DDlStatus.SelectedItem.ToString().Contains("AE Approval") || DDlStatus.SelectedItem.ToString().Contains("AEE Approval") || DDlStatus.SelectedItem.ToString().Contains("EE Approval") || DDlStatus.SelectedItem.ToString().Contains("ACE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString().Contains("Meeting with EE or CE") || DDlStatus.SelectedItem.ToString().Contains("Rejected"))
+            if (DDlStatus.SelectedItem.ToString() == "Closed" || getdata.GetFlowTypeBySubmittalUID(new Guid(getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"])))) == "STP")
             {
                 try
                 {
@@ -153,6 +186,12 @@ namespace ProjectManagementTool._modal_pages
                     {
                         Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Please enter Incmg Recived Date/Approval Date.');</script>");
                         dtStartdate.Focus();
+                        return;
+                    }
+                    if(txtcomments.Text =="")
+                    {
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Please enter comments.');</script>");
+                        txtcomments.Focus();
                         return;
                     }
                     string DocPath = "";
@@ -171,7 +210,7 @@ namespace ProjectManagementTool._modal_pages
                         Subject = Session["Username"].ToString() + " added a new Status";
                     }
                     //
-                    if (DDlStatus.SelectedItem.ToString().Contains("AE Approval") || DDlStatus.SelectedItem.ToString().Contains("EE Approval") || DDlStatus.SelectedItem.ToString().Contains("ACE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval"))
+                    if (DDlStatus.SelectedItem.ToString().Contains("AE Approval") || DDlStatus.SelectedItem.ToString().Contains("EE Approval") || DDlStatus.SelectedItem.ToString().Contains("ACE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE GFC Approval"))
                     {
                         divPassword.Visible = true;
 
@@ -686,6 +725,22 @@ namespace ProjectManagementTool._modal_pages
             if (ds.Tables[0].Rows.Count > 0)
             {
                 RBLOriginator.Items[0].Selected = true;
+            }
+        }
+
+        protected void chkforward_CheckedChanged(object sender, EventArgs e)
+        {
+            if(chkforward.Checked)
+            {
+                divStatus.Visible = false;
+                txtcomments.Text = "forward of document to next level";
+                txtcomments.Enabled = false;
+            }
+            else
+            {
+                divStatus.Visible = true;
+                txtcomments.Text = "";
+                txtcomments.Enabled = true;
             }
         }
     }

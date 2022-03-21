@@ -75,8 +75,8 @@ namespace ProjectManagementTool._content_pages.rabill_summary
             ViewState["isEdit"] = "false";
             ViewState["isDelete"] = "false";
             AddRABill.Visible = false;
-            GrdTreeView.Columns[3].Visible = false;
             GrdTreeView.Columns[4].Visible = false;
+            GrdTreeView.Columns[5].Visible = false;
             if (dscheck.Tables[0].Rows.Count > 0)
             {
                 foreach (DataRow dr in dscheck.Tables[0].Rows)
@@ -88,12 +88,12 @@ namespace ProjectManagementTool._content_pages.rabill_summary
                     if (dr["Code"].ToString() == "RA-E")
                     {
                         ViewState["isEdit"] = "true";
-                        GrdTreeView.Columns[3].Visible = true;
+                        GrdTreeView.Columns[4].Visible = true;
                     }
                     if (dr["Code"].ToString() == "RA-D")
                     {
                         ViewState["isDelete"] = "true";
-                        GrdTreeView.Columns[4].Visible = true;
+                        GrdTreeView.Columns[5].Visible = true;
                     }
                 }
             }
@@ -244,11 +244,11 @@ namespace ProjectManagementTool._content_pages.rabill_summary
             {
                 if (ViewState["isEdit"].ToString() == "false")
                 {
-                    e.Row.Cells[3].Visible = false;
+                    e.Row.Cells[4].Visible = false;
                 }
                 if (ViewState["isDelete"].ToString() == "false")
                 {
-                    e.Row.Cells[4].Visible = false;
+                    e.Row.Cells[5].Visible = false;
                 }
             }
 
@@ -269,11 +269,11 @@ namespace ProjectManagementTool._content_pages.rabill_summary
 
                 if (ViewState["isEdit"].ToString() == "false")
                 {
-                    e.Row.Cells[3].Visible = false;
+                    e.Row.Cells[4].Visible = false;
                 }
                 if (ViewState["isDelete"].ToString() == "false")
                 {
-                    e.Row.Cells[4].Visible = false;
+                    e.Row.Cells[5].Visible = false;
                 }
 
                 //for db sync check
@@ -283,7 +283,7 @@ namespace ProjectManagementTool._content_pages.rabill_summary
                     {
                         if (dbgetdata.checkRABillsSynced(new Guid(RABillUID)) > 0)
                         {
-                            e.Row.BackColor = System.Drawing.Color.LightYellow;
+                            e.Row.BackColor = System.Drawing.Color.White;
                         }
                         else
                         {

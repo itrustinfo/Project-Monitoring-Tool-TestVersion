@@ -233,7 +233,7 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                        <%--<asp:Label Text="Foo bar" CssClass="pl-1" runat="server" />--%>
                                </h6>
                                <div class="col-md-6 col-lg-4 form-group text-right">
-                                   <asp:Button ID="btnSubmit" runat="server" Text="Submit" Visible="false" CssClass="btn btn-primary"></asp:Button>
+                                   <asp:Button ID="btnSubmit" runat="server" Text="Submit" Visible="false" CssClass="btn btn-primary" OnClick="btnSubmit_Click"></asp:Button>
                     <asp:Button ID="btnback" runat="server" Text="Back To Dashboard" CssClass="btn btn-primary" PostBackUrl="/_content_pages/dashboard/"></asp:Button>
                                   
                 </div>
@@ -253,7 +253,7 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                             </asp:BoundField>
                                            <asp:TemplateField HeaderText="Submittal Name" SortExpression="DocName">
                                             <ItemTemplate>
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title='<%#GetTaskHierarchy_By_DocumentUID(Eval("DocumentUID").ToString())%>'><i class="fa fa-info-circle" style="color:black;" aria-hidden="true"></i></a>&nbsp;&nbsp; <a href="/_content_pages/documents/Default.aspx?SubmittalUID=<%#Eval("DocumentUID")%>"><%#GetSubmittalName(Eval("DocumentUID").ToString())%></a>
+                                                <a href="#"  data-toggle="tooltip" data-placement="top" title='<%#GetTaskHierarchy_By_DocumentUID(Eval("DocumentUID").ToString())%>'><i class="fa fa-info-circle" style="color:black;" aria-hidden="true"></i></a>&nbsp;&nbsp; <a href="/_content_pages/documents/Default.aspx?SubmittalUID=<%#Eval("DocumentUID")%>"><%#GetSubmittalName(Eval("DocumentUID").ToString())%></a>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                            <asp:TemplateField ItemStyle-Width="35%" HeaderStyle-Width="35%" HeaderText="Document Name" ItemStyle-HorizontalAlign="Left" SortExpression="ActualDocument_Name">
@@ -272,7 +272,7 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                                 <%#GetDocumentName(Eval("ActualDocument_Type").ToString())%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
-                                           <asp:BoundField DataField="ActualDocument_CurrentStatus" DataFormatString="{0:dd MMM yyyy}" HeaderText="Current Status" SortExpression="ActualDocument_CurrentStatus">
+                                           <asp:BoundField DataField="ActualDocument_CurrentStatus" HeaderText="Current Status" SortExpression="ActualDocument_CurrentStatus">
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
                                              <asp:BoundField DataField="IncomingRec_Date" HeaderText="Incoming Recv. Date" SortExpression="ActualDocument_CreatedDate" DataFormatString="{0:dd/MM/yyyy}" >

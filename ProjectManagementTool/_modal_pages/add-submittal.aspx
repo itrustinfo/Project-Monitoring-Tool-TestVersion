@@ -226,7 +226,7 @@
                         </asp:DropDownList>
                          <asp:Label ID="lblflowmsg" runat="server" Visible="false" Text="Please Note flow is allowed to be changed only if there are no documents uploaded.Please delete the documents if you want to change the flow " Font-Italic="True" ForeColor="Red"></asp:Label>
                     </div>
-                       <div class="form-group" id="synchDisplay" runat="server">
+                       <div class="form-group" id="synchDisplay" runat="server" style="display:none">
                         <label class="lblCss" for="dtStartdate">Synching</label> &nbsp;<span style="color:red; font-size:1rem;"></span>
                         <asp:CheckBox ID="chkSync" runat="server" CssClass="form-control"/>
                             

@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectManagementTool._content_pages.rabill_summary {
-    
-    
-    public partial class _default {
-        
+namespace ProjectManagementTool._content_pages.rabill_summary
+{
+
+
+    public partial class _default
+    {
+
         /// <summary>
         /// ScriptManager1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ProjectManagementTool._content_pages.rabill_summary {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
+
         /// <summary>
         /// DDlProject control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ProjectManagementTool._content_pages.rabill_summary {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDlProject;
-        
+
         /// <summary>
         /// DDLWorkPackage control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ProjectManagementTool._content_pages.rabill_summary {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDLWorkPackage;
-        
+
         /// <summary>
         /// boqsummary control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ProjectManagementTool._content_pages.rabill_summary {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl boqsummary;
-        
+
         /// <summary>
         /// lblBOQName control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ProjectManagementTool._content_pages.rabill_summary {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblBOQName;
-        
+
         /// <summary>
         /// btnback control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ProjectManagementTool._content_pages.rabill_summary {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnback;
-        
+
         /// <summary>
         /// AddRABill control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ProjectManagementTool._content_pages.rabill_summary {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor AddRABill;
-        
+
         /// <summary>
         /// btnAddRABills control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ProjectManagementTool._content_pages.rabill_summary {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAddRABills;
-        
+
         /// <summary>
         /// GrdTreeView control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ProjectManagementTool._content_pages.rabill_summary {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GrdTreeView;
-        
+
         /// <summary>
         /// lblheader control.
         /// </summary>

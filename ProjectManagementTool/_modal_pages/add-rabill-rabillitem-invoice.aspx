@@ -140,6 +140,15 @@
                         <asp:TextBox ID="txtDate" CssClass="form-control" autocomplete="off" required  runat="server" ClientIDMode="Static"></asp:TextBox>
                         
                     </div>
+                    
+                    <div class="form-group">
+                        <label class="lblCss" for="UploadPhotographs">Choose File/s</label>
+                        &nbsp;<span style="color: red; font-size: 1.2rem;">*</span>
+                        <div class="custom-file">
+                            <asp:FileUpload ID="ImageUpload" runat="server" AllowMultiple="true" CssClass="custom-file-input" />
+                            <label class="custom-file-label" for="UploadPhotographs">Choose Files</label>
+                        </div>
+                    </div>
                     <%--<div class="form-group">
                         <label class="lblCss" for="txtRabillNumber">Item Number</label>
                         <asp:TextBox ID="txtraitemnumber" CssClass="form-control" required  runat="server" ClientIDMode="Static"></asp:TextBox>

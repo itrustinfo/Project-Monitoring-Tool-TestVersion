@@ -232,6 +232,7 @@
     <Content Include="_modal_pages\task-schedulehistory.aspx" />
     <Content Include="_modal_pages\TaskScheduleUserControl.ascx" />
     <Content Include="_modal_pages\TaskScheduleUserControlDatewise.ascx" />
+    <Content Include="_modal_pages\upload-rabill-document.aspx" />
     <Content Include="_modal_pages\upload-sitephotograph.aspx" />
     <Content Include="_modal_pages\UserControl.ascx" />
     <Content Include="WebForm1.aspx" />
@@ -410,6 +411,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ITextEvents.cs" />
+    <Compile Include="Models\Models\UploadNewPhoto.cs" />
     <Compile Include="PDFPrint.aspx.cs">
       <DependentUpon>PDFPrint.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1143,6 +1145,13 @@
     </Compile>
     <Compile Include="_modal_pages\TaskScheduleUserControlDatewise.ascx.designer.cs">
       <DependentUpon>TaskScheduleUserControlDatewise.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="_modal_pages\upload-rabill-document.aspx.cs">
+      <DependentUpon>upload-rabill-document.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_modal_pages\upload-rabill-document.aspx.designer.cs">
+      <DependentUpon>upload-rabill-document.aspx</DependentUpon>
     </Compile>
     <Compile Include="_modal_pages\upload-sitephotograph.aspx.cs">
       <DependentUpon>upload-sitephotograph.aspx</DependentUpon>

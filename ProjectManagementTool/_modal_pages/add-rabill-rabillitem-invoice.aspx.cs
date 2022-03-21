@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using ProjectManager.DAL;
 using System.Data;
 using ProjectManagementTool.DAL;
+using System.IO;
 
 namespace ProjectManagementTool._modal_pages
 {
@@ -110,6 +111,32 @@ namespace ProjectManagementTool._modal_pages
                 }
                 else
                 {
+                    // file upload
+                    string sFileDirectory = "~/Documents/RABills/" + rabillUid;
+
+                    if (!Directory.Exists(Server.MapPath(sFileDirectory)))
+                    {
+                        Directory.CreateDirectory(Server.MapPath(sFileDirectory));
+                    }
+                    
+                    foreach (HttpPostedFile uploadedFile in ImageUpload.PostedFiles)
+                    {
+                        if (uploadedFile.ContentLength > 0 && !String.IsNullOrEmpty(uploadedFile.FileName))
+                        {
+                            string sFileName = Path.GetFileNameWithoutExtension(uploadedFile.FileName);
+                            string Extn = Path.GetExtension(uploadedFile.FileName);
+                            uploadedFile.SaveAs(Server.MapPath(sFileDirectory + "/" + sFileName + Extn));
+                            string savedPath = sFileDirectory + "/" + sFileName + Extn;
+                            string DecryptPagePath = sFileDirectory + "/" + sFileName + "_DE" + Extn;
+                            dbObj.EncryptFile(Server.MapPath(savedPath), Server.MapPath(DecryptPagePath));
+
+
+                            int Cnt = dbObj.RABill_Document_InsertUpdate(Guid.NewGuid(), new Guid(rabillUid), new Guid(Request.QueryString["WorkpackageUID"]), savedPath, txtInvoiceNumber.Text, new Guid(Session["UserUID"].ToString()));
+                            
+                        }
+                    }
+
+
                     int ErrorCount = 0;
                     int ItemCount = 0;
                     double totamount = 0;
@@ -143,6 +170,9 @@ namespace ProjectManagementTool._modal_pages
                     {
                         Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('There is a problem linking BOQ details to this RABill. Please contact system admin');</script>");
                     }
+                    
+                    
+                    
                     //AddRABillItem.Visible = true;
                     //invoice_RABill.Visible = false;
                     Session["RABillWorkpackgeUID"] = Request.QueryString["ProjectUID"] + "\\" + Request.QueryString["WorkpackageUID"];

@@ -3214,6 +3214,8 @@ namespace ProjectManager._content_pages.documents
                 {
                     e.Row.Cells[6].Visible = false;
                 }
+
+               
             }
 
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -3323,6 +3325,31 @@ namespace ProjectManager._content_pages.documents
                                 }
                             }
                             //--------------------------------------------
+                            if (Session["IsContractor"].ToString() == "Y")
+                            {
+                                string SubmittalUID = getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(ActualDocumentUID));
+                                string phase = getdata.GetPhaseforStatus(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[2].Text);
+                                if (string.IsNullOrEmpty(phase))
+                                {
+                                    if (e.Row.Cells[2].Text == "Code A-CE Approval" || e.Row.Cells[2].Text == "Client CE GFC Approval")
+                                    {
+                                        e.Row.Cells[2].Text = "Approved";
+
+                                    }
+                                    if (e.Row.Cells[2].Text == "Code B-CE Approval" || e.Row.Cells[3].Text == "Code C-CE Approval")
+                                    {
+                                        e.Row.Cells[2].Text = "Under Client Approval Process";
+                                    }
+                                }
+                                else
+                                {
+                                    e.Row.Cells[2].Text = phase;
+                                }
+
+
+                            }
+
+                            //
 
                         }
                     }
@@ -4607,6 +4634,33 @@ namespace ProjectManager._content_pages.documents
                             }
                         }
                         //--------------------------------------------
+                        if (Session["IsContractor"].ToString() == "Y")
+                        {
+                            string SubmittalUID = getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(ActualDocumentUID));
+                            string phase = getdata.GetPhaseforStatus(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[2].Text);
+
+                            if (string.IsNullOrEmpty(phase))
+                            {
+                                
+                                if (e.Row.Cells[2].Text == "Code A-CE Approval")
+                                {
+                                    e.Row.Cells[2].Text = "Approved";
+
+                                }
+                                if (e.Row.Cells[2].Text == "Code B-CE Approval" || e.Row.Cells[3].Text == "Code C-CE Approval")
+                                {
+                                    e.Row.Cells[2].Text = "Client Approval";
+                                }
+                            }
+                            else
+                            {
+                                e.Row.Cells[2].Text = phase;
+                            }
+
+
+                        }
+
+                        //
                     }
                 }
                 else
