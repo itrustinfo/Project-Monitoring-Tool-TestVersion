@@ -19547,7 +19547,62 @@ namespace ProjectManager.DAL
             return Type;
         }
 
+        //added for NAkib on 21/03/2022
+        internal DateTime? CalculateHolidayOffset(DateTime fromDate, int offset)
+        {
+            DateTime? sresult = null;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
 
+                    using (SqlCommand cmd = new SqlCommand("USP_CalculateHolidayOffset"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@FromDate", fromDate);
+                        cmd.Parameters.AddWithValue("@Offset", offset);
+                        con.Open();
+                        sresult = (DateTime)cmd.ExecuteScalar();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = null;
+            }
+        }
+
+        // added on 22/03/2022
+        public int StoreFreshTargetDatesforStatusChange(Guid ActualDocumentUID, string CurrentStatus)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_StoreFreshTargetDatesforStatusChange"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        con.Open();
+                        cmd.Parameters.AddWithValue("@ActualDocumentUID", ActualDocumentUID);
+                        cmd.Parameters.AddWithValue("@CurrentStatus", CurrentStatus);
+                        sresult = cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                sresult = 0;
+            }
+            return sresult;
+        }
 
     }
 }

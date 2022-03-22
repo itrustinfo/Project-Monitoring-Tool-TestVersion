@@ -315,6 +315,9 @@ namespace ProjectManagementTool._modal_pages
                         if (Cnt > 0)
                         {
                             //DataSet ds = getdata.getAllUsers();
+                            //Update the targte dates 
+                            getdata.StoreFreshTargetDatesforStatusChange(new Guid(Request.QueryString["DocID"].ToString()), DDlStatus.SelectedItem.Text);
+
                             DataSet ds = new DataSet();
                             //if (Session["TypeOfUser"].ToString() == "U" || Session["TypeOfUser"].ToString() == "MD" || Session["TypeOfUser"].ToString() == "VP")
                             //{
@@ -550,6 +553,8 @@ namespace ProjectManagementTool._modal_pages
                             if (Cnt > 0)
                             {
                                 //DataSet ds = getdata.getAllUsers();
+                                getdata.StoreFreshTargetDatesforStatusChange(new Guid(Request.QueryString["DocID"].ToString()), DDlStatus.SelectedItem.Text);
+
                                 DataSet ds = new DataSet();
                                 //if (Session["TypeOfUser"].ToString() == "U" || Session["TypeOfUser"].ToString() == "MD" || Session["TypeOfUser"].ToString() == "VP")
                                 //{

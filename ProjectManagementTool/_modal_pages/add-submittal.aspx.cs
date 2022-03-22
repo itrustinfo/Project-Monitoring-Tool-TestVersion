@@ -1771,33 +1771,42 @@ namespace ProjectManagementTool._modal_pages
                 {
                     if (ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString() != "-1")
                     {
-                        dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtSubTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                     }
                 }
                 else if (ds.Tables[0].Rows[0]["Steps_Count"].ToString() == "2")
                 {
                     if (ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString() != "-1")
                     {
-                        dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtSubTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString() != "-1")
                     {
-                        dtQualTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtQualTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtQualTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
                     }
                 }
                 else if (ds.Tables[0].Rows[0]["Steps_Count"].ToString() == "3")
                 {
                     if (ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString() != "-1")
                     {
-                        dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtSubTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString() != "-1")
                     {
-                        dtQualTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtQualTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtQualTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString() != "-1")
                     {
-                        dtRev_B_TargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //dtRev_B_TargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtRev_B_TargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
                     }
                     //Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Success-8');</script>");
                 }
@@ -1805,141 +1814,184 @@ namespace ProjectManagementTool._modal_pages
                 {
                     if (ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString() != "-1")
                     {
-                        dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtSubTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString() != "-1")
                     {
-                        dtQualTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtQualTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtQualTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString() != "-1")
                     {
-                        dtRev_B_TargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtRev_B_TargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtRev_B_TargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString() != "-1")
                     {
-                        dtRevTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtRevTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtRevTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                     }
                 }
               else if (ds.Tables[0].Rows[0]["Steps_Count"].ToString() == "5")
                 {
                     if (ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString() != "-1")
                     {
-                        dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtSubTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString() != "-1")
                     {
-                        dtQualTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtQualTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtQualTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString() != "-1")
                     {
-                        dtRev_B_TargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //dtRev_B_TargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtRev_B_TargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString() != "-1")
                     {
-                        dtRevTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtRevTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtRevTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+
                     }
                     if (ds.Tables[0].Rows[0]["dtAppTargetDate"].ToString() != "-1")
                     {
-                        dtAppTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep5_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtAppTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep5_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtAppTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep5_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                     }
-                    
+
                 }
                 else // if greater than 5
                 {
                     if (ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString() != "-1")
                     {
-                        dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtSubTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtSubTargetDate.Text =Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1,Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep1_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString() != "-1")
                     {
-                        dtQualTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtQualTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtQualTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep2_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString() != "-1")
                     {
-                        dtRev_B_TargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //dtRev_B_TargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtRev_B_TargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep3_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString() != "-1")
                     {
-                        dtRevTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //dtRevTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtRevTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep4_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep5_Duration"].ToString() != "-1")
                     {
-                        dtAppTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep5_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtAppTargetDate.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep5_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtAppTargetDate.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep5_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+
                     }
                     //
-                    if(ds.Tables[0].Rows[0]["FlowStep6_Duration"] != DBNull.Value)
+                    if (ds.Tables[0].Rows[0]["FlowStep6_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate6.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep6_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtTargetDate6.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep6_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate6.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep6_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep7_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate7.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep7_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtTargetDate7.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep7_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate7.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep7_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep8_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate8.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep8_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //  dtTargetDate8.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep8_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate8.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep8_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep9_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate9.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep9_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtTargetDate9.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep9_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate9.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep9_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep10_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate10.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep10_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //  dtTargetDate10.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep10_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate10.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep10_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep11_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate11.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep11_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //  dtTargetDate11.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep11_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate11.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep11_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep12_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate12.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep12_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtTargetDate12.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep12_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate12.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep12_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep13_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate13.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep13_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //dtTargetDate13.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep13_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate13.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep13_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep14_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate14.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep14_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //dtTargetDate14.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep14_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate14.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep14_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep15_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate15.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep15_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //  dtTargetDate15.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep15_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate15.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep15_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep16_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate16.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep16_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtTargetDate16.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep16_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate16.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep16_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep17_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate17.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep17_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtTargetDate17.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep17_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate17.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep17_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep18_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate18.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep18_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtTargetDate18.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep18_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate18.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep18_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep19_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate19.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep19_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        // dtTargetDate19.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep19_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate19.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep19_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                     if (ds.Tables[0].Rows[0]["FlowStep20_Duration"] != DBNull.Value)
                     {
-                        dtTargetDate20.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep20_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        //dtTargetDate20.Text = CDate1.AddDays(Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep20_Duration"].ToString())).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        dtTargetDate20.Text = Convert.ToDateTime(getdata.CalculateHolidayOffset(CDate1, Convert.ToInt32(ds.Tables[0].Rows[0]["FlowStep20_Duration"].ToString()))).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                     }
                 }

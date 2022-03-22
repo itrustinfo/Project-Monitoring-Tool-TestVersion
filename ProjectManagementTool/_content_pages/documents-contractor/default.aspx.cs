@@ -431,6 +431,8 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                         {
                             //DataSet ds = getdata.getAllUsers();
                             DataSet ds = new DataSet();
+                            //Update the targte dates 
+                            getdt.StoreFreshTargetDatesforStatusChange(new Guid(DocumentUID), status);
 
                             ds = getdt.GetUsers_under_ProjectUID(new Guid(Request.QueryString["PrjUID"]));
 
