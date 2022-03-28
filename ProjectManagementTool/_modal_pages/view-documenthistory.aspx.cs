@@ -1,4 +1,5 @@
-﻿using ProjectManager.DAL;
+﻿
+using ProjectManager.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,6 +15,7 @@ namespace ProjectManagementTool._modal_pages
     {
         DBGetData getdata = new DBGetData();
         DataSet ds = new DataSet();
+        string next = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Username"] == null)
@@ -58,6 +60,11 @@ namespace ProjectManagementTool._modal_pages
                     BindDocStatus();
                     ShowDocumentProcessTaken_in_Days(new Guid(Request.QueryString["DocID"].ToString()));
                     HideorShowAddStatusButton();
+
+                    if (Session["IsClient"].ToString() == "Y")
+                    {
+                        GrdDocStatus.Columns[9].Visible = false;
+                    }
                 }
             }
         }
@@ -132,7 +139,61 @@ namespace ProjectManagementTool._modal_pages
         protected void BindDocStatus()
         {
             //GrdDocStatus.DataSource = getdata.getDocumentStatusList(new Guid(Request.QueryString["DocID"].ToString()));
-            GrdDocStatus.DataSource = getdata.getActualDocumentStatusList(new Guid(Request.QueryString["DocID"].ToString()));
+            
+            DataSet documentSTatusList = getdata.getActualDocumentStatusList(new Guid(Request.QueryString["DocID"].ToString()));
+            if (Session["IsContractor"].ToString() == "Y")
+            {
+                DataTable dtNewTable = new DataTable();
+                dtNewTable.Columns.Add("Sl");
+                dtNewTable.Columns.Add("StatusUID", typeof(Guid));
+                dtNewTable.Columns.Add("ActivityType");
+                dtNewTable.Columns.Add("Phase");
+                var phaseAndStatus = getdata.GetPhaseAndCurrentStatusByDocument(new Guid(Request.QueryString["DocID"].ToString()));
+                int counter = 0;
+                foreach(DataRow dr in documentSTatusList.Tables[0].Rows)
+                {
+                    var statusUID = dr["StatusUID"].ToString();
+                    string phaseForCurrentSTatus = string.Empty;
+                    var phase = phaseAndStatus.AsEnumerable().Where(r => r.Field<string>("Current_Status") == dr["ActivityType"].ToString()).FirstOrDefault();
+                    if(phase != null)
+                    {
+                        phaseForCurrentSTatus = phase[1].ToString();
+                    }
+                    dtNewTable.Rows.Add(counter.ToString(), new Guid( dr["StatusUID"].ToString()), dr["ActivityType"].ToString(), phaseForCurrentSTatus);
+                    counter++;
+                }
+
+                List<Guid> StatusUIDToRemove = new List<Guid>();
+
+                //First remove all the empty phases
+                var EmptyPhases = dtNewTable.AsEnumerable().Where(r => r.Field<string>("Phase") == string.Empty);
+                if(EmptyPhases.Any())
+                {
+                    StatusUIDToRemove = EmptyPhases.Select(r => r.Field<Guid>("StatusUID")).ToList();
+                    dtNewTable.AsEnumerable().Where(x => x.Field<string>("Phase") == string.Empty).ToList().ForEach(r => r.Delete());
+                }
+
+                var groupByPhase = dtNewTable.AsEnumerable().GroupBy(r => r.Field<string>("Phase")).Select(r => new{r.Key, r});
+
+                
+                foreach(var eachPhase in groupByPhase)
+                {
+                    var eachItem = eachPhase.r.ToList();
+                    if(eachItem.Count > 1)
+                    {
+                        for (int count = 0; count < eachItem.Count -1; count++ )
+                        {
+                            StatusUIDToRemove.Add(new Guid(eachItem[count]["StatusUID"].ToString()));
+                        }
+                    }
+                }
+                if(StatusUIDToRemove.Count > 0)
+                {
+                    documentSTatusList.Tables[0].AsEnumerable().Where(x => StatusUIDToRemove.Contains(x.Field<Guid>("StatusUID"))).ToList().ForEach(r => r.Delete());
+                }
+            }
+
+            GrdDocStatus.DataSource = documentSTatusList;
             GrdDocStatus.DataBind();
 
         }
@@ -195,7 +256,7 @@ namespace ProjectManagementTool._modal_pages
                         if (Session["UserUID"].ToString().ToUpper() == druser["Approver"].ToString().ToUpper())
                         {
                             AddStatus.Visible = true;
-                            return;
+                            goto afterloop;
                         }
                         else
                         {
@@ -209,6 +270,16 @@ namespace ProjectManagementTool._modal_pages
                     AddStatus.Visible = false;
                 }
             }
+            //
+            afterloop:
+            if (ds.Tables[0].Rows[0]["ActivityType"].ToString() == "Accepted")
+            {
+                if (getdata.checkUserAddedDocumentstatus(new Guid(Request.QueryString["DocID"].ToString()), new Guid(Session["UserUID"].ToString()), ds.Tables[0].Rows[0]["ActivityType"].ToString()) > 0)
+                {
+                    AddStatus.Visible = false;
+                }
+            }
+            //
         }
 
         protected void GrdDocStatus_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -220,7 +291,7 @@ namespace ProjectManagementTool._modal_pages
                     
                     e.Row.Cells[3].Visible = false;
                     e.Row.Cells[4].Visible = false;
-
+                    e.Row.Cells[12].Visible = false;
                 }
             }
                 if (e.Row.RowType == DataControlRowType.DataRow)
@@ -319,16 +390,73 @@ namespace ProjectManagementTool._modal_pages
                     e.Row.Cells[1].Text = phase;
                     e.Row.Cells[3].Visible =false;
                     e.Row.Cells[4].Visible = false;
-                    if(e.Row.Cells[3].Text == "Code A-CE Approval" || e.Row.Cells[3].Text == "Client CE GFC Approval")
+                    e.Row.Cells[12].Visible = false;
+                    if (e.Row.Cells[3].Text == "Code A-CE Approval")
                     {
-                        e.Row.Cells[1].Text = "Approved";
+                        e.Row.Cells[1].Text = "Approved By BWSSB Under Code A";
 
                     }
-                    else if (e.Row.Cells[3].Text == "Code B-CE Approval" || e.Row.Cells[3].Text == "Code C-CE Approval")
+                    else if (e.Row.Cells[3].Text == "Code B-CE Approval")
+                    {
+                        e.Row.Cells[1].Text = "Approved By BWSSB Under Code B";
+                    }
+                    else if (e.Row.Cells[3].Text == "Code C-CE Approval")
                     {
                         e.Row.Cells[1].Text = "Under Client Approval Process";
+
+                    }
+                    else if (e.Row.Cells[3].Text == "Client CE GFC Approval")
+                    {
+                        e.Row.Cells[1].Text = "Approved GFC by BWSSB";
                     }
 
+                }
+                else
+                {
+                    string SubmittalUID = getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"].ToString()));
+                    string phase = getdata.GetPhaseforStatus_CE(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[3].Text);
+                    //string phase = getdata.GetPhaseforStatus(new Guid(Request.QueryString["FlowUID"]), e.Row.Cells[3].Text);
+                    e.Row.Cells[1].Text = phase;
+                  
+                    if (e.Row.Cells[3].Text == "Code A-CE Approval")
+                    {
+                        e.Row.Cells[1].Text = "Approved By BWSSB Under Code A";
+
+                    }
+                    else if (e.Row.Cells[3].Text == "Code B-CE Approval")
+                    {
+                        e.Row.Cells[1].Text = "Approved By BWSSB Under Code B";
+                    }
+                    else if (e.Row.Cells[3].Text == "Code C-CE Approval")
+                    {
+                        e.Row.Cells[1].Text = "Under Client Approval Process";
+
+                    }
+                    else if(e.Row.Cells[3].Text == "Client CE GFC Approval")
+                    {
+                        e.Row.Cells[1].Text = "Approved GFC by BWSSB";
+                    }
+                    else if (e.Row.Cells[3].Text == "Accepted-PMC Comments")
+                    {
+                        e.Row.Cells[3].Text = "Accepted";
+                    }
+                    
+
+                    if (e.Row.Cells[11].Text == "Y")
+                    {
+                        e.Row.BackColor = System.Drawing.Color.Red;
+                    }
+                    //total days
+                    if(string.IsNullOrEmpty(next))
+                    {
+                        next = e.Row.Cells[2].Text;
+                    }
+                    else
+                    {
+
+                        e.Row.Cells[12].Text = (Convert.ToDateTime(e.Row.Cells[2].Text) - Convert.ToDateTime(next)).TotalDays.ToString() + " day(s)";
+                        next = e.Row.Cells[2].Text;
+                    }
                 }
                 //
                

@@ -59,7 +59,7 @@
            </div>
             <div class="col-sm-6">
                  <div class="form-group">
-                        <label class="lblCss" for="LblDocName">Document Name</label>&nbsp;&nbsp;<b>:</b>&nbsp;&nbsp;
+                        <label class="lblCss" for="LblDocName">Document Name</label>&nbsp;&nbsp;<b>:</b>&nbs&nbsp;&nbsp;
                          <asp:Label ID="LblDocName" class="lblCss" Font-Bold="true" runat="server"></asp:Label>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                                             </asp:Panel>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                            <asp:BoundField DataField="ActivityType" HeaderText="Phase" >
+                            <asp:BoundField DataField="ActivityType" HeaderText="Phase Name" >
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>
                             <asp:BoundField DataField="ActivityDate" HeaderText="Actual Date" DataFormatString="{0:dd MMM yyyy}">
@@ -160,7 +160,12 @@
                                               <asp:LinkButton ID="lnkdelete" runat="server" OnClientClick="return DeleteItem()" CausesValidation="false" CommandArgument='<%#Eval("StatusUID")%>' CommandName="delete"><span title="Delete" class="fas fa-trash"></span></asp:LinkButton>
                                    </ItemTemplate>
                              </asp:TemplateField>
-
+                               <asp:BoundField DataField="Forwarded" HeaderText="" ItemStyle-CssClass="hiddencol"  HeaderStyle-CssClass="hiddencol">
+                            <HeaderStyle HorizontalAlign="Left" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="Forwarded" HeaderText="No. Of Days Taken">
+                            <HeaderStyle HorizontalAlign="Left" />
+                            </asp:BoundField>
                          <%--   <asp:TemplateField>
                                 <ItemTemplate>
                                     <a id="EditStatus" href='/_modal_pages/add-documentstatus.aspx?StatusUID=<%#Eval("StatusUID")%>&DocID=<%#Eval("DocumentUID")%>' class="EditStatus"><span title="Edit" class="fas fa-edit"></span></a>
@@ -176,8 +181,8 @@
     <div class="modal-footer">
                     <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
                     <%--<button type="button" class="btn btn-primary">Save changes</button>--%>
-            <a id="AddStatus" runat="server" href="/_modal_pages/add-documentstatus.aspx" class="showStatusModal"><asp:Button ID="Button2" runat="server" Height="35px" Width="150px" Text="+ Add Status" CssClass="btn btn-primary"></asp:Button></a>
-                </div>
+           <a id="AddStatus" runat="server" href="/_modal_pages/add-documentstatus.aspx" class="showStatusModal"><asp:Button ID="Button2" runat="server" Height="35px" Width="150px" Text="+ Add Status" CssClass="btn btn-primary"></asp:Button></a>
+        </div>
 
     <%--View document status modal--%>
     <div id="ModAddDocumentStatus" class="modal it-modal fade">

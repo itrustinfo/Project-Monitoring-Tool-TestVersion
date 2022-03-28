@@ -387,6 +387,7 @@
     <Compile Include="CashFlowExcelUpdate.aspx.designer.cs">
       <DependentUpon>CashFlowExcelUpdate.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Constants.cs" />
     <Compile Include="DAL\Daypilot.Modal-2.1.cs" />
     <Compile Include="DAL\Db.cs" />
     <Compile Include="DAL\DBGetData.cs" />

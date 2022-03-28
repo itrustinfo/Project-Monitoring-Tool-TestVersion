@@ -224,8 +224,18 @@ namespace ProjectManagementTool._modal_pages
                     DDlProject.SelectedValue = Request.QueryString["PrjUID"].ToString();
                 }
                 string WorkPackageUID = string.Empty;
+                string FlowType = string.Empty;
+                string FlowName = string.Empty;
                 DataSet ds = new DataSet();
                 DataTable dsMusers = new DataTable();
+                DataTable dsAllCategories = new DataTable();
+                DataSet dsFlow = getdata.GetDocumentFlows_by_UID(new Guid(DDLDocumentFlow.SelectedValue));
+                if(dsFlow.Tables[0].Rows.Count > 0)
+                {
+                    FlowType = dsFlow.Tables[0].Rows[0]["Type"].ToString();
+                    FlowName = dsFlow.Tables[0].Rows[0]["Flow_Name"].ToString();
+              
+                }
                 //if (Session["TypeOfUser"].ToString() == "U" || Session["TypeOfUser"].ToString() =="MD" || Session["TypeOfUser"].ToString() == "VP")
                 //{
                 //    ds = getdata.getAllUsers();
@@ -300,23 +310,47 @@ namespace ProjectManagementTool._modal_pages
                 // ddlQualityEngg.Items.Insert(0, new ListItem("--Select--", ""));
                 //
                 //ddlReviewer.DataSource = getdata.getUsers("R"); /step 3
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 3);
-                if (dsMusers.Rows.Count > 0)
+                //for step 3 STP Flows Works A and Works B   -step 3 all users of all discipline to be taken
+                
+
+                if (FlowType == "STP" && FlowName == "Works A")
                 {
-                    ddlReviewer_B.DataSource = dsMusers;
-                    ddlReviewer_B.DataTextField = "Name";
-                    ddlReviewer_B.DataValueField = "UserUID";
-                    ddlReviewer_B.DataBind();
-                    //
+                    //WorkPackageCategory_UID
+                    dsAllCategories = getdata.GetWorkpackageCategory(new Guid(WorkPackageUID));
+                    foreach (DataRow dr in dsAllCategories.Rows)
+                    {
+                        dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(dr["WorkPackageCategory_UID"].ToString()), 3);
+                        foreach (DataRow drM in dsMusers.Rows)
+                        {
+                            ddlReviewer_B.Items.Add(new ListItem(text: drM["Name"].ToString(), value: drM["UserUID"].ToString()));
+
+                        }
+                    }
+
                     foreach (ListItem item in ddlReviewer_B.Items)
                         item.Selected = true;
+
                 }
                 else
                 {
-                    ddlReviewer_B.DataSource = ds;
-                    ddlReviewer_B.DataTextField = "UserName";
-                    ddlReviewer_B.DataValueField = "UserUID";
-                    ddlReviewer_B.DataBind();
+                    dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 3);
+                    if (dsMusers.Rows.Count > 0)
+                    {
+                        ddlReviewer_B.DataSource = dsMusers;
+                        ddlReviewer_B.DataTextField = "Name";
+                        ddlReviewer_B.DataValueField = "UserUID";
+                        ddlReviewer_B.DataBind();
+                        //
+                        foreach (ListItem item in ddlReviewer_B.Items)
+                            item.Selected = true;
+                    }
+                    else
+                    {
+                        ddlReviewer_B.DataSource = ds;
+                        ddlReviewer_B.DataTextField = "UserName";
+                        ddlReviewer_B.DataValueField = "UserUID";
+                        ddlReviewer_B.DataBind();
+                    }
                 }
                
                 //  ddlReviewer.Items.Insert(0, new ListItem("--Select--", ""));
@@ -437,23 +471,44 @@ namespace ProjectManagementTool._modal_pages
                     dlUser9.DataBind();
                 }
                 // dlUser9.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 10);
-                if (dsMusers.Rows.Count > 0)
-                {
-                    dlUser10.DataSource = dsMusers;
-                    dlUser10.DataTextField = "Name";
-                    dlUser10.DataValueField = "UserUID";
-                    dlUser10.DataBind();
-                    foreach (ListItem item in dlUser10.Items)
-                        item.Selected = true;
-                }
-                else
-                {
-                    dlUser10.DataSource = ds;
-                    dlUser10.DataTextField = "UserName";
-                    dlUser10.DataValueField = "UserUID";
-                    dlUser10.DataBind();
-                }
+                //if (FlowType == "STP" && FlowName.Contains("Works B"))
+                //{
+                //    //WorkPackageCategory_UID
+                //    dsAllCategories = getdata.GetWorkpackageCategory(new Guid(WorkPackageUID));
+                //    foreach (DataRow dr in dsAllCategories.Rows)
+                //    {
+                //        dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(dr["WorkPackageCategory_UID"].ToString()), 10);
+                //        foreach (DataRow drM in dsMusers.Rows)
+                //        {
+                //            dlUser10.Items.Add(new ListItem(text: drM["Name"].ToString(), value: drM["UserUID"].ToString()));
+
+                //        }
+                //    }
+
+                //    foreach (ListItem item in dlUser10.Items)
+                //        item.Selected = true;
+
+                //}
+                //else
+                //{
+                    dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 10);
+                    if (dsMusers.Rows.Count > 0)
+                    {
+                        dlUser10.DataSource = dsMusers;
+                        dlUser10.DataTextField = "Name";
+                        dlUser10.DataValueField = "UserUID";
+                        dlUser10.DataBind();
+                        foreach (ListItem item in dlUser10.Items)
+                            item.Selected = true;
+                    }
+                    else
+                    {
+                        dlUser10.DataSource = ds;
+                        dlUser10.DataTextField = "UserName";
+                        dlUser10.DataValueField = "UserUID";
+                        dlUser10.DataBind();
+                    }
+               // }
                 // dlUser10.Items.Insert(0, new ListItem("--Select--", ""));
                 dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 11);
                 if (dsMusers.Rows.Count > 0)

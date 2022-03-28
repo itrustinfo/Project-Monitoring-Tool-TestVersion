@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static ProjectManagementTool.DAL.Constants;
 
 namespace ProjectManagementTool
 {
@@ -96,11 +97,40 @@ namespace ProjectManagementTool
                         }
                         if (login)
                         {
-                            Session["Username"] = ds.Tables[0].Rows[0]["FirstName"].ToString();
+                            Session["Username"] = ds.Tables[0].Rows[0]["FirstName"].ToString() + " " + ds.Tables[0].Rows[0]["LastName"].ToString();
                             Session["UserID"] = ds.Tables[0].Rows[0]["UserName"].ToString();
                             Session["UserUID"] = ds.Tables[0].Rows[0]["UserUID"].ToString();
                             Session["TypeOfUser"] = ds.Tables[0].Rows[0]["TypeOfUser"].ToString();
                             Session["IsContractor"] = ds.Tables[0].Rows[0]["IsContractor"].ToString();
+                            // added on 25/03/2022 for nakib
+                            string userTypeID = ds.Tables[0].Rows[0]["UserTypeID"].ToString();
+                            if (!string.IsNullOrEmpty(userTypeID))
+                            {
+                                Session["IsClient"] = string.Empty;
+                                Session["IsONTB"] = string.Empty;
+                                Session["IsNJSEI"] = string.Empty;
+                                switch (Convert.ToInt32(userTypeID))
+                                {
+                                    case (int)UserTypeEnum.Client:
+                                        Session["IsClient"] = "Y";
+                                        break;
+                                    case (int)UserTypeEnum.ONTB:
+                                        Session["IsONTB"] = "Y";
+                                        break;
+                                    case (int)UserTypeEnum.NJSEI:
+                                        Session["IsNJSEI"] = "Y";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                Session["IsClient"] = string.Empty;
+                                Session["IsONTB"] = string.Empty;
+                                Session["IsNJSEI"] = string.Empty;
+                            }
+                           //-----------------------------------------
                             string sessionId = HttpContext.Current.Session.SessionID;
                             getdt.UsersLogInStatus(txtusername.Value, HttpContext.Current.Session.SessionID, "Success");
                             if (Application["UsersCount"] != null)

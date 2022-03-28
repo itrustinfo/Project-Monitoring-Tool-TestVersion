@@ -62,6 +62,17 @@ namespace ProjectManagementTool._modal_pages
                         {
                             divforward.Visible = false;
                         }
+
+                        if(DDlStatus.SelectedItem.ToString().Contains("Accepted-PMC"))
+                        {
+                            divRef.Visible = false;
+                            divCD.Visible = false;
+                            divCUpload.Visible = false;
+                            divReviewFile.Visible = false;
+                            divIncmDate.Visible = false;
+                            divUpdateStatus.Visible = false;
+                            DDlStatus.Enabled = false;
+                        }
                         //if (DDlStatus.SelectedItem.ToString().Contains("Meeting with EE or CE") || DDlStatus.SelectedItem.ToString().Contains("Rejected") || DDlStatus.SelectedItem.ToString().Contains("PMC DTL Review"))
                         //{
                             spRef.Visible = false;
@@ -194,11 +205,42 @@ namespace ProjectManagementTool._modal_pages
                         txtcomments.Focus();
                         return;
                     }
-                    string DocPath = "";
+                   
+                        string DocPath = "";
                     string Subject = string.Empty;
                     string sHtmlString = string.Empty;
                     Guid StatusUID = new Guid();
                     string CoverPagePath = string.Empty;
+                    string Status = DDlStatus.SelectedItem.ToString();
+                    string Comments = txtcomments.Text;
+                    // check for all PMC Users
+                    int check = 0;
+                    int commentsCount = 0;
+                    if (DDlStatus.SelectedItem.ToString().Contains("Accepted-PMC"))
+                    {
+                        DataSet dsMUSers = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 3);
+                        if (dsMUSers.Tables[0].Rows.Count > 0)
+                        {
+                            foreach (DataRow druser in dsMUSers.Tables[0].Rows)
+                            {
+                                if(getdata.checkUserAddedDocumentstatus(new Guid(Request.QueryString["DocID"].ToString()), new Guid(druser["Approver"].ToString()),"Accepted") == 0)
+                                {
+                                    
+                                }
+                                else
+                                {
+                                    commentsCount = commentsCount + 1;
+                                }
+                            }
+                        }
+                        commentsCount =commentsCount = commentsCount + 1;
+                        if (dsMUSers.Tables[0].Rows.Count != commentsCount)
+                        {
+                            Status = "Accepted";
+                        }
+                        Comments = Session["Username"].ToString() + "added - " + txtcomments.Text;
+                    }
+                    //
                     if (Request.QueryString["StatusUID"] != null)
                     {
                         StatusUID = new Guid(Request.QueryString["StatusUID"]);
@@ -212,24 +254,24 @@ namespace ProjectManagementTool._modal_pages
                     //
                     if (DDlStatus.SelectedItem.ToString().Contains("AE Approval") || DDlStatus.SelectedItem.ToString().Contains("EE Approval") || DDlStatus.SelectedItem.ToString().Contains("ACE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE GFC Approval"))
                     {
-                        divPassword.Visible = true;
+                        //divPassword.Visible = true;
 
-                        if (txtPassword.Text == "")
-                        {
-                            Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Please enter your Password to go ahead !.');</script>");
-                            txtPassword.Focus();
-                            return;
-                        }
-                        else
-                        {
-                            DataSet ds = getdata.CheckLogin(Session["UserID"].ToString(), Security.Encrypt(txtPassword.Text));
-                            if (ds.Tables[0].Rows.Count == 0)
-                            {
-                                Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Password is wrong !.');</script>");
-                                txtPassword.Focus();
-                                return;
-                            }
-                        }
+                        //if (txtPassword.Text == "")
+                        //{
+                        //    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Please enter your Password to go ahead !.');</script>");
+                        //    txtPassword.Focus();
+                        //    return;
+                        //}
+                        //else
+                        //{
+                        //    DataSet ds = getdata.CheckLogin(Session["UserID"].ToString(), Security.Encrypt(txtPassword.Text));
+                        //    if (ds.Tables[0].Rows.Count == 0)
+                        //    {
+                        //        Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Password is wrong !.');</script>");
+                        //        txtPassword.Focus();
+                        //        return;
+                        //    }
+                        //}
                     }
 
                         string sDate1 = "";
@@ -282,8 +324,7 @@ namespace ProjectManagementTool._modal_pages
                         //DocumentDate = DocumentDate.Split('/')[1] + "/" + DocumentDate.Split('/')[0] + "/" + DocumentDate.Split('/')[2];
                         DocumentDate = getdata.ConvertDateFormat(DocumentDate);
                         DateTime Document_Date = Convert.ToDateTime(DocumentDate);
-
-
+                        //
                         if (FileUploadCoverLetter.HasFile)
                         {
                             string FileDatetime = DateTime.Now.ToString("dd MMM yyyy hh-mm-ss tt");
@@ -310,13 +351,14 @@ namespace ProjectManagementTool._modal_pages
                         //sDate2 = (dtPlannedDate.FindControl("txtDate") as TextBox).Text;
                         //sDate2 = sDate2.Split('/')[1] + "/" + sDate2.Split('/')[0] + "/" + sDate2.Split('/')[2];
                         //CDate2 = Convert.ToDateTime(sDate2);
-                        int Cnt = getdata.InsertorUpdateDocumentStatus(StatusUID, new Guid(Request.QueryString["DocID"].ToString()), 1, DDlStatus.SelectedItem.Text, 0, CDate1, DocPath,
-                            new Guid(Session["UserUID"].ToString()), txtcomments.Text, DDlStatus.SelectedItem.Text, txtrefNumber.Text, Document_Date, CoverPagePath, RBLDocumentStatusUpdate.SelectedValue, RBLOriginator.SelectedValue);
+                        int Cnt = getdata.InsertorUpdateDocumentStatus(StatusUID, new Guid(Request.QueryString["DocID"].ToString()), 1, Status, 0, CDate1, DocPath,
+                            new Guid(Session["UserUID"].ToString()), Comments, Status, txtrefNumber.Text, Document_Date, CoverPagePath, RBLDocumentStatusUpdate.SelectedValue, RBLOriginator.SelectedValue);
                         if (Cnt > 0)
                         {
                             //DataSet ds = getdata.getAllUsers();
                             //Update the targte dates 
-                            getdata.StoreFreshTargetDatesforStatusChange(new Guid(Request.QueryString["DocID"].ToString()), DDlStatus.SelectedItem.Text);
+                           
+                              getdata.StoreFreshTargetDatesforStatusChange(new Guid(Request.QueryString["DocID"].ToString()), Status);
 
                             DataSet ds = new DataSet();
                             //if (Session["TypeOfUser"].ToString() == "U" || Session["TypeOfUser"].ToString() == "MD" || Session["TypeOfUser"].ToString() == "VP")
@@ -729,7 +771,37 @@ namespace ProjectManagementTool._modal_pages
             //
             if (ds.Tables[0].Rows.Count > 0)
             {
-                RBLOriginator.Items[0].Selected = true;
+                // RBLOriginator.Items[0].Selected = true;
+                if (Session["IsContractor"].ToString() == "Y")
+                {
+                    if (RBLOriginator.Items.FindByValue("Contractor") != null)
+                    {
+                        RBLOriginator.Items.FindByValue("Contractor").Selected = true;
+                    }
+                }
+                else if (Session["IsONTB"].ToString() == "Y")
+                {
+                    if (RBLOriginator.Items.FindByValue("ONTB") != null)
+                    {
+                        RBLOriginator.Items.FindByValue("ONTB").Selected = true;
+                    }
+                }
+                else if (Session["IsNJSEI"].ToString() == "Y")
+                {
+                    if (RBLOriginator.Items.FindByValue("NJSEI") != null)
+                    {
+                        RBLOriginator.Items.FindByValue("NJSEI").Selected = true;
+                    }
+                }
+                else if (Session["IsClient"].ToString() == "Y")
+                {
+                    if (RBLOriginator.Items.FindByValue("BWSSB") != null)
+                    {
+                        RBLOriginator.Items.FindByValue("BWSSB").Selected = true;
+                    }
+                }
+                else
+                    RBLOriginator.Items[0].Selected = true;
             }
         }
 

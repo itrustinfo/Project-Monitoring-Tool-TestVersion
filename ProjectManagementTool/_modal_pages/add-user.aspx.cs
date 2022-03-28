@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static ProjectManagementTool.DAL.Constants;
 
 namespace ProjectManagementTool._modal_pages
 {
@@ -24,6 +25,7 @@ namespace ProjectManagementTool._modal_pages
             if (!IsPostBack)
             {
                 BindUserType();
+                BindType();
                 if (Request.QueryString["UserUID"] != null)
                 {
                     BindUser(new Guid(Request.QueryString["UserUID"]));
@@ -91,6 +93,18 @@ namespace ProjectManagementTool._modal_pages
                     chkboxlstMailSettings.Items[1].Selected = true;
                 }
 
+                string userTypeID = ds.Tables[0].Rows[0]["UserTypeID"].ToString();
+                if(!string.IsNullOrEmpty(userTypeID))
+                {
+                    RBLType.SelectedValue = userTypeID;
+                }
+                else
+                {
+                    if( ds.Tables[0].Rows[0]["IsContractor"].ToString() == "Y")
+                    {
+                        RBLType.SelectedValue = ((int)UserTypeEnum.Contractor).ToString();
+                    }
+                }
             }
         }
 
@@ -102,6 +116,16 @@ namespace ProjectManagementTool._modal_pages
             DDlUserType.DataSource = ds;
             DDlUserType.DataBind();
         }
+
+        private void BindType()
+        {
+            DataSet ds = getdt.getUserType();
+            RBLType.DataTextField = "Name";
+            RBLType.DataValueField = "ID";
+            RBLType.DataSource = ds;
+            RBLType.DataBind();
+        }
+
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
@@ -155,7 +179,15 @@ namespace ProjectManagementTool._modal_pages
                     {
                         projecmastermail = "Y";
                     }
-                    bool ret = getdt.InsertorUpdateUsers(UserUID, txtfirstname.Text, txtlastname.Text, txtemailid.Text, txtmobile.Text, txtaddress1.Text, txtaddress2.Text, txtloginusername.Text, txtloginpassword.Text, DDlUserType.SelectedValue, new Guid(Session["UserUID"].ToString()), PicPath,docmail,projecmastermail);
+                    string userType = RBLType.SelectedValue;
+                    string IsContractor = string.Empty;
+                    if(!string.IsNullOrEmpty(userType))
+                    {
+                        if (Convert.ToInt32(userType) == (int)UserTypeEnum.Contractor)
+                            IsContractor = "Y";
+                    }
+
+                    bool ret = getdt.InsertorUpdateUsers(UserUID, txtfirstname.Text, txtlastname.Text, txtemailid.Text, txtmobile.Text, txtaddress1.Text, txtaddress2.Text, txtloginusername.Text, txtloginpassword.Text, DDlUserType.SelectedValue, new Guid(Session["UserUID"].ToString()), PicPath,docmail,projecmastermail, IsContractor, userType);
                     if (ret)
                     {
                         Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");

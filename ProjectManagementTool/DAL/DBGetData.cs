@@ -19604,5 +19604,135 @@ namespace ProjectManager.DAL
             return sresult;
         }
 
+        // added on 24/03/2022
+        public int checkUserAddedDocumentstatus(Guid DocumentUID,Guid AcivityUserUID,string Status)
+        {
+            int wOrder = 0;
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+
+                if (con.State == ConnectionState.Closed) con.Open();
+                SqlCommand cmd = new SqlCommand("usp_checkUserAddedDocumentstatus", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@DocumentUID", DocumentUID);
+                cmd.Parameters.AddWithValue("@AcivityUserUID", AcivityUserUID);
+                cmd.Parameters.AddWithValue("@Status", Status);
+                wOrder = (int)cmd.ExecuteScalar();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+            return wOrder;
+        }
+
+        //added on 25/03/2022
+        public DataSet getUserType()
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("USP_GetUserType", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        public Boolean InsertorUpdateUsers(Guid UserUID, string FirstName, string LastName, string EmailID, string Mobilenumber, string Address1, string Address2, string Username,
+                    string password, string TypeOfUser, Guid Admin_Under, string Profile_Pic, string DocumentMail, string ProjecMasterMail, string IsContractor, string UserTypeID)
+        {
+            Boolean sresult = false;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+                    //string query = "INSERT INTO UserDetails " +
+                    // "(UserUID,FirstName,LastName,EmailID,Mobilenumber,Address1,Address2,Username,password,TypeOfUser,CreatedDate,Admin_Under,Project_Under,Profile_Pic) " +
+                    // "VALUES (@Id,  @Name, @IsActive, @IsActive)";
+                    using (SqlCommand cmd = new SqlCommand("ups_InserorUpdateUser"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@UserUID", UserUID);
+                        cmd.Parameters.AddWithValue("@FirstName", FirstName);
+                        cmd.Parameters.AddWithValue("@LastName", LastName);
+                        cmd.Parameters.AddWithValue("@EmailID", EmailID);
+                        cmd.Parameters.AddWithValue("@Mobilenumber", Mobilenumber);
+                        cmd.Parameters.AddWithValue("@Address1", Address1);
+                        cmd.Parameters.AddWithValue("@Address2", Address2);
+                        cmd.Parameters.AddWithValue("@Username", Username);
+                        cmd.Parameters.AddWithValue("@password", Security.Encrypt(password));
+                        cmd.Parameters.AddWithValue("@TypeOfUser", TypeOfUser);
+                        cmd.Parameters.AddWithValue("@Admin_Under", Admin_Under);
+                        //cmd.Parameters.AddWithValue("@Project_Under", Project_Under);
+                        cmd.Parameters.AddWithValue("@Profile_Pic", Profile_Pic);
+                        cmd.Parameters.AddWithValue("@DocumentMail", DocumentMail);
+                        cmd.Parameters.AddWithValue("@ProjecMasterMail", ProjecMasterMail);
+                        cmd.Parameters.AddWithValue("@IsContractor", IsContractor);
+                        cmd.Parameters.AddWithValue("@UserTypeID", UserTypeID);
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        sresult = true;
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = false;
+            }
+        }
+
+        public DataTable GetPhaseAndCurrentStatusByDocument(Guid DocumentUID)
+        {
+            DataTable ds = new DataTable();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("USP_GetPhaseAndCurrentStatusByDocument", con);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentUID", DocumentUID);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        // added on 27/03/2022
+
+        public string GetPhaseforStatus_CE(Guid FlowUID, string Current_Status)
+        {
+            string Type = "";
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+                if (con.State == ConnectionState.Closed) con.Open();
+                SqlCommand cmd = new SqlCommand("usp_GetPhaseforStatus_CE", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Current_Status", Current_Status);
+                cmd.Parameters.AddWithValue("@FlowUID", FlowUID);
+                Type = (string)cmd.ExecuteScalar();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                Type = "Error : " + ex.Message;
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+            return Type;
+        }
     }
 }

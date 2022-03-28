@@ -110,7 +110,10 @@ function isNumber(evt) {
                         <label class="lblCss" for="txtloginpassword">Login Password</label>&nbsp;<asp:Label runat="server" Text="*" ForeColor="Red"></asp:Label><a id="hlresetpassowrd" runat="server" visible="false" class="showStatusModal">&nbsp;Reset Password</a>
                         <asp:TextBox ID="txtloginpassword" runat="server" TextMode="Password"  CssClass="form-control" required></asp:TextBox>
                     </div>
-             
+             <div class="form-group" id="Originator" runat="server">
+                        <label class="lblCss" for="DDLOriginator">Type</label>
+                          <asp:RadioButtonList ID="RBLType" runat="server" Width="100%" CssClass="lblCss" CellPadding="5" RepeatDirection="Horizontal" RepeatColumns="4">
+                             </asp:RadioButtonList>
                     <div class="form-group" id="divMailSettings" runat="server">
                         <label class="lblCss" for="chkboxlstMailSettings">Mail Settings</label>&nbsp;<asp:CheckBoxList runat="server" ID="chkboxlstMailSettings" CssClass="form-control" RepeatDirection="Horizontal">
                             <asp:ListItem Value="0">&nbsp;document mails&nbsp;</asp:ListItem>

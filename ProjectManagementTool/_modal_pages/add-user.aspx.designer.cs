@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectManagementTool._modal_pages {
-    
-    
-    public partial class add_user {
-        
+namespace ProjectManagementTool._modal_pages
+{
+
+
+    public partial class add_user
+    {
+
         /// <summary>
         /// frmAddIssuesModal control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm frmAddIssuesModal;
-        
+
         /// <summary>
         /// txtfirstname control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtfirstname;
-        
+
         /// <summary>
         /// txtlastname control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtlastname;
-        
+
         /// <summary>
         /// txtemailid control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtemailid;
-        
+
         /// <summary>
         /// txtaddress1 control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtaddress1;
-        
+
         /// <summary>
         /// txtaddress2 control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtaddress2;
-        
+
         /// <summary>
         /// txtmobile control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtmobile;
-        
+
         /// <summary>
         /// divUserType control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divUserType;
-        
+
         /// <summary>
         /// DDlUserType control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDlUserType;
-        
+
         /// <summary>
         /// divUsername control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divUsername;
-        
+
         /// <summary>
         /// txtloginusername control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtloginusername;
-        
+
         /// <summary>
         /// divPassword control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPassword;
-        
+
         /// <summary>
         /// hlresetpassowrd control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor hlresetpassowrd;
-        
+
         /// <summary>
         /// txtloginpassword control.
         /// </summary>
@@ -137,7 +139,25 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtloginpassword;
-        
+
+        /// <summary>
+        /// Originator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Originator;
+
+        /// <summary>
+        /// RBLType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList RBLType;
+
         /// <summary>
         /// divMailSettings control.
         /// </summary>
@@ -146,7 +166,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMailSettings;
-        
+
         /// <summary>
         /// chkboxlstMailSettings control.
         /// </summary>
@@ -155,7 +175,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList chkboxlstMailSettings;
-        
+
         /// <summary>
         /// ProfileUpload control.
         /// </summary>
@@ -164,7 +184,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload ProfileUpload;
-        
+
         /// <summary>
         /// ImgPicure control.
         /// </summary>
@@ -173,7 +193,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image ImgPicure;
-        
+
         /// <summary>
         /// btnSubmit control.
         /// </summary>
