@@ -136,10 +136,73 @@ namespace ProjectManagementTool._modal_pages
 
             }
         }
+        //protected void BindDocStatus()
+        //{
+        //    //GrdDocStatus.DataSource = getdata.getDocumentStatusList(new Guid(Request.QueryString["DocID"].ToString()));
+
+        //    DataSet documentSTatusList = getdata.getActualDocumentStatusList(new Guid(Request.QueryString["DocID"].ToString()));
+        //    if (Session["IsContractor"].ToString() == "Y")
+        //    {
+        //        DataTable dtNewTable = new DataTable();
+        //        dtNewTable.Columns.Add("Sl");
+        //        dtNewTable.Columns.Add("StatusUID", typeof(Guid));
+        //        dtNewTable.Columns.Add("ActivityType");
+        //        dtNewTable.Columns.Add("Phase");
+        //        var phaseAndStatus = getdata.GetPhaseAndCurrentStatusByDocument(new Guid(Request.QueryString["DocID"].ToString()));
+        //        int counter = 0;
+        //        foreach(DataRow dr in documentSTatusList.Tables[0].Rows)
+        //        {
+        //            var statusUID = dr["StatusUID"].ToString();
+        //            string phaseForCurrentSTatus = string.Empty;
+        //            var phase = phaseAndStatus.AsEnumerable().Where(r => r.Field<string>("Current_Status") == dr["ActivityType"].ToString()).FirstOrDefault();
+        //            if(phase != null)
+        //            {
+        //                phaseForCurrentSTatus = phase[1].ToString();
+        //            }
+        //            dtNewTable.Rows.Add(counter.ToString(), new Guid( dr["StatusUID"].ToString()), dr["ActivityType"].ToString(), phaseForCurrentSTatus);
+        //            counter++;
+        //        }
+
+        //        List<Guid> StatusUIDToRemove = new List<Guid>();
+
+        //        //First remove all the empty phases
+        //        var EmptyPhases = dtNewTable.AsEnumerable().Where(r => r.Field<string>("Phase") == string.Empty);
+        //        if(EmptyPhases.Any())
+        //        {
+        //            StatusUIDToRemove = EmptyPhases.Select(r => r.Field<Guid>("StatusUID")).ToList();
+        //            dtNewTable.AsEnumerable().Where(x => x.Field<string>("Phase") == string.Empty).ToList().ForEach(r => r.Delete());
+        //        }
+
+        //        var groupByPhase = dtNewTable.AsEnumerable().GroupBy(r => r.Field<string>("Phase")).Select(r => new{r.Key, r});
+
+
+        //        foreach(var eachPhase in groupByPhase)
+        //        {
+        //            var eachItem = eachPhase.r.ToList();
+        //            if(eachItem.Count > 1)
+        //            {
+        //                for (int count = 0; count < eachItem.Count -1; count++ )
+        //                {
+        //                    StatusUIDToRemove.Add(new Guid(eachItem[count]["StatusUID"].ToString()));
+        //                }
+        //            }
+        //        }
+        //        if(StatusUIDToRemove.Count > 0)
+        //        {
+        //            documentSTatusList.Tables[0].AsEnumerable().Where(x => StatusUIDToRemove.Contains(x.Field<Guid>("StatusUID"))).ToList().ForEach(r => r.Delete());
+        //        }
+        //    }
+
+        //    GrdDocStatus.DataSource = documentSTatusList;
+        //    GrdDocStatus.DataBind();
+
+        //}
+
+        //changed on 29/03/2022
         protected void BindDocStatus()
         {
             //GrdDocStatus.DataSource = getdata.getDocumentStatusList(new Guid(Request.QueryString["DocID"].ToString()));
-            
+
             DataSet documentSTatusList = getdata.getActualDocumentStatusList(new Guid(Request.QueryString["DocID"].ToString()));
             if (Session["IsContractor"].ToString() == "Y")
             {
@@ -150,45 +213,91 @@ namespace ProjectManagementTool._modal_pages
                 dtNewTable.Columns.Add("Phase");
                 var phaseAndStatus = getdata.GetPhaseAndCurrentStatusByDocument(new Guid(Request.QueryString["DocID"].ToString()));
                 int counter = 0;
-                foreach(DataRow dr in documentSTatusList.Tables[0].Rows)
+                foreach (DataRow dr in documentSTatusList.Tables[0].Rows)
                 {
                     var statusUID = dr["StatusUID"].ToString();
                     string phaseForCurrentSTatus = string.Empty;
                     var phase = phaseAndStatus.AsEnumerable().Where(r => r.Field<string>("Current_Status") == dr["ActivityType"].ToString()).FirstOrDefault();
-                    if(phase != null)
+                    if (phase != null)
                     {
                         phaseForCurrentSTatus = phase[1].ToString();
                     }
-                    dtNewTable.Rows.Add(counter.ToString(), new Guid( dr["StatusUID"].ToString()), dr["ActivityType"].ToString(), phaseForCurrentSTatus);
+                    dtNewTable.Rows.Add(counter.ToString(), new Guid(dr["StatusUID"].ToString()), dr["ActivityType"].ToString(), phaseForCurrentSTatus);
                     counter++;
                 }
 
                 List<Guid> StatusUIDToRemove = new List<Guid>();
-
+                DataTable dtNewIntermediate = dtNewTable.Copy();
                 //First remove all the empty phases
                 var EmptyPhases = dtNewTable.AsEnumerable().Where(r => r.Field<string>("Phase") == string.Empty);
-                if(EmptyPhases.Any())
+                if (EmptyPhases.Any())
                 {
-                    StatusUIDToRemove = EmptyPhases.Select(r => r.Field<Guid>("StatusUID")).ToList();
-                    dtNewTable.AsEnumerable().Where(x => x.Field<string>("Phase") == string.Empty).ToList().ForEach(r => r.Delete());
+                    foreach (var eachEmptyPhase in EmptyPhases)
+                    {
+                        string activity = eachEmptyPhase["ActivityType"].ToString();
+                        if (activity.ToLower().Contains("client ce") || activity.ToLower().Contains("code a-ce approval"))
+                        {
+
+                        }
+                        else
+                        {
+                            StatusUIDToRemove.Add(new Guid(eachEmptyPhase["StatusUID"].ToString()));
+                        }
+                    }
+                    dtNewIntermediate.AsEnumerable().Where(x => StatusUIDToRemove.Contains(x.Field<Guid>("StatusUID"))).ToList().ForEach(r => r.Delete());
                 }
 
-                var groupByPhase = dtNewTable.AsEnumerable().GroupBy(r => r.Field<string>("Phase")).Select(r => new{r.Key, r});
-
-                
-                foreach(var eachPhase in groupByPhase)
+                var groupByPhase = dtNewTable.AsEnumerable().GroupBy(r => r.Field<string>("Phase").ToLower()).Select(r => new { r.Key, r });
+                foreach (var eachPhase in groupByPhase)
                 {
                     var eachItem = eachPhase.r.ToList();
-                    if(eachItem.Count > 1)
+                    if (eachItem.Count > 1)
                     {
-                        for (int count = 0; count < eachItem.Count -1; count++ )
+                        if (eachPhase.Key == "reconciliation")
                         {
-                            StatusUIDToRemove.Add(new Guid(eachItem[count]["StatusUID"].ToString()));
+                            for (int count = 1; count < eachItem.Count; count++)
+                            {
+                                StatusUIDToRemove.Add(new Guid(eachItem[count]["StatusUID"].ToString()));
+                            }
+                        }
+                        else
+                        {
+                            for (int count = 0; count < eachItem.Count - 1; count++)
+                            {
+                                StatusUIDToRemove.Add(new Guid(eachItem[count]["StatusUID"].ToString()));
+                            }
                         }
                     }
                 }
-                if(StatusUIDToRemove.Count > 0)
+                if (StatusUIDToRemove.Count > 0)
                 {
+                    dtNewIntermediate.AsEnumerable().Where(x => StatusUIDToRemove.Contains(x.Field<Guid>("StatusUID"))).ToList().ForEach(r => r.Delete());
+
+                    string statusIDRemove = RemovePhaseFromDataTable("Approved", "Under Client Approval Process", dtNewIntermediate);
+                    if (!string.IsNullOrEmpty(statusIDRemove))
+                        StatusUIDToRemove.Add(new Guid(statusIDRemove));
+
+                    statusIDRemove = RemovePhaseFromDataTable("Network Design DTL Reviewed", "Network Design by ONTB", dtNewIntermediate);
+                    if (!string.IsNullOrEmpty(statusIDRemove))
+                        StatusUIDToRemove.Add(new Guid(statusIDRemove));
+
+                    statusIDRemove = RemovePhaseFromDataTable("ONTB Approved", "Review by ONTB", dtNewIntermediate);
+                    if (!string.IsNullOrEmpty(statusIDRemove))
+                        StatusUIDToRemove.Add(new Guid(statusIDRemove));
+
+                    statusIDRemove = RemovePhaseFromDataTable("ONTB Approved", "ONTB Specialist Verified", dtNewIntermediate);
+                    if (!string.IsNullOrEmpty(statusIDRemove))
+                        StatusUIDToRemove.Add(new Guid(statusIDRemove));
+
+                    statusIDRemove = RemovePhaseFromDataTable("Approved by ONTB", "Review by ONTB", dtNewIntermediate);
+                    if (!string.IsNullOrEmpty(statusIDRemove))
+                        StatusUIDToRemove.Add(new Guid(statusIDRemove));
+
+
+
+
+                    dtNewIntermediate.AsEnumerable().Where(x => StatusUIDToRemove.Contains(x.Field<Guid>("StatusUID"))).ToList().ForEach(r => r.Delete());
+
                     documentSTatusList.Tables[0].AsEnumerable().Where(x => StatusUIDToRemove.Contains(x.Field<Guid>("StatusUID"))).ToList().ForEach(r => r.Delete());
                 }
             }
@@ -196,6 +305,21 @@ namespace ProjectManagementTool._modal_pages
             GrdDocStatus.DataSource = documentSTatusList;
             GrdDocStatus.DataBind();
 
+        }
+
+        private string RemovePhaseFromDataTable(string PhaseExist, string RemovePhase, DataTable dtNewIntermediate)
+        {
+            string StatusUIDToRemove = string.Empty;
+            var isPhaseExist = dtNewIntermediate.AsEnumerable().Where(r => r.Field<string>("Phase").ToLower().Contains(PhaseExist.ToLower())).FirstOrDefault();
+            if (isPhaseExist != null)
+            {
+                var isRemovePhaseExist = dtNewIntermediate.AsEnumerable().Where(r => r.Field<string>("Phase").ToLower() == RemovePhase.ToLower()).FirstOrDefault();
+                if (isRemovePhaseExist != null)
+                {
+                    StatusUIDToRemove = isRemovePhaseExist["StatusUID"].ToString();
+                }
+            }
+            return StatusUIDToRemove;
         }
 
         private void HideorShowAddStatusButton()
