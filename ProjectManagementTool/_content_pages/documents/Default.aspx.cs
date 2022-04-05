@@ -3328,22 +3328,46 @@ namespace ProjectManager._content_pages.documents
                             if (Session["IsContractor"].ToString() == "Y")
                             {
                                 string SubmittalUID = getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(ActualDocumentUID));
-                                string phase = getdata.GetPhaseforStatus(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[2].Text);
-                                if (string.IsNullOrEmpty(phase))
+                                string Flowtype = getdata.GetFlowTypeBySubmittalUID(new Guid(SubmittalUID));
+                                if (Flowtype == "STP")
                                 {
-                                    if (e.Row.Cells[2].Text == "Code A-CE Approval" || e.Row.Cells[2].Text == "Client CE GFC Approval")
+                                   
+                                    string phase = getdata.GetPhaseforStatus(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[2].Text);
+                                    if (string.IsNullOrEmpty(phase))
                                     {
-                                        e.Row.Cells[2].Text = "Approved";
+                                        //if (e.Row.Cells[2].Text == "Code A-CE Approval" || e.Row.Cells[2].Text == "Client CE GFC Approval")
+                                        //{
+                                        //    e.Row.Cells[2].Text = "Approved";
 
+                                        //}
+                                        //if (e.Row.Cells[2].Text == "Code B-CE Approval" || e.Row.Cells[3].Text == "Code C-CE Approval")
+                                        //{
+                                        //    e.Row.Cells[2].Text = "Under Client Approval Process";
+                                        //}
+                                        //
+                                        if (e.Row.Cells[2].Text == "Code A-CE Approval")
+                                        {
+                                            e.Row.Cells[2].Text = "Approved By BWSSB Under Code A";
+
+                                        }
+                                        else if (e.Row.Cells[2].Text == "Code B-CE Approval")
+                                        {
+                                            e.Row.Cells[2].Text = "Approved By BWSSB Under Code B";
+                                        }
+                                        else if (e.Row.Cells[2].Text == "Code C-CE Approval")
+                                        {
+                                            e.Row.Cells[2].Text = "Under Client Approval Process";
+
+                                        }
+                                        else if (e.Row.Cells[2].Text == "Client CE GFC Approval")
+                                        {
+                                            e.Row.Cells[2].Text = "Approved GFC by BWSSB";
+                                        }
                                     }
-                                    if (e.Row.Cells[2].Text == "Code B-CE Approval" || e.Row.Cells[3].Text == "Code C-CE Approval")
+                                    else
                                     {
-                                        e.Row.Cells[2].Text = "Under Client Approval Process";
+                                        e.Row.Cells[2].Text = phase;
                                     }
-                                }
-                                else
-                                {
-                                    e.Row.Cells[2].Text = phase;
                                 }
 
 
@@ -4638,25 +4662,46 @@ namespace ProjectManager._content_pages.documents
                         {
                             string SubmittalUID = getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(ActualDocumentUID));
                             string phase = getdata.GetPhaseforStatus(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[2].Text);
-
-                            if (string.IsNullOrEmpty(phase))
+                            string Flowtype = getdata.GetFlowTypeBySubmittalUID(new Guid(SubmittalUID));
+                            if (Flowtype == "STP")
                             {
-                                
-                                if (e.Row.Cells[2].Text == "Code A-CE Approval")
+                                if (string.IsNullOrEmpty(phase))
                                 {
-                                    e.Row.Cells[2].Text = "Approved";
 
+                                    //if (e.Row.Cells[2].Text == "Code A-CE Approval")
+                                    //{
+                                    //    e.Row.Cells[2].Text = "Approved";
+
+                                    //}
+                                    //if (e.Row.Cells[2].Text == "Code B-CE Approval" || e.Row.Cells[3].Text == "Code C-CE Approval")
+                                    //{
+                                    //    e.Row.Cells[2].Text = "Client Approval";
+                                    //}
+                                    //
+                                    if (e.Row.Cells[2].Text == "Code A-CE Approval")
+                                    {
+                                        e.Row.Cells[2].Text = "Approved By BWSSB Under Code A";
+
+                                    }
+                                    else if (e.Row.Cells[2].Text == "Code B-CE Approval")
+                                    {
+                                        e.Row.Cells[2].Text = "Approved By BWSSB Under Code B";
+                                    }
+                                    else if (e.Row.Cells[2].Text == "Code C-CE Approval")
+                                    {
+                                        e.Row.Cells[2].Text = "Under Client Approval Process";
+
+                                    }
+                                    else if (e.Row.Cells[2].Text == "Client CE GFC Approval")
+                                    {
+                                        e.Row.Cells[2].Text = "Approved GFC by BWSSB";
+                                    }
                                 }
-                                if (e.Row.Cells[2].Text == "Code B-CE Approval" || e.Row.Cells[3].Text == "Code C-CE Approval")
+                                else
                                 {
-                                    e.Row.Cells[2].Text = "Client Approval";
+                                    e.Row.Cells[2].Text = phase;
                                 }
                             }
-                            else
-                            {
-                                e.Row.Cells[2].Text = phase;
-                            }
-
 
                         }
 

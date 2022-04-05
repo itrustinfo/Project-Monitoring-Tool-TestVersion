@@ -63,7 +63,14 @@ namespace ProjectManagementTool._modal_pages
 
                     if (Session["IsClient"].ToString() == "Y")
                     {
+                        GrdDocStatus.Columns[10].Visible = false;
                         GrdDocStatus.Columns[9].Visible = false;
+
+                    }
+                    else if (Session["IsContractor"].ToString() == "Y")
+                    {
+                        GrdDocStatus.Columns[10].Visible = false;
+                       
                     }
                 }
             }
@@ -281,11 +288,11 @@ namespace ProjectManagementTool._modal_pages
                     if (!string.IsNullOrEmpty(statusIDRemove))
                         StatusUIDToRemove.Add(new Guid(statusIDRemove));
 
-                    statusIDRemove = RemovePhaseFromDataTable("ONTB Approved", "Review by ONTB", dtNewIntermediate);
+                    statusIDRemove = RemovePhaseFromDataTable("ONTB DTL Approved", "Review by ONTB", dtNewIntermediate);
                     if (!string.IsNullOrEmpty(statusIDRemove))
                         StatusUIDToRemove.Add(new Guid(statusIDRemove));
 
-                    statusIDRemove = RemovePhaseFromDataTable("ONTB Approved", "ONTB Specialist Verified", dtNewIntermediate);
+                    statusIDRemove = RemovePhaseFromDataTable("ONTB DTL Approved", "ONTB Specialist Verified", dtNewIntermediate);
                     if (!string.IsNullOrEmpty(statusIDRemove))
                         StatusUIDToRemove.Add(new Guid(statusIDRemove));
 
@@ -505,81 +512,85 @@ namespace ProjectManagementTool._modal_pages
                     lnk.Text = "No cover letter file";
                     //e.Row.Cells[9].Enabled = false;
                 }
-
-                if(Session["IsContractor"].ToString() == "Y")
+                string SubmittalUID = getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"].ToString()));
+                string Flowtype = getdata.GetFlowTypeBySubmittalUID(new Guid(SubmittalUID));
+                if(Flowtype == "STP")
                 {
-                    string SubmittalUID = getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"].ToString()));
-                    string phase = getdata.GetPhaseforStatus(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[3].Text);
-                    //string phase = getdata.GetPhaseforStatus(new Guid(Request.QueryString["FlowUID"]), e.Row.Cells[3].Text);
-                    e.Row.Cells[1].Text = phase;
-                    e.Row.Cells[3].Visible =false;
-                    e.Row.Cells[4].Visible = false;
-                    e.Row.Cells[12].Visible = false;
-                    if (e.Row.Cells[3].Text == "Code A-CE Approval")
+                    if (Session["IsContractor"].ToString() == "Y")
                     {
-                        e.Row.Cells[1].Text = "Approved By BWSSB Under Code A";
 
-                    }
-                    else if (e.Row.Cells[3].Text == "Code B-CE Approval")
-                    {
-                        e.Row.Cells[1].Text = "Approved By BWSSB Under Code B";
-                    }
-                    else if (e.Row.Cells[3].Text == "Code C-CE Approval")
-                    {
-                        e.Row.Cells[1].Text = "Under Client Approval Process";
+                        string phase = getdata.GetPhaseforStatus(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[3].Text);
+                        //string phase = getdata.GetPhaseforStatus(new Guid(Request.QueryString["FlowUID"]), e.Row.Cells[3].Text);
+                        e.Row.Cells[1].Text = phase;
+                        e.Row.Cells[3].Visible = false;
+                        e.Row.Cells[4].Visible = false;
+                        e.Row.Cells[12].Visible = false;
+                        if (e.Row.Cells[3].Text == "Code A-CE Approval")
+                        {
+                            e.Row.Cells[1].Text = "Approved By BWSSB Under Code A";
 
-                    }
-                    else if (e.Row.Cells[3].Text == "Client CE GFC Approval")
-                    {
-                        e.Row.Cells[1].Text = "Approved GFC by BWSSB";
-                    }
+                        }
+                        else if (e.Row.Cells[3].Text == "Code B-CE Approval")
+                        {
+                            e.Row.Cells[1].Text = "Approved By BWSSB Under Code B";
+                        }
+                        else if (e.Row.Cells[3].Text == "Code C-CE Approval")
+                        {
+                            e.Row.Cells[1].Text = "Under Client Approval Process";
 
-                }
-                else
-                {
-                    string SubmittalUID = getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"].ToString()));
-                    string phase = getdata.GetPhaseforStatus_CE(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[3].Text);
-                    //string phase = getdata.GetPhaseforStatus(new Guid(Request.QueryString["FlowUID"]), e.Row.Cells[3].Text);
-                    e.Row.Cells[1].Text = phase;
-                  
-                    if (e.Row.Cells[3].Text == "Code A-CE Approval")
-                    {
-                        e.Row.Cells[1].Text = "Approved By BWSSB Under Code A";
+                        }
+                        else if (e.Row.Cells[3].Text == "Client CE GFC Approval")
+                        {
+                            e.Row.Cells[1].Text = "Approved GFC by BWSSB";
+                        }
 
-                    }
-                    else if (e.Row.Cells[3].Text == "Code B-CE Approval")
-                    {
-                        e.Row.Cells[1].Text = "Approved By BWSSB Under Code B";
-                    }
-                    else if (e.Row.Cells[3].Text == "Code C-CE Approval")
-                    {
-                        e.Row.Cells[1].Text = "Under Client Approval Process";
-
-                    }
-                    else if(e.Row.Cells[3].Text == "Client CE GFC Approval")
-                    {
-                        e.Row.Cells[1].Text = "Approved GFC by BWSSB";
-                    }
-                    else if (e.Row.Cells[3].Text == "Accepted-PMC Comments")
-                    {
-                        e.Row.Cells[3].Text = "Accepted";
-                    }
-                    
-
-                    if (e.Row.Cells[11].Text == "Y")
-                    {
-                        e.Row.BackColor = System.Drawing.Color.Red;
-                    }
-                    //total days
-                    if(string.IsNullOrEmpty(next))
-                    {
-                        next = e.Row.Cells[2].Text;
                     }
                     else
                     {
+                       
+                        string phase = getdata.GetPhaseforStatus_CE(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[3].Text);
+                        //string phase = getdata.GetPhaseforStatus(new Guid(Request.QueryString["FlowUID"]), e.Row.Cells[3].Text);
+                        e.Row.Cells[1].Text = phase;
 
-                        e.Row.Cells[12].Text = (Convert.ToDateTime(e.Row.Cells[2].Text) - Convert.ToDateTime(next)).TotalDays.ToString() + " day(s)";
-                        next = e.Row.Cells[2].Text;
+                        if (e.Row.Cells[3].Text == "Code A-CE Approval")
+                        {
+                            e.Row.Cells[1].Text = "Approved By BWSSB Under Code A";
+
+                        }
+                        else if (e.Row.Cells[3].Text == "Code B-CE Approval")
+                        {
+                            e.Row.Cells[1].Text = "Approved By BWSSB Under Code B";
+                        }
+                        else if (e.Row.Cells[3].Text == "Code C-CE Approval")
+                        {
+                            e.Row.Cells[1].Text = "Under Client Approval Process";
+
+                        }
+                        else if (e.Row.Cells[3].Text == "Client CE GFC Approval")
+                        {
+                            e.Row.Cells[1].Text = "Approved GFC by BWSSB";
+                        }
+                        else if (e.Row.Cells[3].Text == "Accepted-PMC Comments")
+                        {
+                            e.Row.Cells[3].Text = "Accepted";
+                        }
+
+
+                        if (e.Row.Cells[11].Text == "Y")
+                        {
+                            e.Row.BackColor = System.Drawing.Color.Red;
+                        }
+                        //total days
+                        if (string.IsNullOrEmpty(next))
+                        {
+                            next = e.Row.Cells[2].Text;
+                        }
+                        else
+                        {
+
+                            e.Row.Cells[12].Text = (Convert.ToDateTime(e.Row.Cells[2].Text) - Convert.ToDateTime(next)).TotalDays.ToString() + " day(s)";
+                            next = e.Row.Cells[2].Text;
+                        }
                     }
                 }
                 //

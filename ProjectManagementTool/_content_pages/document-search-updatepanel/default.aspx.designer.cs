@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectManagementTool._content_pages.document_search_updatepanel {
-    
-    
-    public partial class _default {
-        
+namespace ProjectManagementTool._content_pages.document_search_updatepanel
+{
+
+
+    public partial class _default
+    {
+
         /// <summary>
         /// ScriptManager1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
+
         /// <summary>
         /// UpdatePanel1 control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
+
         /// <summary>
         /// UpdateProgress3 control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdateProgress UpdateProgress3;
-        
+
         /// <summary>
         /// HiddenPaging control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HiddenPaging;
-        
+
         /// <summary>
         /// DDlProject control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDlProject;
-        
+
         /// <summary>
         /// divWP control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divWP;
-        
+
         /// <summary>
         /// DDLWorkPackage control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDLWorkPackage;
-        
+
         /// <summary>
         /// LblDocumentHeading control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblDocumentHeading;
-        
+
         /// <summary>
         /// UpdatePanel6 control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel6;
-        
+
         /// <summary>
         /// divMain control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMain;
-        
+
         /// <summary>
         /// UpdatePanel2 control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel2;
-        
+
         /// <summary>
         /// txtSubmittal control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSubmittal;
-        
+
         /// <summary>
         /// txtDocName control.
         /// </summary>
@@ -128,7 +130,34 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDocName;
-        
+
+        /// <summary>
+        /// lblProjRefNO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblProjRefNO;
+
+        /// <summary>
+        /// txtOntbRef control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOntbRef;
+
+        /// <summary>
+        /// txtOriginatorRef control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOriginatorRef;
+
         /// <summary>
         /// ddlType control.
         /// </summary>
@@ -137,7 +166,16 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlType;
-        
+
+        /// <summary>
+        /// status control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label status;
+
         /// <summary>
         /// ddlstatus control.
         /// </summary>
@@ -146,7 +184,16 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlstatus;
-        
+
+        /// <summary>
+        /// ddlPhase control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlPhase;
+
         /// <summary>
         /// dtInDate control.
         /// </summary>
@@ -155,7 +202,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtInDate;
-        
+
         /// <summary>
         /// dtInToDate control.
         /// </summary>
@@ -164,7 +211,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtInToDate;
-        
+
         /// <summary>
         /// dtDocDate control.
         /// </summary>
@@ -173,7 +220,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtDocDate;
-        
+
         /// <summary>
         /// dtDocToDate control.
         /// </summary>
@@ -182,7 +229,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtDocToDate;
-        
+
         /// <summary>
         /// txtPageSize control.
         /// </summary>
@@ -191,7 +238,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPageSize;
-        
+
         /// <summary>
         /// btnSubmit control.
         /// </summary>
@@ -200,7 +247,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSubmit;
-        
+
         /// <summary>
         /// btnClearSearch control.
         /// </summary>
@@ -209,7 +256,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnClearSearch;
-        
+
         /// <summary>
         /// lbldocNos control.
         /// </summary>
@@ -218,7 +265,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbldocNos;
-        
+
         /// <summary>
         /// UpdatePanel3 control.
         /// </summary>
@@ -227,7 +274,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel3;
-        
+
         /// <summary>
         /// UpdateProgress1 control.
         /// </summary>
@@ -236,7 +283,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdateProgress UpdateProgress1;
-        
+
         /// <summary>
         /// GrdDocuments control.
         /// </summary>
@@ -245,7 +292,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GrdDocuments;
-        
+
         /// <summary>
         /// divGeneral control.
         /// </summary>
@@ -254,7 +301,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divGeneral;
-        
+
         /// <summary>
         /// UpdatePanel4 control.
         /// </summary>
@@ -263,7 +310,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel4;
-        
+
         /// <summary>
         /// txtDocNameGD control.
         /// </summary>
@@ -272,7 +319,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDocNameGD;
-        
+
         /// <summary>
         /// ddlDocType control.
         /// </summary>
@@ -281,7 +328,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDocType;
-        
+
         /// <summary>
         /// dtInDateGD control.
         /// </summary>
@@ -290,7 +337,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtInDateGD;
-        
+
         /// <summary>
         /// dtInToDateGD control.
         /// </summary>
@@ -299,7 +346,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtInToDateGD;
-        
+
         /// <summary>
         /// dtDocDateGD control.
         /// </summary>
@@ -308,7 +355,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtDocDateGD;
-        
+
         /// <summary>
         /// dtDocToDateGD control.
         /// </summary>
@@ -317,7 +364,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtDocToDateGD;
-        
+
         /// <summary>
         /// txtGDRecords control.
         /// </summary>
@@ -326,7 +373,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtGDRecords;
-        
+
         /// <summary>
         /// btnSubmitGD control.
         /// </summary>
@@ -335,7 +382,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSubmitGD;
-        
+
         /// <summary>
         /// bthClearGD control.
         /// </summary>
@@ -344,7 +391,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button bthClearGD;
-        
+
         /// <summary>
         /// lblGDnos control.
         /// </summary>
@@ -353,7 +400,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblGDnos;
-        
+
         /// <summary>
         /// UpdatePanel5 control.
         /// </summary>
@@ -362,7 +409,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel5;
-        
+
         /// <summary>
         /// UpdateProgress2 control.
         /// </summary>
@@ -371,7 +418,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdateProgress UpdateProgress2;
-        
+
         /// <summary>
         /// grdGeneralDocuments control.
         /// </summary>

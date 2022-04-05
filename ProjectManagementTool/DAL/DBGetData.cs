@@ -19734,5 +19734,194 @@ namespace ProjectManager.DAL
             }
             return Type;
         }
+
+        //added on 01/04/2022 for Nakib
+        public DataSet ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(Guid ProjectUID, Guid WorkPackageUID, string DocumentName, string Doctype, string SubmittalName, string Phase, DateTime DocDate, DateTime DocumentDate, DateTime DocToDate, DateTime DocumentToDate, int Type)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("ActualDocuments_SelectBy_WorkpackageUID_SearchPhase", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentName", DocumentName);
+                cmd.SelectCommand.Parameters.AddWithValue("@Doctype", Doctype);
+                cmd.SelectCommand.Parameters.AddWithValue("@SubmittalName", SubmittalName);
+                cmd.SelectCommand.Parameters.AddWithValue("@Phase", Phase);
+                cmd.SelectCommand.Parameters.AddWithValue("@Type", Type);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocDate", DocDate);// this is incomiung recv date
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentDate", DocumentDate);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocDateTo", DocToDate);// this is incomiung recv date
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentDateTo", DocumentToDate);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+
+        public DataTable GetPhasesAndStatusForSearch(Guid WorpackageUID)
+        {
+            DataTable ds = new DataTable();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("USP_GetPhasesAndStatusForSearch", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorpackageUID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //added on 05/04/2022
+        public int InsertorUpdateRefNoHistroy(Guid UID, Guid ActualDocumentUID, string OriginatorReferenceNo,string ONTBRefNo)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_InsertorUpdateRefNoHistroy"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@UID", UID);
+                        cmd.Parameters.AddWithValue("@ActualDocumentUID", ActualDocumentUID);
+                        cmd.Parameters.AddWithValue("@OriginatorReferenceNo", OriginatorReferenceNo);
+                        cmd.Parameters.AddWithValue("@ONTBRefNo", ONTBRefNo);
+                        con.Open();
+                        cnt = cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+                return cnt;
+            }
+            catch (Exception ex)
+            {
+                return cnt;
+            }
+        }
+
+
+        public int UpdateActualDocsRefNo(Guid ActualDocumentUID, string @ProjectRefNo, string OriginRefNo)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_UpdateActualDocsRefNo"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@ActualDocumentUID", ActualDocumentUID);
+                        cmd.Parameters.AddWithValue("@ProjectRefNo", ProjectRefNo);
+                        cmd.Parameters.AddWithValue("@OriginRefNo", OriginRefNo);
+                        con.Open();
+                        cnt = cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+                return cnt;
+            }
+            catch (Exception ex)
+            {
+                return cnt;
+            }
+        }
+
+        // added on 05/04/2022
+        public DataSet ActualDocuments_SelectBy_WorkpackageUID_Search(Guid ProjectUID, Guid WorkPackageUID, string DocumentName, string Doctype, string SubmittalName, string Status, DateTime DocDate, DateTime DocumentDate, DateTime DocToDate, DateTime DocumentToDate, int Type, string OntbRefNo, string OriginatorRefNo)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("ActualDocuments_SelectBy_WorkpackageUID_Search1", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentName", DocumentName);
+                cmd.SelectCommand.Parameters.AddWithValue("@Doctype", Doctype);
+                cmd.SelectCommand.Parameters.AddWithValue("@SubmittalName", SubmittalName);
+                cmd.SelectCommand.Parameters.AddWithValue("@Status", Status);
+                cmd.SelectCommand.Parameters.AddWithValue("@Type", Type);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocDate", DocDate);// this is incomiung recv date
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentDate", DocumentDate);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocDateTo", DocToDate);// this is incomiung recv date
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentDateTo", DocumentToDate);
+                cmd.SelectCommand.Parameters.AddWithValue("@OntbRefNumber", OntbRefNo);
+                cmd.SelectCommand.Parameters.AddWithValue("@OriginatorRefNumber", OriginatorRefNo);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+
+        public DataSet ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(Guid ProjectUID, Guid WorkPackageUID, string DocumentName, string Doctype, string SubmittalName, string Phase, DateTime DocDate, DateTime DocumentDate, DateTime DocToDate, DateTime DocumentToDate, int Type, string OntbRefNo, string OriginatorRefNo)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("ActualDocuments_SelectBy_WorkpackageUID_SearchPhase", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentName", DocumentName);
+                cmd.SelectCommand.Parameters.AddWithValue("@Doctype", Doctype);
+                cmd.SelectCommand.Parameters.AddWithValue("@SubmittalName", SubmittalName);
+                cmd.SelectCommand.Parameters.AddWithValue("@Phase", Phase);
+                cmd.SelectCommand.Parameters.AddWithValue("@Type", Type);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocDate", DocDate);// this is incomiung recv date
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentDate", DocumentDate);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocDateTo", DocToDate);// this is incomiung recv date
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentDateTo", DocumentToDate);
+                cmd.SelectCommand.Parameters.AddWithValue("@OntbRefNumber", OntbRefNo);
+                cmd.SelectCommand.Parameters.AddWithValue("@OriginatorRefNumber", OriginatorRefNo);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        public DataSet GetAllDocumentExceptReconciliation(Guid ProjectUID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("USP_GetAllDocumentExceptReconciliation", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+
     }
 }

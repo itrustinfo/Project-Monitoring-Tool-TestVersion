@@ -292,6 +292,24 @@ namespace ProjectManager._master_pages {
         protected global::System.Web.UI.WebControls.HyperLink ReportIssues;
         
         /// <summary>
+        /// ReportReconciliation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink ReportReconciliation;
+        
+        /// <summary>
+        /// ReportReconciliationStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink ReportReconciliationStatus;
+        
+        /// <summary>
         /// ReviewReports control.
         /// </summary>
         /// <remarks>

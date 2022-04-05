@@ -168,6 +168,8 @@
     <Content Include="_content_pages\report-physicalprogress\default.aspx" />
     <Content Include="_content_pages\report-projectphysicalprogress\default.aspx" />
     <Content Include="_content_pages\report-projectworkprogress\default.aspx" />
+    <Content Include="_content_pages\report-reconciliation-status\default.aspx" />
+    <Content Include="_content_pages\report-reconciliation\default.aspx" />
     <Content Include="_content_pages\report-resourcedeployment\default.aspx" />
     <Content Include="_content_pages\report-wkpg-master-datasettings\default.aspx" />
     <Content Include="_content_pages\report-wkpg-master-data\default.aspx" />
@@ -698,6 +700,20 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="_content_pages\report-projectworkprogress\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_content_pages\report-reconciliation-status\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_content_pages\report-reconciliation-status\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_content_pages\report-reconciliation\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_content_pages\report-reconciliation\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
     <Compile Include="_content_pages\report-resourcedeployment\default.aspx.cs">

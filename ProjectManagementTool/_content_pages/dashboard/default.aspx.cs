@@ -128,6 +128,10 @@ namespace ProjectManager._content_pages
                     hlReconciliationdocs.HRef = "~/_content_pages/documents-contractor/?&type=Recon&PrjUID=" + DDlProject.SelectedValue;
                     hlONTB.HRef = "~/_content_pages/documents-contractor/?&type=Ontb&PrjUID=" + DDlProject.SelectedValue;
                     hlMeasurement.HRef = "~/_content_pages/dashboard-measurment/?&WorkPackageUID=" + DDLWorkPackage.SelectedValue;
+
+                    UploadSitePhotograph.HRef = "/_modal_pages/upload-sitephotograph.aspx?PrjUID=" + DDlProject.SelectedValue + "&WorkPackage=" + DDLWorkPackage.SelectedValue;
+                    ViewSitePhotograph.HRef = "/_modal_pages/view-sitephotographs.aspx?PrjUID=" + DDlProject.SelectedValue + "&WorkPackage=" + DDLWorkPackage.SelectedValue;
+
                 }
                 else
                 {
@@ -1076,6 +1080,9 @@ vAxes: {
                 divdashboardimage.Visible = true;
                 divMainblocks.Visible = false;
             }
+        }
+        protected void RBLPhotographs_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
 
         private void LoadFinancialGraph()

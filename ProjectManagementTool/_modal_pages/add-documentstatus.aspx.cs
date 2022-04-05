@@ -81,6 +81,10 @@ namespace ProjectManagementTool._modal_pages
                             spIncmDate.Visible = false;
                        // }
                     }
+                    else
+                    {
+                        divforward.Visible = false;
+                    }
                     if (DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE GFC Approval"))
                     {
                         if(DDlStatus.SelectedItem.ToString().Contains("ACE Approval"))
@@ -356,9 +360,23 @@ namespace ProjectManagementTool._modal_pages
                         if (Cnt > 0)
                         {
                             //DataSet ds = getdata.getAllUsers();
-                            //Update the targte dates 
-                           
-                              getdata.StoreFreshTargetDatesforStatusChange(new Guid(Request.QueryString["DocID"].ToString()), Status);
+                            //Update the target dates 
+                            bool storemail = true;
+                            if (DDlStatus.SelectedItem.ToString().Contains("Accepted-PMC"))
+                            {
+                                if(Status !="Accepted")
+                                {
+                                    getdata.StoreFreshTargetDatesforStatusChange(new Guid(Request.QueryString["DocID"].ToString()), Status);
+                                }
+                                else
+                                {
+                                    storemail = false;
+                                }
+                            }
+                            else
+                            {
+                                getdata.StoreFreshTargetDatesforStatusChange(new Guid(Request.QueryString["DocID"].ToString()), Status);
+                            }
 
                             DataSet ds = new DataSet();
                             //if (Session["TypeOfUser"].ToString() == "U" || Session["TypeOfUser"].ToString() == "MD" || Session["TypeOfUser"].ToString() == "VP")
@@ -374,93 +392,223 @@ namespace ProjectManagementTool._modal_pages
                             //{
                             //    ds = getdata.getUsers_by_ProjectUnder(new Guid(Request.QueryString["ProjectUID"]));
                             //}
-
-                            if (ds.Tables[0].Rows.Count > 0)
+                            //mail sending
+                            if (storemail)
                             {
-                                string CC = string.Empty;
-                                string ToEmailID = "";
-                                string sUserName = "";
-                                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                                if (ds.Tables[0].Rows.Count > 0)
                                 {
-                                    if (ds.Tables[0].Rows[i]["UserUID"].ToString() == Session["UserUID"].ToString())
+                                    string CC = string.Empty;
+                                    string ToEmailID = "";
+                                    string sUserName = "";
+                                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                                     {
-                                        ToEmailID = ds.Tables[0].Rows[i]["EmailID"].ToString();
-                                        sUserName = ds.Tables[0].Rows[i]["UserName"].ToString();
+                                        if (ds.Tables[0].Rows[i]["UserUID"].ToString() == Session["UserUID"].ToString())
+                                        {
+                                            ToEmailID = ds.Tables[0].Rows[i]["EmailID"].ToString();
+                                            sUserName = ds.Tables[0].Rows[i]["UserName"].ToString();
+                                        }
+                                        else
+                                        {
+                                            if (getdata.GetUserMailAccess(new Guid(ds.Tables[0].Rows[i]["UserUID"].ToString()), "documentmail") != 0)
+                                            {
+                                                CC += ds.Tables[0].Rows[i]["EmailID"].ToString() + ",";
+                                            }
+
+                                        }
+                                    }
+
+                                    //
+                                    CC = CC.TrimEnd(',');
+                                    sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
+                                      "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "<style>table, th, td {border: 1px solid black; padding:6px;}</style></head>" +
+                                         "<body style='font-family:Verdana, Arial, sans-serif; font-size:12px; font-style:normal;'>";
+                                    sHtmlString += "<div style='width:80%; float:left; padding:1%; border:2px solid #011496; border-radius:5px;'>" +
+                                                       "<div style='float:left; width:100%; border-bottom:2px solid #011496;'>";
+                                    if (WebConfigurationManager.AppSettings["Domain"] == "NJSEI")
+                                    {
+                                        sHtmlString += "<div style='float:left; width:7%;'><img src='https://dm.njsei.com/_assets/images/NJSEI%20Logo.jpg' width='50' /></div>";
                                     }
                                     else
                                     {
-                                        if (getdata.GetUserMailAccess(new Guid(ds.Tables[0].Rows[i]["UserUID"].ToString()), "documentmail") != 0)
-                                        {
-                                            CC += ds.Tables[0].Rows[i]["EmailID"].ToString() + ",";
-                                        }
-                                       
+                                        sHtmlString += "<div style='float:left; width:7%;'><h2>" + WebConfigurationManager.AppSettings["Domain"] + "</h2></div>";
                                     }
-                                }
-                                // added on 14/03/2022 to store mail for Contractor........
-                                if (DDlStatus.SelectedItem.ToString().Contains("AE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString() == "PMC Specialist Review")
-                                {
-                                    DataSet dsMUSers = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 1);
-                                    if (dsMUSers.Tables[0].Rows.Count > 0)
+                                    sHtmlString += "<div style='float:left; width:70%;'><h2 style='margin-top:10px;'>Project Monitoring Tool</h2></div>" +
+                                               "</div>";
+                                    sHtmlString += "<div style='width:100%; float:left;'><br/>Dear User,<br/><br/><span style='font-weight:bold;'>" + sUserName + " has changed " + DDLDocument.SelectedItem.Text + " status.</span> <br/><br/></div>";
+                                    sHtmlString += "<div style='width:100%; float:left;'><table style='width:100%;'>" +
+                                                    "<tr><td><b>Document Name </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDLDocument.SelectedItem.Text + "</td></tr>" +
+                                                    "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDlStatus.SelectedItem.Text + "</td></tr>" +
+                                                    "<tr><td><b>Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtrefNumber.Text + "</td></tr>" +
+                                                    "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + CDate1.ToString("dd MMM yyyy") + "</td></tr>" +
+                                                    "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtcomments.Text + "</td></tr>";
+                                    sHtmlString += "</table></div>";
+                                    sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
+
+                                    // added on 02/11/2020
+                                    DataTable dtemailCred = getdata.GetEmailCredentials();
+                                    Guid MailUID = Guid.NewGuid();
+                                    getdata.StoreEmaildataToMailQueue(MailUID, new Guid(Session["UserUID"].ToString()), dtemailCred.Rows[0][0].ToString(), ToEmailID, Subject, sHtmlString, CC, "");
+
+                                    //----add here----
+                                    // added on 07/01/2022 for sending mail to next user in line to change status...
+                                    DataSet dsnew = getdata.getTop1_DocumentStatusSelect(new Guid(Request.QueryString["DocID"]));
+                                    DataSet dsNext = getdata.GetNextStep_By_DocumentUID(new Guid(Request.QueryString["DocID"]), dsnew.Tables[0].Rows[0]["ActivityType"].ToString());
+
+                                    sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
+                                    "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "<style>table, th, td {border: 1px solid black; padding:6px;}</style></head>" +
+                                       "<body style='font-family:Verdana, Arial, sans-serif; font-size:12px; font-style:normal;'>";
+                                    sHtmlString += "<div style='width:80%; float:left; padding:1%; border:2px solid #011496; border-radius:5px;'>" +
+                                                       "<div style='float:left; width:100%; border-bottom:2px solid #011496;'>";
+                                    if (WebConfigurationManager.AppSettings["Domain"] == "NJSEI")
                                     {
-                                        foreach (DataRow druser in dsMUSers.Tables[0].Rows)
+                                        sHtmlString += "<div style='float:left; width:7%;'><img src='https://dm.njsei.com/_assets/images/NJSEI%20Logo.jpg' width='50' /></div>";
+                                    }
+                                    else
+                                    {
+                                        sHtmlString += "<div style='float:left; width:7%;'><h2>" + WebConfigurationManager.AppSettings["Domain"] + "</h2></div>";
+                                    }
+                                    sHtmlString += "<div style='float:left; width:70%;'><h2 style='margin-top:10px;'>Project Monitoring Tool</h2></div>" +
+                                               "</div>";
+                                    sHtmlString += "<div style='width:100%; float:left;'><br/>Dear Users,<br/><br/><span style='font-weight:bold;'>" + sUserName + " has changed " + DDLDocument.SelectedItem.Text + " status.</span> <br/><br/></div>";
+                                    sHtmlString += "<div style='width:100%; float:left;'><table style='width:100%;'>" +
+                                                    "<tr><td><b>Document Name </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDLDocument.SelectedItem.Text + "</td></tr>" +
+                                                    "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDlStatus.SelectedItem.Text + "</td></tr>" +
+                                                    "<tr><td><b>Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtrefNumber.Text + "</td></tr>" +
+                                                    "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + CDate1.ToString("dd MMM yyyy") + "</td></tr>" +
+                                                    "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtcomments.Text + "</td></tr>";
+                                    sHtmlString += "</table><br /><br /><div style='color: red'>Kindly note that you are to act on this to complete the next step in document flow.</div></div>";
+                                    sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
+                                    Subject = Subject + ".Kindly complete the next step !";
+                                    string next = string.Empty;
+                                    DataSet dsNxtUser = new DataSet();
+                                    foreach (DataRow dr in dsNext.Tables[0].Rows)
+                                    {
+                                        dsNxtUser = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"]), int.Parse(dr["ForFlow_Step"].ToString()));
+                                        foreach (DataRow druser in dsNxtUser.Tables[0].Rows)
                                         {
-                                            CC += getdata.GetUserEmail_By_UserUID_New(new Guid(druser["Approver"].ToString())) + ",";
+                                            ToEmailID = getdata.GetUserEmail_By_UserUID_New(new Guid(druser["Approver"].ToString()));
+                                            if (!next.Contains(ToEmailID))
+                                            {
+                                                getdata.StoreEmaildataToMailQueue(Guid.NewGuid(), new Guid(Session["UserUID"].ToString()), dtemailCred.Rows[0][0].ToString(), ToEmailID, Subject, sHtmlString, "", "");
+                                                next += ToEmailID;
+                                            }
+
                                         }
                                     }
-                                }
-                                //
-                                CC = CC.TrimEnd(',');
-                                sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
-                                  "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "<style>table, th, td {border: 1px solid black; padding:6px;}</style></head>" +
-                                     "<body style='font-family:Verdana, Arial, sans-serif; font-size:12px; font-style:normal;'>";
-                                sHtmlString += "<div style='width:80%; float:left; padding:1%; border:2px solid #011496; border-radius:5px;'>" +
-                                                   "<div style='float:left; width:100%; border-bottom:2px solid #011496;'>";
-                                if (WebConfigurationManager.AppSettings["Domain"] == "NJSEI")
-                                {
-                                    sHtmlString += "<div style='float:left; width:7%;'><img src='https://dm.njsei.com/_assets/images/NJSEI%20Logo.jpg' width='50' /></div>";
-                                }
-                                else
-                                {
-                                    sHtmlString += "<div style='float:left; width:7%;'><h2>" + WebConfigurationManager.AppSettings["Domain"] + "</h2></div>";
-                                }
-                                sHtmlString += "<div style='float:left; width:70%;'><h2 style='margin-top:10px;'>Project Monitoring Tool</h2></div>" +
-                                           "</div>";
-                                sHtmlString += "<div style='width:100%; float:left;'><br/>Dear Users,<br/><br/><span style='font-weight:bold;'>" + sUserName + " has changed " + DDLDocument.SelectedItem.Text + " status.</span> <br/><br/></div>";
-                                sHtmlString += "<div style='width:100%; float:left;'><table style='width:100%;'>" +
-                                                "<tr><td><b>Document Name </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDLDocument.SelectedItem.Text + "</td></tr>" +
-                                                "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDlStatus.SelectedItem.Text + "</td></tr>" +
-                                                "<tr><td><b>Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtrefNumber.Text + "</td></tr>" +
-                                                "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + CDate1.ToString("dd MMM yyyy") + "</td></tr>" +
-                                                "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtcomments.Text + "</td></tr>";
-                                sHtmlString += "</table></div>";
-                                sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Monitoring Tool.</div></div></body></html>";
 
-                                //sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
-                                //       "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "</head>" +
-                                //          "<body style='font-family:Verdana, Arial, sans-serif; font-size:12px; font-style:normal;'>";
-                                //sHtmlString += "<div style='float:left; width:100%; height:30px;'>" +
-                                //                   "Dear, " + "Users" +
-                                //                   "<br/><br/></div>";
-                                //sHtmlString += "<div style='width:100%; float:left;'><div style='width:100%; float:left;'>Below are the Status details. <br/><br/></div>";
-                                //sHtmlString += "<div style='width:100%; float:left;'><div style='width:100%; float:left;'>Document Name : " + DDLDocument.SelectedItem.Text + "<br/></div>";
-                                //sHtmlString += "<div style='width:100%; float:left;'><div style='width:100%; float:left;'>Status : " + DDlStatus.SelectedItem.Text + "<br/></div>";
-                                //sHtmlString += "<div style='width:100%; float:left;'><div style='width:100%; float:left;'>Date : " + CDate1.ToShortDateString() + "<br/></div>";
-                                //sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Manager.</div></div></body></html>";
-                                //string ret = getdata.SendMail(ds.Tables[0].Rows[0]["EmailID"].ToString(), Subject, sHtmlString, CC, Server.MapPath(DocPath));
-                                // added on 02/11/2020
-                                DataTable dtemailCred = getdata.GetEmailCredentials();
-                                Guid MailUID = Guid.NewGuid();
-                                getdata.StoreEmaildataToMailQueue(MailUID, new Guid(Session["UserUID"].ToString()), dtemailCred.Rows[0][0].ToString(), ToEmailID, Subject, sHtmlString, CC, "");
-                                //
-                               
-                                Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");
-                            }
-                            else
-                            {
 
-                                Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error: There is a problem with this feature. Please contact system admin');</script>");
 
-                            }
+                                    // -------------------------mail to contractor after DTL has approved
+                                    if (DDlStatus.SelectedItem.ToString() == "Code A" || DDlStatus.SelectedItem.ToString() == "Code B" || DDlStatus.SelectedItem.ToString() == "Code C" || DDlStatus.SelectedItem.ToString() == "Network Design DTL Reviewed" || DDlStatus.SelectedItem.ToString() == "ONTB DTL Verified" || DDlStatus.SelectedItem.ToString().Contains("Rejected"))
+                                    {
+                                        string EmailHeading = string.Empty;
+                                        Subject = "Document Status Changed !";
+                                        if (DDlStatus.SelectedItem.ToString().Contains("Rejected"))
+                                        {
+                                            EmailHeading = DDlStatus.SelectedItem.ToString();
+                                        }
+                                        else if (DDlStatus.SelectedItem.ToString().Contains("Code"))
+                                        {
+                                            EmailHeading = " has been approved under " + DDlStatus.SelectedItem.ToString() + ".Please submit 9 Hard copies Documents for Review to the client outside the MIS system";
+                                        }
+                                        else
+                                        {
+                                            EmailHeading = "Under Client Approval Process";
+                                        }
+                                        sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
+                                     "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "<style>table, th, td {border: 1px solid black; padding:6px;}</style></head>" +
+                                        "<body style='font-family:Verdana, Arial, sans-serif; font-size:12px; font-style:normal;'>";
+                                        sHtmlString += "<div style='width:80%; float:left; padding:1%; border:2px solid #011496; border-radius:5px;'>" +
+                                                           "<div style='float:left; width:100%; border-bottom:2px solid #011496;'>";
+                                        if (WebConfigurationManager.AppSettings["Domain"] == "NJSEI")
+                                        {
+                                            sHtmlString += "<div style='float:left; width:7%;'><img src='https://dm.njsei.com/_assets/images/NJSEI%20Logo.jpg' width='50' /></div>";
+                                        }
+                                        else
+                                        {
+                                            sHtmlString += "<div style='float:left; width:7%;'><h2>" + WebConfigurationManager.AppSettings["Domain"] + "</h2></div>";
+                                        }
+                                        sHtmlString += "<div style='float:left; width:70%;'><h2 style='margin-top:10px;'>Project Monitoring Tool</h2></div>" +
+                                                   "</div>";
+                                        sHtmlString += "<div style='width:100%; float:left;'><br/>Dear Contractor,<br/><br/><span style='font-weight:bold;'>Document " + DDLDocument.SelectedItem.Text + EmailHeading + ".</span> <br/><br/></div>";
+                                        sHtmlString += "<div style='width:100%; float:left;'><table style='width:100%;'>" +
+                                                        "<tr><td><b>Document Name </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDLDocument.SelectedItem.Text + "</td></tr>" +
+                                                        "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDlStatus.SelectedItem.Text + "</td></tr>" +
+                                                        "<tr><td><b>Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtrefNumber.Text + "</td></tr>" +
+                                                        "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + CDate1.ToString("dd MMM yyyy") + "</td></tr>" +
+                                                        "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtcomments.Text + "</td></tr>";
+                                        sHtmlString += "</table></div>";
+                                        sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
+
+                                        // added on 30/03/2022 to store mail for Contractor........
+
+                                        DataSet dsMUSers = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 1);
+                                        if (dsMUSers.Tables[0].Rows.Count > 0)
+                                        {
+                                            foreach (DataRow druser in dsMUSers.Tables[0].Rows)
+                                            {
+                                                ToEmailID = getdata.GetUserEmail_By_UserUID_New(new Guid(druser["Approver"].ToString()));
+                                            }
+                                        }
+
+                                        getdata.StoreEmaildataToMailQueue(Guid.NewGuid(), new Guid(Session["UserUID"].ToString()), dtemailCred.Rows[0][0].ToString(), ToEmailID, Subject, sHtmlString, CC, "");
+                                    } // mail to contractor and DTL afetr CE has approved
+                                    else if (DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString().Contains("Client CE GFC Approval"))
+                                    {
+                                        // added on 30/03/2022 to store mail for Contractor........
+                                        Subject = "Document Status Changed !";
+                                        DataSet dsMUSers = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 1);
+                                        if (dsMUSers.Tables[0].Rows.Count > 0)
+                                        {
+                                            foreach (DataRow druser in dsMUSers.Tables[0].Rows)
+                                            {
+                                                ToEmailID = getdata.GetUserEmail_By_UserUID_New(new Guid(druser["Approver"].ToString()));
+                                            }
+                                        }
+                                        //To DTL
+                                        CC = "ns.rao04@gmail.com";
+                                        //--------------------
+                                        sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
+                                    "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "<style>table, th, td {border: 1px solid black; padding:6px;}</style></head>" +
+                                       "<body style='font-family:Verdana, Arial, sans-serif; font-size:12px; font-style:normal;'>";
+                                        sHtmlString += "<div style='width:80%; float:left; padding:1%; border:2px solid #011496; border-radius:5px;'>" +
+                                                           "<div style='float:left; width:100%; border-bottom:2px solid #011496;'>";
+                                        if (WebConfigurationManager.AppSettings["Domain"] == "NJSEI")
+                                        {
+                                            sHtmlString += "<div style='float:left; width:7%;'><img src='https://dm.njsei.com/_assets/images/NJSEI%20Logo.jpg' width='50' /></div>";
+                                        }
+                                        else
+                                        {
+                                            sHtmlString += "<div style='float:left; width:7%;'><h2>" + WebConfigurationManager.AppSettings["Domain"] + "</h2></div>";
+                                        }
+                                        sHtmlString += "<div style='float:left; width:70%;'><h2 style='margin-top:10px;'>Project Monitoring Tool</h2></div>" +
+                                                   "</div>";
+                                        sHtmlString += "<div style='width:100%; float:left;'><br/>Dear Contractor,<br/><br/><span style='font-weight:bold;'>Document " + DDLDocument.SelectedItem.Text + " is " + DDlStatus.SelectedItem.ToString().Replace("Approval", "Approved") + ".</span> <br/><br/></div>";
+                                        sHtmlString += "<div style='width:100%; float:left;'><table style='width:100%;'>" +
+                                                        "<tr><td><b>Document Name </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDLDocument.SelectedItem.Text + "</td></tr>" +
+                                                        "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDlStatus.SelectedItem.Text + "</td></tr>" +
+                                                        "<tr><td><b>Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtrefNumber.Text + "</td></tr>" +
+                                                        "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + CDate1.ToString("dd MMM yyyy") + "</td></tr>";
+
+                                        sHtmlString += "</table></div>";
+                                        sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
+                                        getdata.StoreEmaildataToMailQueue(Guid.NewGuid(), new Guid(Session["UserUID"].ToString()), dtemailCred.Rows[0][0].ToString(), ToEmailID, Subject, sHtmlString, CC, "");
+
+
+                                    }
+                                }
+
+
+                                                           }
+                            Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");
+
+
+                        }
+                        else
+                        {
+
+                            Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error: There is a problem with this feature. Please contact system admin');</script>");
+
                         }
                     }
 
@@ -670,7 +818,7 @@ namespace ProjectManagementTool._modal_pages
                                                     "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + CDate1.ToString("dd MMM yyyy") + "</td></tr>" +
                                                     "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtcomments.Text + "</td></tr>";
                                     sHtmlString += "</table></div>";
-                                    sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Monitoring Tool.</div></div></body></html>";
+                                    sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
 
                                     //sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
                                     //       "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "</head>" +
@@ -716,7 +864,7 @@ namespace ProjectManagementTool._modal_pages
                                                     "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + CDate1.ToString("dd MMM yyyy") + "</td></tr>" +
                                                     "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtcomments.Text + "</td></tr>";
                                     sHtmlString += "</table><br /><br /><div style='color: red'>Kindly note that you are to act on this to complete the next step in document flow.</div></div>";
-                                    sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Monitoring Tool.</div></div></body></html>";
+                                    sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
                                     Subject = Subject + ".Kindly complete the next step !";
                                     string next = string.Empty;
                                     DataSet dsNxtUser = new DataSet();

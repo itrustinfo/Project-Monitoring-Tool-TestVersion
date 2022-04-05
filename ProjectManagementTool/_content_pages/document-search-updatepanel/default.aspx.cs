@@ -4,9 +4,11 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using ProjectManagementTool.DAL;
 using ProjectManager.DAL;
 
 namespace ProjectManagementTool._content_pages.document_search_updatepanel
@@ -28,6 +30,11 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
                 if (!IsPostBack)
                 {
                     BindProject();
+                    if (WebConfigurationManager.AppSettings["Domain"].ToString().ToUpper() == "NJSEI")
+                        lblProjRefNO.Text = "NJSEI Reference #";
+                    else
+                        lblProjRefNO.Text = "ONTB Reference #";
+
                     SelectedProjectWorkpackage("Project");
                     if (Session["searchedit"] != null)
                     {
@@ -40,10 +47,12 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
                         dtDocToDate.Text = Session["sDocDateTo"].ToString();
                     }
                     DDlProject_SelectedIndexChanged(sender, e);
+                    //ddlPhase.Attributes["style"] = "display: none;";
                     //BindStatus();
                     //BindType();
                     // BindDocuments();
                     BindTypeGD();
+                    //BindPhases();
                     ViewState["SortDireaction"] = "";
                     ViewState["_sortDirection"] = "";
                     Session["isDownloadNJSE"] = false;
@@ -71,6 +80,45 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
             }
         }
 
+        private void BindPhases(Guid WorkpackageUID)
+        {
+            DataSet dtStatus = getdt.GetStatusForSearch(new Guid(DDLWorkPackage.SelectedValue));
+            DataTable dt = getdt.GetPhasesAndStatusForSearch(WorkpackageUID);
+            if (dt != null)
+            {
+                ddlPhase.DataTextField = "Phase";
+                ddlPhase.DataValueField = "Phase";
+                ddlPhase.DataSource = dt;
+                ddlPhase.DataBind();
+                
+            }
+
+            if(dtStatus != null && dtStatus.Tables[0].Rows.Count > 0)
+            {
+                var isExist = dtStatus.Tables[0].AsEnumerable().Where(r => r.Field<string>("ActualDocument_CurrentStatus") == "Code A-CE Approval").FirstOrDefault();
+                if(isExist != null)
+                {
+                    ddlPhase.Items.Add(new ListItem { Text = "Approved By BWSSB Under Code A", Value = "Code A-CE Approval" });
+                }
+                isExist = dtStatus.Tables[0].AsEnumerable().Where(r => r.Field<string>("ActualDocument_CurrentStatus") == "Code B-CE Approval").FirstOrDefault();
+                if (isExist != null)
+                {
+                    ddlPhase.Items.Add(new ListItem { Text = "Approved By BWSSB Under Code B", Value = "Code B-CE Approval" });
+                }
+                isExist = dtStatus.Tables[0].AsEnumerable().Where(r => r.Field<string>("ActualDocument_CurrentStatus") == "Code C-CE Approval").FirstOrDefault();
+                if (isExist != null)
+                {
+                    ddlPhase.Items.Add(new ListItem { Text = "Under Client Approval Process", Value = "Code C-CE Approval" });
+                }
+                isExist = dtStatus.Tables[0].AsEnumerable().Where(r => r.Field<string>("ActualDocument_CurrentStatus") == "Client CE GFC Approval").FirstOrDefault();
+                if (isExist != null)
+                {
+                    ddlPhase.Items.Add(new ListItem { Text = "Approved GFC by BWSSB", Value = "Client CE GFC Approval" });
+                }
+            }
+            
+            ddlPhase.Items.Insert(0, "All");
+        }
         public string GetSubmittalName(string DocumentID)
         {
             return getdt.getDocumentName_by_DocumentUID(new Guid(DocumentID));
@@ -110,8 +158,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
                 if (dr["DocumentType"].ToString() == "Word")
-                {
-                   
+                {  
                     if (name != dr["DocumentType"].ToString())
                     {
                         name = dr["DocumentType"].ToString();
@@ -207,6 +254,12 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
 
         protected void DDlProject_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (DDlProject.SelectedValue == "-Select-")
+            {
+                ddlPhase.Attributes["style"] = "display: none;";
+                ddlstatus.Attributes["style"] = "";
+                status.Text = "Status";
+            }
             if (DDlProject.SelectedValue != "-Select-")
             {
                 UpdatePanel2.Update();
@@ -427,23 +480,63 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
                     return;
                 }
             }
+            DataSet ds = new DataSet();
+            string statusValue = "";
 
-            DataSet ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue),new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlstatus.SelectedValue, InDate,DocumentDate,InToDate,DocumentToDate, 4);
-            if (dtDocDate.Text != "" && dtInDate.Text != "")
+            bool IsPhaseSearch = false;
+            if (status.Text == "Phase" && ddlPhase.SelectedItem.Text != "All")
             {
-                ds = new DataSet();
-                ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlstatus.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 3);
+                IsPhaseSearch = true;
+                if (Constants.DicFinalStatusAndPhase.ContainsKey(ddlPhase.SelectedValue))
+                {
+                    IsPhaseSearch = false;
+                    statusValue = ddlPhase.SelectedValue;
+                }
             }
-            else if (dtInDate.Text !="")
+
+            if (IsPhaseSearch)
+            {   
+                ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 4, txtOntbRef.Text, txtOriginatorRef.Text);
+
+                if (dtDocDate.Text != "" && dtInDate.Text != "")
+                {
+                    ds = new DataSet();
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 3, txtOntbRef.Text, txtOriginatorRef.Text);
+                }
+                else if (dtInDate.Text != "")
+                {
+                    ds = new DataSet();
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 1, txtOntbRef.Text, txtOriginatorRef.Text);
+                }
+                else if (dtDocDate.Text != "")
+                {
+                    ds = new DataSet();
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 2, txtOntbRef.Text, txtOriginatorRef.Text);
+                }
+            }
+            else
             {
-                ds = new DataSet();
-                ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue),new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlstatus.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 1);
+                if(string.IsNullOrEmpty(statusValue))
+                    statusValue = ddlstatus.SelectedValue;
+                ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 4, txtOntbRef.Text, txtOriginatorRef.Text);
+                if (dtDocDate.Text != "" && dtInDate.Text != "")
+                {
+                    ds = new DataSet();
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 3, txtOntbRef.Text, txtOriginatorRef.Text);
+                }
+                else if (dtInDate.Text != "")
+                {
+                    ds = new DataSet();
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 1, txtOntbRef.Text, txtOriginatorRef.Text);
+                }
+                else if (dtDocDate.Text != "")
+                {
+                    ds = new DataSet();
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 2, txtOntbRef.Text, txtOriginatorRef.Text);
+                }
             }
-            else if (dtDocDate.Text != "")
-            {
-                ds = new DataSet();
-                ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlstatus.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 2);
-            }
+
+            
             if (ds.Tables[0].Rows.Count > 0)
             {
                 lbldocNos.Text = ds.Tables[0].Rows.Count.ToString();
@@ -557,20 +650,13 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
         {
 
             //LinkButton lnkbtn;
-            //if (e.Row.RowType == DataControlRowType.Header)
-            //{
-            //    foreach (TableCell cell in e.Row.Cells)
-            //    {
-            //        lnkbtn = (LinkButton)cell.Controls[0];
-            //        if (!string.IsNullOrEmpty(GrdDocuments.SortExpression))
-            //        {
-            //            if (GrdDocuments.SortExpression.Equals(lnkbtn.Text))
-            //            {
-            //                cell.BackColor = System.Drawing.Color.Crimson;
-            //            }
-            //        }
-            //    }
-            //}
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                if (WebConfigurationManager.AppSettings["Domain"].ToString().ToUpper() == "NJSEI")
+                    e.Row.Cells[5].Text = "NJSEI Reference #";
+                else
+                    e.Row.Cells[5].Text = "ONTB Reference #";
+            }
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 DataSet ds = getdt.getTop1_DocumentStatusSelect(new Guid(e.Row.Cells[0].Text));
@@ -599,28 +685,49 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
                     string SubmittalUID = getdt.GetSubmittalUID_By_ActualDocumentUID(new Guid(e.Row.Cells[0].Text));
                     string phase = getdt.GetPhaseforStatus(new Guid(getdt.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[4].Text);
                     //string phase = getdata.GetPhaseforStatus(new Guid(Request.QueryString["FlowUID"]), e.Row.Cells[3].Text);
-                    if (string.IsNullOrEmpty(phase))
+                    string Flowtype = getdt.GetFlowTypeBySubmittalUID(new Guid(SubmittalUID));
+                    if (Flowtype == "STP")
                     {
-                        
-                        if (e.Row.Cells[4].Text == "Code A-CE Approval" || e.Row.Cells[4].Text == "Client CE GFC Approval")
+                        if (string.IsNullOrEmpty(phase))
                         {
-                            e.Row.Cells[4].Text = "Approved";
 
+                            //if (e.Row.Cells[4].Text == "Code A-CE Approval" || e.Row.Cells[4].Text == "Client CE GFC Approval")
+                            //{
+                            //    e.Row.Cells[4].Text = "Approved";
+
+                            //}
+                            //if (e.Row.Cells[4].Text == "Code B-CE Approval" || e.Row.Cells[3].Text == "Code C-CE Approval")
+                            //{
+                            //    e.Row.Cells[4].Text = "Client Approval";
+                            //}
+                            if (e.Row.Cells[4].Text == "Code A-CE Approval")
+                            {
+                                e.Row.Cells[4].Text = "Approved By BWSSB Under Code A";
+
+                            }
+                            else if (e.Row.Cells[4].Text == "Code B-CE Approval")
+                            {
+                                e.Row.Cells[4].Text = "Approved By BWSSB Under Code B";
+                            }
+                            else if (e.Row.Cells[4].Text == "Code C-CE Approval")
+                            {
+                                e.Row.Cells[4].Text = "Under Client Approval Process";
+
+                            }
+                            else if (e.Row.Cells[4].Text == "Client CE GFC Approval")
+                            {
+                                e.Row.Cells[4].Text = "Approved GFC by BWSSB";
+                            }
                         }
-                        if (e.Row.Cells[4].Text == "Code B-CE Approval" || e.Row.Cells[3].Text == "Code C-CE Approval")
+                        else
                         {
-                            e.Row.Cells[4].Text = "Client Approval";
+                            e.Row.Cells[4].Text = phase;
                         }
-                    }
-                    else
-                    {
-                        e.Row.Cells[4].Text = phase;
-                    }
 
-
+                    }
                 }
 
-            }
+                }
         }
 
         protected void GrdDocuments_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -1092,6 +1199,30 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
         {
             if (DDLWorkPackage.SelectedValue != "-Select-")
             {
+                if (Session["IsContractor"].ToString() == "Y")
+                {
+                    var IsProjFound = Constants.ProjectsForPhaseSearch.Where(r => r == DDlProject.SelectedItem.Text).FirstOrDefault();
+                    if (!string.IsNullOrEmpty(IsProjFound))
+                    {
+                        ddlstatus.Attributes["style"] = "display: none;";
+                        ddlPhase.Attributes["style"] = "";
+                        status.Text = "Phase";
+                        BindPhases(new Guid(DDLWorkPackage.SelectedValue));
+                    }
+                    else
+                    {
+                        ddlPhase.Attributes["style"] = "display: none;";
+                        ddlstatus.Attributes["style"] = "";
+                        status.Text = "Status";
+                    }
+                }
+                else
+                {
+                    ddlPhase.Attributes["style"] = "display: none;";
+                    ddlstatus.Attributes["style"] = "";
+                    status.Text = "Status";
+                }
+
                 UpdatePanel2.Update();
                 ddlstatus.DataSource = null;
                 ddlstatus.DataBind();
@@ -1103,7 +1234,11 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
                 divGeneral.Visible = false;
                 divWP.Visible = true;
                 GrdDocuments.Visible = false;
+
+
                 BindStatus();
+                //bind phase
+
                 BindType();
                 
                 if (Session["searchedit"] != null)

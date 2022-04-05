@@ -343,13 +343,17 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                UpdateMode="Conditional"><ContentTemplate>
                    
                              <table class="table table-borderless" style="border:1px solid #909090;">
-                                 <tr style="font-weight:bold;"><td>Submittal Name : <asp:TextBox runat="server" ID="txtSubmittal" CssClass="form-control"></asp:TextBox></td><td>Document Name : <asp:TextBox runat="server" ID="txtDocName" CssClass="form-control"></asp:TextBox></td><td>Document Type<asp:DropDownList ID="ddlType" runat="server" CssClass="form-control">
-                                        
-                                     </asp:DropDownList>
-                                     </td><td>Status<asp:DropDownList ID="ddlstatus" runat="server" CssClass="form-control">
-                                        
-                                     </asp:DropDownList>
-                                     </td></tr>
+                                 <tr style="font-weight:bold;">
+                                     <td>Submittal Name : <asp:TextBox runat="server" ID="txtSubmittal" CssClass="form-control"></asp:TextBox></td>
+                                     <td>Document Name : <asp:TextBox runat="server" ID="txtDocName" CssClass="form-control"></asp:TextBox></td>
+                                     <td>Document Type<asp:DropDownList ID="ddlType" runat="server" CssClass="form-control"></asp:DropDownList>
+                                     </td>
+                                     <td><asp:Label ID ="status" runat="server" Text="Status"></asp:Label>
+                                         <asp:DropDownList ID="ddlstatus" runat="server" CssClass="form-control"></asp:DropDownList>
+                                         <asp:DropDownList ID="ddlPhase" runat="server" CssClass="form-control"></asp:DropDownList>
+                                     </td>
+
+                                 </tr>
                                  <tr><td colspan="1" style="font-weight:bold;">Incoming Recv From Date : <asp:TextBox ID="dtInDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox></td>
                                      <td colspan="1" style="font-weight:bold;">Incoming Recv To Date : <asp:TextBox ID="dtInToDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox></td>
                                      <td colspan="1" style="font-weight:bold;">Document From Date :  <asp:TextBox ID="dtDocDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox></td>

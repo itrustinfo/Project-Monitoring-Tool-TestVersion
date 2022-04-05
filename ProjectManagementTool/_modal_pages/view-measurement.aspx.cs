@@ -29,6 +29,11 @@ namespace ProjectManagementTool._modal_pages
                     {
                         BindMeasurementBook(Request.QueryString["TaskUID"]);
                     }
+                    if (Session["IsContractor"].ToString() == "Y")
+                    {
+                        grdMeasurementbook.Columns[8].Visible = false;
+
+                    }
                 }
             }
         }

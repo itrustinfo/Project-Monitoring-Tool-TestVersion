@@ -46,6 +46,22 @@
         <script type="text/javascript">
           
 
+            function BindEvents() {
+                $(".showModalUploadPhotograph").click(function (e) {
+                    e.preventDefault();
+                    var url = $(this).attr("href");
+                    $("#ModAddUploadSiteImages iframe").attr("src", url);
+                    $("#ModAddUploadSiteImages").modal("show");
+                });
+
+                $(".showModalViewSitePhotograph").click(function (e) {
+                    e.preventDefault();
+                    var url = $(this).attr("href");
+                    $("#ModViewSitePhotograph iframe").attr("src", url);
+                    $("#ModViewSitePhotograph").modal("show");
+                });
+            }
+
             function printdiv(printpage) {
                 var frame = document.getElementById(printpage);
                  document.getElementById("btnPrint").style.display = "none";
@@ -103,8 +119,12 @@
                 document.getElementById("Hluserdocs").href = "/_content_pages/documents-contractor/?&type=Ontb&PrjUID=" + getvalue + "&UserUID=" + username + "&WkpgUID=" + getvaluew;
             }
             window.onload = GetDetails;
-       
-</script>
+
+            $(document).ready(function () {
+                BindEvents();
+                //$('#loader').fadeOut();
+            });
+        </script>
        
     </asp:Content>
     <asp:Content ID="content_body" ContentPlaceHolderID="default_master_body" runat="server">
@@ -147,12 +167,12 @@
           <div class="col-lg-6 col-xl-12 form-group">
                         <div class="card">
                             <div class="card-body" style="padding-bottom:0; margin-bottom:0;">
-                                <div class="row" align="center">
+                                <div class="row" >
                                     <%-- <div class="col-lg-1">
                             <h6 class="card-title text-muted text-uppercase font-weight-bold">Chart : </h6>
 
                         </div>--%>
-                        <div class="col-lg-12" >
+                        <div class="col-lg-8" align="left">
                             <asp:RadioButtonList ID="rdSelect" runat="server" class="card-title text-muted text-uppercase font-weight-bold text-center" AutoPostBack="true" OnSelectedIndexChanged="rdSelect_SelectedIndexChanged" RepeatDirection="Horizontal">
                        <asp:ListItem Selected="True" Value="0">&nbsp;Without Progress Chart&nbsp;</asp:ListItem>
                        <asp:ListItem Value="1">&nbsp;With Physical Progress Chart&nbsp;</asp:ListItem>
@@ -160,7 +180,12 @@
                                  <asp:ListItem Value="3">&nbsp;NJSEI Project MIS&nbsp;</asp:ListItem>
                     </asp:RadioButtonList>
 
-                        </div>                     
+                        </div>  
+                                    <div class="col-lg-4" align="right">
+                                        <a id="UploadSitePhotograph" runat="server" href="/_modal_pages/upload-sitephotograph.aspx" class="showModalUploadPhotograph">Add Photographs&nbsp;&nbsp;&nbsp;</a>
+                                        <a id="ViewSitePhotograph" runat="server"  href="/_modal_pages/view-sitephotographs.aspx" class="showModalViewSitePhotograph">View Photographs</a>
+
+                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -551,4 +576,42 @@ scrolldelay="100" style="height:275px; width:100%;">
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+        <%--Upload Site Photographs--%>
+    <div id="ModAddUploadSiteImages" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">Upload Site Photographs</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:450px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
+    </div>
+
+    <%--View Site Photographs--%>
+    <div id="ModViewSitePhotograph" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">View Site Photograph/s</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:450px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
+    </div>
+
     </asp:Content>
