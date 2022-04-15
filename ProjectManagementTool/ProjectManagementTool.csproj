@@ -103,6 +103,7 @@
     <Content Include="Global.asax" />
     <Content Include="PDFPrint.aspx" />
     <Content Include="TaskSchedule.ascx" />
+    <Content Include="test.aspx" />
     <Content Include="XMLFile1.xml" />
     <Content Include="_assets\images\block1.jpg" />
     <Content Include="_assets\images\block1_1.jpg" />
@@ -168,6 +169,7 @@
     <Content Include="_content_pages\report-physicalprogress\default.aspx" />
     <Content Include="_content_pages\report-projectphysicalprogress\default.aspx" />
     <Content Include="_content_pages\report-projectworkprogress\default.aspx" />
+    <Content Include="_content_pages\report-reconciliation-phase\default.aspx" />
     <Content Include="_content_pages\report-reconciliation-status\default.aspx" />
     <Content Include="_content_pages\report-reconciliation\default.aspx" />
     <Content Include="_content_pages\report-resourcedeployment\default.aspx" />
@@ -201,6 +203,7 @@
     <Content Include="_modal_pages\add-insurancepremium.aspx" />
     <Content Include="_modal_pages\add-invoicededuction.aspx" />
     <Content Include="_modal_pages\add-invoicemaster.aspx" />
+    <Content Include="_modal_pages\add-issues-users.aspx" />
     <Content Include="_modal_pages\add-jointinspection-to-rabill.aspx" />
     <Content Include="_modal_pages\add-jointinspection.aspx" />
     <Content Include="_modal_pages\add-location.aspx" />
@@ -382,6 +385,8 @@
     <Content Include="_modal_pages\View_UpdateIssueStatus.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\FileOperation.cs" />
+    <Compile Include="BLL\Phases.cs" />
     <Compile Include="CashFlowExcelUpdate.aspx.cs">
       <DependentUpon>CashFlowExcelUpdate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -428,6 +433,13 @@
     </Compile>
     <Compile Include="TaskSchedule.ascx.designer.cs">
       <DependentUpon>TaskSchedule.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="test.aspx.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test.aspx.designer.cs">
+      <DependentUpon>test.aspx</DependentUpon>
     </Compile>
     <Compile Include="_content_pages\boq-details\default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
@@ -702,6 +714,13 @@
     <Compile Include="_content_pages\report-projectworkprogress\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="_content_pages\report-reconciliation-phase\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_content_pages\report-reconciliation-phase\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="_content_pages\report-reconciliation-status\default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -931,6 +950,13 @@
     </Compile>
     <Compile Include="_modal_pages\add-invoicemaster.aspx.designer.cs">
       <DependentUpon>add-invoicemaster.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_modal_pages\add-issues-users.aspx.cs">
+      <DependentUpon>add-issues-users.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_modal_pages\add-issues-users.aspx.designer.cs">
+      <DependentUpon>add-issues-users.aspx</DependentUpon>
     </Compile>
     <Compile Include="_modal_pages\add-jointinspection-to-rabill.aspx.cs">
       <DependentUpon>add-jointinspection-to-rabill.aspx</DependentUpon>

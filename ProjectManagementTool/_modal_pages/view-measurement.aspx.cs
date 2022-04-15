@@ -92,33 +92,33 @@ namespace ProjectManagementTool._modal_pages
                 int cnt = getdata.Measurement_Delete(new Guid(UID), new Guid(Session["UserUID"].ToString()));
                 if (cnt > 0)
                 {
-                    if (WebConfigurationManager.AppSettings["Dbsync"] == "Yes")
-                    {
-                        string WebAPIURL = WebConfigurationManager.AppSettings["DbsyncWebApiURL"];
-                        WebAPIURL = WebAPIURL + "Activity/TaskMeasurementDelete";
+                    //if (WebConfigurationManager.AppSettings["Dbsync"] == "Yes")
+                    //{
+                    //    string WebAPIURL = WebConfigurationManager.AppSettings["DbsyncWebApiURL"];
+                    //    WebAPIURL = WebAPIURL + "Activity/TaskMeasurementDelete";
 
-                        string postData = "MeasurementUID=" + UID + "&UserUID=" + Session["UserUID"].ToString();
-                        string sReturnStatus = getdata.webPostMethod(postData, WebAPIURL);
-                        if (!sReturnStatus.StartsWith("Error:"))
-                        {
-                            dynamic DynamicData = JsonConvert.DeserializeObject(sReturnStatus);
-                            string RetStatus = DynamicData.Status;
-                            if (!RetStatus.StartsWith("Error:"))
-                            {
-                                int rCnt = getdata.ServerFlagsUpdate(UID, 2, "MeasurementBook", "Y", "UID");
-                            }
-                            else
-                            {
-                                string ErrorMessage = DynamicData.Message;
-                                WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, ErrorMessage, "Failure", "Measurement Book Delete", "MeasurementDelete", new Guid(UID));
-                                //Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error: DBSync =" + ErrorMessage + "');</script>");
-                            }
-                        }
-                        else
-                        {
-                            WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, sReturnStatus, "Failure", "Measurement Book Delete", "MeasurementDelete", new Guid(UID));
-                        }
-                    }
+                    //    string postData = "MeasurementUID=" + UID + "&UserUID=" + Session["UserUID"].ToString();
+                    //    string sReturnStatus = getdata.webPostMethod(postData, WebAPIURL);
+                    //    if (!sReturnStatus.StartsWith("Error:"))
+                    //    {
+                    //        dynamic DynamicData = JsonConvert.DeserializeObject(sReturnStatus);
+                    //        string RetStatus = DynamicData.Status;
+                    //        if (!RetStatus.StartsWith("Error:"))
+                    //        {
+                    //            int rCnt = getdata.ServerFlagsUpdate(UID, 2, "MeasurementBook", "Y", "UID");
+                    //        }
+                    //        else
+                    //        {
+                    //            string ErrorMessage = DynamicData.Message;
+                    //            WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, ErrorMessage, "Failure", "Measurement Book Delete", "MeasurementDelete", new Guid(UID));
+                    //            //Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error: DBSync =" + ErrorMessage + "');</script>");
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, sReturnStatus, "Failure", "Measurement Book Delete", "MeasurementDelete", new Guid(UID));
+                    //    }
+                    //}
                     BindMeasurementBook(Request.QueryString["TaskUID"]);
                 }
             }

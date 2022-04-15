@@ -19,6 +19,13 @@
                 $("#ModEditIssue").modal("show");
                  });
 
+                 $(".EditAssignUser").click(function (e) {
+                     e.preventDefault();
+                     var url = $(this).attr("href");
+                     $("#ModAssignUser iframe").attr("src", url);
+                     $("#ModAssignUser").modal("show");
+                 });
+
                  $(".UpdateIssueStatus").click(function(e) {
                      e.preventDefault();                 
                 var url = $(this).attr("href");
@@ -33,7 +40,7 @@
             $(document).ready(function () {
                 BindEvents();
                });
-        </script>
+         </script>
 
     <script type="text/javascript">
         function DeleteItem() {
@@ -217,6 +224,11 @@
                                                                 <a id="EditIssues" href="/_modal_pages/add-issues.aspx?Issue_Uid=<%#Eval("Issue_Uid")%>&PrjID=<%#Eval("ProjectUID")%>"  class="EditIssues"><span title="Edit" class="fas fa-edit"></span></a>
                                                             </ItemTemplate>
                                                         </asp:TemplateField>
+                                                        <asp:TemplateField>
+                                                            <ItemTemplate>
+                                                                <a id="EditAssignUser" href="/_modal_pages/add-issues-users.aspx?Issue_Uid=<%#Eval("Issue_Uid")%>&PrjID=<%#Eval("ProjectUID")%>"  class="EditAssignUser"><span title="Assign User" class="fas fa-users"></span></a>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
                                                          <asp:TemplateField>
                                                                     <ItemTemplate>
                                                                         <asp:LinkButton ID="lnkactualdelete" runat="server" OnClientClick="return DeleteItem()" CausesValidation="false" CommandArgument='<%#Eval("Issue_Uid")%>' CommandName="delete"><span title="Delete" class="fas fa-trash"></span></asp:LinkButton>
@@ -336,6 +348,22 @@
 		    </div>
 	    </div>
     </div>
+    <div id="ModAssignUser" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">Assign Users</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height: 460px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
+    </div>
+
+    
 
     <%--Add Issue status resource modal--%>
     <div id="ModIssueStatus" class="modal it-modal fade">

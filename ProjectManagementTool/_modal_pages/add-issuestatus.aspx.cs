@@ -81,34 +81,77 @@ namespace ProjectManagementTool._modal_pages
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             string DecryptPagePath = "";
-            Guid IssueRemarksUID = Guid.NewGuid();
+            //Guid IssueRemarksUID = Guid.NewGuid();
+            //if (Request.QueryString["IssueRemarksUID"] != null)
+            //{
+            //    DecryptPagePath = ViewState["Document"].ToString();
+            //    IssueRemarksUID = new Guid(Request.QueryString["IssueRemarksUID"]);
+            //}
+            //if (FileUploadDoc.HasFile)
+            //{
+            //    string FileDirectory = "~/Documents/Issues/";
+            //    if (!Directory.Exists(Server.MapPath(FileDirectory)))
+            //    {
+            //        Directory.CreateDirectory(Server.MapPath(FileDirectory));
+            //    }
+
+            //    string sFileName = Path.GetFileNameWithoutExtension(FileUploadDoc.FileName);
+            //    string Extn = Path.GetExtension(FileUploadDoc.FileName);
+            //    FileUploadDoc.SaveAs(Server.MapPath(FileDirectory + "/" + sFileName + Extn));
+            //   // FileUploadDoc.SaveAs(Server.MapPath("~/Documents/Encrypted/" + sDocumentUID + "_" + txtDocName.Text + "_1"  + "_enp" + InputFile));
+            //    string savedPath = FileDirectory + "/" + sFileName + Extn;
+            //    DecryptPagePath = FileDirectory + "/" + sFileName + "_DE" + Extn;
+            //    getdata.EncryptFile(Server.MapPath(savedPath), Server.MapPath(DecryptPagePath));
+            //}
+
+            //int cnt = getdata.Issues_Status_Remarks_Insert(IssueRemarksUID, new Guid(Request.QueryString["Issue_Uid"]), DDLStatus.SelectedValue, txtremarks.Text, DecryptPagePath);
+            //if (cnt > 0)
+            //{
+            //    Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");
+            //}
+
+            var issue_uid = new Guid(Request.QueryString["Issue_Uid"]);
+
+            var issue_remarks_uid = Guid.NewGuid();
+                       
             if (Request.QueryString["IssueRemarksUID"] != null)
             {
-                DecryptPagePath = ViewState["Document"].ToString();
-                IssueRemarksUID = new Guid(Request.QueryString["IssueRemarksUID"]);
+               // DecryptPagePath = ViewState["Document"].ToString();
+                issue_remarks_uid = new Guid(Request.QueryString["IssueRemarksUID"]);
             }
-            if (FileUploadDoc.HasFile)
+
+            int cnt = getdata.Issues_Status_Remarks_Insert(issue_remarks_uid, issue_uid, DDLStatus.SelectedValue, txtremarks.Text, DecryptPagePath);
+
+            if (FileUploadDoc.HasFiles)
             {
-                string FileDirectory = "~/Documents/Issues/";
+                string FileDirectory = "/Documents/Issues/";
+
+
                 if (!Directory.Exists(Server.MapPath(FileDirectory)))
                 {
                     Directory.CreateDirectory(Server.MapPath(FileDirectory));
                 }
 
-                string sFileName = Path.GetFileNameWithoutExtension(FileUploadDoc.FileName);
-                string Extn = Path.GetExtension(FileUploadDoc.FileName);
-                FileUploadDoc.SaveAs(Server.MapPath(FileDirectory + "/" + sFileName + Extn));
-                //FileUploadDoc.SaveAs(Server.MapPath("~/Documents/Encrypted/" + sDocumentUID + "_" + txtDocName.Text + "_1"  + "_enp" + InputFile));
-                string savedPath = FileDirectory + "/" + sFileName + Extn;
-                DecryptPagePath = FileDirectory + "/" + sFileName + "_DE" + Extn;
-                getdata.EncryptFile(Server.MapPath(savedPath), Server.MapPath(DecryptPagePath));
+                foreach (HttpPostedFile postedFile in FileUploadDoc.PostedFiles)
+                {
+                    string fileName = Path.GetFileName(postedFile.FileName);
+                    postedFile.SaveAs(Server.MapPath(FileDirectory) + fileName);
+
+                    string sFileName = Path.GetFileNameWithoutExtension(postedFile.FileName);
+                    string Extn = Path.GetExtension(postedFile.FileName);
+
+                    string savedPath = FileDirectory + "/" + fileName;
+
+                    DecryptPagePath = FileDirectory + "/" + sFileName + "_DE" + Extn;
+
+                    getdata.EncryptFile(Server.MapPath(savedPath), Server.MapPath(DecryptPagePath));
+
+                    getdata.InsertUploadedDocument(fileName, FileDirectory, issue_remarks_uid.ToString());
+                }
             }
-           
-                int cnt = getdata.Issues_Status_Remarks_Insert(IssueRemarksUID, new Guid(Request.QueryString["Issue_Uid"]), DDLStatus.SelectedValue, txtremarks.Text, DecryptPagePath);
-            if (cnt > 0)
-            {
-                Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");
-            }
+
+
+            Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");
         }
     }
 }

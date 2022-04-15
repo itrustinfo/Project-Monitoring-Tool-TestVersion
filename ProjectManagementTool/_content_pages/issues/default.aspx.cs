@@ -46,9 +46,11 @@ namespace ProjectManagementTool._content_pages.issues
         {
             AddIssues.Visible = false;
             ViewState["isEdit"] = "false";
+            ViewState["isAssignUser"] = "false";
             ViewState["isDelete"] = "false";
             GrdIssues.Columns[10].Visible = false;
             GrdIssues.Columns[11].Visible = false;
+            GrdIssues.Columns[12].Visible = false;
             DataSet dscheck = new DataSet();
             dscheck = getdt.GetUsertypeFunctionality_Mapping(Session["TypeOfUser"].ToString());
             if (dscheck.Tables[0].Rows.Count > 0)
@@ -65,12 +67,17 @@ namespace ProjectManagementTool._content_pages.issues
                         GrdIssues.Columns[10].Visible = true;
                         ViewState["isEdit"] = "true";
                     }
-
-                    if (dr["Code"].ToString() == "ID")
+                    if (dr["Code"].ToString() == "IAU")
                     {
                         GrdIssues.Columns[11].Visible = true;
+                        ViewState["isAssignUser"] = "true";
+                    }
+                    if (dr["Code"].ToString() == "ID")
+                    {
+                        GrdIssues.Columns[12].Visible = true;
                         ViewState["isDelete"] = "true";
                     }
+                    
                 }
             }
         }
@@ -366,9 +373,13 @@ namespace ProjectManagementTool._content_pages.issues
                 {
                     e.Row.Cells[10].Visible = false;
                 }
-                if (ViewState["isDelete"].ToString() == "false")
+                if (ViewState["isAssignUser"].ToString() == "false")
                 {
                     e.Row.Cells[11].Visible = false;
+                }
+                if (ViewState["isDelete"].ToString() == "false")
+                {
+                    e.Row.Cells[12].Visible = false;
                 }
             }
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -396,16 +407,20 @@ namespace ProjectManagementTool._content_pages.issues
                 {
                     e.Row.Cells[10].Visible = false;
                 }
-                if (ViewState["isDelete"].ToString() == "false")
+                if (ViewState["isAssignUser"].ToString() == "false")
                 {
                     e.Row.Cells[11].Visible = false;
+                }
+                if (ViewState["isDelete"].ToString() == "false")
+                {
+                    e.Row.Cells[12].Visible = false;
                 }
                 //for db sync check
                 if (WebConfigurationManager.AppSettings["Dbsync"] == "Yes")
                 {
-                    if (!string.IsNullOrEmpty(e.Row.Cells[12].Text))
+                    if (!string.IsNullOrEmpty(e.Row.Cells[13].Text))
                     {
-                        if (getdt.checkIssuesSynced(new Guid(e.Row.Cells[12].Text)) > 0)
+                        if (getdt.checkIssuesSynced(new Guid(e.Row.Cells[13].Text)) > 0)
                         {
                             e.Row.BackColor = System.Drawing.Color.LightYellow;
                         }

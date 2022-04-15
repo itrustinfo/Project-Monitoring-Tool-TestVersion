@@ -275,6 +275,12 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                            <asp:BoundField DataField="ActualDocument_CurrentStatus" HeaderText="Current Status" SortExpression="ActualDocument_CurrentStatus">
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
+                                           <asp:BoundField DataField="ProjectRef_Number" HeaderText="ONTB Reference #" SortExpression="ProjectRef_Number">
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
+                                           <asp:BoundField DataField="Ref_Number" HeaderText="Originator Reference #" SortExpression="Ref_Number">
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
                                              <asp:BoundField DataField="IncomingRec_Date" HeaderText="Incoming Recv. Date" SortExpression="ActualDocument_CreatedDate" DataFormatString="{0:dd/MM/yyyy}" >
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
@@ -309,6 +315,11 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                              <asp:TemplateField HeaderText="Remarks">
                                                  <ItemTemplate>
                                                  <asp:TextBox ID="txtremarks" TextMode="MultiLine" runat="server"></asp:TextBox>
+                                                     </ItemTemplate>
+                                                        </asp:TemplateField>
+                                             <asp:TemplateField HeaderText="ONTB Ref. No">
+                                                 <ItemTemplate>
+                                                 <asp:TextBox ID="txtONTBRefNo" TextMode="SingleLine" runat="server" MaxLength="75" AutoCompleteType="Disabled"></asp:TextBox>
                                                      </ItemTemplate>
                                                         </asp:TemplateField>
                                            <%--   <asp:TemplateField>

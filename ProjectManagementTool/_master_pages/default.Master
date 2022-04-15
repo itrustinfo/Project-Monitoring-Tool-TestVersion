@@ -216,9 +216,9 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportProjectStatusofWorkProgress" runat="server" NavigateUrl="/_content_pages/project-progress" ToolTip="Project Status of Work Progress">Project Status of Work Progress</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportResourceDeployment" runat="server" NavigateUrl="/_content_pages/report-resourcedeployment" ToolTip="Status of Resource Deployment">Status of Resource Deployment</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportIssues" runat="server" NavigateUrl="/_content_pages/report-issues" ToolTip="Issues">Issues</asp:HyperLink>
-                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliation" runat="server" NavigateUrl="/_content_pages/report-reconciliation" ToolTip="Reconciliation">Reconciliation</asp:HyperLink>
-                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliationStatus" runat="server" NavigateUrl="/_content_pages/report-reconciliation-status" ToolTip="Reconciliation">Reconciliation Approved or Rejected</asp:HyperLink>
-                                    
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliation" runat="server" NavigateUrl="/_content_pages/report-reconciliation" ToolTip="Reconciliation">Reconciliation Documents</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliationStatus" runat="server" NavigateUrl="/_content_pages/report-reconciliation-status" ToolTip="Reconciliation">Reconciliation Approved or Rejected Documents</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliationPhase" runat="server" NavigateUrl="/_content_pages/report-reconciliation-phase" ToolTip="Reconciliation">Status of Documents for Contractor</asp:HyperLink>
                                     
                                     
                                 </div>

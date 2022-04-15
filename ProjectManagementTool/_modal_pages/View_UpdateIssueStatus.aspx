@@ -65,18 +65,21 @@
                             <asp:BoundField DataField="Issue_Document" ItemStyle-CssClass="hiddencol"  HeaderStyle-CssClass="hiddencol" HeaderText="LinkToReviewFile" >
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>
+                             <asp:BoundField DataField="IssueRemarksUID" ItemStyle-CssClass="hiddencol"  HeaderStyle-CssClass="hiddencol" HeaderText="LinkToReviewFile" >
+                            <HeaderStyle HorizontalAlign="Left" />
+                            </asp:BoundField>
                             <asp:TemplateField HeaderText="Status Document">
                                 <ItemTemplate>
-                                      <asp:LinkButton ID="lnkdown" runat="server" CommandArgument='<%#Eval("IssueRemarksUID")%>' CausesValidation="false" CommandName="download">Download</asp:LinkButton>
+                                      <%--<asp:LinkButton ID="lnkdown" runat="server" CommandArgument='<%#Eval("IssueRemarksUID")%>' CausesValidation="false" CommandName="download">Download</asp:LinkButton>--%>
                                </ItemTemplate>
                             </asp:TemplateField>
                              <asp:TemplateField>
-                                                        <ItemTemplate>
-                                                            <a id="Edit" href="/_modal_pages/add-issuestatus.aspx?IssueRemarksUID=<%#Eval("IssueRemarksUID")%>&Issue_Uid=<%#Eval("Issue_Uid")%>" class="EditStatusModal"><span title="Edit" class="fas fa-edit"></span></a> 
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
+                                 <ItemTemplate>
+                                       <a id="Edit" href="/_modal_pages/add-issuestatus.aspx?IssueRemarksUID=<%#Eval("IssueRemarksUID")%>&Issue_Uid=<%#Eval("Issue_Uid")%>" class="EditStatusModal"><span title="Edit" class="fas fa-edit"></span></a> 
+                                 </ItemTemplate>
+                             </asp:TemplateField>
                              <asp:TemplateField>
-                                    <ItemTemplate>
+                                  <ItemTemplate>
                                         <asp:LinkButton ID="lnkdelete" runat="server" CausesValidation="false" OnClientClick="return DeleteItem()" CommandArgument='<%#Eval("IssueRemarksUID")%>' CommandName="delete"><span title="Delete" class="fas fa-trash"></span></asp:LinkButton>
                                   </ItemTemplate>
                              </asp:TemplateField>          

@@ -159,7 +159,8 @@ namespace ProjectManagementTool._modal_pages
                     }
                 }
                 string sDate1 = "", sDate2 = "", sDate3 = "", sDate4 = "";
-                DateTime CDate1 = DateTime.MinValue, CDate2 = DateTime.MinValue, CDate3 = DateTime.MinValue, CDate4 = DateTime.MinValue;
+                DateTime CDReportingDate = DateTime.MinValue;
+                DateTime? CDAssignedDate = null, CDApprovingDate = null, CDProposeClosureDate = null;
 
                 //
                 if (dtReportingDate.Text != "")
@@ -167,7 +168,7 @@ namespace ProjectManagementTool._modal_pages
                     sDate1 = dtReportingDate.Text;
                     //sDate1 = sDate1.Split('/')[1] + "/" + sDate1.Split('/')[0] + "/" + sDate1.Split('/')[2];
                     sDate1 = getdata.ConvertDateFormat(sDate1);
-                    CDate1 = Convert.ToDateTime(sDate1);
+                    CDReportingDate = Convert.ToDateTime(sDate1);
                 }
 
                 //
@@ -176,7 +177,7 @@ namespace ProjectManagementTool._modal_pages
                     sDate2 = dtAssignedDate.Text;
                     //sDate2 = sDate2.Split('/')[1] + "/" + sDate2.Split('/')[0] + "/" + sDate2.Split('/')[2];
                     sDate2 = getdata.ConvertDateFormat(sDate2);
-                    CDate2 = Convert.ToDateTime(sDate2);
+                    CDAssignedDate = Convert.ToDateTime(sDate2);
                 }
 
                 //
@@ -185,7 +186,7 @@ namespace ProjectManagementTool._modal_pages
                     sDate3 = dtApprovingDate.Text;
                     //sDate3 = sDate3.Split('/')[1] + "/" + sDate3.Split('/')[0] + "/" + sDate3.Split('/')[2];
                     sDate3 = getdata.ConvertDateFormat(sDate3);
-                    CDate3 = Convert.ToDateTime(sDate3);
+                    CDApprovingDate = Convert.ToDateTime(sDate3);
                 }
 
                 //
@@ -194,7 +195,7 @@ namespace ProjectManagementTool._modal_pages
                     sDate4 = dtProposedCloserDate.Text;
                     //sDate4 = sDate4.Split('/')[1] + "/" + sDate4.Split('/')[0] + "/" + sDate4.Split('/')[2];
                     sDate4 = getdata.ConvertDateFormat(sDate4);
-                    CDate4 = Convert.ToDateTime(sDate4);
+                    CDProposeClosureDate = Convert.ToDateTime(sDate4);
                 }
 
                 
@@ -216,7 +217,7 @@ namespace ProjectManagementTool._modal_pages
                     getdata.EncryptFile(Server.MapPath(savedPath), Server.MapPath(DecryptPagePath));
 
                 }
-                int Cnt = getdata.InsertorUpdateIssues(Issue_Uid, new Guid(TaskUID), txtIssue_Description.Text, CDate1, new Guid(ddlReportingUser.SelectedValue), new Guid(ddlAssignedUser.SelectedValue), CDate2, CDate4, new Guid(ddlApprovingUser.SelectedValue), CDate3, ddlStatus.SelectedItem.Text, txtRemarks.Text, new Guid(WorkPackageID), new Guid(ProjectUID), DecryptPagePath);
+                int Cnt = getdata.InsertorUpdateIssues(Issue_Uid, new Guid(TaskUID), txtIssue_Description.Text, CDReportingDate, new Guid(ddlReportingUser.SelectedValue), new Guid(ddlAssignedUser.SelectedValue), CDAssignedDate, CDProposeClosureDate, new Guid(ddlApprovingUser.SelectedValue), CDApprovingDate, ddlStatus.SelectedItem.Text, txtRemarks.Text, new Guid(WorkPackageID), new Guid(ProjectUID), DecryptPagePath);
                 if (Cnt > 0)
                 {
                     //if (Request.QueryString["Issue_Uid"] == null)

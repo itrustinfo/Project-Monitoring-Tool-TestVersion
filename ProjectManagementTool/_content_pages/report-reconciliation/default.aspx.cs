@@ -106,7 +106,14 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
                 else
                     e.Row.Cells[4].Text = "ONTB Reference #";
             }
-        }
+            else if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if(e.Row.Cells[3].Text.ToLower() == "reconciliation")
+                {
+                    e.Row.Cells[3].Text = "Pending for reconciliation";
+                }
+            }
+     }
 
         protected void btnExcel_Click(object sender, EventArgs e)
         {

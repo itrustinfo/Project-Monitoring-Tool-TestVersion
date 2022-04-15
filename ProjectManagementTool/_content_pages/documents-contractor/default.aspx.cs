@@ -28,12 +28,27 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                 {
                     if (Request.QueryString["UserUID"] != null)
                     {
-                        GrdDocuments.DataSource = getdt.GetNextUserDocuments(new Guid(Request.QueryString["PrjUID"]), new Guid(Request.QueryString["WkpgUID"]));
-                        GrdDocuments.DataBind();
+                        DataSet ds = getdt.GetNextUserDocuments(new Guid(Request.QueryString["PrjUID"]), new Guid(Request.QueryString["WkpgUID"]));
+                        if (ds.Tables[0].Rows.Count > 0)
+                        {
+                           
+                            GrdDocuments.DataSource = getdt.GetNextUserDocuments(new Guid(Request.QueryString["PrjUID"]), new Guid(Request.QueryString["WkpgUID"])).Tables[0].AsEnumerable()
+                     .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date"))
+                     .CopyToDataTable();
+                            GrdDocuments.DataBind();
+                        }
+                        else
+                        {
+                            GrdDocuments.DataSource = getdt.GetNextUserDocuments(new Guid(Request.QueryString["PrjUID"]), new Guid(Request.QueryString["WkpgUID"])).Tables[0].AsEnumerable()
+                     .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date"))
+                     .CopyToDataTable();
+                            GrdDocuments.DataBind();
+                        }
                         LblDocumentHeading.Text = "Document List";
                         lblTotalcount.Visible = false;
-                        GrdDocuments.Columns[10].Visible = false;
-                        GrdDocuments.Columns[11].Visible = false;
+                        GrdDocuments.Columns[12].Visible = false;
+                        GrdDocuments.Columns[13].Visible = false;
+                        GrdDocuments.Columns[14].Visible = false;
                         //  lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                         //if (GrdDocuments.Rows.Count > 15)
                         //{
@@ -44,11 +59,23 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                     {
                         if (Request.QueryString["type"].ToString() == "Contractor")
                         {
-                            GrdDocuments.DataSource = getdt.GetDashboardContractotDocsSubmitted_Details(new Guid(Request.QueryString["PrjUID"]));
-                            GrdDocuments.DataBind();
+                            DataSet ds = getdt.GetDashboardContractotDocsSubmitted_Details(new Guid(Request.QueryString["PrjUID"]));
+                            if (ds.Tables[0].Rows.Count > 0)
+                            {
+                                GrdDocuments.DataSource = getdt.GetDashboardContractotDocsSubmitted_Details(new Guid(Request.QueryString["PrjUID"])).Tables[0].AsEnumerable()
+                 .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date"))
+                 .CopyToDataTable();
+                                GrdDocuments.DataBind();
+                            }
+                            else
+                            {
+                                GrdDocuments.DataSource = ds;
+                                GrdDocuments.DataBind();
+                            }
                             LblDocumentHeading.Text = "Document List for Contractor -> ONTB";
-                            GrdDocuments.Columns[10].Visible = false;
-                            GrdDocuments.Columns[11].Visible = false;
+                            GrdDocuments.Columns[12].Visible = false;
+                            GrdDocuments.Columns[13].Visible = false;
+                            GrdDocuments.Columns[14].Visible = false;
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                             if (GrdDocuments.Rows.Count > 15)
                             {
@@ -57,20 +84,33 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                         }
                         else if (Request.QueryString["type"].ToString() == "Recon")
                         {
-                            GrdDocuments.DataSource = getdt.GetDashboardReconciliationDocs_Details(new Guid(Request.QueryString["PrjUID"]));
-                            GrdDocuments.DataBind();
+                            DataSet ds = getdt.GetDashboardReconciliationDocs_Details(new Guid(Request.QueryString["PrjUID"]));
+                            if (ds.Tables[0].Rows.Count > 0)
+                            {
+                                GrdDocuments.DataSource = ds.Tables[0].AsEnumerable()
+                     .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date"))
+                     .CopyToDataTable();
+                                GrdDocuments.DataBind();
+                            }
+                            else
+                            {
+                                GrdDocuments.DataSource = ds;
+                                GrdDocuments.DataBind();
+                            }
                             LblDocumentHeading.Text = "Document List for Reconciliation Docs";
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                             if (Session["IsContractor"].ToString() == "Y")
                             {
-                                GrdDocuments.Columns[10].Visible = false;
-                                GrdDocuments.Columns[11].Visible = false;
-                               
+                                GrdDocuments.Columns[12].Visible = false;
+                                GrdDocuments.Columns[13].Visible = false;
+                                GrdDocuments.Columns[14].Visible = false;
+
                             }
                             else
                             {
-                                GrdDocuments.Columns[10].Visible = true;
-                                GrdDocuments.Columns[11].Visible = true;
+                                GrdDocuments.Columns[12].Visible = true;
+                                GrdDocuments.Columns[13].Visible = true;
+                                GrdDocuments.Columns[14].Visible = true;
                                 btnSubmit.Visible = true;
                             }
                             if (GrdDocuments.Rows.Count > 15)
@@ -80,12 +120,24 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                         }
                         else
                         {
-                            GrdDocuments.DataSource = getdt.GetDashboardONTBtoContractorDocs_Details(new Guid(Request.QueryString["PrjUID"]));
-                            GrdDocuments.DataBind();
+                            DataSet ds = getdt.GetDashboardONTBtoContractorDocs_Details(new Guid(Request.QueryString["PrjUID"]));
+                            if (ds.Tables[0].Rows.Count > 0)
+                            {
+                                GrdDocuments.DataSource = getdt.GetDashboardONTBtoContractorDocs_Details(new Guid(Request.QueryString["PrjUID"])).Tables[0].AsEnumerable()
+                 .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date"))
+                 .CopyToDataTable();
+                                GrdDocuments.DataBind();
+                            }
+                            else
+                            {
+                                GrdDocuments.DataSource = ds;
+                                GrdDocuments.DataBind();
+                            }
                             LblDocumentHeading.Text = "Document List for ONTB -> Contractor";
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
-                            GrdDocuments.Columns[10].Visible = false;
-                            GrdDocuments.Columns[11].Visible = false;
+                            GrdDocuments.Columns[12].Visible = false;
+                            GrdDocuments.Columns[13].Visible = false;
+                            GrdDocuments.Columns[14].Visible = false;
                             if (GrdDocuments.Rows.Count > 15)
                             {
                                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "Key", "<script>MakeStaticHeader('" + GrdDocuments.ClientID + "', 700, 1300 , 45 ,true); </script>", false);
@@ -405,10 +457,29 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                     if(rbSelect.SelectedValue != "")
                     { 
                     TextBox txtremarks = (TextBox)row.FindControl("txtremarks");
-                    string status = rbSelect.SelectedValue;
-                    string remarks = txtremarks.Text;
+                    TextBox txtrefNo = (TextBox)row.FindControl("txtONTBRefNo");
+                        string status = rbSelect.SelectedValue;
+                        string remarks = txtremarks.Text;
                         string EmailHeading = string.Empty;
-                    string DocumentUID = row.Cells[0].Text;
+                        string DocumentUID = row.Cells[0].Text;
+                        if (status == "Accept")
+                        {
+                            if (String.IsNullOrEmpty(txtrefNo.Text.Trim()))
+                            {
+                                Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Please Enter Reference No !');</script>");
+                                return;
+                            }
+                        }
+
+                        if (!String.IsNullOrEmpty(txtrefNo.Text.Trim()))
+                        {
+                            if (getdt.checkPrjRefNoExists(new Guid(Request.QueryString["PrjUID"]), txtrefNo.Text.Trim()))
+                            {
+                                Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('ONTB Reference No already Exists.Please choose another Ref No. !');</script>");
+                                return;
+                            }
+                        }
+                       
                    string documentname = getdt.GetActualDocumentName_by_ActualDocumentUID(new Guid(DocumentUID));
                         //
                         if (status =="Accept")
@@ -456,6 +527,14 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             DataSet ds = new DataSet();
                             //Update the targte dates 
                             getdt.StoreFreshTargetDatesforStatusChange(new Guid(DocumentUID), status);
+
+                            //Update refno for ONTB ......
+                            getdt.UpdateActualDocsRefNo(new Guid(DocumentUID), txtrefNo.Text, "", 1);
+                            string RefUID = getdt.GetTopRefNoHistory(new Guid(DocumentUID));
+                            if (!string.IsNullOrEmpty(RefUID))
+                            {
+                                getdt.UpdateRefNoHistory(new Guid(RefUID), txtrefNo.Text, "", 1);
+                            }
 
                             ds = getdt.GetUsers_under_ProjectUID(new Guid(Request.QueryString["PrjUID"]));
 

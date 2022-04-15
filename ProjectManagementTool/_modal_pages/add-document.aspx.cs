@@ -63,13 +63,21 @@ namespace ProjectManager._modal_pages
                     if (Request.QueryString["fID"] != null)
                     {
                         string FlowName = getdata.GetFlowName_by_SubmittalID(new Guid(Request.QueryString["dUID"]));
+                        string FlowType = getdata.GetFlowTypeBySubmittalUID(new Guid(Request.QueryString["dUID"]));
                         if (FlowName == "Flow 3" || FlowName.Contains("Correspondence"))
                         {
                             spfile.Visible = false;
                         }
 
-
-                            DataSet dsFlow = getdata.GetDocumentFlows_by_UID(new Guid(Request.QueryString["fID"]));
+                        if (WebConfigurationManager.AppSettings["Domain"] == "ONTB" || WebConfigurationManager.AppSettings["Domain"] == "LNT")
+                        {
+                            if(FlowType == "STP")
+                            {
+                                txtprefnumber.Enabled = false;
+                                txtprefnumber.Text = "";
+                            }
+                        }
+                        DataSet dsFlow = getdata.GetDocumentFlows_by_UID(new Guid(Request.QueryString["fID"]));
                         if (dsFlow.Tables[0].Rows.Count > 0)
                         {
                             if (dsFlow.Tables[0].Rows[0]["Steps_Count"].ToString() == "-1")
@@ -940,7 +948,8 @@ namespace ProjectManager._modal_pages
                                                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "Error", "<script language='javascript'>alert('Error:11,There is some problem while inserting document. Please contact administrator');</script>");
                                                 }
                                             }
-
+                                            // store the origintaor reference no in separate table...added on 05/04/2022
+                                            getdata.InsertorUpdateRefNoHistroy(Guid.NewGuid(), ActualDocumentUID, txtRefNumber.Text, "");
                                         }
 
                                         try
@@ -1651,7 +1660,8 @@ namespace ProjectManager._modal_pages
                                                         }
                                                     }
 
-
+                                                    // store the origintaor reference no in separate table...added on 05/04/2022
+                                                    getdata.InsertorUpdateRefNoHistroy(Guid.NewGuid(), ActualDocumentUID, txtRefNumber.Text, "");
                                                 }
 
                                                 try

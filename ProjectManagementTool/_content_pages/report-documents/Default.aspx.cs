@@ -14,6 +14,7 @@ using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using System.Text;
 using System.Web.Configuration;
+using ProjectManagementTool.DAL;
 
 namespace ProjectManager._content_pages.reports
 {
@@ -179,6 +180,11 @@ namespace ProjectManager._content_pages.reports
                     GrdDocumentMaster.DataSource = null;
                     GrdDocumentMaster.DataBind();
                 }
+                //
+                if (DDlProject.SelectedItem.ToString() == "CP-25" || DDlProject.SelectedItem.ToString() == "CP-26" || DDlProject.SelectedItem.ToString() == "CP-27" || DDlProject.SelectedItem.ToString() == "Test Project 1")
+                {
+                    DocumentSummary.Visible = false;
+                }
 
             }
             else
@@ -257,7 +263,10 @@ namespace ProjectManager._content_pages.reports
         }
         protected void GrdActualDocuments_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[5].Text = Constants.ProjectReferenceName;
+            }
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 if (e.Row.Cells[2].Text != "&nbsp;")
@@ -1875,6 +1884,18 @@ namespace ProjectManager._content_pages.reports
                     btnbyOriginatorPrint.Visible = false;
                     btnbyOriginatorExportExcel.Visible = false;
                 }
+                if (DDlProject.SelectedItem.ToString() == "CP-25" || DDlProject.SelectedItem.ToString() == "CP-26" || DDlProject.SelectedItem.ToString() == "CP-27" || DDlProject.SelectedItem.ToString() == "Test Project 1")
+                {
+                    DocumentSummary.Visible = false;
+                }
+            }
+        }
+
+        protected void GrdOriginatorDocuments_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[5].Text = Constants.ProjectReferenceName;
             }
         }
 

@@ -346,15 +346,19 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                  <tr style="font-weight:bold;">
                                      <td>Submittal Name : <asp:TextBox runat="server" ID="txtSubmittal" CssClass="form-control"></asp:TextBox></td>
                                      <td>Document Name : <asp:TextBox runat="server" ID="txtDocName" CssClass="form-control"></asp:TextBox></td>
+                                     <td><asp:Label runat="server" ID="lblProjRefNO" Text="ONTB Reference # :"/><asp:TextBox runat="server" ID="txtOntbRef" CssClass="form-control"></asp:TextBox></td>
+                                     <td>Originator Reference # : <asp:TextBox runat="server" ID="txtOriginatorRef" CssClass="form-control"></asp:TextBox></td>
                                      <td>Document Type<asp:DropDownList ID="ddlType" runat="server" CssClass="form-control"></asp:DropDownList>
                                      </td>
+                                     
+
+                                 </tr>
+                                 <tr>
                                      <td><asp:Label ID ="status" runat="server" Text="Status"></asp:Label>
                                          <asp:DropDownList ID="ddlstatus" runat="server" CssClass="form-control"></asp:DropDownList>
                                          <asp:DropDownList ID="ddlPhase" runat="server" CssClass="form-control"></asp:DropDownList>
                                      </td>
-
-                                 </tr>
-                                 <tr><td colspan="1" style="font-weight:bold;">Incoming Recv From Date : <asp:TextBox ID="dtInDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox></td>
+                                     <td colspan="1" style="font-weight:bold;">Incoming Recv From Date : <asp:TextBox ID="dtInDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox></td>
                                      <td colspan="1" style="font-weight:bold;">Incoming Recv To Date : <asp:TextBox ID="dtInToDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox></td>
                                      <td colspan="1" style="font-weight:bold;">Document From Date :  <asp:TextBox ID="dtDocDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox></td>
                                      <td colspan="1" style="font-weight:bold;">Document To Date :  <asp:TextBox ID="dtDocToDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox></td>
@@ -363,7 +367,7 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                  <tr>
                                      <td colspan="1" style="text-align:left;">No. of Records in Each Page
                                      <asp:TextBox ID="txtPageSize" runat="server" Width="30px">10</asp:TextBox></td>
-                                     <td colspan="2" style="text-align:center">
+                                     <td colspan="3" style="text-align:center">
                                      <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-primary" OnClick="btnSubmit_Click1"/>&nbsp;&nbsp;&nbsp;
                                      <asp:Button ID="btnClearSearch" runat="server" Text="Clear Search" CssClass="btn btn-primary" OnClick="btnClearSearch_Click"/></td>
                                      <td colspan="1" style="text-align:right">Total no.of documents found : <asp:Label ID="lbldocNos" runat="server" Font-Bold="True" ForeColor="#009900" Text="0"></asp:Label>
@@ -410,6 +414,12 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                            <asp:BoundField DataField="ActualDocument_CurrentStatus" DataFormatString="{0:dd MMM yyyy}" HeaderText="Current Status" SortExpression="ActualDocument_CurrentStatus">
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
+                                           <asp:BoundField DataField="ProjectRef_Number" HeaderText="ONTB Reference #" SortExpression="ProjectRef_Number">
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
+                                           <asp:BoundField DataField="Ref_Number" HeaderText="Originator Reference #" SortExpression="Ref_Number">
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
                                              <asp:BoundField DataField="IncomingRec_Date" HeaderText="Incoming Recv. Date" SortExpression="ActualDocument_CreatedDate" DataFormatString="{0:dd/MM/yyyy}" >

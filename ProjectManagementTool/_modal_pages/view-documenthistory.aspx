@@ -127,7 +127,7 @@
                             <asp:BoundField DataField="ActivityDate" HeaderText="Actual Date" DataFormatString="{0:dd MMM yyyy}">
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="Current_Status" HeaderText="Status" >
+                            <asp:BoundField DataField="Current_Status" HeaderText="Status" HtmlEncode="false" ItemStyle-Width="200px" HeaderStyle-Width="200px">
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>
                             <asp:BoundField DataField="Status_Comments" HeaderText="Comments">

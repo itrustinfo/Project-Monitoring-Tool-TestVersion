@@ -5913,47 +5913,47 @@ namespace ProjectManager.DAL
             }
         }
         //added on 12/04/2019
-        public int InsertorUpdateIssues(Guid Issue_Uid, Guid TaskUID, string Issue_Description, DateTime Issue_Date, Guid Issued_User, Guid Assigned_User, DateTime Assigned_Date, DateTime Issue_ProposedCloser_Date, 
-            Guid Approving_User, DateTime Actual_Closer_Date, string Issue_Status, string Issue_Remarks, Guid WorkPackagesUID, Guid ProjectUID,string Issue_Document)
-        {
-            int sresult = 0;
-            try
-            {
-                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
-                {
+        //public int InsertorUpdateIssues(Guid Issue_Uid, Guid TaskUID, string Issue_Description, DateTime Issue_Date, Guid Issued_User, Guid Assigned_User, DateTime Assigned_Date, DateTime Issue_ProposedCloser_Date, 
+        //    Guid Approving_User, DateTime Actual_Closer_Date, string Issue_Status, string Issue_Remarks, Guid WorkPackagesUID, Guid ProjectUID,string Issue_Document)
+        //{
+        //    int sresult = 0;
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+        //        {
 
-                    using (SqlCommand cmd = new SqlCommand("ups_IsuuesInsertUpdate"))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = con;
-                        cmd.Parameters.AddWithValue("@Issue_Uid", Issue_Uid);
-                        cmd.Parameters.AddWithValue("@TaskUID", TaskUID);
-                        cmd.Parameters.AddWithValue("@Issue_Description", Issue_Description);
-                        cmd.Parameters.AddWithValue("@Issue_Date", Issue_Date);
-                        cmd.Parameters.AddWithValue("@Issued_User", Issued_User);
-                        cmd.Parameters.AddWithValue("@Assigned_User", Assigned_User);
-                        cmd.Parameters.AddWithValue("@Assigned_Date", Assigned_Date);
-                        cmd.Parameters.AddWithValue("@Issue_ProposedCloser_Date", Issue_ProposedCloser_Date);
-                        cmd.Parameters.AddWithValue("@Approving_User", Approving_User);
-                        cmd.Parameters.AddWithValue("@Actual_Closer_Date", Actual_Closer_Date);
-                        cmd.Parameters.AddWithValue("@Issue_Status", Issue_Status);
-                        cmd.Parameters.AddWithValue("@Issue_Remarks", Issue_Remarks);
-                        cmd.Parameters.AddWithValue("@WorkPackagesUID", WorkPackagesUID);
-                        cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
-                        cmd.Parameters.AddWithValue("@Issue_Document", Issue_Document);
-                        con.Open();
-                        sresult = (int)cmd.ExecuteNonQuery();
-                        con.Close();
+        //            using (SqlCommand cmd = new SqlCommand("ups_IsuuesInsertUpdate"))
+        //            {
+        //                cmd.CommandType = CommandType.StoredProcedure;
+        //                cmd.Connection = con;
+        //                cmd.Parameters.AddWithValue("@Issue_Uid", Issue_Uid);
+        //                cmd.Parameters.AddWithValue("@TaskUID", TaskUID);
+        //                cmd.Parameters.AddWithValue("@Issue_Description", Issue_Description);
+        //                cmd.Parameters.AddWithValue("@Issue_Date", Issue_Date);
+        //                cmd.Parameters.AddWithValue("@Issued_User", Issued_User);
+        //                cmd.Parameters.AddWithValue("@Assigned_User", Assigned_User);
+        //                cmd.Parameters.AddWithValue("@Assigned_Date", Assigned_Date);
+        //                cmd.Parameters.AddWithValue("@Issue_ProposedCloser_Date", Issue_ProposedCloser_Date);
+        //                cmd.Parameters.AddWithValue("@Approving_User", Approving_User);
+        //                cmd.Parameters.AddWithValue("@Actual_Closer_Date", Actual_Closer_Date);
+        //                cmd.Parameters.AddWithValue("@Issue_Status", Issue_Status);
+        //                cmd.Parameters.AddWithValue("@Issue_Remarks", Issue_Remarks);
+        //                cmd.Parameters.AddWithValue("@WorkPackagesUID", WorkPackagesUID);
+        //                cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+        //                cmd.Parameters.AddWithValue("@Issue_Document", Issue_Document);
+        //                con.Open();
+        //                sresult = (int)cmd.ExecuteNonQuery();
+        //                con.Close();
 
-                    }
-                }
-                return sresult;
-            }
-            catch (Exception ex)
-            {
-                return sresult = 0;
-            }
-        }
+        //            }
+        //        }
+        //        return sresult;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return sresult = 0;
+        //    }
+        //}
 
         public string getDocumentStatus_by_StatusUID(Guid StatusUID)
         {
@@ -19814,7 +19814,7 @@ namespace ProjectManager.DAL
         }
 
 
-        public int UpdateActualDocsRefNo(Guid ActualDocumentUID, string @ProjectRefNo, string OriginRefNo)
+        public int UpdateActualDocsRefNo(Guid ActualDocumentUID, string @ProjectRefNo, string OriginRefNo,Int16 type)
         {
             int cnt = 0;
             try
@@ -19829,6 +19829,7 @@ namespace ProjectManager.DAL
                         cmd.Parameters.AddWithValue("@ActualDocumentUID", ActualDocumentUID);
                         cmd.Parameters.AddWithValue("@ProjectRefNo", ProjectRefNo);
                         cmd.Parameters.AddWithValue("@OriginRefNo", OriginRefNo);
+                        cmd.Parameters.AddWithValue("@Type", type);
                         con.Open();
                         cnt = cmd.ExecuteNonQuery();
                         con.Close();
@@ -19922,6 +19923,241 @@ namespace ProjectManager.DAL
             return ds;
         }
 
+        // added on 05/04/2022
+        public string GetTopRefNoHistory(Guid ActualDocumentUID)
+        {
+            string Type = "";
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+                if (con.State == ConnectionState.Closed) con.Open();
+                SqlCommand cmd = new SqlCommand("usp_GetTopRefNoHistory", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ActualDocumentUID", ActualDocumentUID);
+                Type = ((Guid)cmd.ExecuteScalar()).ToString();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
 
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+            return Type;
+        }
+
+        public int UpdateRefNoHistory(Guid UID, string @ProjectRefNo, string OriginRefNo, Int16 type)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_UpdateRefNoHistory"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@UID ", UID);
+                        cmd.Parameters.AddWithValue("@ProjectRefNo", ProjectRefNo);
+                        cmd.Parameters.AddWithValue("@OriginRefNo", OriginRefNo);
+                        cmd.Parameters.AddWithValue("@Type", type);
+                        con.Open();
+                        cnt = cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+                return cnt;
+            }
+            catch (Exception ex)
+            {
+                return cnt;
+            }
+        }
+
+        public string GetRefNoHistoryCount(Guid ActualDocumentUID)
+        {
+            string RefNo ="";
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+                if (con.State == ConnectionState.Closed) con.Open();
+                SqlCommand cmd = new SqlCommand("usp_GetRefNoHistoryCount", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ActualDocumentUID", ActualDocumentUID);
+                RefNo = (string)cmd.ExecuteScalar();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+            return RefNo;
+        }
+
+        public bool checkPrjRefNoExists(Guid ProjectUID,string ProjectRef_Number)
+        {
+            bool RefNo = false;
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+                if (con.State == ConnectionState.Closed) con.Open();
+                SqlCommand cmd = new SqlCommand("usp_checkPrjRefNoExists", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ProjectUID ", ProjectUID);
+                cmd.Parameters.AddWithValue("@ProjectRef_Number  ", ProjectRef_Number);
+                if((int)cmd.ExecuteScalar() > 0)
+                {
+                    RefNo = true;
+                }
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+            return RefNo;
+        }
+
+        //added on 12/04/2022
+
+        public DataSet GetAllDocumentPhase(Guid ProjectUID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("USP_GetAllDocumentForPhae", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //added on 13/04/2022
+        public int InsertorUpdateIssues(Guid Issue_Uid, Guid TaskUID, string Issue_Description, DateTime Issue_Date, Guid Issued_User, Guid? Assigned_User, DateTime? Assigned_Date, DateTime? Issue_ProposedCloser_Date,
+            Guid? Approving_User, DateTime? Actual_Closer_Date, string Issue_Status, string Issue_Remarks, Guid WorkPackagesUID, Guid ProjectUID, string Issue_Document)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("ups_IsuuesInsertUpdate"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@Issue_Uid", Issue_Uid);
+                        cmd.Parameters.AddWithValue("@TaskUID", TaskUID);
+                        cmd.Parameters.AddWithValue("@Issue_Description", Issue_Description);
+                        cmd.Parameters.AddWithValue("@Issue_Date", Issue_Date);
+                        cmd.Parameters.AddWithValue("@Issued_User", Issued_User);
+                        cmd.Parameters.AddWithValue("@Assigned_User", Assigned_User);
+                        cmd.Parameters.AddWithValue("@Assigned_Date", Assigned_Date ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Issue_ProposedCloser_Date", Issue_ProposedCloser_Date ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Approving_User", Approving_User);
+                        cmd.Parameters.AddWithValue("@Actual_Closer_Date", Actual_Closer_Date ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Issue_Status", Issue_Status);
+                        cmd.Parameters.AddWithValue("@Issue_Remarks", Issue_Remarks);
+                        cmd.Parameters.AddWithValue("@WorkPackagesUID", WorkPackagesUID);
+                        cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                        cmd.Parameters.AddWithValue("@Issue_Document", Issue_Document);
+                        con.Open();
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = 0;
+            }
+        }
+
+
+        //added on 14/04/2022
+        public int InsertUploadedDocument(string name, string path, string issue_remarks_uid)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("InsertUploadedDocument"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        con.Open();
+                        cmd.Parameters.AddWithValue("@name", name);
+                        cmd.Parameters.AddWithValue("@path", path);
+                        cmd.Parameters.AddWithValue("@issue_remarks_uid", issue_remarks_uid);
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult;
+            }
+        }
+
+        public DataSet GetUploadedDocuments(string issue_remarks_uid)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("GetUploadedDocuments", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@issue_remarks_uid", issue_remarks_uid);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        public int DeleteUploadedDoc(int uploadedDocId)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("DeleteUploadedDoc"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@uploaded_docid", uploadedDocId);
+                        con.Open();
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = 0;
+            }
+        }
     }
 }

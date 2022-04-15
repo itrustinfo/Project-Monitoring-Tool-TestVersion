@@ -40,6 +40,10 @@ namespace ProjectManagementTool._modal_pages
                     {
                         chkSync.Checked = true;
                     }
+                    else if (WebConfigurationManager.AppSettings["Domain"].ToLower() == "suez")
+                    {
+                        chkSync.Checked = true;
+                    }
                     //
                     if (Request.QueryString["type"] == "add")
                     {

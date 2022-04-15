@@ -102,6 +102,12 @@ namespace ProjectManagementTool._modal_pages
                             int cnt = getdata.InsertDocumentVersion(DocVersion_UID, new Guid(Request.QueryString["StatusUID"]), new Guid(Request.QueryString["DocumentUID"]), Extn, DocPath, txtcomments.Text, ConverLetterFilepath);
                             if (cnt > 0)
                             {
+                                //
+                                string OriginatorRefNO = getdata.GetRefNoHistoryCount(new Guid(Request.QueryString["DocumentUID"]));
+                                getdata.UpdateActualDocsRefNo(new Guid(Request.QueryString["DocumentUID"]), "", OriginatorRefNO, 2);
+                                getdata.InsertorUpdateRefNoHistroy(Guid.NewGuid(), new Guid(Request.QueryString["DocumentUID"]), OriginatorRefNO, "");
+                                //
+
                                 DataSet ds = getdata.getAllUsers();
                                 if (ds.Tables[0].Rows.Count > 0)
                                 {

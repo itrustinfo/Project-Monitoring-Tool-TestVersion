@@ -1128,6 +1128,7 @@ namespace ProjectManager._content_pages.work_packages
         public void GetTask_by_UID(string TaskUID)
         {
             DataTable ds = dbgetdata.GetTaskDetails_TaskUID(TaskUID);
+         
             if (ds.Rows.Count > 0)
             {
                 LblTaskName.Text = ds.Rows[0]["Name"].ToString();
@@ -1160,7 +1161,28 @@ namespace ProjectManager._content_pages.work_packages
                     //double CumulativeQuan = dbgetdata.GetMeasurementCumulativeQuantity(new Guid(TaskUID));
                     if (ds.Rows[0]["CumulativeAchvQuantity"] != DBNull.Value)
                     {
-                        LblMeasurementCumulativeQuantity.Text = ds.Rows[0]["CumulativeAchvQuantity"].ToString();
+                        if (ds.Rows[0]["ParentTaskID"] != DBNull.Value)
+                        {
+                            if (dbgetdata.GetTaskCount_by_ParentTaskID(new Guid(ds.Rows[0]["ParentTaskID"].ToString())) > 0)
+                            {
+                                if (ds.Rows[0]["UnitforProgress"].ToString().ToLower() == "percentage")
+                                {
+                                    LblMeasurementCumulativeQuantity.Text = ds.Rows[0]["Task_CulumativePercentage"].ToString() == "" ? "0 %" : Convert.ToDecimal(ds.Rows[0]["Task_CulumativePercentage"].ToString()).ToString("0.###");
+                                }
+                                else
+                                {
+                                    LblMeasurementCumulativeQuantity.Text = ds.Rows[0]["CumulativeAchvQuantity"].ToString();
+                                }
+                            }
+                            else
+                            {
+                                LblMeasurementCumulativeQuantity.Text = ds.Rows[0]["CumulativeAchvQuantity"].ToString();
+                            }
+                        }
+                        else
+                        {
+                            LblMeasurementCumulativeQuantity.Text = ds.Rows[0]["CumulativeAchvQuantity"].ToString();
+                        }
                     }
                     else
                     {

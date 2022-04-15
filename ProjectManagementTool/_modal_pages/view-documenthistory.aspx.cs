@@ -72,6 +72,21 @@ namespace ProjectManagementTool._modal_pages
                         GrdDocStatus.Columns[10].Visible = false;
                        
                     }
+                    else if (Session["IsONTB"].ToString() == "Y")
+                    {
+                        GrdDocStatus.Columns[9].Visible = false;
+                        GrdDocStatus.Columns[10].Visible = false;
+
+                    }
+
+                    if (Session["TypeOfUser"].ToString() == "U")
+                    {
+                        GrdDocStatus.Columns[10].Visible = true;
+                    }
+                    else
+                    {
+                        GrdDocStatus.Columns[10].Visible = false;
+                    }
                 }
             }
         }
@@ -262,10 +277,10 @@ namespace ProjectManagementTool._modal_pages
                     {
                         if (eachPhase.Key == "reconciliation")
                         {
-                            for (int count = 1; count < eachItem.Count; count++)
-                            {
-                                StatusUIDToRemove.Add(new Guid(eachItem[count]["StatusUID"].ToString()));
-                            }
+                            //for (int count = 1; count < eachItem.Count; count++)
+                            //{
+                            //    StatusUIDToRemove.Add(new Guid(eachItem[count]["StatusUID"].ToString()));
+                            //}
                         }
                         else
                         {
@@ -591,6 +606,12 @@ namespace ProjectManagementTool._modal_pages
                             e.Row.Cells[12].Text = (Convert.ToDateTime(e.Row.Cells[2].Text) - Convert.ToDateTime(next)).TotalDays.ToString() + " day(s)";
                             next = e.Row.Cells[2].Text;
                         }
+                    }
+                    //
+                    if(e.Row.Cells[3].Text.Contains("-") && e.Row.Cells[3].Text.Contains("Approval"))
+                    {
+                        string dataText = e.Row.Cells[3].Text.Split('-')[0]  + "-"  + "<br/>"  + e.Row.Cells[3].Text.Split('-')[1];
+                        e.Row.Cells[3].Text = dataText;
                     }
                 }
                 //

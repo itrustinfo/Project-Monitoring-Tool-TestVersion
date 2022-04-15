@@ -412,6 +412,23 @@ namespace ProjectManager._master_pages
                     ReportProjectPhysicalProgress.Visible = false;
                     ReportProjectStatusofWorkProgress.Visible = false;
                     ReportResourceDeployment.Visible = false;
+                    ReportReconciliation.Visible = false;
+                    ReportReconciliationStatus.Visible = false;
+                    ReportReconciliationPhase.Visible = false;
+                }
+                if (Session["IsContractor"].ToString() == "Y" || Session["TypeOfUser"].ToString() == "U")
+                {
+                    ReportReconciliationPhase.Visible = true;
+                }
+                else
+                {
+                    ReportReconciliationPhase.Visible = false;
+                }
+                //
+                if (Session["IsContractor"].ToString() == "Y")
+                {
+                    ReportReconciliation.Visible = false;
+                    ReportReconciliationStatus.Visible = false;
                 }
             }
             //

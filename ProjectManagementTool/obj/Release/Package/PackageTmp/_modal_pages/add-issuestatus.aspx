@@ -27,7 +27,7 @@
                     <div class="form-group">
                         <label class="lblCss" for="FileUploadDoc">Issue Staus Document</label>
                         <div class="custom-file">
-                            <asp:FileUpload ID="FileUploadDoc" runat="server" CssClass="custom-file-input"/>
+                            <asp:FileUpload ID="FileUploadDoc" runat="server" CssClass="custom-file-input" AllowMultiple="true"/>
                             <label class="custom-file-label" for="FilDocument">Choose document</label>
                         </div>
                     </div>

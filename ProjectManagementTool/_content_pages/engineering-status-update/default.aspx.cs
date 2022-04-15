@@ -1007,70 +1007,70 @@ namespace ProjectManagementTool._content_pages.engineering_status_update
                         int result = getdata.InsertMeasurementBookWithoutTaskGrouping(MeasurementUID, new Guid(TaskUID), sUnit, txtAchievedCurrent.Text, "", CDate1, "", new Guid(Session["UserUID"].ToString()), txtMeasurementRemarks.Text, DateTime.Now);
                         if (result > 0)
                         {
-                            if (WebConfigurationManager.AppSettings["Dbsync"] == "Yes")
-                            {
-                                DataSet copysite = getdata.GetDataCopySiteDetails_by_ProjectUID(new Guid(ddlProject.SelectedValue));
-                                if (copysite.Tables[0].Rows.Count > 0)
-                                {
-                                    int TaskLevel = getdata.getTaskLevel_By_TaskUID(new Guid(TaskUID));
+                            //if (WebConfigurationManager.AppSettings["Dbsync"] == "Yes")
+                            //{
+                            //    DataSet copysite = getdata.GetDataCopySiteDetails_by_ProjectUID(new Guid(ddlProject.SelectedValue));
+                            //    if (copysite.Tables[0].Rows.Count > 0)
+                            //    {
+                            //        int TaskLevel = getdata.getTaskLevel_By_TaskUID(new Guid(TaskUID));
 
-                                    string Tasks = getdata.getTaskNameby_TaskUID(new Guid(TaskUID)) + ",";
-                                    string ParentTaskUID = "";
-                                    for (int i = 1; i < TaskLevel; i++)
-                                    {
-                                        if (i == 1)
-                                        {
-                                            string TName = getdata.GetParentTaskName_by_TaskUID(new Guid(TaskUID));
-                                            Tasks += TName.Split('{')[1] + ",";
-                                            ParentTaskUID = TName.Split('{')[0];
-                                        }
-                                        else
-                                        {
-                                            string TName = getdata.GetParentTaskUID_TaskName_by_TaskUID(new Guid(ParentTaskUID));
-                                            Tasks += TName.Split('{')[1] + ",";
-                                            ParentTaskUID = TName.Split('{')[0];
-                                        }
+                            //        string Tasks = getdata.getTaskNameby_TaskUID(new Guid(TaskUID)) + ",";
+                            //        string ParentTaskUID = "";
+                            //        for (int i = 1; i < TaskLevel; i++)
+                            //        {
+                            //            if (i == 1)
+                            //            {
+                            //                string TName = getdata.GetParentTaskName_by_TaskUID(new Guid(TaskUID));
+                            //                Tasks += TName.Split('{')[1] + ",";
+                            //                ParentTaskUID = TName.Split('{')[0];
+                            //            }
+                            //            else
+                            //            {
+                            //                string TName = getdata.GetParentTaskUID_TaskName_by_TaskUID(new Guid(ParentTaskUID));
+                            //                Tasks += TName.Split('{')[1] + ",";
+                            //                ParentTaskUID = TName.Split('{')[0];
+                            //            }
 
-                                    }
-                                    Tasks = Tasks.TrimEnd(',');
-                                    var strArr = Tasks.Split(',').Select(p => p.Trim()).ToArray();
-                                    var output = string.Join(",", strArr.Reverse());
+                            //        }
+                            //        Tasks = Tasks.TrimEnd(',');
+                            //        var strArr = Tasks.Split(',').Select(p => p.Trim()).ToArray();
+                            //        var output = string.Join(",", strArr.Reverse());
 
-                                    string WebAPIURL = copysite.Tables[0].Rows[0]["DataCopySiteURL"].ToString();
-                                    WebAPIURL = WebAPIURL + "Activity/TaskMeasurementUpdatewithoutGrouping";
+                            //        string WebAPIURL = copysite.Tables[0].Rows[0]["DataCopySiteURL"].ToString();
+                            //        WebAPIURL = WebAPIURL + "Activity/TaskMeasurementUpdatewithoutGrouping";
 
-                                    string postData = "MeasurementUID=" + MeasurementUID + "&ProjectName=" + ddlProject.SelectedItem.Text + "&WorkpackageName=" + ddlworkpackage.SelectedItem.Text + "&Tasks=" + output + "&Quantity=" + txtAchievedCurrent.Text + "&Remarks=" + txtMeasurementRemarks.Text + "&UserEmail=" + getdata.GetUserEmail_By_UserUID_New(new Guid(Session["UserUID"].ToString())) + "&TLevel=" + TaskLevel + "&UnitforProgress=" + sUnit + "&SelectedDate=" + CDate1;
-                                    string sReturnStatus = webPostMethod(postData, WebAPIURL);
-                                    if (!sReturnStatus.StartsWith("Error:"))
-                                    {
-                                        dynamic DynamicData = JsonConvert.DeserializeObject(sReturnStatus);
-                                        string RetStatus = DynamicData.Status;
-                                        if (!RetStatus.StartsWith("Error:"))
-                                        {
-                                            //Update Server tag to Y
-                                            int cnt = getdata.MeasurementServerFlags_Update(MeasurementUID, 1);
-                                            if (cnt > 0)
-                                            {
-                                                cnt = getdata.MeasurementServerFlags_Update(MeasurementUID, 2);
-                                                if (cnt > 0)
-                                                {
-                                                    cnt = getdata.TaskSchedule_ServerCopiedUpdate(new Guid(TaskUID), CDate1);
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            string ErrorMessage = DynamicData.Message;
-                                            WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, ErrorMessage, "Failure", "Measurement Book Update", "MeasurementUpdate", MeasurementUID);
-                                            //Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error: DBSync =" + ErrorMessage + "');</script>");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, sReturnStatus, "Failure", "Measurement Book Update", "MeasurementUpdate", MeasurementUID);
-                                    }
-                                }
-                            }
+                            //        string postData = "MeasurementUID=" + MeasurementUID + "&ProjectName=" + ddlProject.SelectedItem.Text + "&WorkpackageName=" + ddlworkpackage.SelectedItem.Text + "&Tasks=" + output + "&Quantity=" + txtAchievedCurrent.Text + "&Remarks=" + txtMeasurementRemarks.Text + "&UserEmail=" + getdata.GetUserEmail_By_UserUID_New(new Guid(Session["UserUID"].ToString())) + "&TLevel=" + TaskLevel + "&UnitforProgress=" + sUnit + "&SelectedDate=" + CDate1;
+                            //        string sReturnStatus = webPostMethod(postData, WebAPIURL);
+                            //        if (!sReturnStatus.StartsWith("Error:"))
+                            //        {
+                            //            dynamic DynamicData = JsonConvert.DeserializeObject(sReturnStatus);
+                            //            string RetStatus = DynamicData.Status;
+                            //            if (!RetStatus.StartsWith("Error:"))
+                            //            {
+                            //                //Update Server tag to Y
+                            //                int cnt = getdata.MeasurementServerFlags_Update(MeasurementUID, 1);
+                            //                if (cnt > 0)
+                            //                {
+                            //                    cnt = getdata.MeasurementServerFlags_Update(MeasurementUID, 2);
+                            //                    if (cnt > 0)
+                            //                    {
+                            //                        cnt = getdata.TaskSchedule_ServerCopiedUpdate(new Guid(TaskUID), CDate1);
+                            //                    }
+                            //                }
+                            //            }
+                            //            else
+                            //            {
+                            //                string ErrorMessage = DynamicData.Message;
+                            //                WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, ErrorMessage, "Failure", "Measurement Book Update", "MeasurementUpdate", MeasurementUID);
+                            //                //Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error: DBSync =" + ErrorMessage + "');</script>");
+                            //            }
+                            //        }
+                            //        else
+                            //        {
+                            //            WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, sReturnStatus, "Failure", "Measurement Book Update", "MeasurementUpdate", MeasurementUID);
+                            //        }
+                             // }
+                          //  }
                             Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Measurement updated successfully');</script>");
                         }
                     }
@@ -1460,70 +1460,70 @@ namespace ProjectManagementTool._content_pages.engineering_status_update
                                 int rs = getdata.InsertorUpdateTaskMeasurementBook(MeasurementUID, new Guid(TaskUID), sUnit, txtTodayQuantity.Text, "", DateTime.Now, DocPath, new Guid(Session["UserUID"].ToString()), txtRemarks.Text, CDate1);
                                 if (rs > 0)
                                 {
-                                    if (WebConfigurationManager.AppSettings["Dbsync"] == "Yes")
-                                    {
-                                        DataSet copysite = getdata.GetDataCopySiteDetails_by_ProjectUID(new Guid(ddlProject.SelectedValue));
-                                        if (copysite.Tables[0].Rows.Count > 0)
-                                        {
-                                            int TaskLevel = getdata.getTaskLevel_By_TaskUID(new Guid(TaskUID));
+                                    //if (WebConfigurationManager.AppSettings["Dbsync"] == "Yes")
+                                    //{
+                                    //    DataSet copysite = getdata.GetDataCopySiteDetails_by_ProjectUID(new Guid(ddlProject.SelectedValue));
+                                    //    if (copysite.Tables[0].Rows.Count > 0)
+                                    //    {
+                                    //        int TaskLevel = getdata.getTaskLevel_By_TaskUID(new Guid(TaskUID));
 
-                                            string Tasks = getdata.getTaskNameby_TaskUID(new Guid(TaskUID)) + ",";
-                                            string ParentTaskUID = "";
-                                            for (int i = 1; i < TaskLevel; i++)
-                                            {
-                                                if (i == 1)
-                                                {
-                                                    string TName = getdata.GetParentTaskName_by_TaskUID(new Guid(TaskUID));
-                                                    Tasks += TName.Split('{')[1] + ",";
-                                                    ParentTaskUID = TName.Split('{')[0];
-                                                }
-                                                else
-                                                {
-                                                    string TName = getdata.GetParentTaskUID_TaskName_by_TaskUID(new Guid(ParentTaskUID));
-                                                    Tasks += TName.Split('{')[1] + ",";
-                                                    ParentTaskUID = TName.Split('{')[0];
-                                                }
+                                    //        string Tasks = getdata.getTaskNameby_TaskUID(new Guid(TaskUID)) + ",";
+                                    //        string ParentTaskUID = "";
+                                    //        for (int i = 1; i < TaskLevel; i++)
+                                    //        {
+                                    //            if (i == 1)
+                                    //            {
+                                    //                string TName = getdata.GetParentTaskName_by_TaskUID(new Guid(TaskUID));
+                                    //                Tasks += TName.Split('{')[1] + ",";
+                                    //                ParentTaskUID = TName.Split('{')[0];
+                                    //            }
+                                    //            else
+                                    //            {
+                                    //                string TName = getdata.GetParentTaskUID_TaskName_by_TaskUID(new Guid(ParentTaskUID));
+                                    //                Tasks += TName.Split('{')[1] + ",";
+                                    //                ParentTaskUID = TName.Split('{')[0];
+                                    //            }
 
-                                            }
-                                            Tasks = Tasks.TrimEnd(',');
-                                            var strArr = Tasks.Split(',').Select(p => p.Trim()).ToArray();
-                                            var output = string.Join(",", strArr.Reverse());
-                                            //string WebAPIURL = WebConfigurationManager.AppSettings["DbsyncWebApiURL"];
-                                            string WebAPIURL = copysite.Tables[0].Rows[0]["DataCopySiteURL"].ToString();
-                                            WebAPIURL = WebAPIURL + "Activity/TaskMeasurementUpdate";
+                                    //        }
+                                    //        Tasks = Tasks.TrimEnd(',');
+                                    //        var strArr = Tasks.Split(',').Select(p => p.Trim()).ToArray();
+                                    //        var output = string.Join(",", strArr.Reverse());
+                                    //        //string WebAPIURL = WebConfigurationManager.AppSettings["DbsyncWebApiURL"];
+                                    //        string WebAPIURL = copysite.Tables[0].Rows[0]["DataCopySiteURL"].ToString();
+                                    //        WebAPIURL = WebAPIURL + "Activity/TaskMeasurementUpdate";
 
-                                            string postData = "MeasurementUID=" + MeasurementUID + "&ProjectName=" + ddlProject.SelectedItem.Text + "&WorkpackageName=" + ddlworkpackage.SelectedItem.Text + "&Tasks=" + output + "&Quantity=" + txtTodayQuantity.Text + "&Remarks=" + txtRemarks.Text + "&UserEmail=" + getdata.GetUserEmail_By_UserUID_New(new Guid(Session["UserUID"].ToString())) + "&TLevel=" + TaskLevel + "&UnitofProgress=" + sUnit + "&AchievedDate=" + CDate1;
-                                            string sReturnStatus = webPostMethod(postData, WebAPIURL);
-                                            if (!sReturnStatus.StartsWith("Error:"))
-                                            {
-                                                dynamic DynamicData = JsonConvert.DeserializeObject(sReturnStatus);
-                                                string RetStatus = DynamicData.Status;
-                                                if (!RetStatus.StartsWith("Error:"))
-                                                {
-                                                    //Update Server tag to Y
-                                                    int cnt = getdata.MeasurementServerFlags_Update(MeasurementUID, 1);
-                                                    if (cnt > 0)
-                                                    {
-                                                        cnt = getdata.MeasurementServerFlags_Update(MeasurementUID, 2);
-                                                        if (cnt > 0)
-                                                        {
-                                                            cnt = getdata.TaskSchedule_ServerCopiedUpdate(new Guid(TaskUID), CDate1);
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    string ErrorMessage = DynamicData.Message;
-                                                    WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, ErrorMessage, "Failure", "Measurement Book Update", "MeasurementUpdate", MeasurementUID);
-                                                    //Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error: DBSync =" + ErrorMessage + "');</script>");
-                                                }
-                                            }
-                                            else
-                                            {
-                                                WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, sReturnStatus, "Failure", "Measurement Book Update", "MeasurementUpdate", MeasurementUID);
-                                            }
-                                        }
-                                    }
+                                    //        string postData = "MeasurementUID=" + MeasurementUID + "&ProjectName=" + ddlProject.SelectedItem.Text + "&WorkpackageName=" + ddlworkpackage.SelectedItem.Text + "&Tasks=" + output + "&Quantity=" + txtTodayQuantity.Text + "&Remarks=" + txtRemarks.Text + "&UserEmail=" + getdata.GetUserEmail_By_UserUID_New(new Guid(Session["UserUID"].ToString())) + "&TLevel=" + TaskLevel + "&UnitofProgress=" + sUnit + "&AchievedDate=" + CDate1;
+                                    //        string sReturnStatus = webPostMethod(postData, WebAPIURL);
+                                    //        if (!sReturnStatus.StartsWith("Error:"))
+                                    //        {
+                                    //            dynamic DynamicData = JsonConvert.DeserializeObject(sReturnStatus);
+                                    //            string RetStatus = DynamicData.Status;
+                                    //            if (!RetStatus.StartsWith("Error:"))
+                                    //            {
+                                    //                //Update Server tag to Y
+                                    //                int cnt = getdata.MeasurementServerFlags_Update(MeasurementUID, 1);
+                                    //                if (cnt > 0)
+                                    //                {
+                                    //                    cnt = getdata.MeasurementServerFlags_Update(MeasurementUID, 2);
+                                    //                    if (cnt > 0)
+                                    //                    {
+                                    //                        cnt = getdata.TaskSchedule_ServerCopiedUpdate(new Guid(TaskUID), CDate1);
+                                    //                    }
+                                    //                }
+                                    //            }
+                                    //            else
+                                    //            {
+                                    //                string ErrorMessage = DynamicData.Message;
+                                    //                WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, ErrorMessage, "Failure", "Measurement Book Update", "MeasurementUpdate", MeasurementUID);
+                                    //                //Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error: DBSync =" + ErrorMessage + "');</script>");
+                                    //            }
+                                    //        }
+                                    //        else
+                                    //        {
+                                    //            WebAPIStatusInsert(Guid.NewGuid(), WebAPIURL, postData, sReturnStatus, "Failure", "Measurement Book Update", "MeasurementUpdate", MeasurementUID);
+                                    //        }
+                                    //   }
+                                   // }
                                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Data updated successfully.');</script>");
 
                                 }

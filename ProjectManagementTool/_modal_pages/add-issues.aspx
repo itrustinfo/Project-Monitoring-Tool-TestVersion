@@ -59,12 +59,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="lblCss" for="ddlAssignedUser">Assigned User</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
-                         <asp:DropDownList ID="ddlAssignedUser" CssClass="form-control"  runat="server"></asp:DropDownList>
+                        <%--<label class="lblCss" for="ddlAssignedUser">Assigned User</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>--%>
+                         <asp:DropDownList ID="ddlAssignedUser" CssClass="form-control"  runat="server" Visible="false"></asp:DropDownList>
                     </div>
                     <div class="form-group">
-                        <label class="lblCss" for="txtdesc">Assigned Date</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
-                        <asp:TextBox ID="dtAssignedDate" CssClass="form-control" required runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                        <%--<label class="lblCss" for="txtdesc" Visible="false">Assigned Date</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>--%>
+                        <asp:TextBox ID="dtAssignedDate" CssClass="form-control" required runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static" Visible="false"></asp:TextBox>
                         
                     </div>
                     <div class="form-group">
@@ -79,19 +79,19 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="lblCss" for="ddlApprovingUser">Approving User</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
-                         <asp:DropDownList ID="ddlApprovingUser" runat="server" CssClass="form-control">
+                        <%--<label class="lblCss" for="ddlApprovingUser">Approving User</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>--%>
+                         <asp:DropDownList ID="ddlApprovingUser" runat="server" CssClass="form-control" Visible="false">
                      </asp:DropDownList>
                     </div>
 
                     
                      <div class="form-group">
-                        <label class="lblCss" for="dtApprovingDate">Approving Date</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
-                        <asp:TextBox ID="dtApprovingDate" CssClass="form-control"  runat="server" placeholder="dd/mm/yyyy" autocomplete="off" required  ClientIDMode="Static"></asp:TextBox>
+                        <%--<label class="lblCss" for="dtApprovingDate">Approving Date</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>--%>
+                        <asp:TextBox ID="dtApprovingDate" CssClass="form-control" Visible="false" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" required  ClientIDMode="Static"></asp:TextBox>
                     </div>
                     <div class="form-group">
-                        <label class="lblCss" for="dtProposedCloserDate">Issue Proposed Closure Date</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
-                       <asp:TextBox ID="dtProposedCloserDate" CssClass="form-control"  runat="server" placeholder="dd/mm/yyyy" autocomplete="off" required ClientIDMode="Static"></asp:TextBox>
+                        <%--<label class="lblCss" for="dtProposedCloserDate">Issue Proposed Closure Date</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>--%>
+                       <asp:TextBox ID="dtProposedCloserDate" CssClass="form-control" Visible="false" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" required ClientIDMode="Static"></asp:TextBox>
                     </div>
                     <div class="form-group" id="IssueStatus" runat="server">
                         <label class="lblCss" for="ddlStatus">Status</label>

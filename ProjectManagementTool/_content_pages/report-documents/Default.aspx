@@ -258,12 +258,18 @@
                                             </asp:BoundField>--%>
                                            <asp:BoundField DataField="ActualDocument_Type" HeaderText="Document Type" ItemStyle-HorizontalAlign="Left">
                                                             </asp:BoundField>
-
+                                           
                                            <asp:BoundField DataField="ActualDocumentUID" HeaderText="Status" ItemStyle-HorizontalAlign="Left">
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
                                            <asp:BoundField DataField="ActualDocument_CreatedDate" HeaderText="Submit Date" ItemStyle-HorizontalAlign="Left" DataFormatString="{0:dd MMM yyyy}">
                                                             </asp:BoundField>
+
+                                           <asp:BoundField DataField="ProjectRef_Number" HeaderText="Ontb Reference #" ItemStyle-HorizontalAlign="Left">
+                                                            </asp:BoundField>
+                                           <asp:BoundField DataField="Ref_Number" HeaderText="Originator Reference #" ItemStyle-HorizontalAlign="Left">
+                                                            </asp:BoundField>
+
                                            <%--<asp:TemplateField HeaderText="Submit Date" ItemStyle-HorizontalAlign="Left">
                                                <HeaderStyle HorizontalAlign="Left" />
                                                <ItemTemplate>
@@ -483,7 +489,7 @@
                             </div>
                         <div class="table-responsive">
                             <asp:GridView ID="GrdOriginatorDocuments" EmptyDataText="No Documents Found." AlternatingRowStyle-BackColor="LightGray" runat="server" Width="100%" AutoGenerateColumns="false" 
-                                            AllowPaging="false" DataKeyNames="ActualDocumentUID" CssClass="table table-bordered">
+                                            AllowPaging="false" DataKeyNames="ActualDocumentUID" CssClass="table table-bordered" OnRowDataBound="GrdOriginatorDocuments_RowDataBound">
                                        <Columns>
                                            <asp:TemplateField HeaderText="Sl.No" ItemStyle-HorizontalAlign="Center">
                                                             <ItemTemplate>
@@ -514,6 +520,12 @@
                                                 <%#GetDocumentName(Eval("ActualDocument_Type").ToString())%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                           <asp:BoundField DataField="ProjectRef_Number" HeaderText="Ontb Reference #" ItemStyle-HorizontalAlign="Center">
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
+                                           <asp:BoundField DataField="Ref_Number" HeaderText="Originator Reference #" ItemStyle-HorizontalAlign="Center">
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
                                            <asp:BoundField DataField="ActualDocument_CurrentStatus" HeaderText="Current Status" ItemStyle-HorizontalAlign="Center">
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
