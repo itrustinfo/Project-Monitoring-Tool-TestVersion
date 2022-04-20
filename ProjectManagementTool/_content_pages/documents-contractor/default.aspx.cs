@@ -462,6 +462,8 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                         string remarks = txtremarks.Text;
                         string EmailHeading = string.Empty;
                         string DocumentUID = row.Cells[0].Text;
+                        string OriginatorRefNo = string.Empty;
+                        string ProjectRefNo = string.Empty;
                         if (status == "Accept")
                         {
                             if (String.IsNullOrEmpty(txtrefNo.Text.Trim()))
@@ -506,6 +508,9 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             }
                             EmailHeading = "Rejected by ONTB";
                         }
+                        //
+                       
+
                         string sDate1 = "";
                         DateTime CDate1 = DateTime.Now;
                         //
@@ -523,6 +528,7 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                         new Guid(Session["UserUID"].ToString()), remarks, status, "", CDate1, CoverPagePath, "Current", "ONTB");
                         if (Cnt > 0)
                         {
+                           
                             //DataSet ds = getdata.getAllUsers();
                             DataSet ds = new DataSet();
                             //Update the targte dates 
@@ -537,7 +543,14 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             }
 
                             ds = getdt.GetUsers_under_ProjectUID(new Guid(Request.QueryString["PrjUID"]));
-
+                            //
+                            DataSet dsTasks = getdt.ActualDocuments_SelectBy_ActualDocumentUID(new Guid(DocumentUID));
+                            if (dsTasks.Tables[0].Rows.Count > 0)
+                            {
+                                OriginatorRefNo = dsTasks.Tables[0].Rows[0]["Ref_Number"].ToString();
+                                ProjectRefNo = dsTasks.Tables[0].Rows[0]["ProjectRef_Number"].ToString();
+                            }
+                            //
 
                             if (ds.Tables[0].Rows.Count > 0)
                             {
@@ -582,8 +595,9 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                 sHtmlString += "<div style='width:100%; float:left;'><table style='width:100%;'>" +
                                                 "<tr><td><b>Document Name </b></td><td style='text-align:center;'><b>:</b></td><td>" + documentname + "</td></tr>" +
                                                 "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + status + "</td></tr>" +
-                                                "<tr><td><b>Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td></td></tr>" +
-                                                "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + DateTime.Now.ToString("dd MMM yyyy") + "</td></tr>" +
+                                               "<tr><td><b>Originator Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + OriginatorRefNo + "</td></tr>" +
+                                                    "<tr><td><b>ONTB Ref. Number</b></td><td style='text-align:center;'><b>:</b></td><td>" + ProjectRefNo + "</td></tr>" +
+                                                      "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + DateTime.Now.ToString("dd MMM yyyy") + "</td></tr>" +
                                                 "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + remarks + "</td></tr>";
                                 sHtmlString += "</table></div>";
                                 sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Monitoring Tool.</div></div></body></html>";
@@ -627,7 +641,10 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                 sHtmlString += "<div style='width:100%; float:left;'><br/>Dear Users,<br/><br/><span style='font-weight:bold;'>" + sUserName + " has changed " + documentname + " status.</span> <br/><br/></div>";
                                 sHtmlString += "<div style='width:100%; float:left;'><table style='width:100%;'>" +
                                                 "<tr><td><b>Document Name </b></td><td style='text-align:center;'><b>:</b></td><td>" + documentname + "</td></tr>" +
-                                                "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + status + "</td></tr>" +   
+                                                "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + status + "</td></tr>" +
+                                                 "<tr><td><b>Originator Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + OriginatorRefNo + "</td></tr>" +
+                                                    "<tr><td><b>ONTB Ref. Number</b></td><td style='text-align:center;'><b>:</b></td><td>" + ProjectRefNo + "</td></tr>" +
+
                                                 "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + DateTime.Now.ToString("dd MMM yyyy") + "</td></tr>" +
                                                 "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + remarks + "</td></tr>";
                                 sHtmlString += "</table><br /><br /><div style='color: red'>Kindly note that you are to act on this to complete the next step in document flow.</div></div>";
@@ -678,7 +695,9 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                 sHtmlString += "<div style='width:100%; float:left;'><table style='width:100%;'>" +
                                                 "<tr><td><b>Document Name </b></td><td style='text-align:center;'><b>:</b></td><td>" + documentname + "</td></tr>" +
                                                 "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + status + "</td></tr>" +
-                                                "<tr><td><b>Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td></td></tr>" +
+                                               "<tr><td><b>Originator Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + OriginatorRefNo + "</td></tr>" +
+                                                    "<tr><td><b>ONTB Ref. Number</b></td><td style='text-align:center;'><b>:</b></td><td>" + ProjectRefNo + "</td></tr>" +
+
                                                 "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + DateTime.Now.ToString("dd MMM yyyy") + "</td></tr>" +
                                                 "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + remarks + "</td></tr>";
                                 sHtmlString += "</table></div>";

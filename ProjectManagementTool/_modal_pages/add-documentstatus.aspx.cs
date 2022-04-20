@@ -686,6 +686,19 @@ namespace ProjectManagementTool._modal_pages
                             StatusUID = Guid.NewGuid();
                             Subject = Session["Username"].ToString() + " added a new Status";
                         }
+                        //
+                        string OriginatorRefNo = string.Empty;
+                        string ProjectRefNo = string.Empty;
+                        string RefNostring = string.Empty;
+                       
+                        //
+                        DataSet dsTasks = getdata.ActualDocuments_SelectBy_ActualDocumentUID(new Guid(Request.QueryString["DocID"].ToString()));
+                        if (dsTasks.Tables[0].Rows.Count > 0)
+                        {
+                            OriginatorRefNo = dsTasks.Tables[0].Rows[0]["Ref_Number"].ToString();
+                            ProjectRefNo = dsTasks.Tables[0].Rows[0]["ProjectRef_Number"].ToString();
+                        }
+                        //
 
                         string sDate1 = "";
                         DateTime CDate1 = DateTime.Now;
@@ -828,10 +841,12 @@ namespace ProjectManagementTool._modal_pages
                                     if (WebConfigurationManager.AppSettings["Domain"] == "NJSEI")
                                     {
                                         sHtmlString += "<div style='float:left; width:7%;'><img src='https://dm.njsei.com/_assets/images/NJSEI%20Logo.jpg' width='50' /></div>";
+                                        RefNostring = "NJSEI Ref Number";
                                     }
                                     else
                                     {
                                         sHtmlString += "<div style='float:left; width:7%;'><h2>" + WebConfigurationManager.AppSettings["Domain"] + "</h2></div>";
+                                        RefNostring = "ONTB Ref Number";
                                     }
                                     sHtmlString += "<div style='float:left; width:70%;'><h2 style='margin-top:10px;'>Project Monitoring Tool</h2></div>" +
                                                "</div>";
@@ -839,7 +854,8 @@ namespace ProjectManagementTool._modal_pages
                                     sHtmlString += "<div style='width:100%; float:left;'><table style='width:100%;'>" +
                                                     "<tr><td><b>Document Name </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDLDocument.SelectedItem.Text + "</td></tr>" +
                                                     "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDlStatus.SelectedItem.Text + "</td></tr>" +
-                                                    "<tr><td><b>Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtrefNumber.Text + "</td></tr>" +
+                                                        "<tr><td><b>Originator Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + OriginatorRefNo + "</td></tr>" +
+                                                    "<tr><td><b>" + RefNostring + "</b></td><td style='text-align:center;'><b>:</b></td><td>" + ProjectRefNo + "</td></tr>" +
                                                     "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + CDate1.ToString("dd MMM yyyy") + "</td></tr>" +
                                                     "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtcomments.Text + "</td></tr>";
                                     sHtmlString += "</table></div>";
@@ -885,7 +901,8 @@ namespace ProjectManagementTool._modal_pages
                                     sHtmlString += "<div style='width:100%; float:left;'><table style='width:100%;'>" +
                                                     "<tr><td><b>Document Name </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDLDocument.SelectedItem.Text + "</td></tr>" +
                                                     "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + DDlStatus.SelectedItem.Text + "</td></tr>" +
-                                                    "<tr><td><b>Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtrefNumber.Text + "</td></tr>" +
+                                                       "<tr><td><b>Originator Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + OriginatorRefNo + "</td></tr>" +
+                                                    "<tr><td><b>" + RefNostring + "</b></td><td style='text-align:center;'><b>:</b></td><td>" + ProjectRefNo + "</td></tr>" +
                                                     "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + CDate1.ToString("dd MMM yyyy") + "</td></tr>" +
                                                     "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + txtcomments.Text + "</td></tr>";
                                     sHtmlString += "</table><br /><br /><div style='color: red'>Kindly note that you are to act on this to complete the next step in document flow.</div></div>";
