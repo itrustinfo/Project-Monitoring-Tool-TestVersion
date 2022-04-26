@@ -1,5 +1,6 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
+using ProjectManagementTool.BLL;
 using ProjectManager.DAL;
 using System;
 using System.Collections.Generic;
@@ -26,12 +27,19 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
             }
             if (!IsPostBack)
             {
+                ReportFilter.Visible = false;
+                BindStatus();
                 BindProject();
                 DDlProject_SelectedIndexChanged(sender, e);
-
             }
         }
 
+        private void BindStatus()
+        {
+            DDLStatus.Items.Add("All");
+            DDLStatus.Items.Add("Accepted");
+            DDLStatus.Items.Add("Rejected");
+        }
         private void BindProject()
         {
             DataTable ds = new DataTable();
@@ -63,6 +71,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
                 //DataSet ds = getdt.GetWorkPackages_By_ProjectUID(new Guid(DDlProject.SelectedValue));
 
                 divTabular.Visible = false;
+                ReportFilter.Visible = true;
                 DataSet ds = new DataSet();
                 if (Session["TypeOfUser"].ToString() == "U" || Session["TypeOfUser"].ToString() == "MD" || Session["TypeOfUser"].ToString() == "VP")
                 {
@@ -91,7 +100,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
         {
             if (DDlProject.SelectedValue != "")
             {
-                grdDataList.DataSource = getdt.GetAllDocumentExceptReconciliation(new Guid(DDlProject.SelectedValue));
+                grdDataList.DataSource = getdt.GetAllDocumentExceptReconciliation(new Guid(DDlProject.SelectedValue), txtOntbReference.Text, txtProjectRefernce.Text, DDLStatus.SelectedValue);
                 grdDataList.DataBind();
                 divTabular.Visible = true;
             }
@@ -103,15 +112,15 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
             if (e.Row.RowType == DataControlRowType.Header)
             {
                 if(WebConfigurationManager.AppSettings["Domain"].ToString().ToUpper() == "NJSEI")
-                    e.Row.Cells[4].Text = "NJSEI Reference #";
+                    e.Row.Cells[5].Text = "NJSEI Reference #";
                 else
-                    e.Row.Cells[4].Text = "ONTB Reference #";
+                    e.Row.Cells[5].Text = "ONTB Reference #";
             }
             else if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                if(!e.Row.Cells[3].Text.Contains("Rejected"))
+                if (!e.Row.Cells[4].Text.Contains("Rejected"))
                 {
-                    e.Row.Cells[3].Text = "Accepted";
+                    e.Row.Cells[4].Text = "Accepted";
                 }
             }
         }

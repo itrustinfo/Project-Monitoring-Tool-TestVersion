@@ -112,6 +112,33 @@ namespace ProjectManager._content_pages.reports {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ByOriginator;
         
         /// <summary>
+        /// hRefNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hRefNo;
+        
+        /// <summary>
+        /// txtProjectRef control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtProjectRef;
+        
+        /// <summary>
+        /// txtOriginator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOriginator;
+        
+        /// <summary>
         /// DDLOriginator control.
         /// </summary>
         /// <remarks>

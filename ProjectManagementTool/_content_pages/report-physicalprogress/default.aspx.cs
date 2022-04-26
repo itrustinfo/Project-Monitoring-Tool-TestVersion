@@ -213,11 +213,20 @@ namespace ProjectManagementTool._content_pages.report_physicalprogress
                 ActivityProgressReport.Visible = false;
                 WeeklyProgressReport.Visible = false;
                 MonthlyPhysicalProgress.Visible = false;
-                DataSet ds = getdt.GetConstructionProgramme_Tasks(new Guid(DDLWorkPackage.SelectedValue));
-                DDLActivity.DataTextField = "Name";
-                DDLActivity.DataValueField = "TaskUID";
-                DDLActivity.DataSource = ds;
-                DDLActivity.DataBind();
+                DataTable ds = getdt.GetConstructionProgramme_Tasks(new Guid(DDLWorkPackage.SelectedValue)).Tables[0].AsEnumerable()
+                     .OrderBy(r => r.Field<string>("Name"))
+                     .CopyToDataTable();
+
+               foreach(DataRow dr in ds.Rows)
+                {
+                    System.Web.UI.WebControls.ListItem lst = new System.Web.UI.WebControls.ListItem(dr["Name"].ToString() + " (" + getTaskHeirarchy(new Guid(dr["TaskUID"].ToString())) + ")", dr["TaskUID"].ToString());
+                    DDLActivity.Items.Add(lst);
+                }
+
+                //DDLActivity.DataTextField = "Name";
+                //DDLActivity.DataValueField = "TaskUID";
+                //DDLActivity.DataSource = ds;
+                //DDLActivity.DataBind();
                 DDLActivity.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- Select Activity--", ""));
             }
             else
@@ -1300,5 +1309,23 @@ namespace ProjectManagementTool._content_pages.report_physicalprogress
             Response.Close();
             Response.End();
         }
+
+        private string getTaskHeirarchy(Guid TaskUID)
+        {
+            string TaskList = string.Empty;
+            string ParenttaskUID = getdt.GetParentTaskUID_by_TaskUID(TaskUID);
+            while(!string.IsNullOrWhiteSpace(ParenttaskUID))
+            {
+                TaskList += getdt.getTaskNameby_TaskUID(new Guid(ParenttaskUID)) + "->";
+                ParenttaskUID = getdt.GetParentTaskUID_by_TaskUID(new Guid(ParenttaskUID));
+            }
+            if(!string.IsNullOrEmpty(TaskList))
+            {
+                TaskList = TaskList.Substring(0, TaskList.Length - 2);
+            }
+            return TaskList;
+        }
+
+       
     }
 }

@@ -33,6 +33,42 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
         protected global::System.Web.UI.WebControls.DropDownList DDLWorkPackage;
 
         /// <summary>
+        /// ReportFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ReportFilter;
+
+        /// <summary>
+        /// txtOntbReference control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOntbReference;
+
+        /// <summary>
+        /// txtProjectRefernce control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtProjectRefernce;
+
+        /// <summary>
+        /// DDLStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLStatus;
+
+        /// <summary>
         /// btnSubmit control.
         /// </summary>
         /// <remarks>

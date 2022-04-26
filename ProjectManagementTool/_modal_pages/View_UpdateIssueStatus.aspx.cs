@@ -141,15 +141,15 @@ namespace ProjectManagementTool._modal_pages
 
             if (file_count != 0)
             {
-                string fileName = Server.MapPath(new_link.CommandArgument);
+                //string fileName = Server.MapPath(new_link.CommandArgument);
 
-                if (fileName != null || fileName != string.Empty)
-                {
-                    if ((System.IO.File.Exists(fileName)))
-                    {
-                        System.IO.File.Delete(fileName);
-                    }
-                }
+                //if (fileName != null || fileName != string.Empty)
+                //{
+                //    if ((System.IO.File.Exists(fileName)))
+                //    {
+                //        System.IO.File.Delete(fileName);
+                //    }
+                //}
             }
 
             if (Request.QueryString["Issue_Uid"] != null)

@@ -17,7 +17,7 @@ namespace ProjectManagementTool.DAL
         }
 
         public static List<string> ProjectsForPhaseSearch = ConfigurationManager.AppSettings["ProjectsForPhaseSearch"].ToString().Split(',').ToList();
-        public static string ProjectReferenceName = ConfigurationManager.AppSettings["Domain"].ToString() == "ONTB" ? "ONTB Reference #" : "NJSEI Reference #";
+        public static string ProjectReferenceName = ConfigurationManager.AppSettings["Domain"].ToString() == "NJSEI" ? "NJSEI Reference #" : "ONTB Reference #";
 
         /// <summary>
         /// This dictionary is for the final phases for the status. Key is status and value is phases

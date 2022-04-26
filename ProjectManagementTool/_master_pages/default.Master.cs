@@ -405,6 +405,15 @@ namespace ProjectManager._master_pages
                     }
                 }
 
+               
+                if (Session["IsContractor"].ToString() == "Y" || Session["TypeOfUser"].ToString() == "U")
+                {
+                    ReportReconciliationPhase.Visible = true;
+                }
+                else
+                {
+                    ReportReconciliationPhase.Visible = false;
+                }
                 if (WebConfigurationManager.AppSettings["Domain"] == "NJSEI")
                 {
                     ReviewReports.Visible = false;
@@ -414,14 +423,6 @@ namespace ProjectManager._master_pages
                     ReportResourceDeployment.Visible = false;
                     ReportReconciliation.Visible = false;
                     ReportReconciliationStatus.Visible = false;
-                    ReportReconciliationPhase.Visible = false;
-                }
-                if (Session["IsContractor"].ToString() == "Y" || Session["TypeOfUser"].ToString() == "U")
-                {
-                    ReportReconciliationPhase.Visible = true;
-                }
-                else
-                {
                     ReportReconciliationPhase.Visible = false;
                 }
                 //

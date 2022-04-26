@@ -1,12 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/_master_pages/default.Master" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="ProjectManagementTool._content_pages.report_reconciliation_status._default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="default_master_head" runat="server">
+    <style type="text/css">
+         .hideItem {
+         display:none;
+     }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="default_master_body" runat="server">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 col-lg-5 form-group">Reconciliation Approved or Rejected Report</div>
-            <div class="col-md-6 col-lg-3 form-group">
+            <div class="col-md-6 col-lg-4 form-group">Reconciliation Approved or Rejected Report</div>
+            <div class="col-md-6 col-lg-4 form-group">
                 <label class="sr-only" for="DDLProject">Project</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -15,7 +20,7 @@
                     <asp:DropDownList ID="DDlProject" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="DDlProject_SelectedIndexChanged"></asp:DropDownList>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3 form-group">
+            <div class="col-md-6 col-lg-4 form-group">
                 <label class="sr-only" for="DDLWorkPackage">Work Package</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -24,11 +29,57 @@
                     <asp:DropDownList ID="DDLWorkPackage" runat="server" CssClass="form-control"></asp:DropDownList>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-1 form-group">
-                <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Submit" OnClick="btnSubmit_Click" />
-            </div>
         </div>
+      
+    </div>
+      
 
+
+
+        <div class="container-fluid" id="ReportFilter" runat="server">
+            <div class="row">
+                <div class="col-sm-12 mb-4" runat="server">
+                     <div class="card">
+                        <div class="card-body" >   
+                            <div class="table-responsive">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td>
+                                         <h6 class="card-title text-muted text-uppercase font-weight-bold">ONTB Reference #</h6>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td>
+                                        <h6 class="card-title text-muted text-uppercase font-weight-bold">Originator Reference #</h6>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td>
+                                        <h6 class="card-title text-muted text-uppercase font-weight-bold">Status</h6>
+                                    </td>
+                                </tr>
+                             <tr>
+                                 <td style="width:31%;">
+                                     <asp:TextBox ID="txtOntbReference" runat="server" CssClass="form-control" ></asp:TextBox>
+                                </td>
+                                 <td>&nbsp;</td>
+                                 <td style="width:31%;">
+                                     <asp:TextBox ID="txtProjectRefernce" runat="server" CssClass="form-control" ></asp:TextBox>
+                                 </td>
+                                 <td>&nbsp;</td>
+                                 <td style="width:31%;">
+                                     <asp:DropDownList ID="DDLStatus" runat="server" CssClass="form-control" ></asp:DropDownList>
+                                 </td>
+                                 <td>&nbsp;</td>
+                                 <td style="width:7%;">
+                                     <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Submit" OnClick="btnSubmit_Click" />
+                                 </td>
+                             </tr>
+                        </table>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+        </div>
 
 
 
@@ -56,6 +107,9 @@
                                         <asp:GridView ID="grdDataList" EmptyDataText="No Data Found." runat="server" Width="100%" AutoGenerateColumns="false" CellPadding="6" CellSpacing="16" HeaderStyle-BackColor="#666666" HeaderStyle-ForeColor="White" AlternatingRowStyle-BackColor="#F5F5F5"
                                             CssClass="table table-bordered" OnRowDataBound="grdDataList_RowDataBound">
                                             <Columns>
+                                                <asp:BoundField DataField="ActualDocumentUID"  HeaderText="UID" ItemStyle-CssClass="hideItem" HeaderStyle-CssClass="hideItem">
+                                                    <HeaderStyle HorizontalAlign="Left" />
+                                                </asp:BoundField>
                                                 <asp:BoundField DataField="DocName" HeaderText="Submittal Name">
                                                     <HeaderStyle HorizontalAlign="Left" />
                                                 </asp:BoundField>
@@ -81,6 +135,8 @@
                                                 <asp:BoundField DataField="Document_Date" HeaderText="Document Date" SortExpression="Document_Date" DataFormatString="{0:dd/MM/yyyy}">
                                                     <HeaderStyle HorizontalAlign="Left" />
                                                 </asp:BoundField>
+
+
                                             </Columns>
                                         </asp:GridView>
                                     </div>
@@ -94,8 +150,5 @@
             </div>
         </div>
 
-
-
-    </div>
 </asp:Content>
 

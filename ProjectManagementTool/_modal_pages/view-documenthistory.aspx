@@ -133,7 +133,7 @@
                             <asp:BoundField DataField="Status_Comments" HeaderText="Comments">
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="LinkToReviewFile" ItemStyle-CssClass="hiddencol"  HeaderStyle-CssClass="hiddencol" HeaderText="LinkToReviewFile" >
+                            <asp:BoundField DataField="LinkToReviewFile" ItemStyle-CssClass="hiddencol" HtmlEncode="false"  HeaderStyle-CssClass="hiddencol" HeaderText="LinkToReviewFile" >
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>
                             <asp:TemplateField HeaderText="Link Review File">

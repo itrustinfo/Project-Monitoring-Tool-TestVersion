@@ -299,7 +299,7 @@ function DeleteItem() {
                                                         </div>
                                                         
                                                     </div>
-                                                    <div id="DivDocumentsSyncedCount" runat="server" visible="false" style="text-align:left; font-size:10pt; margin-top:10px;">
+                                                    <div id="DivDocumentsSyncedCount" runat="server" visible="false" style="text-align:left; font-size:10pt; margin-top:10px;display:none">
                                                             
                                                             <b class="card-title text-muted text-uppercase">Last Synced Date : </b>
                                                             <asp:Label ID="LblLastSyncedDate" runat="server" Font-Bold="true" ForeColor="Green" Text="2021-09-03 14:34:05.847"></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;

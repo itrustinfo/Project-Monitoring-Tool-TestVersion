@@ -20159,5 +20159,138 @@ namespace ProjectManager.DAL
                 return sresult = 0;
             }
         }
+
+        //added on 22/04/2022
+        public string GetCategoryNameforUser(Guid ProjectUID,Guid UserUID,Guid FlowUID)
+        {
+            string Categoryname = "";
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+                if (con.State == ConnectionState.Closed) con.Open();
+                SqlCommand cmd = new SqlCommand("usp_GetCategoryNameforUser", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.Parameters.AddWithValue("@UserUID", UserUID);
+                cmd.Parameters.AddWithValue("@FlowUID", FlowUID);
+                Categoryname = (string)cmd.ExecuteScalar();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+            return Categoryname;
+        }
+
+        //added on 22/04/2022 for nakib
+
+        public DataSet GetDocuments_by_Workpackage_Orininator(Guid ProjectUID, Guid WorkPackageUID, string ActualDocument_Originator, string ProjectRefNo, string OriginatorRefNo)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetDocuments_by_Workpackage_Orininator", con);
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@ActualDocument_Originator", ActualDocument_Originator);
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectRefNumber", ProjectRefNo);
+                cmd.SelectCommand.Parameters.AddWithValue("@OriginatorRefNumber", OriginatorRefNo);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        public DataSet GetDocuments_by_Workpackage_Orininator_CategoryUID(Guid ProjectUID, Guid WorkPackageUID, string ActualDocument_Originator, string CategoryUID, string ProjectRefNo, string OriginatorRefNo)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetDocuments_by_Workpackage_Orininator_CategoryUID", con);
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@ActualDocument_Originator", ActualDocument_Originator);
+                cmd.SelectCommand.Parameters.AddWithValue("@CategoryUID", CategoryUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectRefNumber", ProjectRefNo);
+                cmd.SelectCommand.Parameters.AddWithValue("@OriginatorRefNumber", OriginatorRefNo);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        public DataTable GetSitePhotographs_by_SitePhotographUID(Guid SitePhotographUID)
+        {
+            DataTable ds = new DataTable();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_SitePhotograph_Select", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@SitePhotographUID", SitePhotographUID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        public DataSet GetAllDocumentExceptReconciliation(Guid ProjectUID, string OntbRefNumber, string OriginatorRefNumber, string status)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("USP_GetAllDocumentExceptReconciliation", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@OntbRefNumber", OntbRefNumber);
+                cmd.SelectCommand.Parameters.AddWithValue("@OriginatorRefNumber", OriginatorRefNumber);
+                cmd.SelectCommand.Parameters.AddWithValue("@Status", status);
+
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+
+        //added on 23/04/2022
+        public string GetParentTaskUID_by_TaskUID(Guid TaskUID)
+        {
+            string sUser = "";
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                if (con.State == ConnectionState.Closed) con.Open();
+                SqlCommand cmd = new SqlCommand("usp_GetParentTaskUID_by_TaskUID", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@TaskUID", TaskUID);
+                sUser = (string)cmd.ExecuteScalar();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                sUser = "Error : " + ex.Message;
+            }
+            return sUser;
+        }
     }
 }

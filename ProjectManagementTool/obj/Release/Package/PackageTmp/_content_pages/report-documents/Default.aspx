@@ -101,24 +101,38 @@
                      <div class="card">
                         <div class="card-body" >   
                             <div class="table-responsive">
-                            <table style="width:90%;">
+                            <table style="width:92%;">
                                 <tr>
                                     <td>
-                                         <h6 class="card-title text-muted text-uppercase font-weight-bold">Originator</h6>
+                                         <h6 id="hRefNo" runat="server" class="card-title text-muted text-uppercase font-weight-bold">Ontb Reference #</h6>
                                     </td>
                                     <td>&nbsp;</td>
+                                    <td><h6 class="card-title text-muted text-uppercase font-weight-bold">Originator Reference #</h6></td>
+                                    <td>&nbsp;</td>
+                                    <td><h6 class="card-title text-muted text-uppercase font-weight-bold">Originator</h6></td>
+                                    <td>&nbsp;</td>'
                                     <td><h6 class="card-title text-muted text-uppercase font-weight-bold">Discipline</h6></td>
                                     <td>&nbsp;</td>
                                 </tr>
-                             <tr><td style="width:45%;">
+                             <tr>
+                                 <td style="width:23%;">
+                                 <asp:TextBox ID="txtProjectRef" runat="server" CssClass="form-control" ></asp:TextBox>
+                            </td>
+                                 <td>&nbsp;</td>
+                                 <td style="width:23%;">
+                                 <asp:TextBox ID="txtOriginator" runat="server" CssClass="form-control" ></asp:TextBox>
+                            </td>
+                                 <td>&nbsp;</td>
+
+                                 <td style="width:23%;">
                                  <asp:DropDownList ID="DDLOriginator" runat="server" CssClass="form-control" required></asp:DropDownList>
                             </td>
                                  <td>&nbsp;</td>
-                                 <td style="width:45%;">
+                                 <td style="width:23%;">
                                      <asp:DropDownList ID="DDLDocumentCategory" runat="server" CssClass="form-control" required></asp:DropDownList>
                                  </td>
                                  <td>&nbsp;</td>
-                                 <td style="width:10%;">
+                                 <td style="width:8%;">
                                      <asp:Button ID="BtnOriginatorSubmit" runat="server" Text="Submit" CssClass="btn btn-primary" OnClick="BtnOriginatorSubmit_Click" />
                                  </td>
                              </tr>

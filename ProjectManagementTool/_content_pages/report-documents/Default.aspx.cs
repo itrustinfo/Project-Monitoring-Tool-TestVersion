@@ -44,6 +44,8 @@ namespace ProjectManager._content_pages.reports
                     DivByOriginator.Visible = false;
                     ByOriginator.Visible = false;
                     DivDocumentSummary.Visible = false;
+                    //
+                    hRefNo.InnerHtml = Constants.ProjectReferenceName;
                 }
             }
         }
@@ -179,11 +181,6 @@ namespace ProjectManager._content_pages.reports
                     btnExportExcel.Visible = false;
                     GrdDocumentMaster.DataSource = null;
                     GrdDocumentMaster.DataBind();
-                }
-                //
-                if (DDlProject.SelectedItem.ToString() == "CP-25" || DDlProject.SelectedItem.ToString() == "CP-26" || DDlProject.SelectedItem.ToString() == "CP-27" || DDlProject.SelectedItem.ToString() == "Test Project 1")
-                {
-                    DocumentSummary.Visible = false;
                 }
 
             }
@@ -1028,7 +1025,7 @@ namespace ProjectManager._content_pages.reports
                 DivByOriginator.Visible = true;
                 BindDocumentSummary(DDlProject.SelectedValue, DDLWorkPackage.SelectedValue, RBLReportFor.SelectedValue);
 
-                DataSet ds = getdt.GetDocuments_by_Workpackage_Orininator(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), DDLOriginator.SelectedValue);
+                DataSet ds = getdt.GetDocuments_by_Workpackage_Orininator(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), DDLOriginator.SelectedValue, txtProjectRef.Text, txtOriginator.Text);
                 GrdOriginatorDocuments.DataSource = ds;
                 GrdOriginatorDocuments.DataBind();
                 if (ds.Tables[0].Rows.Count > 0)
@@ -1863,11 +1860,11 @@ namespace ProjectManager._content_pages.reports
                 DataSet ds = new DataSet();
                 if (DDLDocumentCategory.SelectedValue == "All")
                 {
-                    ds = getdt.GetDocuments_by_Workpackage_Orininator(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), DDLOriginator.SelectedValue);
+                    ds = getdt.GetDocuments_by_Workpackage_Orininator(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), DDLOriginator.SelectedValue, txtProjectRef.Text, txtOriginator.Text);
                 }
                 else
                 {
-                    ds = getdt.GetDocuments_by_Workpackage_Orininator_CategoryUID(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), DDLOriginator.SelectedValue, DDLDocumentCategory.SelectedValue);
+                    ds = getdt.GetDocuments_by_Workpackage_Orininator_CategoryUID(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), DDLOriginator.SelectedValue, DDLDocumentCategory.SelectedValue, txtProjectRef.Text, txtOriginator.Text);
                 }
                 
                 GrdOriginatorDocuments.DataSource = ds;
@@ -1883,10 +1880,6 @@ namespace ProjectManager._content_pages.reports
                     btnbyOriginatorExportPDF.Visible = false;
                     btnbyOriginatorPrint.Visible = false;
                     btnbyOriginatorExportExcel.Visible = false;
-                }
-                if (DDlProject.SelectedItem.ToString() == "CP-25" || DDlProject.SelectedItem.ToString() == "CP-26" || DDlProject.SelectedItem.ToString() == "CP-27" || DDlProject.SelectedItem.ToString() == "Test Project 1")
-                {
-                    DocumentSummary.Visible = false;
                 }
             }
         }

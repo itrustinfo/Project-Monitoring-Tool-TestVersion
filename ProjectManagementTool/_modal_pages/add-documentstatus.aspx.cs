@@ -231,16 +231,19 @@ namespace ProjectManagementTool._modal_pages
                     }
                     //
                     int commentsCount = 0;
+                    string categoryname = string.Empty;
+                    string pending = string.Empty;
                     if (DDlStatus.SelectedItem.ToString().Contains("Accepted-PMC"))
                     {
                         DataSet dsMUSers = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 3);
+                        string FlowUID = getdata.GetFlowUIDBySubmittalUID(new Guid(getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"]))));
                         if (dsMUSers.Tables[0].Rows.Count > 0)
                         {
                             foreach (DataRow druser in dsMUSers.Tables[0].Rows)
                             {
                                 if(getdata.checkUserAddedDocumentstatus(new Guid(Request.QueryString["DocID"].ToString()), new Guid(druser["Approver"].ToString()),"Accepted") == 0)
                                 {
-                                    
+                                    pending = pending +  getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(druser["Approver"].ToString()), new Guid(FlowUID)) + ",";
                                 }
                                 else
                                 {
@@ -252,8 +255,19 @@ namespace ProjectManagementTool._modal_pages
                         if (dsMUSers.Tables[0].Rows.Count != commentsCount)
                         {
                             Status = "Accepted";
+                            categoryname = getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(Session["UserUID"].ToString()), new Guid(FlowUID));
+                            pending = pending.Replace(categoryname, "").Replace(",,",",");
+                            Comments = Session["Username"].ToString() + " (" + categoryname + ") added - " + txtcomments.Text + " ( " + pending + " pending to take action )";
+
                         }
-                        Comments = Session["Username"].ToString() + " added - " + txtcomments.Text;
+                        else
+                        {
+                            categoryname = getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(Session["UserUID"].ToString()), new Guid(FlowUID));
+
+                            Comments = Session["Username"].ToString() + " (" + categoryname + ") added - " + txtcomments.Text ;
+
+                        }
+
                     }
                     //
                     if (Request.QueryString["StatusUID"] != null)

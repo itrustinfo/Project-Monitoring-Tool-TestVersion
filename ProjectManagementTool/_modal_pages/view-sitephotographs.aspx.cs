@@ -78,6 +78,25 @@ namespace ProjectManagementTool._modal_pages
             }
         }
 
+        protected void GrdSitePhotograph_UpdateCommand(object source, DataListCommandEventArgs e)
+        {
+            string UID = GrdSitePhotograph.DataKeys[e.Item.ItemIndex].ToString();
+            DataTable data = getdata.GetSitePhotographs_by_SitePhotographUID(new Guid(UID));
+            if(data != null && data.Rows.Count > 0)
+            {
+                string description = data.Rows[0].Field<string>("Description");
+                DateTime uploadedDate = data.Rows[0].Field<DateTime>("Uploaded_Date");
+                string siteImage = data.Rows[0].Field<string>("Site_Image");
+                if(siteImage.StartsWith("~/"))
+                {
+                    siteImage = siteImage.Replace("~/", "../");
+                }
+                txtDesc.Text = description;
+                txtUploadDate.Text = uploadedDate.ToString("MM/dd/yyyy hh:mm:ss tt");
+                ClientScript.RegisterStartupScript(this.GetType(), "LoadDiv", "LoadDiv('" + siteImage + "');", true);
+            }
+        }
+
         protected void btnSearch_Click(object source, EventArgs e)
         {
             DateTime fromDate = Convert.ToDateTime("01-Jan-1900");
