@@ -34,10 +34,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2021 23:12:32</publishTime>
     </File>
     <File Include="bin/ProjectManagementTool.dll">
-      <publishTime>04/25/2022 20:05:32</publishTime>
+      <publishTime>04/27/2022 18:04:31</publishTime>
     </File>
     <File Include="bin/ProjectManagementTool.pdb">
-      <publishTime>04/25/2022 20:05:32</publishTime>
+      <publishTime>04/27/2022 18:04:31</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>10/20/2021 23:12:32</publishTime>

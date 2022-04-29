@@ -193,6 +193,7 @@
     <Content Include="_modal_pages\add-caa-jica-claims.aspx" />
     <Content Include="_modal_pages\add-complianceofMOM.aspx" />
     <Content Include="_modal_pages\add-conactivity.aspx" />
+    <Content Include="_modal_pages\add-document-flow.aspx" />
     <Content Include="_modal_pages\add-domaindetails.aspx" />
     <Content Include="_modal_pages\add-Fin-Month-data.aspx" />
     <Content Include="_modal_pages\add-flow-master.aspx" />
@@ -881,6 +882,13 @@
     </Compile>
     <Compile Include="_modal_pages\add-conactivity.aspx.designer.cs">
       <DependentUpon>add-conactivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_modal_pages\add-document-flow.aspx.cs">
+      <DependentUpon>add-document-flow.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_modal_pages\add-document-flow.aspx.designer.cs">
+      <DependentUpon>add-document-flow.aspx</DependentUpon>
     </Compile>
     <Compile Include="_modal_pages\add-domaindetails.aspx.cs">
       <DependentUpon>add-domaindetails.aspx</DependentUpon>

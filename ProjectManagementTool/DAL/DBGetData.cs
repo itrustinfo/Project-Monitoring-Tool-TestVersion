@@ -20292,5 +20292,102 @@ namespace ProjectManager.DAL
             }
             return sUser;
         }
+
+        //added on 28/04/2022 for nakib
+
+        public int InsertorUpdateDocumentFlowDisplayMaster(Guid flowUID, string step_name1, int step_Duration1,
+            string step_name2, int step_Duration2,
+            string step_name3, int step_Duration3,
+            string step_name4, int step_Duration4,
+            string step_name5, int step_Duration5,
+            string step_name6, int step_Duration6,
+            string step_name7, int step_Duration7,
+            string step_name8, int step_Duration8,
+            string step_name9, int step_Duration9,
+            string step_name10, int step_Duration10,
+            string step_name11, int step_Duration11,
+            string step_name12, int step_Duration12,
+            string step_name13, int step_Duration13,
+            string step_name14, int step_Duration14,
+            string step_name15, int step_Duration15,
+            string step_name16, int step_Duration16,
+            string step_name17, int step_Duration17,
+            string step_name18, int step_Duration18,
+            string step_name19, int step_Duration19,
+            string step_name20, int step_Duration20)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("USP_DocumentFlow_Insert_Update"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@FlowMasterUID", flowUID);
+                        cmd.Parameters.AddWithValue("@FlowStep1_Name", step_name1);
+                        cmd.Parameters.AddWithValue("@FlowStep2_Name", step_name2);
+                        cmd.Parameters.AddWithValue("@FlowStep3_Name", step_name3);
+                        cmd.Parameters.AddWithValue("@FlowStep4_Name", step_name4);
+                        cmd.Parameters.AddWithValue("@FlowStep5_Name", step_name5);
+                        cmd.Parameters.AddWithValue("@FlowStep6_Name", step_name6);
+                        cmd.Parameters.AddWithValue("@FlowStep7_Name", step_name7);
+                        cmd.Parameters.AddWithValue("@FlowStep8_Name", step_name8);
+                        cmd.Parameters.AddWithValue("@FlowStep9_Name", step_name9);
+                        cmd.Parameters.AddWithValue("@FlowStep10_Name", step_name10);
+                        cmd.Parameters.AddWithValue("@FlowStep11_Name", step_name11);
+                        cmd.Parameters.AddWithValue("@FlowStep12_Name", step_name12);
+                        cmd.Parameters.AddWithValue("@FlowStep13_Name", step_name13);
+                        cmd.Parameters.AddWithValue("@FlowStep14_Name", step_name14);
+                        cmd.Parameters.AddWithValue("@FlowStep15_Name", step_name15);
+                        cmd.Parameters.AddWithValue("@FlowStep16_Name", step_name16);
+                        cmd.Parameters.AddWithValue("@FlowStep17_Name", step_name17);
+                        cmd.Parameters.AddWithValue("@FlowStep18_Name", step_name18);
+                        cmd.Parameters.AddWithValue("@FlowStep19_Name", step_name19);
+                        cmd.Parameters.AddWithValue("@FlowStep20_Name", step_name20);
+
+                        cmd.Parameters.AddWithValue("@FlowStep1_Duration", step_Duration1);
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration2, "FlowStep2_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration3, "FlowStep3_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration4, "FlowStep4_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration5, "FlowStep5_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration6, "FlowStep6_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration7, "FlowStep7_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration8, "FlowStep8_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration9, "FlowStep9_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration10, "FlowStep10_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration11, "FlowStep11_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration12, "FlowStep12_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration13, "FlowStep13_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration14, "FlowStep14_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration15, "FlowStep15_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration16, "FlowStep16_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration17, "FlowStep17_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration18, "FlowStep18_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration19, "FlowStep19_Duration"));
+                        cmd.Parameters.Add(GetSqlParameterForDocumentFlow(step_Duration20, "FlowStep20_Duration"));
+
+                        con.Open();
+                        cnt = cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+                return cnt;
+            }
+            catch (Exception ex)
+            {
+                return cnt;
+            }
+        }
+
+        private SqlParameter GetSqlParameterForDocumentFlow(int duration, string parameterName)
+        {
+            if (duration == 0)
+                return new SqlParameter { SqlValue = DBNull.Value, ParameterName = parameterName };
+            else
+                return new SqlParameter { SqlValue = duration, ParameterName = parameterName };
+        }
     }
 }

@@ -2310,8 +2310,15 @@ namespace ProjectManager._content_pages.documents
                 //}
                 
                 AddDocument.Visible = true;
+
+                DataTable dtwkpg = getdata.GetTaskDetails_TaskUID(TreeView1.SelectedNode.Value);
+                if(dtwkpg.Rows.Count > 0)
+                {
+                    ViewState["WkpgUID"] = dtwkpg.Rows[0]["WorkPackageUID"].ToString();
+                }
+                
                 //AddDocument.HRef = "/_modal_pages/add-submittal.aspx?type=add&TaskUID=" + TreeView1.SelectedNode.Value + "&ViewDocumentBy=" + RDBDocumentView.SelectedValue + "&PrjUID=" + TreeView1.SelectedNode.Parent.Parent.Parent.Value + "&WorkPackageUID=" + TreeView1.SelectedNode.Parent.Parent.Value;
-                AddDocument.HRef = "/_modal_pages/add-submittal.aspx?type=add&TaskUID=" + TreeView1.SelectedNode.Value + "&ViewDocumentBy=" + RDBDocumentView.SelectedValue + "&PrjUID=" + DDlProject.SelectedValue + "&WorkPackageUID=" + TreeView1.SelectedNode.Parent.Parent.Value;
+                AddDocument.HRef = "/_modal_pages/add-submittal.aspx?type=add&TaskUID=" + TreeView1.SelectedNode.Value + "&ViewDocumentBy=" + RDBDocumentView.SelectedValue + "&PrjUID=" + DDlProject.SelectedValue + "&WorkPackageUID=" + ViewState["WkpgUID"].ToString();
                 ActivityHeading.Text = "Activity : " + TreeView1.SelectedNode.Text;
                 DataSet ds = getdata.GetTask_by_ParentTaskUID(new Guid(TreeView1.SelectedNode.Value));
                 GrdTreeView.DataSource = ds;
