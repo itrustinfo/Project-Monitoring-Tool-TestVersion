@@ -431,6 +431,16 @@ namespace ProjectManager._master_pages
                     ReportReconciliation.Visible = false;
                     ReportReconciliationStatus.Visible = false;
                 }
+                if(Session["TypeOfUser"].ToString() == "U")
+                {
+                    navlinkFlowMaster.Visible = true;
+                    navlinkDocumentFlowMaster.Visible = true;
+                }
+                else
+                {
+                    navlinkFlowMaster.Visible = false;
+                    navlinkDocumentFlowMaster.Visible = false;
+                }
             }
             //
         }

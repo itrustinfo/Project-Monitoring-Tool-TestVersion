@@ -339,11 +339,11 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
                                         <i class="fas fa-user-cog"></i>
                                         <span class="d-inline-block ml-1">User Management</span>
                                     </a>
-                                    <a class="dropdown-item" id="navlinkFlowMaster" href="/_modal_pages/add-flow-master.aspx" title="User Flow Master">
+                                    <a class="dropdown-item" id="navlinkFlowMaster" runat="server" href="/_modal_pages/add-flow-master.aspx" title="User Flow Master">
                                         <i class="fas fa-tasks"></i>
                                         <span class="d-inline-block ml-1">User Flow Master</span>
                                     </a>
-                                    <a class="dropdown-item" id="navlinkDocumentFlowMaster" href="/_modal_pages/add-document-flow.aspx" title="Document Flow Display Master">
+                                    <a class="dropdown-item" id="navlinkDocumentFlowMaster" runat="server" href="/_modal_pages/add-document-flow.aspx" title="Document Flow Display Master">
                                         <i class="fas fa-tasks"></i>
                                         <span class="d-inline-block ml-1">Document Flow Display Master</span>
                                     </a>

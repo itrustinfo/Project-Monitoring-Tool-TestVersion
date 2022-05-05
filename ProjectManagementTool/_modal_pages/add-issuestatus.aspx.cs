@@ -146,7 +146,7 @@ namespace ProjectManagementTool._modal_pages
 
                     getdata.EncryptFile(Server.MapPath(savedPath), Server.MapPath(DecryptPagePath));
 
-                    getdata.InsertUploadedDocument(fileName, FileDirectory, issue_remarks_uid.ToString());
+                    getdata.InsertUploadedDocument(sFileName + "_DE" + Extn, FileDirectory, issue_remarks_uid.ToString());
                 }
             }
 
