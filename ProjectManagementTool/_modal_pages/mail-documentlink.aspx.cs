@@ -61,7 +61,8 @@ namespace ProjectManagementTool._modal_pages
                 if (dsUser.Tables[0].Rows.Count > 0)
                 {
                     string Subject = dsUser.Tables[0].Rows[0]["UserName"].ToString() + " shared a document";
-                    string ToEmailID = dsUser.Tables[0].Rows[0]["EmailID"].ToString();
+                    string ToEmailID = CC;// dsUser.Tables[0].Rows[0]["EmailID"].ToString();
+                    CC = dsUser.Tables[0].Rows[0]["EmailID"].ToString();
                     sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
                                        "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "<style>table, th, td {border: 1px solid black; padding:6px;}</style></head>" +
                                           "<body style='font-family:Verdana, Arial, sans-serif; font-size:12px; font-style:normal;'>";
@@ -81,7 +82,7 @@ namespace ProjectManagementTool._modal_pages
                     sHtmlString += "<div style='width:100%; float:left;'>";
                     sHtmlString += "<a href='" + WebConfigurationManager.AppSettings["SiteName"] + "download-document.aspx?key=GAAHAJKHGSHHDH237HSBHJFFLMNVASERWYWB242VFSGDD8765NJMADWEWDJDJDJFNB12GAHSBMLKOUFFHFXDGZ&DocumentUID=" + Request.QueryString["DocID"] + "&Ticks=" + DateTime.Now.Ticks + "' target='_blank'>Download Here</a>";
                     sHtmlString += "</div>";
-                    sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Monitoring Tool.</div></div></body></html>";
+                    sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
                     DataTable dtemailCred = getdata.GetEmailCredentials();
                     Guid MailUID = Guid.NewGuid();
                     getdata.StoreEmaildataToMailQueue(MailUID, new Guid(Session["UserUID"].ToString()), dtemailCred.Rows[0][0].ToString(), ToEmailID, Subject, sHtmlString, CC, "");
@@ -115,7 +116,8 @@ namespace ProjectManagementTool._modal_pages
                 if (dsUser.Tables[0].Rows.Count > 0)
                 {
                     string Subject = dsUser.Tables[0].Rows[0]["UserName"].ToString() + " shared a document";
-                    string ToEmailID = dsUser.Tables[0].Rows[0]["EmailID"].ToString();
+                    string ToEmailID = CC;// dsUser.Tables[0].Rows[0]["EmailID"].ToString();
+                    CC = dsUser.Tables[0].Rows[0]["EmailID"].ToString();
                     sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
                                        "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "<style>table, th, td {border: 1px solid black; padding:6px;}</style></head>" +
                                           "<body style='font-family:Verdana, Arial, sans-serif; font-size:12px; font-style:normal;'>";
@@ -135,7 +137,7 @@ namespace ProjectManagementTool._modal_pages
                     sHtmlString += "<div style='width:100%; float:left;'>";
                     sHtmlString += "<a href='" + WebConfigurationManager.AppSettings["SiteName"] + "download-document.aspx?key=GAAHAJKHGSHHDH237HSBHJFFLMNVASERWYWB242VFSGDD8765NJMADWEWDJDJDJFNB12GAHSBMLKOUFFHFXDGZ&GeneralDocumentUID=" + Request.QueryString["GeneralDocumentUID"] + "&Ticks=" + DateTime.Now.Ticks + "' target='_blank'>Download Here</a>";
                     sHtmlString += "</div>";
-                    sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Monitoring Tool.</div></div></body></html>";
+                    sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
                     DataTable dtemailCred = getdata.GetEmailCredentials();
                     Guid MailUID = Guid.NewGuid();
                     getdata.StoreEmaildataToMailQueue(MailUID, new Guid(Session["UserUID"].ToString()), dtemailCred.Rows[0][0].ToString(), ToEmailID, Subject, sHtmlString, CC, "");

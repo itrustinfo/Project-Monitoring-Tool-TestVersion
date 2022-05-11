@@ -25,22 +25,28 @@ namespace ProjectManagementTool._content_pages.financial_status_update
             }
             else
             {
+
                 ScriptManager.RegisterStartupScript(
                               UpdatePanel2,
                               this.GetType(),
                               "MyAction",
                               "DateText();",
                               true);
+
+                
                 if (!IsPostBack)
                 {
                     
                     LoadProjects();
                     SelectedProjectWorkpackage("Project");
                     ddlProject_SelectedIndexChanged(sender, e);
+
                     divStatus.Visible = false;
                     divStatusMonth.Visible = true;
                     AddData.HRef = "~/_modal_pages/add-Fin-Month-data.aspx?WorkPackageUID=" + ddlworkpackage.SelectedValue;
                 }
+
+
             }
             
         }
@@ -77,6 +83,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update
         {
             if (ddlProject.SelectedValue != "")
             {
+                
                 divStatus.Visible = false;
                 divStatusMonth.Visible = true;
                 DataSet ds = new DataSet();
@@ -121,6 +128,9 @@ namespace ProjectManagementTool._content_pages.financial_status_update
                     }
 
                     Session["Project_Workpackage"] = ddlProject.SelectedValue + "_" + ddlworkpackage.SelectedValue;
+
+                    Session["ProjectUID"] = ddlProject.SelectedValue;
+                    Session["WorkPackageUID"] = ddlworkpackage.SelectedValue;
                 }
             }
             
@@ -156,6 +166,9 @@ namespace ProjectManagementTool._content_pages.financial_status_update
             //LoadTaskPayments(TreeView1.SelectedNode.Value);
             FinanceMileStoneMonthBind(ddlworkpackage.SelectedValue);
             Session["Project_Workpackage"] = ddlProject.SelectedValue + "_" + ddlworkpackage.SelectedValue;
+
+            Session["ProjectUID"] = ddlProject.SelectedValue;
+            Session["WorkPackageUID"] = ddlworkpackage.SelectedValue;
         }
 
         internal void SelectedProjectWorkpackage(string pType)

@@ -20389,5 +20389,108 @@ namespace ProjectManager.DAL
             else
                 return new SqlParameter { SqlValue = duration, ParameterName = parameterName };
         }
+
+        //added on 10/05/2022 for Saji
+        internal int InsertMobilisationAdvance(Guid AdvanceUID, Guid ProjectUID, Guid WorkPackageUID, string InvoiceNo, DateTime TransDate, decimal AdvanceAmount, string TransType, Boolean edit)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_InsertMobilisationAdvance"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@MobilizationAdvanceUID", AdvanceUID);
+                        cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                        cmd.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                        cmd.Parameters.AddWithValue("@InvoiceNo", InvoiceNo);
+                        cmd.Parameters.AddWithValue("@DateGiven", TransDate);
+                        cmd.Parameters.AddWithValue("@AdvanceAmount", AdvanceAmount);
+                        cmd.Parameters.AddWithValue("@TransactionType", TransType);
+                        cmd.Parameters.AddWithValue("@Edit", edit);
+                        con.Open();
+                        cnt = cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+                return cnt;
+            }
+            catch (Exception ex)
+            {
+                return cnt;
+            }
+
+        }
+
+
+        public DataSet GetMobilisationAdvance(Guid ProjectUID, Guid WorkPackageUID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetMobilisationAdvance", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        public DataSet GetMobilisationAdvanceByID(Guid AdvanceID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetMobilisationAdvanceByID", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@MobilizationAdvanceUID", AdvanceID);
+
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        public int DeleteMobilisationAdvance(Guid mobilisationAdvanceId, Guid userId)
+        {
+            int sresult = 0;
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_DeleteMobilisationAdvance"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@MobilizationAdvanceUID", mobilisationAdvanceId);
+                        cmd.Parameters.AddWithValue("@DeletedBy", userId);
+                        con.Open();
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult;
+            }
+        }
     }
 }

@@ -251,7 +251,7 @@ namespace ProjectManagementTool._modal_pages
                         txtDeducPer1.Text = dr["Percentage"].ToString();
                         txtDeduction1.Text = dr["Amount"].ToString();
                         txtDeducPer1.Enabled = false;
-                        txtDeduction1.Enabled = false;
+                        txtDeduction1.Enabled = true;
                     }
                     else
                          if (count == 2)
@@ -357,6 +357,12 @@ namespace ProjectManagementTool._modal_pages
                     return;
                 }
 
+                if (Session["ProjectUID"] is null || Session["WorkPackageUID"] is null)
+                {
+                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "Warning", "<script language='javascript'>alert('Project ID/WorkPackageID can not be null.');</script>");
+                    return;
+                }
+
                 Guid PaymentUID = Guid.NewGuid();
                 if (Request.QueryString["type"] != null) //edit 
                 {
@@ -385,6 +391,7 @@ namespace ProjectManagementTool._modal_pages
                     }
                     TotalDeductions = TotalDeductions + DeducAmnt;
                     result = getdata.InsertRABillsDeductions(Guid.NewGuid(), PaymentUID, DeductionUID, DeducAmnt, Deducper);
+                    result = getdata.InsertMobilisationAdvance(Guid.NewGuid(), new Guid(Session["ProjectUID"].ToString()), new Guid(Session["WorkPackageUID"].ToString()), DDLInvoice.SelectedItem.Text, Convert.ToDateTime(getdata.ConvertDateFormat(dtPaymentDate.Text)), Convert.ToDecimal(txtDeduction1.Text), "Debit", false);
                 }
                 if (txtDeduction2.Text != "" && txtDeducPer2.Text != "")
                 {

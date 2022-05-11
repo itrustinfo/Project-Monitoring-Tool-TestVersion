@@ -146,6 +146,7 @@
     <Content Include="_content_pages\document-user-count\default.aspx" />
     <Content Include="_content_pages\documents-contractor\default.aspx" />
     <Content Include="_content_pages\domain-details\default.aspx" />
+    <Content Include="_content_pages\finance_mobilisation_advance\default.aspx" />
     <Content Include="_content_pages\forms-update\Default.aspx" />
     <Content Include="_content_pages\invoice-abstract\default.aspx" />
     <Content Include="_content_pages\invoice\default.aspx" />
@@ -208,6 +209,7 @@
     <Content Include="_modal_pages\add-jointinspection-to-rabill.aspx" />
     <Content Include="_modal_pages\add-jointinspection.aspx" />
     <Content Include="_modal_pages\add-location.aspx" />
+    <Content Include="_modal_pages\Add-MobilisationAdvance.aspx" />
     <Content Include="_modal_pages\add-OtherPointsforDiscussion.aspx" />
     <Content Include="_modal_pages\add-pagenamemaster.aspx" />
     <Content Include="_modal_pages\add-paymentbreakupterms.aspx" />
@@ -552,6 +554,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="_content_pages\domain-details\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_content_pages\finance_mobilisation_advance\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_content_pages\finance_mobilisation_advance\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
     <Compile Include="_content_pages\forms-update\Default.aspx.cs">
@@ -986,6 +995,13 @@
     </Compile>
     <Compile Include="_modal_pages\add-location.aspx.designer.cs">
       <DependentUpon>add-location.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_modal_pages\Add-MobilisationAdvance.aspx.cs">
+      <DependentUpon>Add-MobilisationAdvance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_modal_pages\Add-MobilisationAdvance.aspx.designer.cs">
+      <DependentUpon>Add-MobilisationAdvance.aspx</DependentUpon>
     </Compile>
     <Compile Include="_modal_pages\add-OtherPointsforDiscussion.aspx.cs">
       <DependentUpon>add-OtherPointsforDiscussion.aspx</DependentUpon>

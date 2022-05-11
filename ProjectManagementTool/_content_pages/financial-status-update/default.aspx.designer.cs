@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectManagementTool._content_pages.financial_status_update {
-    
-    
-    public partial class _default {
-        
+namespace ProjectManagementTool._content_pages.financial_status_update
+{
+
+
+    public partial class _default
+    {
+
         /// <summary>
         /// ScriptManager1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
+
         /// <summary>
         /// ddlProject control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlProject;
-        
+
         /// <summary>
         /// ddlworkpackage control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlworkpackage;
-        
+
         /// <summary>
         /// UpdatePanel2 control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel2;
-        
+
         /// <summary>
         /// BtnSearchDocuments control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnSearchDocuments;
-        
+
         /// <summary>
         /// TreeView1 control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TreeView TreeView1;
-        
+
         /// <summary>
         /// UpdateProgress2 control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdateProgress UpdateProgress2;
-        
+
         /// <summary>
         /// ActivityHeading control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ActivityHeading;
-        
+
         /// <summary>
         /// AddData control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor AddData;
-        
+
         /// <summary>
         /// Button2 control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button2;
-        
+
         /// <summary>
         /// divStatus control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divStatus;
-        
+
         /// <summary>
         /// grdFinanceMileStones control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grdFinanceMileStones;
-        
+
         /// <summary>
         /// divStatusMonth control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ProjectManagementTool._content_pages.financial_status_update {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divStatusMonth;
-        
+
         /// <summary>
         /// grdMileStoneMonths control.
         /// </summary>

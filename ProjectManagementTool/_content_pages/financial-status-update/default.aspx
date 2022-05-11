@@ -54,16 +54,22 @@
         $("#ModViewDocument iframe").attr("src", url);
         $("#ModViewDocument").modal("show");
             });
-
-               
+              
               $(".showBankGuaranteeModal").click(function (e) {
                  jQuery.noConflict();
                 e.preventDefault();
                 var url = $(this).attr("href");
                 $("#ModAddBankGuarantee iframe").attr("src", url);
                 $("#ModAddBankGuarantee").modal("show");
-            });
-         
+              });
+
+              $(".showMobilisationAdvanceModal").click(function (e) {
+                  jQuery.noConflict();
+                  e.preventDefault();
+                  var url = $(this).attr("href");
+                  $("#ModAddMobilisationAdvance iframe").attr("src", url);
+                  $("#ModAddMobilisationAdvance").modal("show");
+              });        
         }
 
         $(document).ready(function () {
@@ -168,7 +174,8 @@
                                         <div class="table-responsive">
                                              <div align="left">
                                    <a id="AddData" runat="server" href="~/_modal_pages/add-Fin-Month-data.aspx" class="showBankGuaranteeModal"><asp:Button ID="Button2" runat="server" Text="+ Add" CssClass="btn btn-primary"></asp:Button></a>
-                                </div><br />
+                                 
+                                             </div><br />
                                         <div id="divStatus" runat="server" visible="false">
                                             <asp:GridView ID="grdFinanceMileStones" runat="server" DataKeyNames="Finance_MileStoneUID" AutoGenerateEditButton="false" CssClass="table table-bordered" AutoGenerateColumns="False" Width="100%" OnRowDataBound="grdFinanceMileStones_RowDataBound" OnRowCommand="grdFinanceMileStones_RowCommand" OnRowEditing="grdFinanceMileStones_RowEditing">
                                                 <Columns>
@@ -361,7 +368,7 @@
 
                                                     <asp:TemplateField HeaderText="Actual Payment (Crores)" ItemStyle-HorizontalAlign="Right">
                                                         <ItemTemplate>
-                                                           <%#Eval("PaymentMade")%>
+                                                           <%#Eval("PaymentMade")%> 
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                       <asp:TemplateField HeaderText="Total Deductions (Crores)" ItemStyle-HorizontalAlign="Right">
@@ -436,6 +443,20 @@
 		    <div class="modal-content">
 			    <div class="modal-header">
 				    <h5 class="modal-title">Add Month Data</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:500px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
+    </div>
+    <div id="ModAddMobilisationAdvance" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">Add Mobilisation Advance</h5>
                     <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
 			    </div>
 			    <div class="modal-body">
