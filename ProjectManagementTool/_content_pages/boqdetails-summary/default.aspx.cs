@@ -440,7 +440,7 @@ namespace ProjectManagementTool._content_pages.boqdetails_summary
         {
             try
             {
-                AddDependency.HRef = " /_modal_pages/add-boqdetails.aspx?projectuid=" + DDlProject.SelectedValue + "@WorkpackageUID=" + DDLWorkPackage.SelectedValue + "&parameterType=" + TreeView1.SelectedNode.Target;
+                AddDependency.HRef = " /_modal_pages/add-boqdetails.aspx?projectuid=" + DDlProject.SelectedValue + "&WorkpackageUID=" + DDLWorkPackage.SelectedValue + "&parameterType=" + TreeView1.SelectedNode.Target + "&ParentUID=" + TreeView1.SelectedNode.Value;
                 DataTable dtBOQSummary = dbgetdata.getBOQParent_Details(new Guid(TreeView1.SelectedNode.Value), TreeView1.SelectedNode.Target);
                 GrdTreeView.DataSource = dtBOQSummary;
                 GrdTreeView.DataBind();

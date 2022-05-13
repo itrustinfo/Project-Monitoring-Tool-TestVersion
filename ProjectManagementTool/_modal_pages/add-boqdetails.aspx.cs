@@ -19,7 +19,7 @@ namespace ProjectManagementTool._modal_pages
             {
                 if(Request.QueryString["projectUid"] != null )
                 {
-                    if(Guid.TryParse(Request.QueryString["projectUid"].ToString(),out Guid result))
+                    if (Guid.TryParse(Request.QueryString["projectUid"].ToString(),out Guid result))
                     {
                         getBOQItems(result, Request.QueryString["parameterType"].ToString());
                         btnSubmit.Visible = true;
@@ -67,7 +67,10 @@ namespace ProjectManagementTool._modal_pages
                     txtForgignUsdRate.Value = dsBOQDetails.Tables[0].Rows[0]["USD-Rate"].ToString();
                     txtForgignUsdRate.Disabled = true;
                     txtInrRate.Value = dsBOQDetails.Tables[0].Rows[0]["INR-Rate"].ToString();
-
+                    txtExWorks.Value = dsBOQDetails.Tables[0].Rows[0]["ExWorks"].ToString();
+                    txtDuties.Value = dsBOQDetails.Tables[0].Rows[0]["Duties"].ToString();
+                    txtLocalTransport.Value = dsBOQDetails.Tables[0].Rows[0]["LocalTransport"].ToString();
+                    txtGST.Value = dsBOQDetails.Tables[0].Rows[0]["GST"].ToString();
                 }
             }
             catch( Exception ex)
@@ -102,7 +105,7 @@ namespace ProjectManagementTool._modal_pages
             try
             {
                
-                int cnt = dbObj.UpdateBOQDetails(txtitemnumber.Text, txtdesc.Text, txtquantity.Value, txtUnit.Value, txtInrRate.Value, txtLocalInrAmount.Value, new Guid(hidUid.Value));
+                int cnt = dbObj.UpdateBOQDetails(txtitemnumber.Text, txtdesc.Text, txtquantity.Value, txtUnit.Value, txtInrRate.Value, txtLocalInrAmount.Value, new Guid(hidUid.Value), txtDuties.Value, txtExWorks.Value, txtLocalTransport.Value, txtGST.Value);
                 if (cnt > 0)
                 {
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");
@@ -119,15 +122,19 @@ namespace ProjectManagementTool._modal_pages
         {
             try
             {
-                DataSet dtItems =dbObj.GetBOQDetails_by_BOQDetailsUID(new Guid(hidUid.Value));
-                string projectUid = "";
-                if(dtItems.Tables[0].Rows.Count>0)
-                {
-                    projectUid = dtItems.Tables[0].Rows[0]["projectuid"].ToString();
-                }
-              int cnt=   dbObj.InsertBOQDetails(txtitemnumber.Text, txtdesc.Text, txtquantity.Value, txtUnit.Value, txtInrRate.Value, txtForgignJpyRate.Value,
-                    txtForgignUsdRate.Value, txtLocalInrAmount.Value, txtforeignJpyAmount.Value, txtforeignUsdAmount.Value, hidUid.Value,
-                    new Guid(projectUid));
+                string projectUid = string.Empty, parentUID = string.Empty, workPackageUID = string.Empty;
+                if (Request.QueryString["ParentUID"] != null)
+                    parentUID = Request.QueryString["ParentUID"].ToString();
+                if (Request.QueryString["projectUid"] != null)
+                    projectUid = Request.QueryString["projectUid"].ToString();
+                if (Request.QueryString["WorkpackageUID"] != null)
+                    workPackageUID = Request.QueryString["WorkpackageUID"].ToString();
+
+
+
+                int cnt =   dbObj.InsertBOQDetails(txtitemnumber.Text, txtdesc.Text, txtquantity.Value, txtUnit.Value, txtInrRate.Value, txtForgignJpyRate.Value,
+                    txtForgignUsdRate.Value, txtLocalInrAmount.Value, txtforeignJpyAmount.Value, txtforeignUsdAmount.Value, parentUID,
+                    new Guid(projectUid), string.Empty, new Guid(workPackageUID), txtDuties.Value, txtExWorks.Value, txtLocalTransport.Value, txtGST.Value);
                 if (cnt > 0)
                 {
                     Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");

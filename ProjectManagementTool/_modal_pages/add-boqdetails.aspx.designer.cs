@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectManagementTool._modal_pages {
-    
-    
-    public partial class add_boqdetails {
-        
+namespace ProjectManagementTool._modal_pages
+{
+
+
+    public partial class add_boqdetails
+    {
+
         /// <summary>
         /// FrmAddResource control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm FrmAddResource;
-        
+
         /// <summary>
         /// ScriptManager1 control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
+
         /// <summary>
         /// hidUid control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hidUid;
-        
+
         /// <summary>
         /// txtitemnumber control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtitemnumber;
-        
+
         /// <summary>
         /// txtUnit control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtUnit;
-        
+
         /// <summary>
         /// txtquantity control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtquantity;
-        
+
         /// <summary>
         /// txtInrRate control.
         /// </summary>
@@ -74,7 +76,34 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtInrRate;
-        
+
+        /// <summary>
+        /// txtDuties control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtDuties;
+
+        /// <summary>
+        /// txtExWorks control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtExWorks;
+
+        /// <summary>
+        /// txtLocalTransport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtLocalTransport;
+
         /// <summary>
         /// txtForgignUsdRate control.
         /// </summary>
@@ -83,7 +112,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtForgignUsdRate;
-        
+
         /// <summary>
         /// txtForgignJpyRate control.
         /// </summary>
@@ -92,7 +121,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtForgignJpyRate;
-        
+
         /// <summary>
         /// txtLocalInrAmount control.
         /// </summary>
@@ -101,7 +130,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtLocalInrAmount;
-        
+
         /// <summary>
         /// txtforeignUsdAmount control.
         /// </summary>
@@ -110,7 +139,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtforeignUsdAmount;
-        
+
         /// <summary>
         /// txtforeignJpyAmount control.
         /// </summary>
@@ -119,7 +148,16 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtforeignJpyAmount;
-        
+
+        /// <summary>
+        /// txtGST control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtGST;
+
         /// <summary>
         /// txtdesc control.
         /// </summary>
@@ -128,7 +166,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtdesc;
-        
+
         /// <summary>
         /// btnUpdate control.
         /// </summary>
@@ -137,7 +175,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnUpdate;
-        
+
         /// <summary>
         /// btnSubmit control.
         /// </summary>

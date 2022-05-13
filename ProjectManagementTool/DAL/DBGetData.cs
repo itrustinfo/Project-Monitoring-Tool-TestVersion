@@ -15073,80 +15073,80 @@ namespace ProjectManager.DAL
                 return sresult = 0;
             }
         }
-        internal int UpdateBOQDetails(string itemNo, string description, string quantity, string unit, string inrRate, string inrAmount, Guid uid)
-        {
-            int cnt = 0;
-            try
-            {
-                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
-                {
+        //internal int UpdateBOQDetails(string itemNo, string description, string quantity, string unit, string inrRate, string inrAmount, Guid uid)
+        //{
+        //    int cnt = 0;
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+        //        {
 
-                    using (SqlCommand cmd = new SqlCommand("usp_UpdateBOQDetails"))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = con;
-                        cmd.Parameters.AddWithValue("@uid", uid);
-                        cmd.Parameters.AddWithValue("@itemNo", itemNo);
-                        cmd.Parameters.AddWithValue("@description", description);
-                        cmd.Parameters.AddWithValue("@quantity", quantity);
-                        cmd.Parameters.AddWithValue("@unit", unit);
-                        cmd.Parameters.AddWithValue("@inrRate", inrRate);
-                        cmd.Parameters.AddWithValue("@inrAmount", inrAmount);
-                        con.Open();
-                        cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
-                        con.Close();
-                        //sresult = true;
-                    }
-                }
+        //            using (SqlCommand cmd = new SqlCommand("usp_UpdateBOQDetails"))
+        //            {
+        //                cmd.CommandType = CommandType.StoredProcedure;
+        //                cmd.Connection = con;
+        //                cmd.Parameters.AddWithValue("@uid", uid);
+        //                cmd.Parameters.AddWithValue("@itemNo", itemNo);
+        //                cmd.Parameters.AddWithValue("@description", description);
+        //                cmd.Parameters.AddWithValue("@quantity", quantity);
+        //                cmd.Parameters.AddWithValue("@unit", unit);
+        //                cmd.Parameters.AddWithValue("@inrRate", inrRate);
+        //                cmd.Parameters.AddWithValue("@inrAmount", inrAmount);
+        //                con.Open();
+        //                cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
+        //                con.Close();
+        //                //sresult = true;
+        //            }
+        //        }
 
-            }
-            catch (Exception ex)
-            {
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-            }
-            return cnt;
-        }
+        //    }
+        //    return cnt;
+        //}
 
-        internal int InsertBOQDetails(string itemNo, string description, string quantity, string unit,
-        string inrRate, string jpyRate, string usdRate, string inrAmount, string jpyAmount, string usdAmount, string parentId, Guid projectuid)
-        {
-            int cnt = 0;
-            try
-            {
-                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
-                {
+        //internal int InsertBOQDetails(string itemNo, string description, string quantity, string unit,
+        //string inrRate, string jpyRate, string usdRate, string inrAmount, string jpyAmount, string usdAmount, string parentId, Guid projectuid)
+        //{
+        //    int cnt = 0;
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+        //        {
 
-                    using (SqlCommand cmd = new SqlCommand("usp_InsertBOQDetails"))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = con;
-                        cmd.Parameters.AddWithValue("@uid", Guid.NewGuid());
-                        cmd.Parameters.AddWithValue("@itemNo", itemNo);
-                        cmd.Parameters.AddWithValue("@description", description);
-                        cmd.Parameters.AddWithValue("@quantity", quantity);
-                        cmd.Parameters.AddWithValue("@unit", unit);
-                        cmd.Parameters.AddWithValue("@inrRate", inrRate);
-                        cmd.Parameters.AddWithValue("@jpyRate", jpyRate);
-                        cmd.Parameters.AddWithValue("@usdRate", usdRate);
-                        cmd.Parameters.AddWithValue("@inrAmount", inrAmount);
-                        cmd.Parameters.AddWithValue("@jpyAmount", jpyAmount);
-                        cmd.Parameters.AddWithValue("@usdAmount", usdAmount);
-                        cmd.Parameters.AddWithValue("@parentId", parentId);
-                        cmd.Parameters.AddWithValue("@projectuid", projectuid);
-                        con.Open();
-                        cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
-                        con.Close();
+        //            using (SqlCommand cmd = new SqlCommand("usp_InsertBOQDetails"))
+        //            {
+        //                cmd.CommandType = CommandType.StoredProcedure;
+        //                cmd.Connection = con;
+        //                cmd.Parameters.AddWithValue("@uid", Guid.NewGuid());
+        //                cmd.Parameters.AddWithValue("@itemNo", itemNo);
+        //                cmd.Parameters.AddWithValue("@description", description);
+        //                cmd.Parameters.AddWithValue("@quantity", quantity);
+        //                cmd.Parameters.AddWithValue("@unit", unit);
+        //                cmd.Parameters.AddWithValue("@inrRate", inrRate);
+        //                cmd.Parameters.AddWithValue("@jpyRate", jpyRate);
+        //                cmd.Parameters.AddWithValue("@usdRate", usdRate);
+        //                cmd.Parameters.AddWithValue("@inrAmount", inrAmount);
+        //                cmd.Parameters.AddWithValue("@jpyAmount", jpyAmount);
+        //                cmd.Parameters.AddWithValue("@usdAmount", usdAmount);
+        //                cmd.Parameters.AddWithValue("@parentId", parentId);
+        //                cmd.Parameters.AddWithValue("@projectuid", projectuid);
+        //                con.Open();
+        //                cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
+        //                con.Close();
 
-                    }
-                }
+        //            }
+        //        }
 
-            }
-            catch (Exception ex)
-            {
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-            }
-            return cnt;
-        }
+        //    }
+        //    return cnt;
+        //}
         internal DataTable getInspectionReports(string InspectionUid)
         {
             DataTable ds = new DataTable();
@@ -20492,5 +20492,98 @@ namespace ProjectManager.DAL
                 return sresult;
             }
         }
+
+        // added on 13/05/2022 for nakib
+
+        internal int InsertBOQDetails(string itemNo, string description, string quantity, string unit,
+        string inrRate, string jpyRate, string usdRate, string inrAmount, string jpyAmount, string usdAmount, string parentId, Guid projectuid, string typeofBOQ, Guid workPackageUID
+            , string duties, string exWorks, string localTransport, string gst)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_InsertBOQDetails"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.CommandTimeout = 0;
+                        cmd.Parameters.AddWithValue("@uid", Guid.NewGuid());
+                        cmd.Parameters.AddWithValue("@itemNo", itemNo);
+                        cmd.Parameters.AddWithValue("@description", description);
+                        cmd.Parameters.AddWithValue("@quantity", quantity);
+                        cmd.Parameters.AddWithValue("@unit", unit);
+                        cmd.Parameters.AddWithValue("@inrRate", inrRate);
+                        cmd.Parameters.AddWithValue("@jpyRate", jpyRate);
+                        cmd.Parameters.AddWithValue("@usdRate", usdRate);
+                        cmd.Parameters.AddWithValue("@inrAmount", inrAmount);
+                        cmd.Parameters.AddWithValue("@jpyAmount", jpyAmount);
+                        cmd.Parameters.AddWithValue("@usdAmount", usdAmount);
+                        cmd.Parameters.AddWithValue("@parentId", parentId);
+                        cmd.Parameters.AddWithValue("@projectuid", projectuid);
+                        cmd.Parameters.AddWithValue("@typeOfBOQ", typeofBOQ);
+                        cmd.Parameters.AddWithValue("@WorkPackageUID", workPackageUID);
+
+                        cmd.Parameters.AddWithValue("@duties", duties);
+                        cmd.Parameters.AddWithValue("@exWorks", exWorks);
+                        cmd.Parameters.AddWithValue("@localTransport", localTransport);
+                        cmd.Parameters.AddWithValue("@gst", gst);
+                        con.Open();
+                        cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
+                        con.Close();
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return cnt;
+        }
+
+
+        internal int UpdateBOQDetails(string itemNo, string description, string quantity, string unit, string inrRate, string inrAmount, Guid uid, string duties, string exWorks, string localTransport, string gst)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_UpdateBOQDetails"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@uid", uid);
+                        cmd.Parameters.AddWithValue("@itemNo", itemNo);
+                        cmd.Parameters.AddWithValue("@description", description);
+                        cmd.Parameters.AddWithValue("@quantity", quantity);
+                        cmd.Parameters.AddWithValue("@unit", unit);
+                        cmd.Parameters.AddWithValue("@inrRate", inrRate);
+                        cmd.Parameters.AddWithValue("@inrAmount", inrAmount);
+
+                        cmd.Parameters.AddWithValue("@duties", duties);
+                        cmd.Parameters.AddWithValue("@exWorks", exWorks);
+                        cmd.Parameters.AddWithValue("@localTransport", localTransport);
+                        cmd.Parameters.AddWithValue("@gst", gst);
+                        con.Open();
+                        cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
+                        con.Close();
+                        //sresult = true;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return cnt;
+        }
+
     }
 }
