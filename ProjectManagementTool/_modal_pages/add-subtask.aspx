@@ -456,6 +456,13 @@
                         <label class="lblCss" for="ddlStatus">Status</label>
                         <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control"></asp:DropDownList>
                     </div>
+
+                    <%--added checkbox by saji augustin dated 17/05/2022--%>
+
+                    <div class="form-group">
+                        <label class="lblCss" for="ddlStatus">In Graph</label>
+                        <asp:CheckBox ID="chkInGraph" runat="server" CssClass="form-control" />
+                    </div>
                 </div>
             </div> 
         </div>

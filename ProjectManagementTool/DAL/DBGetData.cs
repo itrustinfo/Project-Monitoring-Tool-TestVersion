@@ -4135,9 +4135,9 @@ namespace ProjectManager.DAL
             }
         }
 
-        public Boolean InsertorUpdateSubTask(Guid TaskUID, Guid WorkPackageUID, Guid ProjectUID, string Owner, string Name, string Description, string RFPReference, string POReference, string StartDate, string PlannedEndDate, string ProjectedEndDate, string PlannedStartDate, string ProjectedStartDate, string ActualEndDate, 
+        public Boolean InsertorUpdateSubTask(Guid TaskUID, Guid WorkPackageUID, Guid ProjectUID, string Owner, string Name, string Description, string RFPReference, string POReference, string StartDate, string PlannedEndDate, string ProjectedEndDate, string PlannedStartDate, string ProjectedStartDate, string ActualEndDate,
             string Status, Double Basic_Budget, Double ActualExpenditure, string RFPDocument, int TaskLevel, string ParentTaskID, Double GST, Double TotalBudget, Double StatusPer, string Discipline, string UnitforProgress,
-            string Currency,string Currency_CultureInfo,double Task_Weightage, string Task_Type,Guid Workpackage_Option,double UnitQuantity, Guid BOQDetailsUID, string GroupBOQItems)
+            string Currency, string Currency_CultureInfo, double Task_Weightage, string Task_Type, Guid Workpackage_Option, double UnitQuantity, Guid BOQDetailsUID, string GroupBOQItems, Boolean in_graph)
         {
             Boolean sresult = false;
             try
@@ -4237,6 +4237,10 @@ namespace ProjectManager.DAL
                         cmd.Parameters.AddWithValue("@UnitQuantity", UnitQuantity);
                         cmd.Parameters.AddWithValue("@BOQDetailsUID", BOQDetailsUID);
                         cmd.Parameters.AddWithValue("@GroupBOQItems", GroupBOQItems);
+                        if (in_graph)
+                            cmd.Parameters.AddWithValue("@InGraph", "Y"); // modified by saji augustin
+                        else
+                            cmd.Parameters.AddWithValue("@InGraph", "N"); // modified by saji augustin
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
@@ -4250,7 +4254,6 @@ namespace ProjectManager.DAL
                 return sresult = false;
             }
         }
-
         public bool InsertBOQItemstoTask(Guid TaskUID, Guid WorkPackageUID, Guid ProjectUID, Guid Workpackage_Option,string Owner, Guid BOQDetailsUID)
         {
             bool sresult = false;
@@ -20585,5 +20588,24 @@ namespace ProjectManager.DAL
             return cnt;
         }
 
+        // written by saji augustin dated 12th May 2022
+        public DataSet GetCostGraphData(string WorkPackage_UID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("GetCostGraphData", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                //cmd.SelectCommand.Parameters.AddWithValue("@UserUID", UserUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackage_UID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
     }
 }

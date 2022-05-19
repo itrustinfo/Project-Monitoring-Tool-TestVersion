@@ -368,8 +368,12 @@ namespace ProjectManagementTool._modal_pages
                 }
                 txtGST.Value = (txtGST.Value == "") ? "0" : txtGST.Value;
 
+                // changed by saji augustin dated 17/05/2022
+
                 bool result = getdata.InsertorUpdateSubTask(sTaskUID, new Guid(DDLWorkPackage.SelectedValue), new Guid(Request.QueryString["PrjUID"].ToString()), DDLUsers.SelectedValue, txtTaskName.Text, txtDescription.Text, "", "", CDate1 == DateTime.MinValue ? "" : CDate1.ToString(), CDate2 == DateTime.MinValue ? "" : CDate2.ToString(), CDate3 == DateTime.MinValue ? "" : CDate3.ToString(), CDate5 == DateTime.MinValue ? "" : CDate5.ToString(), CDate6 == DateTime.MinValue ? "" : CDate6.ToString(), CDate4 == DateTime.MinValue ? "" : CDate4.ToString(), ddlStatus.SelectedValue, 0, 0, "", TaskLevel, ParentTaskID, Convert.ToDouble(txtGST.Value),
-                    0, Convert.ToDouble(0), DDlDiscipline.SelectedValue, MeasurementUnit, Currency, Currecncy_CultureInfo, TaskWeightage, DDLTaskType.SelectedValue, new Guid(Request.QueryString["OptionUID"].ToString()), MeasurementQuantity, BOQUID, RBLOption.SelectedValue);
+                    0, Convert.ToDouble(0), DDlDiscipline.SelectedValue, MeasurementUnit, Currency, Currecncy_CultureInfo, TaskWeightage, DDLTaskType.SelectedValue, new Guid(Request.QueryString["OptionUID"].ToString()), MeasurementQuantity, BOQUID, RBLOption.SelectedValue,chkInGraph.Checked);
+                
+                
                 if (result)
                 {
                     if (Request.QueryString["type"] == "edit")
@@ -503,6 +507,12 @@ namespace ProjectManagementTool._modal_pages
                     //    txtStatusPer.Text = "0";
                     //}
                     ddlStatus.SelectedValue = ds.Tables[0].Rows[0]["Status"].ToString();
+                    var x = ds.Tables[0].Rows[0]["InGraph"].ToString();
+
+                    // added code by saji augustin dated 17/05/2022
+                    if (ds.Tables[0].Rows[0]["InGraph"] != null)
+                      chkInGraph.Checked =  ds.Tables[0].Rows[0]["InGraph"].ToString() == "Y" ? true : false;
+                    
                     //txtActualExpenditure.Value = Convert.ToDouble(ds.Tables[0].Rows[0]["ActualExpenditure"].ToString()).ToString("#,##.##", CultureInfo.CreateSpecificCulture(ds.Tables[0].Rows[0]["Currency_CultureInfo"].ToString()));
                     //if (string.IsNullOrEmpty(txtActualExpenditure.Value))
                     //{

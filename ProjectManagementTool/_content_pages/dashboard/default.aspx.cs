@@ -790,12 +790,79 @@ namespace ProjectManager._content_pages
             }
         }
 
+        //private void Bind_CostChart(string ActivityType, string Activity_ID)
+        //{
+        //    if (DDLWorkPackage.SelectedValue != "--Select--")
+        //    {
+        //        ltScript_Progress.Text = string.Empty;
+        //        DataSet ds = getdt.Get_WorkPackage_Budget(Session["UserUID"].ToString(), ActivityType, Activity_ID);
+        //        if (ds.Tables[0].Rows.Count > 0)
+        //        {
+        //            StringBuilder strScript = new StringBuilder();
+        //            strScript.Append(@" <script type='text/javascript'>
+
+        //        google.charts.load('current', { packages: ['corechart', 'bar'] });
+        //        google.charts.setOnLoadCallback(drawBasic);
+
+        //        function drawBasic() {
+
+        //        var data = google.visualization.arrayToDataTable([
+        //             ['Element', 'Cost', { role: 'style' }, { role: 'annotation' }],");
+        //            string CurrencySymbol = "";
+        //            if (ds.Tables[0].Rows[0]["Currency"].ToString() == "&#x20B9;")
+        //            {
+        //                CurrencySymbol = "₹";
+        //            }
+        //            else if (ds.Tables[0].Rows[0]["Currency"].ToString() == "&#36;")
+        //            {
+        //                CurrencySymbol = "$";
+        //            }
+        //            else
+        //            {
+
+        //                CurrencySymbol = "¥";
+        //            }
+        //            strScript.Append("['Actual', " + ds.Tables[0].Rows[0]["Actual"].ToString() + ", '#3366CC', '" + CurrencySymbol + ' ' + ds.Tables[0].Rows[0]["Actual"].ToString() + "'],['Planned', " + ds.Tables[0].Rows[0]["Planned"].ToString() + ", '#DC3912', '" + CurrencySymbol + ' ' + ds.Tables[0].Rows[0]["Planned"].ToString() + "'],['Budget', " + ds.Tables[0].Rows[0]["Budget"].ToString() + ", '#109618', '" + CurrencySymbol + ' ' + ds.Tables[0].Rows[0]["Budget"].ToString() + "']]);");
+        //            strScript.Append(@"var options = {
+        //            is3D: true,
+        //            legend: { position: 'none' },
+        //            fontSize: 14,
+        //            chartArea: {
+        //                left: '10%',
+        //                top: '10%',
+        //                height: '75%',
+        //                width: '80%'
+        //            },
+        //            height: 300
+        //        };
+
+        //        var chart = new google.visualization.ColumnChart(
+        //          document.getElementById('chart_div'));
+        //         chart.draw(data, options);
+
+        //    }</script>");
+        //            //ltScript_Cost.Text = strScript.ToString();
+        //            ltScript_Progress.Text = strScript.ToString();
+        //        }
+        //        else
+        //        {
+        //            //ltScript_Cost.Text = "<h3>No data</h3>";
+        //            ltScript_Progress.Text = "<h3>No data</h3>";
+
+        //        }
+        //    }
+        //}
+
+
         private void Bind_CostChart(string ActivityType, string Activity_ID)
         {
             if (DDLWorkPackage.SelectedValue != "--Select--")
             {
                 ltScript_Progress.Text = string.Empty;
-                DataSet ds = getdt.Get_WorkPackage_Budget(Session["UserUID"].ToString(), ActivityType, Activity_ID);
+                // DataSet ds = getdt.Get_WorkPackage_Budget(Session["UserUID"].ToString(), ActivityType, Activity_ID);
+
+                DataSet ds = getdt.GetCostGraphData(Activity_ID); // changed by saji augustin dated 13 may 2022
+
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     StringBuilder strScript = new StringBuilder();
@@ -824,7 +891,8 @@ namespace ProjectManager._content_pages
                     }
                     strScript.Append("['Actual', " + ds.Tables[0].Rows[0]["Actual"].ToString() + ", '#3366CC', '" + CurrencySymbol + ' ' + ds.Tables[0].Rows[0]["Actual"].ToString() + "'],['Planned', " + ds.Tables[0].Rows[0]["Planned"].ToString() + ", '#DC3912', '" + CurrencySymbol + ' ' + ds.Tables[0].Rows[0]["Planned"].ToString() + "'],['Budget', " + ds.Tables[0].Rows[0]["Budget"].ToString() + ", '#109618', '" + CurrencySymbol + ' ' + ds.Tables[0].Rows[0]["Budget"].ToString() + "']]);");
                     strScript.Append(@"var options = {
-                    is3D: true,
+                    title : 'Cost in Crores of Rupees',
+                    is3D: true, 
                     legend: { position: 'none' },
                     fontSize: 14,
                     chartArea: {

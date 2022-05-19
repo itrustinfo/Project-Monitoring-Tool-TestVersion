@@ -27,9 +27,21 @@
                         <label class="lblCss" for="txtquantity">Quantity</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
                          <input type="text" id="txtquantity" runat="server" class="form-control" autocomplete="off" required />
                     </div>
-                       <div class="form-group">
+                    <div class="form-group">
                         <label class="lblCss" for="txtprice">Local(INR)-Rate</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
                         <input type="text" id="txtInrRate" runat="server" class="form-control" autocomplete="off" required  onblur="toUSD(this)"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="lblCss" for="txtprice">Duties</label> &nbsp;<span style="color:red; font-size:1.1rem;"></span>
+                        <input type="text" id="txtDuties" runat="server" class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <label class="lblCss" for="txtprice">Ex Works</label> &nbsp;<span style="color:red; font-size:1.1rem;"></span>
+                        <input type="text" id="txtExWorks" runat="server" class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <label class="lblCss" for="txtprice">Local Transport</label> &nbsp;<span style="color:red; font-size:1.1rem;"></span>
+                        <input type="text" id="txtLocalTransport" runat="server" class="form-control" autocomplete="off" />
                     </div>
                     
                 </div>
@@ -56,6 +68,10 @@
                      <div class="form-group">
                         <label class="lblCss" for="txtprice">Foreign(JPY)-Amount</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
                         <input type="text" id="txtforeignJpyAmount" runat="server" class="form-control" autocomplete="off" required  onblur="toUSD(this)"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="lblCss" for="txtprice">GST</label> &nbsp;<span style="color:red; font-size:1.1rem;"></span>
+                        <input type="text" id="txtGST" runat="server" class="form-control" autocomplete="off"/>
                     </div>
                    
                     </div>
