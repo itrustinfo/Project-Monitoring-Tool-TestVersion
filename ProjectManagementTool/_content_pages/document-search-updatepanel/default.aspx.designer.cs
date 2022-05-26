@@ -231,6 +231,15 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
         protected global::System.Web.UI.WebControls.TextBox dtDocToDate;
 
         /// <summary>
+        /// DDLFlow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLFlow;
+
+        /// <summary>
         /// txtPageSize control.
         /// </summary>
         /// <remarks>

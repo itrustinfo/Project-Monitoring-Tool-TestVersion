@@ -52,6 +52,7 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
                     //BindType();
                     // BindDocuments();
                     BindTypeGD();
+                    BindFlow();
                     //BindPhases();
                     ViewState["SortDireaction"] = "";
                     ViewState["_sortDirection"] = "";
@@ -77,6 +78,20 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
                     }
                    
                 }
+            }
+        }
+
+        void BindFlow()
+        {
+            DataTable ds = getdt.GetDocumentFlow();
+            if (ds != null && ds.Rows.Count > 0)
+            {
+                DDLFlow.DataTextField = "Flow_Name";
+                DDLFlow.DataValueField = "FlowMasterUID";
+                DDLFlow.DataSource = ds;
+                DDLFlow.DataBind();
+                DDLFlow.Items.Insert(0, "All");
+                ViewState["Flow"] = ds;
             }
         }
 
@@ -493,46 +508,48 @@ namespace ProjectManagementTool._content_pages.document_search_updatepanel
                     statusValue = ddlPhase.SelectedValue;
                 }
             }
-
+            string flowUID = string.Empty;
+            if (DDLFlow.SelectedValue.ToString() != "All")
+                flowUID = DDLFlow.SelectedValue.ToString();
             if (IsPhaseSearch)
             {   
-                ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 4, txtOntbRef.Text, txtOriginatorRef.Text);
+                ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 4, txtOntbRef.Text, txtOriginatorRef.Text, flowUID);
 
                 if (dtDocDate.Text != "" && dtInDate.Text != "")
                 {
                     ds = new DataSet();
-                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 3, txtOntbRef.Text, txtOriginatorRef.Text);
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 3, txtOntbRef.Text, txtOriginatorRef.Text, flowUID);
                 }
                 else if (dtInDate.Text != "")
                 {
                     ds = new DataSet();
-                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 1, txtOntbRef.Text, txtOriginatorRef.Text);
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 1, txtOntbRef.Text, txtOriginatorRef.Text, flowUID);
                 }
                 else if (dtDocDate.Text != "")
                 {
                     ds = new DataSet();
-                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 2, txtOntbRef.Text, txtOriginatorRef.Text);
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, ddlPhase.SelectedValue, InDate, DocumentDate, InToDate, DocumentToDate, 2, txtOntbRef.Text, txtOriginatorRef.Text, flowUID);
                 }
             }
             else
             {
                 if(string.IsNullOrEmpty(statusValue))
                     statusValue = ddlstatus.SelectedValue;
-                ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 4, txtOntbRef.Text, txtOriginatorRef.Text);
+                ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 4, txtOntbRef.Text, txtOriginatorRef.Text, flowUID);
                 if (dtDocDate.Text != "" && dtInDate.Text != "")
                 {
                     ds = new DataSet();
-                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 3, txtOntbRef.Text, txtOriginatorRef.Text);
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 3, txtOntbRef.Text, txtOriginatorRef.Text, flowUID);
                 }
                 else if (dtInDate.Text != "")
                 {
                     ds = new DataSet();
-                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 1, txtOntbRef.Text, txtOriginatorRef.Text);
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 1, txtOntbRef.Text, txtOriginatorRef.Text, flowUID);
                 }
                 else if (dtDocDate.Text != "")
                 {
                     ds = new DataSet();
-                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 2, txtOntbRef.Text, txtOriginatorRef.Text);
+                    ds = getdt.ActualDocuments_SelectBy_WorkpackageUID_Search(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue), txtDocName.Text, ddlType.SelectedValue, txtSubmittal.Text, statusValue, InDate, DocumentDate, InToDate, DocumentToDate, 2, txtOntbRef.Text, txtOriginatorRef.Text, flowUID);
                 }
             }
 

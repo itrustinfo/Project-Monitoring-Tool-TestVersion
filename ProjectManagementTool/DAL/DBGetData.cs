@@ -20607,5 +20607,71 @@ namespace ProjectManager.DAL
             }
             return ds;
         }
+
+        // added on 25/05/2022 for nakib
+        public DataSet ActualDocuments_SelectBy_WorkpackageUID_Search(Guid ProjectUID, Guid WorkPackageUID, string DocumentName, string Doctype, string SubmittalName, string Status, DateTime DocDate, DateTime DocumentDate, DateTime DocToDate, DateTime DocumentToDate, int Type, string OntbRefNo, string OriginatorRefNo, string FlowMasterUID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("ActualDocuments_SelectBy_WorkpackageUID_Search1", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentName", DocumentName);
+                cmd.SelectCommand.Parameters.AddWithValue("@Doctype", Doctype);
+                cmd.SelectCommand.Parameters.AddWithValue("@SubmittalName", SubmittalName);
+                cmd.SelectCommand.Parameters.AddWithValue("@Status", Status);
+                cmd.SelectCommand.Parameters.AddWithValue("@Type", Type);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocDate", DocDate);// this is incomiung recv date
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentDate", DocumentDate);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocDateTo", DocToDate);// this is incomiung recv date
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentDateTo", DocumentToDate);
+                cmd.SelectCommand.Parameters.AddWithValue("@OntbRefNumber", OntbRefNo);
+                cmd.SelectCommand.Parameters.AddWithValue("@OriginatorRefNumber", OriginatorRefNo);
+                cmd.SelectCommand.Parameters.AddWithValue("@FlowUID", FlowMasterUID);
+
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+
+        public DataSet ActualDocuments_SelectBy_WorkpackageUID_SearchPhase(Guid ProjectUID, Guid WorkPackageUID, string DocumentName, string Doctype, string SubmittalName, string Phase, DateTime DocDate, DateTime DocumentDate, DateTime DocToDate, DateTime DocumentToDate, int Type, string OntbRefNo, string OriginatorRefNo, string FlowUID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("ActualDocuments_SelectBy_WorkpackageUID_SearchPhase", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentName", DocumentName);
+                cmd.SelectCommand.Parameters.AddWithValue("@Doctype", Doctype);
+                cmd.SelectCommand.Parameters.AddWithValue("@SubmittalName", SubmittalName);
+                cmd.SelectCommand.Parameters.AddWithValue("@Phase", Phase);
+                cmd.SelectCommand.Parameters.AddWithValue("@Type", Type);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocDate", DocDate);// this is incomiung recv date
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentDate", DocumentDate);
+                cmd.SelectCommand.Parameters.AddWithValue("@DocDateTo", DocToDate);// this is incomiung recv date
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentDateTo", DocumentToDate);
+                cmd.SelectCommand.Parameters.AddWithValue("@OntbRefNumber", OntbRefNo);
+                cmd.SelectCommand.Parameters.AddWithValue("@OriginatorRefNumber", OriginatorRefNo);
+                cmd.SelectCommand.Parameters.AddWithValue("@FlowUID", FlowUID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
     }
 }

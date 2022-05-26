@@ -348,10 +348,7 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                      <td>Document Name : <asp:TextBox runat="server" ID="txtDocName" CssClass="form-control"></asp:TextBox></td>
                                      <td><asp:Label runat="server" ID="lblProjRefNO" Text="ONTB Reference # :"/><asp:TextBox runat="server" ID="txtOntbRef" CssClass="form-control"></asp:TextBox></td>
                                      <td>Originator Reference # : <asp:TextBox runat="server" ID="txtOriginatorRef" CssClass="form-control"></asp:TextBox></td>
-                                     <td>Document Type<asp:DropDownList ID="ddlType" runat="server" CssClass="form-control"></asp:DropDownList>
-                                     </td>
-                                     
-
+                                     <td>Document Type<asp:DropDownList ID="ddlType" runat="server" CssClass="form-control"></asp:DropDownList></td>
                                  </tr>
                                  <tr>
                                      <td><asp:Label ID ="status" runat="server" Text="Status"></asp:Label>
@@ -362,8 +359,10 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                      <td colspan="1" style="font-weight:bold;">Incoming Recv To Date : <asp:TextBox ID="dtInToDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox></td>
                                      <td colspan="1" style="font-weight:bold;">Document From Date :  <asp:TextBox ID="dtDocDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox></td>
                                      <td colspan="1" style="font-weight:bold;">Document To Date :  <asp:TextBox ID="dtDocToDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox></td>
-                                    </tr>
-                                
+                                 </tr>
+                                <tr>
+                                    <td>Flow<asp:DropDownList ID="DDLFlow" runat="server" CssClass="form-control"></asp:DropDownList></td>
+                                </tr>
                                  <tr>
                                      <td colspan="1" style="text-align:left;">No. of Records in Each Page
                                      <asp:TextBox ID="txtPageSize" runat="server" Width="30px">10</asp:TextBox></td>
@@ -420,6 +419,9 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
                                            <asp:BoundField DataField="Ref_Number" HeaderText="Originator Reference #" SortExpression="Ref_Number">
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
+                                           <asp:BoundField DataField="Flow_Name" HeaderText="Flow Name" SortExpression="Flow_Name">
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
                                              <asp:BoundField DataField="IncomingRec_Date" HeaderText="Incoming Recv. Date" SortExpression="ActualDocument_CreatedDate" DataFormatString="{0:dd/MM/yyyy}" >
