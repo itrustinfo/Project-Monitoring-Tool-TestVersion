@@ -20673,5 +20673,148 @@ namespace ProjectManager.DAL
             return ds;
         }
 
+        //added on 01/06/2022
+        public DataTable FlowMasterUser_Select(Guid FlowUID, Guid WorkPackageUID, Guid WorkPackageCategory_UID, int Step, DataTable dtUpdatedUser)
+        {
+            DataTable ds = new DataTable();
+            if (dtUpdatedUser != null && dtUpdatedUser.Rows.Count > 0)
+            {
+                var updatedUserForCurrentStep = dtUpdatedUser.AsEnumerable().Where(r => r.Field<int>("StepNo") == Step);
+                if (updatedUserForCurrentStep.FirstOrDefault() != null)
+                {
+                    ds = updatedUserForCurrentStep.CopyToDataTable();
+                    return ds;
+                }
+            }
+
+            SqlConnection con = new SqlConnection(db.GetConnectionString());
+            try
+            {
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_Flow_Master_User_Select", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@FlowUID", FlowUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageCategory_UID", WorkPackageCategory_UID);
+                cmd.SelectCommand.Parameters.AddWithValue("@Step", Step);
+                cmd.Fill(ds);
+
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+
+            }
+            return ds;
+        }
+
+
+        public DataTable GetWorksTaskUpdatedStepUsers(Guid ProjectUID, Guid FlowUID)
+        {
+            DataTable ds = new DataTable();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("USP_GetWorksTaskUpdatedStepUsers", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@FlowUID", FlowUID);
+
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        public DataSet GetDocumentSummary_PMC_by_WorkpackgeUID(Guid ProjectUID, Guid WorkPackageUID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetDocumentSummary_by_WorkpackgeUID_PMC", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //added on 06/06/2022
+        public DataSet GetWorkPackageOptions()
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("GetWorkPackageOptions", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+
+
+        public DataSet GetTasks_by_WorkPackageUID_ByLevel(String sWorkPackageUID, string wp_option, string task_fld)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetTasks_By_WorkPackageUID_ByLevel", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackagesUID", sWorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageOption", wp_option);
+                cmd.SelectCommand.Parameters.AddWithValue("@TaskFld", task_fld);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+
+
+        public int UpdateTask(string task_uid, string task_column)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("UpdateTaskSelectedFld"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        con.Open();
+                        cmd.Parameters.AddWithValue("@task_uid", task_uid);
+                        cmd.Parameters.AddWithValue("@task_column", task_column);
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult;
+            }
+        }
     }
 }

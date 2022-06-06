@@ -1,4 +1,5 @@
-﻿using ProjectManager.DAL;
+﻿using ProjectManagementTool.BLL;
+using ProjectManager.DAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -263,15 +264,59 @@ namespace ProjectManagementTool._modal_pages
                     WorkPackageUID = Request.QueryString["WrkUID"].ToString();
                 }
 
-                    //}
+                DataTable updatedUsers = getdata.GetWorksTaskUpdatedStepUsers(new Guid(Request.QueryString["PrjUID"].ToString()), new Guid(DDLDocumentFlow.SelectedValue));
+                if (updatedUsers != null && updatedUsers.Rows.Count > 0)
+                {
+                    string taskUID = Request.QueryString["TaskUID"].ToString();
 
-                    //ddlSubmissionUSer.DataSource = getdata.getUsers("S");
+                    var allUpdatedUsersWithNoTask = updatedUsers.AsEnumerable().Where(r => string.IsNullOrEmpty(r.Field<string>("TaskUID")));
+                    if (allUpdatedUsersWithNoTask.FirstOrDefault() != null)
+                    {
+                        updatedUsers = allUpdatedUsersWithNoTask.CopyToDataTable();
+                    }
+                    else
+                    {
+                        var filterredData = updatedUsers.AsEnumerable().Where(r => r.Field<string>("TaskUID") == taskUID.ToUpper());
+                        if (filterredData.FirstOrDefault() != null)
+                        {
+                            updatedUsers = filterredData.CopyToDataTable();
+                        }
+                        else
+                        {
+                            while (true)
+                            {
+                                DataTable dt = getdata.GetTaskDetails_TaskUID(taskUID);
+                                if (dt != null && dt.Rows.Count > 0)
+                                {
+                                    taskUID = dt.Rows[0]["ParentTaskID"].ToString();
+                                    filterredData = updatedUsers.AsEnumerable().Where(r => r.Field<string>("TaskUID") == taskUID.ToUpper());
+                                    if (filterredData.FirstOrDefault() != null)
+                                    {
+                                        updatedUsers = filterredData.CopyToDataTable();
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    updatedUsers = new DataTable();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                //}
+
+                //ddlSubmissionUSer.DataSource = getdata.getUsers("S");
                 //    ddlSubmissionUSer.DataSource = ds;
                 //ddlSubmissionUSer.DataTextField = "UserName";
                 //ddlSubmissionUSer.DataValueField = "UserUID";
                 //ddlSubmissionUSer.DataBind();
                 //ddlSubmissionUSer.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 1);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 1, updatedUsers);
+                
 
                 if (dsMusers.Rows.Count > 0)
                 {
@@ -293,7 +338,7 @@ namespace ProjectManagementTool._modal_pages
 
                 //
                 //ddlQualityEngg.DataSource = getdata.getUsers("C"); /step 2
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 2);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 2, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     ddlQualityEngg.DataSource = dsMusers;
@@ -323,7 +368,7 @@ namespace ProjectManagementTool._modal_pages
                     dsAllCategories = getdata.GetWorkpackageCategory(new Guid(WorkPackageUID));
                     foreach (DataRow dr in dsAllCategories.Rows)
                     {
-                        dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(dr["WorkPackageCategory_UID"].ToString()), 3);
+                        dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(dr["WorkPackageCategory_UID"].ToString()), 3, updatedUsers);
                         foreach (DataRow drM in dsMusers.Rows)
                         {
                             ddlReviewer_B.Items.Add(new ListItem(text: drM["Name"].ToString(), value: drM["UserUID"].ToString()));
@@ -337,7 +382,7 @@ namespace ProjectManagementTool._modal_pages
                 }
                 else
                 {
-                    dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 3);
+                    dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 3, updatedUsers);
                     if (dsMusers.Rows.Count > 0)
                     {
                         ddlReviewer_B.DataSource = dsMusers;
@@ -361,7 +406,7 @@ namespace ProjectManagementTool._modal_pages
 
                 //
                 //ddlReviewer_B.DataSource = getdata.getUsers("R"); //step 4
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 4);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 4, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     ddlReviewer.DataSource = dsMusers;
@@ -382,7 +427,7 @@ namespace ProjectManagementTool._modal_pages
                 //  ddlReviewer_B.Items.Insert(0, new ListItem("--Select--", ""));
                 //
                 //ddlApproval.DataSource = getdata.getUsers("A"); //step 5
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 5);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 5, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     ddlApproval.DataSource = dsMusers;
@@ -402,7 +447,7 @@ namespace ProjectManagementTool._modal_pages
                 // ddlApproval.Items.Insert(0, new ListItem("--Select--", ""));
 
                 // added on 03/03/2022 for new 15 entries
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 6);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 6, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser6.DataSource = dsMusers;
@@ -421,7 +466,7 @@ namespace ProjectManagementTool._modal_pages
                     dlUser6.DataBind();
                 }
                 // dlUser6.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 7);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 7, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser7.DataSource = dsMusers;
@@ -439,7 +484,7 @@ namespace ProjectManagementTool._modal_pages
                     dlUser7.DataBind();
                 }
                 //  dlUser7.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 8);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 8, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser8.DataSource = dsMusers;
@@ -457,7 +502,7 @@ namespace ProjectManagementTool._modal_pages
                     dlUser8.DataBind();
                 }
                 // dlUser8.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 9);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 9, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser9.DataSource = dsMusers;
@@ -495,7 +540,7 @@ namespace ProjectManagementTool._modal_pages
                 //}
                 //else
                 //{
-                    dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 10);
+                    dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 10, updatedUsers);
                     if (dsMusers.Rows.Count > 0)
                     {
                         dlUser10.DataSource = dsMusers;
@@ -514,7 +559,7 @@ namespace ProjectManagementTool._modal_pages
                     }
                // }
                 // dlUser10.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 11);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 11, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser11.DataSource = dsMusers;
@@ -532,7 +577,7 @@ namespace ProjectManagementTool._modal_pages
                     dlUser11.DataBind();
                 }
                 // dlUser11.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 12);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 12, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser12.DataSource = dsMusers;
@@ -550,7 +595,7 @@ namespace ProjectManagementTool._modal_pages
                     dlUser12.DataBind();
                 }
                 //  dlUser12.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 13);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 13, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser13.DataSource = dsMusers;
@@ -568,7 +613,7 @@ namespace ProjectManagementTool._modal_pages
                     dlUser13.DataBind();
                 }
                 // dlUser13.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 14);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 14, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser14.DataSource = dsMusers;
@@ -586,7 +631,7 @@ namespace ProjectManagementTool._modal_pages
                     dlUser14.DataBind();
                 }
                 // dlUser14.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 15);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 15, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser15.DataSource = dsMusers;
@@ -605,7 +650,7 @@ namespace ProjectManagementTool._modal_pages
                 }
                 // dlUser15.Items.Insert(0, new ListItem("--Select--", ""));
 
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 16);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 16, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser16.DataSource = dsMusers;
@@ -623,7 +668,7 @@ namespace ProjectManagementTool._modal_pages
                     dlUser16.DataBind();
                 }
                 // dlUser16.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 17);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 17, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser17.DataSource = dsMusers;
@@ -641,7 +686,7 @@ namespace ProjectManagementTool._modal_pages
                     dlUser17.DataBind();
                 }
                 // dlUser17.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 18);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 18, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser18.DataSource = dsMusers;
@@ -659,7 +704,7 @@ namespace ProjectManagementTool._modal_pages
                     dlUser18.DataBind();
                 }
                 // dlUser18.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 19);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 19, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser19.DataSource = dsMusers;
@@ -677,7 +722,7 @@ namespace ProjectManagementTool._modal_pages
                     dlUser19.DataBind();
                 }
                 // dlUser19.Items.Insert(0, new ListItem("--Select--", ""));
-                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 20);
+                dsMusers = getdata.FlowMasterUser_Select(new Guid(DDLDocumentFlow.SelectedValue), new Guid(WorkPackageUID), new Guid(DDLDocumentCategory.SelectedValue), 20, updatedUsers);
                 if (dsMusers.Rows.Count > 0)
                 {
                     dlUser20.DataSource = dsMusers;

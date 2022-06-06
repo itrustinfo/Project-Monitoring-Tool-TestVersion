@@ -226,7 +226,7 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliation" runat="server" NavigateUrl="/_content_pages/report-reconciliation" ToolTip="Reconciliation">Reconciliation Documents</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliationStatus" runat="server" NavigateUrl="/_content_pages/report-reconciliation-status" ToolTip="Reconciliation">Reconciliation Approved or Rejected Documents</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliationPhase" runat="server" NavigateUrl="/_content_pages/report-reconciliation-phase" ToolTip="Reconciliation">Status of Documents for Contractor</asp:HyperLink>
-                                    
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportPmcDocumentStatus" runat="server" NavigateUrl="/_content_pages/report-document-status" ToolTip="Status of STP Documents">Status of STP Documents</asp:HyperLink>
                                     
                                 </div>
 
@@ -308,6 +308,7 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
                                     <asp:HyperLink CssClass="dropdown-item" ID="Misc_Consolidated" runat="server" NavigateUrl="/_content_pages/consolidated-activities" ToolTip="Consolidated Activities">Consolidated Activities</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="Misc_Status_WasteWater" runat="server" NavigateUrl="/_content_pages/status-wastewater-forms" ToolTip="Status WasteWater ContractPackage">Status WasteWater ContractPackage</asp:HyperLink>
                                      <asp:HyperLink CssClass="dropdown-item" ID="Misc_OtherPoints" runat="server" NavigateUrl="~/_content_pages/other-points-discussion-insert" ToolTip="Other points for Discussion">Other points for Discussion</asp:HyperLink>
+                                     <asp:HyperLink CssClass="dropdown-item" ID="TaskSelectionUpdate" runat="server" NavigateUrl="/_content_pages/task_report_selection" ToolTip="Camera">Task Selection Update</asp:HyperLink>
                                   
                                     <%--<asp:HyperLink CssClass="dropdown-item" ID="HyperLink13" runat="server" NavigateUrl="/_content_pages/masters" ToolTip="Masters">Masters</asp:HyperLink>--%>
                                 </div>

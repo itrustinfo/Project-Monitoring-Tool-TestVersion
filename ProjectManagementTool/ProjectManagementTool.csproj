@@ -164,6 +164,7 @@
     <Content Include="_content_pages\rabill-summary\default.aspx" />
     <Content Include="_content_pages\report-const-drawing-status\default.aspx" />
     <Content Include="_content_pages\report-contractdata\default.aspx" />
+    <Content Include="_content_pages\report-document-status\default.aspx" />
     <Content Include="_content_pages\report-Financial-Progress\default.aspx" />
     <Content Include="_content_pages\report-issues\default.aspx" />
     <Content Include="_content_pages\report-MonthlyPhysical-Progress\default.aspx" />
@@ -183,6 +184,7 @@
     <Content Include="_content_pages\Rpt-status-wastewater\default.aspx" />
     <Content Include="_content_pages\status-wastewater-forms\default.aspx" />
     <Content Include="_content_pages\status-wastewater\default.aspx" />
+    <Content Include="_content_pages\task_report_selection\default.aspx" />
     <Content Include="_content_pages\test-documents\default.aspx" />
     <Content Include="_content_pages\user-functionality\default.aspx" />
     <Content Include="_content_pages\view-compliancemom\default.aspx" />
@@ -423,6 +425,7 @@
     </Compile>
     <Compile Include="ITextEvents.cs" />
     <Compile Include="Models\Models\UploadNewPhoto.cs" />
+    <Compile Include="Models\TaskNode.cs" />
     <Compile Include="PDFPrint.aspx.cs">
       <DependentUpon>PDFPrint.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -682,6 +685,13 @@
     <Compile Include="_content_pages\report-contractdata\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="_content_pages\report-document-status\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_content_pages\report-document-status\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="_content_pages\report-Financial-Progress\default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -813,6 +823,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="_content_pages\status-wastewater\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_content_pages\task_report_selection\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_content_pages\task_report_selection\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
     <Compile Include="_content_pages\test-documents\default.aspx.cs">

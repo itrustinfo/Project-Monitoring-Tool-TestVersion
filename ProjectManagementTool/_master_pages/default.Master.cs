@@ -441,6 +441,14 @@ namespace ProjectManager._master_pages
                     navlinkFlowMaster.Visible = false;
                     navlinkDocumentFlowMaster.Visible = false;
                 }
+
+                //
+                if((Session["TypeOfUser"].ToString() == "DDE" || Session["TypeOfUser"].ToString() == "PM") && WebConfigurationManager.AppSettings["Domain"] == "ONTB")
+                {
+                    ViewReports.Visible = true;
+                    ReportReconciliation.Visible = true;
+                    ReportReconciliationStatus.Visible = true;
+                }
             }
             //
         }

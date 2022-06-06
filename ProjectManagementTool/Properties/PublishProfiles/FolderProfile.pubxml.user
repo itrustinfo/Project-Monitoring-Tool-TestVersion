@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>D:\Projects\NJS_Prj_New\publish\WebApp</_PublishTargetUrl>
+    <_PublishTargetUrl>D:\NJS Projects\publish\WebApp_ONTB</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/AjaxControlToolkit.dll">
@@ -34,10 +34,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2021 23:12:32</publishTime>
     </File>
     <File Include="bin/ProjectManagementTool.dll">
-      <publishTime>05/14/2022 19:00:26</publishTime>
+      <publishTime>06/05/2022 21:21:57</publishTime>
     </File>
     <File Include="bin/ProjectManagementTool.pdb">
-      <publishTime>05/14/2022 19:00:26</publishTime>
+      <publishTime>06/05/2022 21:21:57</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>10/20/2021 23:12:32</publishTime>
@@ -151,7 +151,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/10/2020 09:46:28</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/14/2022 19:00:32</publishTime>
+      <publishTime>06/03/2022 19:36:57</publishTime>
     </File>
     <File Include="WebForm1.aspx">
       <publishTime>10/20/2021 23:12:32</publishTime>
@@ -832,7 +832,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2021 23:12:32</publishTime>
     </File>
     <File Include="_content_pages/dashboard/default.aspx">
-      <publishTime>03/30/2022 17:04:40</publishTime>
+      <publishTime>06/02/2022 18:24:00</publishTime>
     </File>
     <File Include="_content_pages/doctohtml/default.aspx">
       <publishTime>10/20/2021 23:12:32</publishTime>
@@ -847,7 +847,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2021 23:12:32</publishTime>
     </File>
     <File Include="_content_pages/document-search-updatepanel/default.aspx">
-      <publishTime>04/05/2022 12:45:28</publishTime>
+      <publishTime>05/25/2022 07:29:20</publishTime>
     </File>
     <File Include="_content_pages/document-search/default.aspx">
       <publishTime>10/20/2021 23:12:32</publishTime>
@@ -957,6 +957,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="_content_pages/report-contractdata/default.aspx">
       <publishTime>10/20/2021 23:12:32</publishTime>
     </File>
+    <File Include="_content_pages/report-document-status/default.aspx">
+      <publishTime>06/05/2022 17:38:58</publishTime>
+    </File>
     <File Include="_content_pages/report-documents/Default.aspx">
       <publishTime>04/25/2022 12:43:49</publishTime>
     </File>
@@ -1054,7 +1057,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2021 23:12:32</publishTime>
     </File>
     <File Include="_master_pages/default.Master">
-      <publishTime>05/10/2022 11:14:07</publishTime>
+      <publishTime>06/05/2022 21:01:35</publishTime>
     </File>
     <File Include="_master_pages/modal.Master">
       <publishTime>10/20/2021 23:12:32</publishTime>
@@ -1246,13 +1249,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2021 23:12:32</publishTime>
     </File>
     <File Include="_modal_pages/add-submittal.aspx">
-      <publishTime>03/19/2022 23:06:47</publishTime>
+      <publishTime>05/23/2022 16:59:24</publishTime>
     </File>
     <File Include="_modal_pages/add-submittalsforcategory.aspx">
       <publishTime>11/02/2021 13:41:28</publishTime>
     </File>
     <File Include="_modal_pages/add-subtask.aspx">
-      <publishTime>01/29/2022 21:16:56</publishTime>
+      <publishTime>05/18/2022 09:49:54</publishTime>
     </File>
     <File Include="_modal_pages/add-task.aspx">
       <publishTime>02/01/2022 22:48:10</publishTime>

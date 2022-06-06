@@ -319,6 +319,15 @@ namespace ProjectManager._master_pages {
         protected global::System.Web.UI.WebControls.HyperLink ReportReconciliationPhase;
         
         /// <summary>
+        /// ReportPmcDocumentStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink ReportPmcDocumentStatus;
+        
+        /// <summary>
         /// ReviewReports control.
         /// </summary>
         /// <remarks>
@@ -659,6 +668,15 @@ namespace ProjectManager._master_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink Misc_OtherPoints;
+        
+        /// <summary>
+        /// TaskSelectionUpdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink TaskSelectionUpdate;
         
         /// <summary>
         /// lblUserGreeting control.

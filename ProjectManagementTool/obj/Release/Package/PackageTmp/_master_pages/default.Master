@@ -226,7 +226,7 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliation" runat="server" NavigateUrl="/_content_pages/report-reconciliation" ToolTip="Reconciliation">Reconciliation Documents</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliationStatus" runat="server" NavigateUrl="/_content_pages/report-reconciliation-status" ToolTip="Reconciliation">Reconciliation Approved or Rejected Documents</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliationPhase" runat="server" NavigateUrl="/_content_pages/report-reconciliation-phase" ToolTip="Reconciliation">Status of Documents for Contractor</asp:HyperLink>
-                                    
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportPmcDocumentStatus" runat="server" NavigateUrl="/_content_pages/report-document-status" ToolTip="Status of STP Documents">Status of STP Documents</asp:HyperLink>
                                     
                                 </div>
 

@@ -272,8 +272,8 @@
                           
                            
                                 <asp:RadioButtonList ID="RdList" runat="server" RepeatDirection="Horizontal"  class="card-title text-muted text-uppercase font-weight-bold" AutoPostBack="true" OnSelectedIndexChanged="RdList_SelectedIndexChanged">
-                                    <asp:ListItem Value="Progress" Selected="True">&nbsp;Progress Chart&nbsp;&nbsp;</asp:ListItem>
-                                    <asp:ListItem Value="Cost">&nbsp;Cost Chart</asp:ListItem>                      
+                                   <%-- <asp:ListItem Value="Progress">&nbsp;Progress Chart&nbsp;&nbsp;</asp:ListItem>--%>
+                                    <asp:ListItem Value="Cost" Selected="True">&nbsp;Cost Chart</asp:ListItem>                      
                                 </asp:RadioButtonList>
                                 <%--<h6 class="card-title text-muted text-uppercase font-weight-bold">Progress</h6>--%>
                                   

@@ -40,7 +40,7 @@ namespace ProjectManager._content_pages
                     // RdList.Items[1].Attributes.CssStyle.Add("display", "none");
                     //   rdSelect.Items[1].Attributes.CssStyle.Add("display", "none");
                     // rdSelect.Items[2].Attributes.CssStyle.Add("display", "none");
-                    RdList.Items[1].Enabled = false;
+                   // RdList.Items[1].Enabled = false;
                     rdSelect.Items[1].Enabled = false;
                     rdSelect.Items[2].Enabled = false;
                      divCamera.Visible = false;
@@ -53,7 +53,7 @@ namespace ProjectManager._content_pages
                             {
                                 // RdList.Items[1].Attributes.CssStyle.Add("display", "block");
                                 //  rdSelect.Items[2].Attributes.CssStyle.Add("display", "block");
-                                RdList.Items[1].Enabled = true;
+                              //  RdList.Items[1].Enabled = true;
                                 rdSelect.Items[2].Enabled = true;
 
                             }
@@ -225,9 +225,16 @@ namespace ProjectManager._content_pages
                         BindAlerts("WorkPackage");
                         BindActivityPie_Chart("Work Package", DDLWorkPackage.SelectedValue);
                         Bind_ResourceChart("Work Package", DDLWorkPackage.SelectedValue);
-                        Bind_ProgressChart("Work Package", DDLWorkPackage.SelectedValue);
+                    // Bind_ProgressChart("Work Package", DDLWorkPackage.SelectedValue);
+                    Bind_CostChart("Work Package", DDLWorkPackage.SelectedValue);
+                    if (rdSelect.SelectedValue == "1")
+                    {
                         LoadGraph(); //Physical progress chart
+                    }
+                    else if (rdSelect.SelectedValue == "2")
+                    {
                         LoadFinancialGraph();
+                    }
                         BindCamera(DDLWorkPackage.SelectedValue);
                         heading.InnerHtml = "Physical Progress Chart - " + DDlProject.SelectedItem.Text + " (" + DDLWorkPackage.SelectedItem.Text + ")";
                         headingF.InnerHtml = "Financial Progress Chart - " + DDlProject.SelectedItem.Text + " (" + DDLWorkPackage.SelectedItem.Text + ")";
@@ -315,11 +322,19 @@ namespace ProjectManager._content_pages
                 BindAlerts("WorkPackage");
                 BindActivityPie_Chart("Work Package", DDLWorkPackage.SelectedValue);
                 Bind_ResourceChart("Work Package", DDLWorkPackage.SelectedValue);
-                Bind_ProgressChart("Work Package", DDLWorkPackage.SelectedValue);
+                //Bind_ProgressChart("Work Package", DDLWorkPackage.SelectedValue);
+                Bind_CostChart("Work Package", DDLWorkPackage.SelectedValue);
                 BindCamera(DDLWorkPackage.SelectedValue);
                 heading.InnerHtml = "Physical Progress Chart - " + DDlProject.SelectedItem.Text + " (" + DDLWorkPackage.SelectedItem.Text + ")";
                 headingF.InnerHtml = "Financial Progress Chart - " + DDlProject.SelectedItem.Text + " (" + DDLWorkPackage.SelectedItem.Text + ")";
-                LoadGraph();
+                if (rdSelect.SelectedValue == "1")
+                {
+                    LoadGraph(); //Physical progress chart
+                }
+                else if (rdSelect.SelectedValue == "2")
+                {
+                    LoadFinancialGraph();
+                }
                 Session["Project_Workpackage"] = DDlProject.SelectedValue + "_" + DDLWorkPackage.SelectedValue;
                 //----------------------
                 if (Session["TypeOfUser"].ToString() != "U" && Session["TypeOfUser"].ToString() != "VP" && Session["TypeOfUser"].ToString() != "MD")
@@ -417,12 +432,12 @@ namespace ProjectManager._content_pages
                     strScript.Append("['Tot. Documents', " + ds.Tables[0].Rows[0]["DocCount"].ToString() + ", 0,'" + ds.Tables[0].Rows[0]["DocCount"].ToString() + "'],");
                     strScript.Append("['Submitted', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status1"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status1Delay"].ToString())) + ", " + ds.Tables[0].Rows[0]["Status1Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status1"].ToString() + "'],");
                     strScript.Append("['Code A', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status3"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status3Delay"].ToString())) + ", " + ds.Tables[0].Rows[0]["Status3Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status3"].ToString() + "'],");
-                    strScript.Append("['Code C', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeC"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeCDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeCDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeC"].ToString() + "'],");
-                    strScript.Append("['Code E', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeE"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeEDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeEDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeE"].ToString() + "'],");
-                    strScript.Append("['Code G', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeG"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeGDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeGDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeG"].ToString() + "'],");
                     strScript.Append("['Code B', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status2"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status2Delay"].ToString())) + ", " + ds.Tables[0].Rows[0]["Status2Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status2"].ToString() + "'],");
+                    strScript.Append("['Code C', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeC"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeCDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeCDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeC"].ToString() + "'],");
                     strScript.Append("['Code D', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeD"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeDDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeDDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeD"].ToString() + "'],");
+                    strScript.Append("['Code E', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeE"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeEDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeEDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeE"].ToString() + "'],");
                     strScript.Append("['Code F', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeF"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeFDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeFDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeF"].ToString() + "'],");
+                    strScript.Append("['Code G', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeG"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeGDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeGDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeG"].ToString() + "'],");
                     strScript.Append("['Code H', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeH"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeHDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeHDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeH"].ToString() + "'],");
                     strScript.Append("['Client Approved', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status4"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status4Delay"].ToString())) + "," + ds.Tables[0].Rows[0]["Status4Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status4"].ToString() + "'],");
                     strScript.Remove(strScript.Length - 1, 1);
@@ -1131,6 +1146,7 @@ vAxes: {
                 divNJSEIMIS.Visible = false;
                 divdashboardimage.Visible = true;
                 divMainblocks.Visible = true;
+                LoadGraph();
             }
             else if (rdSelect.SelectedIndex == 2)
             {
@@ -1139,6 +1155,7 @@ vAxes: {
                 divNJSEIMIS.Visible = false;
                 divdashboardimage.Visible = true;
                 divMainblocks.Visible = true;
+                LoadFinancialGraph();
             }
             else if (rdSelect.SelectedIndex == 3)
             {
