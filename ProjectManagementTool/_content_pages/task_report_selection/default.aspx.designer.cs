@@ -87,6 +87,33 @@ namespace ProjectManagementTool._content_pages.task_report_selection
         protected global::System.Web.UI.WebControls.Button btnSubmit;
 
         /// <summary>
+        /// btnExpand control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExpand;
+
+        /// <summary>
+        /// btnCollapse control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCollapse;
+
+        /// <summary>
+        /// chkBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkBox1;
+
+        /// <summary>
         /// divStatus control.
         /// </summary>
         /// <remarks>

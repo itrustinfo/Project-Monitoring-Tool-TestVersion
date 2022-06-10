@@ -122,6 +122,11 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
                 {
                     e.Row.Cells[4].Text = "Accepted";
                 }
+                DateTime? acceptedRejDate = getdt.GetDocumentAcceptedRecejtedDate(new Guid(e.Row.Cells[0].Text));
+                if(acceptedRejDate != null)
+                {
+                    e.Row.Cells[9].Text = Convert.ToDateTime(acceptedRejDate).ToString("dd/MM/yyyy");
+                }
             }
         }
 

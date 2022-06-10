@@ -46,9 +46,9 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                         }
                         LblDocumentHeading.Text = "Document List";
                         lblTotalcount.Visible = false;
-                        GrdDocuments.Columns[12].Visible = false;
                         GrdDocuments.Columns[13].Visible = false;
                         GrdDocuments.Columns[14].Visible = false;
+                        GrdDocuments.Columns[15].Visible = false;
                         //  lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                         //if (GrdDocuments.Rows.Count > 15)
                         //{
@@ -73,9 +73,9 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                 GrdDocuments.DataBind();
                             }
                             LblDocumentHeading.Text = "Document List for Contractor -> ONTB";
-                            GrdDocuments.Columns[12].Visible = false;
                             GrdDocuments.Columns[13].Visible = false;
                             GrdDocuments.Columns[14].Visible = false;
+                            GrdDocuments.Columns[15].Visible = false;
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                             if (GrdDocuments.Rows.Count > 15)
                             {
@@ -99,18 +99,23 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             }
                             LblDocumentHeading.Text = "Document List for Reconciliation Docs";
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
+                            //added on 09/06/2022 after inputs from saladin
+                            GrdDocuments.Columns[7].Visible = true;
+                            GrdDocuments.Columns[8].Visible = false;
+                            GrdDocuments.HeaderRow.Cells[7].Text = "Contractor Uploaded date";
+                            //
                             if (Session["IsContractor"].ToString() == "Y")
                             {
-                                GrdDocuments.Columns[12].Visible = false;
                                 GrdDocuments.Columns[13].Visible = false;
                                 GrdDocuments.Columns[14].Visible = false;
+                                GrdDocuments.Columns[15].Visible = false;
 
                             }
                             else
                             {
-                                GrdDocuments.Columns[12].Visible = true;
                                 GrdDocuments.Columns[13].Visible = true;
                                 GrdDocuments.Columns[14].Visible = true;
+                                GrdDocuments.Columns[15].Visible = true;
                                 btnSubmit.Visible = true;
                             }
                             if (GrdDocuments.Rows.Count > 15)
@@ -135,9 +140,9 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             }
                             LblDocumentHeading.Text = "Document List for ONTB -> Contractor";
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
-                            GrdDocuments.Columns[12].Visible = false;
                             GrdDocuments.Columns[13].Visible = false;
                             GrdDocuments.Columns[14].Visible = false;
+                            GrdDocuments.Columns[15].Visible = false;
                             if (GrdDocuments.Rows.Count > 15)
                             {
                                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "Key", "<script>MakeStaticHeader('" + GrdDocuments.ClientID + "', 700, 1300 , 45 ,true); </script>", false);
@@ -181,11 +186,27 @@ namespace ProjectManagementTool._content_pages.documents_contractor
         public string GetDocumentTypeIcon(string DocumentExtn)
         {
             return getdt.GetDocumentTypeMasterIcon_by_Extension(DocumentExtn);
+
+           
         }
 
         public string GetDocumentName(string DocumentExtn)
         {
             string retval = getdt.GetDocumentMasterType_by_Extension(DocumentExtn);
+            if (retval == null || retval == "")
+            {
+                return "N/A";
+            }
+            else
+            {
+                return retval;
+            }
+        }
+
+        //added on 09/06/2022
+        public string GetFlowName(string SubmittalUID)
+        {
+            string retval = getdt.GetFlowName_by_SubmittalID(new Guid(SubmittalUID));
             if (retval == null || retval == "")
             {
                 return "N/A";
@@ -229,7 +250,7 @@ namespace ProjectManagementTool._content_pages.documents_contractor
 
                     if (ds.Tables[0].Rows[0]["DocumentType"].ToString() == "General Document")
                     {
-                        e.Row.Cells[8].Text = "No History";
+                        e.Row.Cells[11].Text = "No History";
                     }
                 }
                 if (ds.Tables[0].Rows[0]["ActivityType"].ToString() != "" && ds.Tables[0].Rows[0]["TopVersion"].ToString() != "")
@@ -237,8 +258,8 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                     //e.Row.Cells[1].Text = ds.Tables[0].Rows[0]["TopVersion"].ToString();
 
 
-                    string newVersionFileName = Path.GetFileNameWithoutExtension(Server.MapPath(ds.Tables[0].Rows[0]["Doc_Path"].ToString()));
-                    lblDocumentName.Text = newVersionFileName.Substring(0, (newVersionFileName.Length - 2)) + " [ Ver. " + ds.Tables[0].Rows[0]["TopVersion"].ToString() + " ]";
+                    //string newVersionFileName = Path.GetFileNameWithoutExtension(Server.MapPath(ds.Tables[0].Rows[0]["Doc_Path"].ToString()));
+                   // lblDocumentName.Text = newVersionFileName.Substring(0, (newVersionFileName.Length - 2)) + " [ Ver. " + ds.Tables[0].Rows[0]["TopVersion"].ToString() + " ]";
                     e.Row.Cells[4].Text = ds.Tables[0].Rows[0]["ActivityType"].ToString();
                 }
                 //
@@ -310,8 +331,20 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             {
                                 if (Session["UserUID"].ToString().ToUpper() == druser["Approver"].ToString().ToUpper())
                                 {
-                                    e.Row.Visible = true;
-                                    return;
+                                    if (ds.Tables[0].Rows[0]["ActivityType"].ToString() == "Accepted")
+                                    {
+                                        if (getdt.checkUserAddedDocumentstatus(new Guid(e.Row.Cells[0].Text), new Guid(HttpContext.Current.Session["UserUID"].ToString()), ds.Tables[0].Rows[0]["ActivityType"].ToString()) == 0)
+                                        {
+                                            e.Row.Visible = true;
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            e.Row.Visible = false;
+                                            return;
+                                        }
+                                    }
+                                    
                                 }
                                 else
                                 {

@@ -130,7 +130,7 @@
                             <asp:BoundField DataField="Current_Status" HeaderText="Status" HtmlEncode="false" ItemStyle-Width="200px" HeaderStyle-Width="200px">
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="Status_Comments" HeaderText="Comments">
+                            <asp:BoundField DataField="Status_Comments" HeaderText="Comments" HtmlEncode="false">
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>
                             <asp:BoundField DataField="LinkToReviewFile" ItemStyle-CssClass="hiddencol" HtmlEncode="false"  HeaderStyle-CssClass="hiddencol" HeaderText="LinkToReviewFile" >
@@ -164,6 +164,9 @@
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>
                             <asp:BoundField DataField="Forwarded" HeaderText="No. Of Days Taken">
+                            <HeaderStyle HorizontalAlign="Left" />
+                            </asp:BoundField>
+                             <asp:BoundField DataField="AcivityUserUID" HeaderText="" ItemStyle-CssClass="hiddencol"  HeaderStyle-CssClass="hiddencol">
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>
                          <%--   <asp:TemplateField>

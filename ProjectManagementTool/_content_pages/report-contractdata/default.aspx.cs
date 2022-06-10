@@ -161,11 +161,11 @@ namespace ProjectManagementTool._content_pages.report_contractdata
                             dr["Description"] = "Contractor Representatives Details";
                             dr["value"] = ds.Tables[0].Rows[0]["Contractor_Representatives_Details"].ToString();
                         }
-                        else if (ds.Tables[0].Columns[i].ToString() == "Company_Details")
-                        {
-                            dr["Description"] = "Company Details";
-                            dr["value"] = ds.Tables[0].Rows[0]["Company_Details"].ToString();
-                        }
+                        //else if (ds.Tables[0].Columns[i].ToString() == "Company_Details")
+                        //{
+                        //    dr["Description"] = "Company Details";
+                        //    dr["value"] = ds.Tables[0].Rows[0]["Company_Details"].ToString();
+                        //}
                         else if (ds.Tables[0].Columns[i].ToString() == "Type_of_Contract")
                         {
                             dr["Description"] = "Type of Contract";
@@ -187,8 +187,15 @@ namespace ProjectManagementTool._content_pages.report_contractdata
                                 CurrencySymbol = "YEN";
                             }
 
-                            dr["Description"] = "Contract Value";
-                            dr["value"] = CurrencySymbol + " " + Convert.ToDouble(ds.Tables[0].Rows[0]["Contract_Value"].ToString()).ToString("#,##.##", CultureInfo.CreateSpecificCulture(ds.Tables[0].Rows[0]["Currency_CultureInfo"].ToString()));
+                            dr["Description"] = "Contract Value (INR in crores)";
+                            // dr["value"] = CurrencySymbol + " " + Convert.ToDouble(ds.Tables[0].Rows[0]["Contract_Value"].ToString()).ToString("#,##.##", CultureInfo.CreateSpecificCulture(ds.Tables[0].Rows[0]["Currency_CultureInfo"].ToString()));
+                            dr["value"] = Convert.ToDouble(ds.Tables[0].Rows[0]["Contract_Value"].ToString()).ToString("#,##.##", CultureInfo.CreateSpecificCulture(ds.Tables[0].Rows[0]["Currency_CultureInfo"].ToString()));
+                        }
+                        else if (ds.Tables[0].Columns[i].ToString() == "ActualExpenditure")
+                        {
+                            dr["Description"] = "ActualExpenditure(INR in crores)";
+                            // dr["value"] = CurrencySymbol + " " + Convert.ToDouble(ds.Tables[0].Rows[0]["Contract_Value"].ToString()).ToString("#,##.##", CultureInfo.CreateSpecificCulture(ds.Tables[0].Rows[0]["Currency_CultureInfo"].ToString()));
+                            dr["value"] = Convert.ToDouble(ds.Tables[0].Rows[0]["ActualExpenditure"].ToString()).ToString("#,##.##", CultureInfo.CreateSpecificCulture(ds.Tables[0].Rows[0]["Currency_CultureInfo"].ToString()));
                         }
                         else if (ds.Tables[0].Columns[i].ToString() == "Letter_of_Acceptance")
                         {
@@ -215,12 +222,12 @@ namespace ProjectManagementTool._content_pages.report_contractdata
                             dr["Description"] = "Contract Completion Date";
                             dr["value"] = ds.Tables[0].Rows[0]["Contract_Completion_Date"].ToString() != "" ? Convert.ToDateTime(ds.Tables[0].Rows[0]["Contract_Completion_Date"].ToString()).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) : "-";
                         }
-                        else if (ds.Tables[0].Columns[i].ToString() == "Defects_Liability_Period")
-                        {
-                            dr["Description"] = "Defects Liability Period";
-                            dr["value"] = ds.Tables[0].Rows[0]["Defects_Liability_Period"].ToString() + " Days";
-                        }
-                        if (ds.Tables[0].Columns[i].ToString() != "Currency" && ds.Tables[0].Columns[i].ToString() != "Currency_CultureInfo")
+                        //else if (ds.Tables[0].Columns[i].ToString() == "Defects_Liability_Period")
+                        //{
+                        //    dr["Description"] = "Defects Liability Period";
+                        //    dr["value"] = ds.Tables[0].Rows[0]["Defects_Liability_Period"].ToString() + " Days";
+                        //}
+                        if (ds.Tables[0].Columns[i].ToString() != "Currency" && ds.Tables[0].Columns[i].ToString() != "Currency_CultureInfo"  && ds.Tables[0].Columns[i].ToString() != "Company_Details")
                         {
                             dt.Rows.Add(dr);
                         }

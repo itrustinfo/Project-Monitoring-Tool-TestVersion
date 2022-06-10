@@ -16,6 +16,7 @@ namespace ProjectManagementTool._modal_pages
         DBGetData getdata = new DBGetData();
         DataSet ds = new DataSet();
         string next = string.Empty;
+        string prevstatus = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Username"] == null)
@@ -449,6 +450,9 @@ namespace ProjectManagementTool._modal_pages
             {
                 ImageButton imgShowHide = (ImageButton)e.Row.FindControl("imgProductsShow");
                 Show_Hide_ProductsGrid(imgShowHide, e);
+                
+                    
+               
                 //ImageButton imgShowHide = (sender as ImageButton);
                 //GridViewRow row = (imgShowHide.NamingContainer as GridViewRow);
                 //if (imgShowHide.CommandArgument == "Show")
@@ -567,7 +571,42 @@ namespace ProjectManagementTool._modal_pages
                     }
                     else
                     {
-                       
+
+                        //added on 10/06/2022 for saladins changes for comments section
+                        string FlowName = getdata.GetFlowName_by_SubmittalID(new Guid(SubmittalUID));
+                        if (FlowName == "Works A")
+                        {
+                            if (e.Row.Cells[3].Text == "Accepted" && prevstatus == "Reconciliation")
+                            {
+                                DataSet dsMUSers = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 3);
+                                string FlowUID = getdata.GetFlowUIDBySubmittalUID(new Guid(getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"]))));
+                                e.Row.Cells[4].Text += "<br/>" + "--------------------" + "<br/>";
+                                foreach (DataRow druser in dsMUSers.Tables[0].Rows)
+                                {
+                                    //if (getdata.checkUserAddedDocumentstatus(new Guid(Request.QueryString["DocID"].ToString()), new Guid(druser["Approver"].ToString()), "Accepted") == 0)
+                                    //{
+                                        e.Row.Cells[4].Text += getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(druser["Approver"].ToString()), new Guid(FlowUID)) + " -- Pending" + "<br/>";
+                                    //}
+                                }
+                            }
+                        }
+                        else if ((FlowName == "Works B" || FlowName=="Vendor Approval"))
+                        {
+                            if (e.Row.Cells[3].Text == "Accepted" && prevstatus == "Reconciliation")
+                            {
+                                DataSet dsMUSers = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 3);
+                                string FlowUID = getdata.GetFlowUIDBySubmittalUID(new Guid(getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"]))));
+                                e.Row.Cells[4].Text += "<br/>" + "--------------------" + "<br/>";
+                                foreach (DataRow druser in dsMUSers.Tables[0].Rows)
+                                {
+                                    //if (getdata.checkUserAddedDocumentstatus(new Guid(Request.QueryString["DocID"].ToString()), new Guid(druser["Approver"].ToString()), "Accepted") == 0)
+                                    //{
+                                        e.Row.Cells[4].Text += getdata.getUserNameby_UID(new Guid(druser["Approver"].ToString())) + " -- Pending" + "<br/>";
+                                    //}
+                                }
+                            }
+                        }
+                        //
                         string phase = getdata.GetPhaseforStatus_CE(new Guid(getdata.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[3].Text);
                         //string phase = getdata.GetPhaseforStatus(new Guid(Request.QueryString["FlowUID"]), e.Row.Cells[3].Text);
                         e.Row.Cells[1].Text = phase;
@@ -620,7 +659,7 @@ namespace ProjectManagementTool._modal_pages
                     }
                 }
                 //
-               
+                prevstatus = e.Row.Cells[3].Text;
                 //if (Session["TypeOfUser"].ToString() == "U" || Session["TypeOfUser"].ToString() == "PA")
                 //{
                 //    e.Row.Cells[10].Visible = false;

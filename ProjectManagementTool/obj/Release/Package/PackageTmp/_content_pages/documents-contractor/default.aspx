@@ -281,12 +281,17 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                            <asp:BoundField DataField="Ref_Number" HeaderText="Originator Reference #" SortExpression="Ref_Number">
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
-                                             <asp:BoundField DataField="IncomingRec_Date" HeaderText="Incoming Recv. Date" SortExpression="ActualDocument_CreatedDate" DataFormatString="{0:dd/MM/yyyy}" >
+                                             <asp:BoundField DataField="IncomingRec_Date" HeaderText="Incoming Recv. Date" SortExpression="IncomingRec_Date" DataFormatString="{0:dd/MM/yyyy}" >
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
                                                <asp:BoundField DataField="Document_Date" HeaderText="Document Date" SortExpression="Document_Date" DataFormatString="{0:dd/MM/yyyy}" >
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
+                                           <asp:TemplateField HeaderText="Flow Name">
+                                            <ItemTemplate>
+                                                <%#GetFlowName(Eval("DocumentUID").ToString())%>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
                                            <asp:TemplateField>
                                             <ItemTemplate>              
                                                       <asp:LinkButton ID="LnkDownloadnew" runat="server" CausesValidation="false" CommandArgument='<%#Eval("ActualDocumentUID")%>' CommandName="download">Download</asp:LinkButton>               

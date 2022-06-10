@@ -128,14 +128,21 @@
                                                 <asp:BoundField DataField="Ref_Number" HeaderText="Originator Reference #">
                                                     <HeaderStyle HorizontalAlign="Left" />
                                                 </asp:BoundField>
-                                                <asp:BoundField DataField="IncomingRec_Date" HeaderText="Incoming Recv. Date" SortExpression="ActualDocument_CreatedDate" DataFormatString="{0:dd/MM/yyyy}">
+                                                <asp:BoundField DataField="Flow_Name" HeaderText="Flow Name" >
+                                                    <HeaderStyle HorizontalAlign="Left" />
+                                                </asp:BoundField>
+                                                <asp:BoundField DataField="Document_Date" HeaderText="Contractor Uploaded Date" SortExpression="Document_Date" DataFormatString="{0:dd/MM/yyyy}">
+                                                    <HeaderStyle HorizontalAlign="Left" />
+                                                </asp:BoundField>
+                                                <asp:BoundField DataField="CreatedDate" HeaderText="ONTB Accepted/Rejected Date" SortExpression="CreatedDate" DataFormatString="{0:dd/MM/yyyy}">
+                                                    <HeaderStyle HorizontalAlign="Left" />
+                                                </asp:BoundField>
+                                                <asp:BoundField DataField="Remarks" HeaderText="Remarks" SortExpression="Remarks">
                                                     <HeaderStyle HorizontalAlign="Left" />
                                                 </asp:BoundField>
 
-                                                <asp:BoundField DataField="Document_Date" HeaderText="Document Date" SortExpression="Document_Date" DataFormatString="{0:dd/MM/yyyy}">
-                                                    <HeaderStyle HorizontalAlign="Left" />
-                                                </asp:BoundField>
-
+                                                
+                                                
 
                                             </Columns>
                                         </asp:GridView>

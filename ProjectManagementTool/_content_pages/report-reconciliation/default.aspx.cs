@@ -507,5 +507,19 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
         {
             ExporttoPDF(grdDataList, 2, "Yes");
         }
+
+        //added on 09/06/2022
+        public string GetFlowName(string SubmittalUID)
+        {
+            string retval = getdt.GetFlowName_by_SubmittalID(new Guid(SubmittalUID));
+            if (retval == null || retval == "")
+            {
+                return "N/A";
+            }
+            else
+            {
+                return retval;
+            }
+        }
     }
 }

@@ -1344,7 +1344,17 @@ vAxes: {
                         {
                             if (HttpContext.Current.Session["UserUID"].ToString().ToUpper() == druser["Approver"].ToString().ToUpper())
                             {
-                                docscount = docscount + 1;
+                                if (dsTop.Tables[0].Rows[0]["ActivityType"].ToString() == "Accepted")
+                                {
+                                    if (dbget.checkUserAddedDocumentstatus(new Guid(drnext["ActualDocumentUID"].ToString()), new Guid(HttpContext.Current.Session["UserUID"].ToString()), dsTop.Tables[0].Rows[0]["ActivityType"].ToString()) == 0)
+                                    {
+                                        docscount = docscount + 1;
+                                    }
+                                }
+                                else
+                                {
+                                    docscount = docscount + 1;
+                                }
                                 goto afterloop;
                             }
                             else

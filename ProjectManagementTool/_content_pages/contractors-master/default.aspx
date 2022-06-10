@@ -67,7 +67,7 @@
                                               <%#Eval("Type_of_Contract")%>
                                       </ItemTemplate>
                                     </asp:TemplateField>  
-                                   <asp:TemplateField HeaderText="Value">
+                                   <asp:TemplateField HeaderText="Contract Value (INR in crores)">
                                       <ItemTemplate>
                                           <span style="color:#006699;"><%#Eval("Currency")%></span>&nbsp;<%#string.Format(new System.Globalization.CultureInfo(Eval("Currency_CultureInfo").ToString()),"{0:N}", Eval("Contract_Value"))%>
                                       </ItemTemplate>

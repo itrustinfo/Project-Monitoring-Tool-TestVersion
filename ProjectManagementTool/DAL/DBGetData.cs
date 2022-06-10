@@ -20816,5 +20816,185 @@ namespace ProjectManager.DAL
                 return sresult;
             }
         }
+
+        //added on 09/06/2022
+        public int UpdateTaskAll(Guid WorkPackageUID, string task_column, string selected)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("UpdateTaskAllSelectedFld"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        con.Open();
+                        cmd.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                        cmd.Parameters.AddWithValue("@task_column", task_column);
+                        cmd.Parameters.AddWithValue("@selected", selected);
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult;
+            }
+        }
+
+
+        public DataSet GetTasks_by_WorkpackageOptionUID_ForTaskUpdate(Guid WorkPackageUID, Guid Workpackage_Option, string FldName)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("GetTasks_by_WorkpackageOptionUID_ForTaskUpdate", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@Workpackage_Option", Workpackage_Option);
+                cmd.SelectCommand.Parameters.AddWithValue("@FldName", FldName);
+
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //--------------------------------------------------------------------------------------
+
+        public DataSet GetSubTasksForWorkPackages_ForTaskUpdate(String sTaskUID, string FldName)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetSubTasksForWorkPackage_ForTaskUpdate", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ParentTaskID", sTaskUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@FldName", FldName);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //-----------------------------------------------------------------------------
+
+        public DataSet GetSubtoSubTasksForWorkPackages_ForTaskUpdate(String sTaskUID, string FldName)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetSubtoSubTasksForWorkPackage_ForTaskUpdate", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ParentTaskID", sTaskUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@FldName", FldName);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+        //-------------------------------------------------------------------------------------------
+
+        public DataSet GetSubtoSubtoSubTasksForWorkPackages_ForTaskUpdate(String sTaskUID, string FldName)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetSubtoSubtoSubTasksForWorkPackage_ForTaskUpdate", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ParentTaskID", sTaskUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@FldName", FldName);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //---------------------------------------------------------------------------------------
+
+        public DataSet GetSubtoSubtoSubtoSubTasksForWorkPackages_ForTaskUpdate(String sTaskUID, string FldName)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetSubtoSubtoSubtoSubTasksForWorkPackage_ForTaskUpdate", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ParentTaskID", sTaskUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@FldName", FldName);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+        //------------------------------------------------------------------------
+
+        public DataSet GetTask_by_ParentTaskUID_ForTaskUpdate(Guid ParentTaskID, string FldName)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("GetTask_by_ParentTaskUID_ForTaskUpdate", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@ParentTaskID", ParentTaskID);
+                cmd.SelectCommand.Parameters.AddWithValue("@FldName", FldName);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+        //--------------------------------------------------------------------------
+
+        //added on 10/06/2022 for nakib
+
+        public DateTime? GetDocumentAcceptedRecejtedDate(Guid DocumentUID)
+        {
+            DateTime? accpetedRejDate = null;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+                    if (con.State == ConnectionState.Closed) con.Open();
+                    SqlCommand cmd = new SqlCommand("USP_DocumentAcceptedRecejtedDate", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@DocumentUID", DocumentUID);
+                    accpetedRejDate = Convert.ToDateTime(cmd.ExecuteScalar());
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                accpetedRejDate = null;
+            }
+            return accpetedRejDate;
+        }
+
     }
 }

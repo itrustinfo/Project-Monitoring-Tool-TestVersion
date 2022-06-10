@@ -97,7 +97,7 @@
                                     <asp:BoundField DataField="Name" HeaderText="WorkPackage Name">
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>
-                                    <asp:TemplateField HeaderText="Budget">
+                                    <asp:TemplateField HeaderText="Budget (INR in crores)">
                                         <ItemTemplate>
                                              <div id="divB" runat="server" visible="false">
                                             <a id="Add" href="/_modal_pages/add-wkpgmaster-data.aspx?WorkPackageUID=<%#Eval("WorkPackageUID")%>&type=budget" class="showAddMasterModal"><span style="color:#006699;"><%#Eval("Currency")%></span>&nbsp;<%#string.Format(new System.Globalization.CultureInfo(Eval("Currency_CultureInfo").ToString()),"{0:N}", Eval("Budget"))%></a>
@@ -113,7 +113,7 @@
                                        <%--<asp:BoundField DataField="ActualExpenditure" HeaderText="Actual Expenditure" >
                             <HeaderStyle HorizontalAlign="Left" />
                             </asp:BoundField>--%>
-                                    <asp:TemplateField HeaderText="Actual Expenditure">
+                                    <asp:TemplateField HeaderText="Actual Expenditure (INR in crores)">
                                         <ItemTemplate>
                                             <div id="divR" runat="server" visible="false">
                                             <a  href="/_modal_pages/add-wkpgmaster-data.aspx?WorkPackageUID=<%#Eval("WorkPackageUID")%>&type=expenditure" class="showAddMasterModal"><span style="color:#006699;"><%#Eval("Currency")%></span>&nbsp;<%#string.Format(new System.Globalization.CultureInfo(Eval("Currency_CultureInfo").ToString()),"{0:N}", Eval("ActualExpenditure"))%></a>

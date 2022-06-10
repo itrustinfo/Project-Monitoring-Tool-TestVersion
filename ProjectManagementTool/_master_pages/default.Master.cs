@@ -120,6 +120,9 @@ namespace ProjectManager._master_pages
             AddViewSitePhotographs.Visible = false;
             AddViewConsolidatedActivities.Visible = false;
             ReportProjectStatusofWorkProgress.Visible = false;
+            ReportReconciliation.Visible = false;
+            ReportReconciliationStatus.Visible = false;
+            ReportPmcDocumentStatus.Visible = false;
             if (Session["TypeOfUser"].ToString() != "U")
             {
                 ViewReports.Visible = false;
@@ -424,6 +427,7 @@ namespace ProjectManager._master_pages
                     ReportReconciliation.Visible = false;
                     ReportReconciliationStatus.Visible = false;
                     ReportReconciliationPhase.Visible = false;
+                    
                 }
                 //
                 if (Session["IsContractor"].ToString() == "Y")
@@ -443,14 +447,36 @@ namespace ProjectManager._master_pages
                 }
 
                 //
-                if((Session["TypeOfUser"].ToString() == "DDE" || Session["TypeOfUser"].ToString() == "PM") && WebConfigurationManager.AppSettings["Domain"] == "ONTB")
+                //if((Session["TypeOfUser"].ToString() == "DDE" || Session["TypeOfUser"].ToString() == "PM") && WebConfigurationManager.AppSettings["Domain"] != "NJSEI")
+                //{
+                //    ViewReports.Visible = true;
+                //    ReportReconciliation.Visible = true;
+                //    ReportReconciliationStatus.Visible = true;
+                //}
+                //added on 08/06/2022
+                if ((Session["TypeOfUser"].ToString() != "U" && WebConfigurationManager.AppSettings["Domain"] != "NJSEI"))
+                {
+                    DataSet ds = getdt.GetAssignedProjects_by_UserUID(new Guid(Session["UserUID"].ToString()));
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        if (dr["ProjectName"].ToString() == "CP-25" || dr["ProjectName"].ToString() == "CP-26" || dr["ProjectName"].ToString() == "CP-27")
+                        {
+                            ViewReports.Visible = true;
+                            ReportReconciliation.Visible = true;
+                            ReportReconciliationStatus.Visible = true;
+                            ReportPmcDocumentStatus.Visible = true;
+                        }
+                    }
+                }
+                else
                 {
                     ViewReports.Visible = true;
                     ReportReconciliation.Visible = true;
                     ReportReconciliationStatus.Visible = true;
+                    ReportPmcDocumentStatus.Visible = true;
                 }
-            }
-            //
+                
+            }            //
         }
     }
 }

@@ -110,7 +110,10 @@ namespace ProjectManagementTool._content_pages.report_const_drawing_status
             {
                 dr = dt.NewRow();
                 count += 1;
-                dococunt = int.Parse(gvr["EstimatedDocuments"].ToString()) - (int.Parse(gvr["Submitted"].ToString()) - int.Parse(gvr["Approved"].ToString())) ;
+                if (int.Parse(gvr["EstimatedDocuments"].ToString()) != 0)
+                {
+                    dococunt = int.Parse(gvr["EstimatedDocuments"].ToString()) - (int.Parse(gvr["Submitted"].ToString()) - int.Parse(gvr["Approved"].ToString()));
+                }
                 dr["DocName"] = gvr["DocName"].ToString();
                 dr["PendingDocuments"] = dococunt;
                 dr["SubmittedDocuments"] = gvr["Submitted"].ToString();

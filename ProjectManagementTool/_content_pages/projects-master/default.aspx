@@ -129,13 +129,11 @@
                           </div>
                             </div>
                         <div class="table-responsive">
-                            <asp:GridView ID="GrdProject" runat="server" CssClass="table table-bordered" AutoGenerateColumns="False" Width="100%" PageSize="10" OnPageIndexChanging="GrdProject_PageIndexChanging" OnRowCommand="GrdProject_RowCommand" OnRowDeleting="GrdProject_RowDeleting" >
+                            <asp:GridView ID="GrdProject" runat="server" CssClass="table table-bordered" AutoGenerateColumns="False" Width="100%" PageSize="10" OnPageIndexChanging="GrdProject_PageIndexChanging" OnRowCommand="GrdProject_RowCommand" OnRowDeleting="GrdProject_RowDeleting" OnRowDataBound="GrdProject_RowDataBound" >
                                <Columns>             
-                                    <asp:TemplateField HeaderText="Project Name">
-                                      <ItemTemplate>
-                                              <%#Eval("ProjectName")%>
-                                      </ItemTemplate>
-                                    </asp:TemplateField> 
+                                    <asp:BoundField DataField="ProjectName" HeaderText="Project Name" DataFormatString="{0:dd MMM yyyy}">
+                                  <HeaderStyle HorizontalAlign="Left" />
+                              </asp:BoundField>                                
                                    <asp:TemplateField HeaderText="Project Code">
                                       <ItemTemplate>
                                               <%#Eval("ProjectAbbrevation")%>
@@ -146,12 +144,12 @@
                                               <%#Eval("Funding_Agency")%>
                                       </ItemTemplate>
                                     </asp:TemplateField> 
-                                   <asp:TemplateField HeaderText="Budget">
+                                   <asp:TemplateField HeaderText="Budget (INR in crores)">
                                   <ItemTemplate>
                                       <span style="color:#006699;"><%#Eval("Currency")%></span>&nbsp;<%#string.Format(new System.Globalization.CultureInfo(Eval("Currency_CultureInfo").ToString()),"{0:N}", Eval("Budget"))%>
                                   </ItemTemplate>
                               </asp:TemplateField>
-                              <asp:TemplateField HeaderText="ActualExpenditure">
+                              <asp:TemplateField HeaderText="ActualExpenditure (INR in crores)">
                                   <ItemTemplate>
                                       <span style="color:#006699;"><%#Eval("Currency").ToString()%></span>&nbsp;<%#string.Format(new System.Globalization.CultureInfo(Eval("Currency_CultureInfo").ToString()),"{0:N}", Eval("ActualExpenditure"))%>
                                   </ItemTemplate>

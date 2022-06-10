@@ -879,7 +879,7 @@ namespace ProjectManager._content_pages.reports
                     DDLOriginator.Items.Clear();
                     DDLOriginator.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- Select --", ""));
                     DDLOriginator.Items.Insert(1, new System.Web.UI.WebControls.ListItem("Contractor", "Contractor"));
-                    DDLOriginator.Items.Insert(2, new System.Web.UI.WebControls.ListItem("NJSEI", "NJSEI"));
+                    DDLOriginator.Items.Insert(2, new System.Web.UI.WebControls.ListItem("ONTB", "ONTB"));
                     string pCode = getdt.GetClientCodebyWorkpackageUID(new Guid(DDLWorkPackage.SelectedValue));
                     if (!pCode.StartsWith("Error:"))
                     {

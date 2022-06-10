@@ -75,13 +75,18 @@
                                                 <asp:BoundField DataField="Ref_Number" HeaderText="Originator Reference #">
                                                     <HeaderStyle HorizontalAlign="Left" />
                                                 </asp:BoundField>
-                                                <asp:BoundField DataField="IncomingRec_Date" HeaderText="Incoming Recv. Date" SortExpression="ActualDocument_CreatedDate" DataFormatString="{0:dd/MM/yyyy}">
+                                                <asp:BoundField DataField="IncomingRec_Date" HeaderText="Uploaded date" SortExpression="IncomingRec_Date" DataFormatString="{0:dd/MM/yyyy}">
                                                     <HeaderStyle HorizontalAlign="Left" />
                                                 </asp:BoundField>
 
-                                                <asp:BoundField DataField="Document_Date" HeaderText="Document Date" SortExpression="Document_Date" DataFormatString="{0:dd/MM/yyyy}">
+                                                <asp:BoundField DataField="Document_Date" HeaderText="Document Date" SortExpression="Document_Date" DataFormatString="{0:dd/MM/yyyy}" Visible="false">
                                                     <HeaderStyle HorizontalAlign="Left" />
                                                 </asp:BoundField>
+                                                <asp:TemplateField HeaderText="Flow Name">
+                                            <ItemTemplate>
+                                                <%#GetFlowName(Eval("DocumentUID").ToString())%>
+                                            </ItemTemplate>
+                                                     </asp:TemplateField>
                                             </Columns>
                                         </asp:GridView>
                                     </div>
