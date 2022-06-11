@@ -344,6 +344,11 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                             return;
                                         }
                                     }
+                                    else
+                                    {
+                                        e.Row.Visible = true;
+                                        return;
+                                    }
                                     
                                 }
                                 else

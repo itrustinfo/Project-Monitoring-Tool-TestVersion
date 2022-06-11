@@ -243,7 +243,11 @@ namespace ProjectManagementTool._modal_pages
                             {
                                 if(getdata.checkUserAddedDocumentstatus(new Guid(Request.QueryString["DocID"].ToString()), new Guid(druser["Approver"].ToString()),"Accepted") == 0)
                                 {
-                                    pending = pending +   getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(druser["Approver"].ToString()), new Guid(FlowUID)) + " -- Pending <br/>";
+                                    DataSet dsuserf = getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(druser["Approver"].ToString()), new Guid(FlowUID));
+                                    foreach (DataRow drf in dsuserf.Tables[0].Rows)
+                                    {
+                                        pending = pending + drf["WorkPackageCategory_Name"].ToString() + " -- Pending <br/>";
+                                    }
                                 }
                                 else
                                 {
@@ -255,19 +259,30 @@ namespace ProjectManagementTool._modal_pages
                         if (dsMUSers.Tables[0].Rows.Count != commentsCount)
                         {
                             Status = "Accepted";
-                            categoryname = getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(Session["UserUID"].ToString()), new Guid(FlowUID));
+                            DataSet dsuserf = getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(Session["UserUID"].ToString()), new Guid(FlowUID));
+                            foreach (DataRow drf in dsuserf.Tables[0].Rows)
+                            {
+                             categoryname = drf["WorkPackageCategory_Name"].ToString();
                             pending = pending.Replace(categoryname + " -- Pending <br/>", "");
+                            }
                             Comments = Session["Username"].ToString() + " (" + categoryname + ") added - " + txtcomments.Text + "<br/>" + "--------------------" +  "<br/>" + pending  ;
 
                         }
                         else
                         {
-                            categoryname = getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(Session["UserUID"].ToString()), new Guid(FlowUID));
-
+                            DataSet dsuserf = getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(Session["UserUID"].ToString()), new Guid(FlowUID));
+                            foreach (DataRow drf in dsuserf.Tables[0].Rows)
+                            {
+                                categoryname = drf["WorkPackageCategory_Name"].ToString();
+                            }
                             Comments = Session["Username"].ToString() + " (" + categoryname + ") added - " + txtcomments.Text ;
 
                         }
 
+                    }
+                    else if (DDlStatus.SelectedItem.ToString().Contains("Network Design by ONTB") || DDlStatus.SelectedItem.ToString().Contains("ONTB Specialist Verified") || DDlStatus.SelectedItem.ToString() =="Review By ONTB")
+                    {
+                        Comments = Session["Username"].ToString() + " (" + categoryname + ") added - " + txtcomments.Text;
                     }
                     //
                     if (Request.QueryString["StatusUID"] != null)

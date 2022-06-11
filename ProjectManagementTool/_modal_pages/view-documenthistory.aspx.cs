@@ -585,7 +585,14 @@ namespace ProjectManagementTool._modal_pages
                                 {
                                     //if (getdata.checkUserAddedDocumentstatus(new Guid(Request.QueryString["DocID"].ToString()), new Guid(druser["Approver"].ToString()), "Accepted") == 0)
                                     //{
-                                        e.Row.Cells[4].Text += getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(druser["Approver"].ToString()), new Guid(FlowUID)) + " -- Pending" + "<br/>";
+                                    DataSet dsuserf = getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(druser["Approver"].ToString()), new Guid(FlowUID));
+                                    foreach (DataRow drf in dsuserf.Tables[0].Rows)
+                                    {
+                                        if (!e.Row.Cells[4].Text.Contains(drf["WorkPackageCategory_Name"].ToString()))
+                                        {
+                                            e.Row.Cells[4].Text += drf["WorkPackageCategory_Name"].ToString() + " -- Pending" + "<br/>";
+                                        }
+                                    }
                                     //}
                                 }
                             }

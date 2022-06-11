@@ -20164,27 +20164,34 @@ namespace ProjectManager.DAL
         }
 
         //added on 22/04/2022
-        public string GetCategoryNameforUser(Guid ProjectUID,Guid UserUID,Guid FlowUID)
+        public DataSet GetCategoryNameforUser(Guid ProjectUID,Guid UserUID,Guid FlowUID)
         {
-            string Categoryname = "";
+            // string Categoryname = "";
+            DataSet ds = new DataSet();
             SqlConnection con = new SqlConnection(db.GetConnectionString());
             try
             {
-                if (con.State == ConnectionState.Closed) con.Open();
-                SqlCommand cmd = new SqlCommand("usp_GetCategoryNameforUser", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
-                cmd.Parameters.AddWithValue("@UserUID", UserUID);
-                cmd.Parameters.AddWithValue("@FlowUID", FlowUID);
-                Categoryname = (string)cmd.ExecuteScalar();
-                con.Close();
+               // if (con.State == ConnectionState.Closed) con.Open();
+                //SqlCommand cmd = new SqlCommand("usp_GetCategoryNameforUser", con);
+               // cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetCategoryNameforUser", con);
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID); ;
+                cmd.SelectCommand.Parameters.AddWithValue("@UserUID", UserUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@FlowUID", FlowUID);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                //cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                //cmd.Parameters.AddWithValue("@UserUID", UserUID);
+                //cmd.Parameters.AddWithValue("@FlowUID", FlowUID);
+                cmd.Fill(ds);
+                // Categoryname = (string)cmd.ExecuteScalar();
+               // con.Close();
             }
             catch (Exception ex)
             {
 
                 if (con.State == ConnectionState.Open) con.Close();
             }
-            return Categoryname;
+            return ds;
         }
 
         //added on 22/04/2022 for nakib
