@@ -140,10 +140,14 @@
                         <asp:TextBox ID="txtDate" CssClass="form-control" autocomplete="off" required  runat="server" ClientIDMode="Static"></asp:TextBox>
                         
                     </div>
-                    
+                    <div class="form-group">
+                        <label class="lblCss" for="txtRabillNumber">Bill Amount</label>
+                        <asp:TextBox ID="txtBillAmount" CssClass="form-control" autocomplete="off"  runat="server" ClientIDMode="Static"></asp:TextBox>
+                        
+                    </div>
                     <div class="form-group">
                         <label class="lblCss" for="UploadPhotographs">Choose File/s</label>
-                        &nbsp;<span style="color: red; font-size: 1.2rem;">*</span>
+                        
                         <div class="custom-file">
                             <asp:FileUpload ID="ImageUpload" runat="server" AllowMultiple="true" CssClass="custom-file-input" />
                             <label class="custom-file-label" for="UploadPhotographs">Choose Files</label>
@@ -167,6 +171,7 @@
                      <img src="../_assets/images/progress.gif" width="40" alt="loading"  /> <span style="color:#006699; font-weight:bold;">Processing please wait...</span>
                      </div> 
         <div class="modal-footer">
+            <asp:Label ID="LblMessage" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
             <asp:Button ID="btnaddrabill" runat="server" Text="Continue" CssClass="btn btn-primary" OnClientClick="ShowProgressBar('true')" OnClick="btnaddrabill_Click"  />
             
                 </div>

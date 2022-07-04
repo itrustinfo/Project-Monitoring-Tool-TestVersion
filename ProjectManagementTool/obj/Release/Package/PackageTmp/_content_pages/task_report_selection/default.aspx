@@ -187,12 +187,12 @@
                                               <asp:Button ID="btnSubmit" runat="server" Text="Update Tasks" CssClass="btn btn-primary" OnClick="btnSubmit_Click" />
                                               <asp:Button ID="btnExpand" runat="server" Text="Expand All" CssClass="btn btn-primary" OnClick="btnExpand_Click" />
                                               <asp:Button ID="btnCollapse" runat="server" Text="Collapse All" CssClass="btn btn-primary" OnClick="btnCollapse_Click" />
-                                                 <asp:CheckBox ID="chkBox1" class="fa-pull-right" style="color:red" runat="server" Text= "Select/Deselect All & Update" OnCheckedChanged="chkBox1_CheckedChanged" AutoPostBack="True" />
+                                                 <asp:Button ID="btnClearAll" runat="server" Text="Clear All" CssClass="btn btn-primary" OnClick="btnClearAll_Click" />
                                               </div>
                                              <br />
                                             <div id="divStatus" runat="server" visible="true">
                                                 <%--insert treeview--%>
-                                                <asp:TreeView runat="server" CssClass="it_tree_view" ID="TreeView1" ImageSet="XPFileExplorer" OnSelectedNodeChanged="TreeView1_SelectedNodeChanged" NodeIndent="15" EnableTheming="True" NodeWrap="True" Height ="500px" Width="100%" style="padding:10px;padding-top:0px">                               
+                                                <asp:TreeView runat="server" CssClass="it_tree_view" ID="TreeView1" ImageSet="XPFileExplorer" NodeIndent="15" EnableTheming="True" NodeWrap="True" Height ="500px" Width="100%" style="padding:10px;padding-top:0px">                               
                                                     <NodeStyle CssClass="it_tree_view__node" NodeSpacing="2px" />
                                                     <ParentNodeStyle Font-Bold="False" />
                                                     <SelectedNodeStyle CssClass="it_tree_view__node__selected" HorizontalPadding="4px" VerticalPadding="2px" />

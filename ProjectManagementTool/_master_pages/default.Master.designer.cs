@@ -58,6 +58,15 @@ namespace ProjectManager._master_pages {
         protected global::System.Web.UI.WebControls.Label LblTitle;
         
         /// <summary>
+        /// WorkPackage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WorkPackage;
+        
+        /// <summary>
         /// ViewWorkpackage control.
         /// </summary>
         /// <remarks>
@@ -146,6 +155,15 @@ namespace ProjectManager._master_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink HyperLink4;
+        
+        /// <summary>
+        /// Documents control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Documents;
         
         /// <summary>
         /// HyperLink14 control.
@@ -326,6 +344,24 @@ namespace ProjectManager._master_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink ReportPmcDocumentStatus;
+        
+        /// <summary>
+        /// ReportDailyProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink ReportDailyProgress;
+        
+        /// <summary>
+        /// ReportStatusSummaryReport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink ReportStatusSummaryReport;
         
         /// <summary>
         /// ReviewReports control.
@@ -677,6 +713,24 @@ namespace ProjectManager._master_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink TaskSelectionUpdate;
+        
+        /// <summary>
+        /// Daily_progressreport_master control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink Daily_progressreport_master;
+        
+        /// <summary>
+        /// Daily_progress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink Daily_progress;
         
         /// <summary>
         /// lblUserGreeting control.

@@ -15,11 +15,14 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(".showStatusModal").click(function (e) {
+                e.stopPropagation();
                 e.preventDefault();
+               
                 jQuery.noConflict();
                 var url = $(this).attr("href");
                 $("#ModAddDocumentStatus iframe").attr("src", url);
-                $("#ModAddDocumentStatus").modal("show");
+                 $("#ModAddDocumentStatus").modal("show");
+               
             });
 
             $(".showuploaddocumentModal").click(function (e) {
@@ -27,6 +30,7 @@
                 jQuery.noConflict();
                 var url = $(this).attr("href");
                 $("#ModResubmitdocument iframe").attr("src", url);
+               
                 $("#ModResubmitdocument").modal("show");
             });
         });
@@ -193,7 +197,7 @@
 		    <div class="modal-content">
 			    <div class="modal-header">
 				    <h5 class="modal-title">Add Status</h5>
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    <button aria-label="Close" class="close" data-dismiss="modal" data-backdrop="static" data-keyboard="false" type="button"><span aria-hidden="true">&times;</span></button>
 			    </div>
 			    <div class="modal-body">
                     <iframe class="border-0 w-100" style="height:340px;" loading="lazy"></iframe>

@@ -46,9 +46,21 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                         }
                         LblDocumentHeading.Text = "Document List";
                         lblTotalcount.Visible = false;
-                        GrdDocuments.Columns[13].Visible = false;
-                        GrdDocuments.Columns[14].Visible = false;
-                        GrdDocuments.Columns[15].Visible = false;
+                        GrdDocuments.Columns[0].Visible = false;
+                        GrdDocuments.Columns[1].Visible = false;
+                        GrdDocuments.Columns[13+3].Visible = false;
+                        GrdDocuments.Columns[14+3].Visible = false;
+                        GrdDocuments.Columns[15+3].Visible = false;
+                        //added on 13/06/2022 after inputs from saladin
+                        GrdDocuments.Columns[7+3].Visible = true;
+                        GrdDocuments.Columns[8+3].Visible = false;
+                        GrdDocuments.Columns[19].Visible = false;
+                        GrdDocuments.Columns[20].Visible = false;
+                        if (ds.Tables[0].Rows.Count > 0)
+                        {
+                            GrdDocuments.HeaderRow.Cells[7+2].Text = "Uploaded date";
+                        }
+                        //
                         //  lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                         //if (GrdDocuments.Rows.Count > 15)
                         //{
@@ -73,9 +85,17 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                 GrdDocuments.DataBind();
                             }
                             LblDocumentHeading.Text = "Document List for Contractor -> ONTB";
-                            GrdDocuments.Columns[13].Visible = false;
-                            GrdDocuments.Columns[14].Visible = false;
-                            GrdDocuments.Columns[15].Visible = false;
+                            GrdDocuments.Columns[13+3].Visible = false;
+                            GrdDocuments.Columns[14+3].Visible = false;
+                            GrdDocuments.Columns[15+3].Visible = false;
+                            //added on 13/06/2022 after inputs from saladin
+                            GrdDocuments.Columns[7+3].Visible = true;
+                            GrdDocuments.Columns[8+3].Visible = false;
+                            if (ds.Tables[0].Rows.Count > 0)
+                            {
+                                GrdDocuments.HeaderRow.Cells[7+3].Text = "Contractor Uploaded date";
+                            }
+                            //
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                             if (GrdDocuments.Rows.Count > 15)
                             {
@@ -100,22 +120,27 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             LblDocumentHeading.Text = "Document List for Reconciliation Docs";
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                             //added on 09/06/2022 after inputs from saladin
-                            GrdDocuments.Columns[7].Visible = true;
-                            GrdDocuments.Columns[8].Visible = false;
-                            GrdDocuments.HeaderRow.Cells[7].Text = "Contractor Uploaded date";
+                            GrdDocuments.Columns[7+3].Visible = true;
+                            GrdDocuments.Columns[8+3].Visible = false;
+                            GrdDocuments.Columns[19].Visible = false;
+                            GrdDocuments.Columns[20].Visible = false;
+                            if (ds.Tables[0].Rows.Count > 0)
+                            {
+                                GrdDocuments.HeaderRow.Cells[7+3].Text = "Contractor Uploaded date";
+                            }
                             //
                             if (Session["IsContractor"].ToString() == "Y")
                             {
-                                GrdDocuments.Columns[13].Visible = false;
-                                GrdDocuments.Columns[14].Visible = false;
-                                GrdDocuments.Columns[15].Visible = false;
+                                GrdDocuments.Columns[13+3].Visible = false;
+                                GrdDocuments.Columns[14+3].Visible = false;
+                                GrdDocuments.Columns[15+3].Visible = false;
 
                             }
                             else
                             {
-                                GrdDocuments.Columns[13].Visible = true;
-                                GrdDocuments.Columns[14].Visible = true;
-                                GrdDocuments.Columns[15].Visible = true;
+                                GrdDocuments.Columns[13+3].Visible = true;
+                                GrdDocuments.Columns[14+3].Visible = true;
+                                GrdDocuments.Columns[15+3].Visible = true;
                                 btnSubmit.Visible = true;
                             }
                             if (GrdDocuments.Rows.Count > 15)
@@ -140,9 +165,11 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             }
                             LblDocumentHeading.Text = "Document List for ONTB -> Contractor";
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
-                            GrdDocuments.Columns[13].Visible = false;
-                            GrdDocuments.Columns[14].Visible = false;
-                            GrdDocuments.Columns[15].Visible = false;
+                            GrdDocuments.Columns[13+3].Visible = false;
+                            GrdDocuments.Columns[14+3].Visible = false;
+                            GrdDocuments.Columns[15+3].Visible = false;
+                            GrdDocuments.Columns[19].Visible = false;
+                            GrdDocuments.Columns[20].Visible = false;
                             if (GrdDocuments.Rows.Count > 15)
                             {
                                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "Key", "<script>MakeStaticHeader('" + GrdDocuments.ClientID + "', 700, 1300 , 45 ,true); </script>", false);
@@ -240,17 +267,15 @@ namespace ProjectManagementTool._content_pages.documents_contractor
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-               
-                DataSet ds = getdt.getTop1_DocumentStatusSelect(new Guid(e.Row.Cells[0].Text));
+
+                DataSet ds = getdt.getTop1_DocumentStatusSelect(new Guid(e.Row.Cells[0 + 2].Text));
                 Label lblDocumentName = (Label)e.Row.FindControl("lblDocumentName");
                 //
                 if (ds != null)
                 {
-
-
                     if (ds.Tables[0].Rows[0]["DocumentType"].ToString() == "General Document")
                     {
-                        e.Row.Cells[11].Text = "No History";
+                        e.Row.Cells[11 + 3].Text = "No History";
                     }
                 }
                 if (ds.Tables[0].Rows[0]["ActivityType"].ToString() != "" && ds.Tables[0].Rows[0]["TopVersion"].ToString() != "")
@@ -259,14 +284,19 @@ namespace ProjectManagementTool._content_pages.documents_contractor
 
 
                     //string newVersionFileName = Path.GetFileNameWithoutExtension(Server.MapPath(ds.Tables[0].Rows[0]["Doc_Path"].ToString()));
-                   // lblDocumentName.Text = newVersionFileName.Substring(0, (newVersionFileName.Length - 2)) + " [ Ver. " + ds.Tables[0].Rows[0]["TopVersion"].ToString() + " ]";
-                    e.Row.Cells[4].Text = ds.Tables[0].Rows[0]["ActivityType"].ToString();
+                    // lblDocumentName.Text = newVersionFileName.Substring(0, (newVersionFileName.Length - 2)) + " [ Ver. " + ds.Tables[0].Rows[0]["TopVersion"].ToString() + " ]";
+                    e.Row.Cells[4 + 2].Text = ds.Tables[0].Rows[0]["ActivityType"].ToString();
                 }
+                //
+                //added on 27/06/2022 for next user action from current status
+                string SubmittalUID_Next = getdt.GetSubmittalUID_By_ActualDocumentUID(new Guid(e.Row.Cells[0 + 2].Text));
+                string FlowUID = getdt.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID_Next));
+                e.Row.Cells[7].Text = getdt.NextAction_ByCurrentStatus(new Guid(FlowUID), e.Row.Cells[6].Text);
                 //
                 if (Session["IsContractor"].ToString() == "Y")
                 {
-                    string SubmittalUID = getdt.GetSubmittalUID_By_ActualDocumentUID(new Guid(e.Row.Cells[0].Text));
-                    string phase = getdt.GetPhaseforStatus(new Guid(getdt.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[4].Text);
+                    string SubmittalUID = getdt.GetSubmittalUID_By_ActualDocumentUID(new Guid(e.Row.Cells[0 + 2].Text));
+                    string phase = getdt.GetPhaseforStatus(new Guid(getdt.GetFlowUIDBySubmittalUID(new Guid(SubmittalUID))), e.Row.Cells[4 + 2].Text);
                     //string phase = getdata.GetPhaseforStatus(new Guid(Request.QueryString["FlowUID"]), e.Row.Cells[3].Text);
 
                     string Flowtype = getdt.GetFlowTypeBySubmittalUID(new Guid(SubmittalUID));
@@ -285,46 +315,46 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             //    e.Row.Cells[4].Text = "Under Client Approval Process";
                             //}
                             //
-                            if (e.Row.Cells[4].Text == "Code A-CE Approval")
+                            if (e.Row.Cells[4 + 2].Text == "Code A-CE Approval")
                             {
-                                e.Row.Cells[4].Text = "Approved By BWSSB Under Code A";
+                                e.Row.Cells[4 + 2].Text = "Approved By BWSSB Under Code A";
 
                             }
-                            else if (e.Row.Cells[4].Text == "Code B-CE Approval")
+                            else if (e.Row.Cells[4 + 2].Text == "Code B-CE Approval")
                             {
-                                e.Row.Cells[4].Text = "Approved By BWSSB Under Code B";
+                                e.Row.Cells[4 + 2].Text = "Approved By BWSSB Under Code B";
                             }
-                            else if (e.Row.Cells[4].Text == "Code C-CE Approval")
+                            else if (e.Row.Cells[4 + 2].Text == "Code C-CE Approval")
                             {
-                                e.Row.Cells[4].Text = "Under Client Approval Process";
+                                e.Row.Cells[4 + 2].Text = "Under Client Approval Process";
 
                             }
-                            else if (e.Row.Cells[4].Text == "Client CE GFC Approval")
+                            else if (e.Row.Cells[4 + 2].Text == "Client CE GFC Approval")
                             {
-                                e.Row.Cells[4].Text = "Approved GFC by BWSSB";
+                                e.Row.Cells[4 + 2].Text = "Approved GFC by BWSSB";
                             }
                         }
                         else
                         {
-                            e.Row.Cells[4].Text = phase;
+                            e.Row.Cells[4 + 2].Text = phase;
                         }
                     }
 
                 }
                 //
-                if (e.Row.Cells[4].Text.Contains("Reconciliation"))
+                if (e.Row.Cells[4 + 2].Text.Contains("Reconciliation"))
                 {
-                    e.Row.Cells[1].Text = GetSubmittalName(getdt.GetSubmittalUID_By_ActualDocumentUID(new Guid(e.Row.Cells[0].Text)));
+                    e.Row.Cells[1 + 2].Text = GetSubmittalName(getdt.GetSubmittalUID_By_ActualDocumentUID(new Guid(e.Row.Cells[0 + 2].Text)));
                 }
                 //
                 if (Request.QueryString["UserUID"] != null)
                 {
                     e.Row.Visible = false;
-                    DataSet dsNext = getdt.GetNextStep_By_DocumentUID(new Guid(e.Row.Cells[0].Text), ds.Tables[0].Rows[0]["ActivityType"].ToString());
+                    DataSet dsNext = getdt.GetNextStep_By_DocumentUID(new Guid(e.Row.Cells[0 + 2].Text), ds.Tables[0].Rows[0]["ActivityType"].ToString());
                     DataSet dsNxtUser = new DataSet();
                     foreach (DataRow dr in dsNext.Tables[0].Rows)
                     {
-                        dsNxtUser = getdt.GetNextUser_By_DocumentUID(new Guid(e.Row.Cells[0].Text), int.Parse(dr["ForFlow_Step"].ToString()));
+                        dsNxtUser = getdt.GetNextUser_By_DocumentUID(new Guid(e.Row.Cells[0 + 2].Text), int.Parse(dr["ForFlow_Step"].ToString()));
                         if (dsNxtUser.Tables[0].Rows.Count > 0)
                         {
                             foreach (DataRow druser in dsNxtUser.Tables[0].Rows)
@@ -333,7 +363,7 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                 {
                                     if (ds.Tables[0].Rows[0]["ActivityType"].ToString() == "Accepted")
                                     {
-                                        if (getdt.checkUserAddedDocumentstatus(new Guid(e.Row.Cells[0].Text), new Guid(HttpContext.Current.Session["UserUID"].ToString()), ds.Tables[0].Rows[0]["ActivityType"].ToString()) == 0)
+                                        if (getdt.checkUserAddedDocumentstatus(new Guid(e.Row.Cells[0 + 2].Text), new Guid(HttpContext.Current.Session["UserUID"].ToString()), ds.Tables[0].Rows[0]["ActivityType"].ToString()) == 0)
                                         {
                                             e.Row.Visible = true;
                                             return;
@@ -349,7 +379,7 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                         e.Row.Visible = true;
                                         return;
                                     }
-                                    
+
                                 }
                                 else
                                 {
@@ -364,7 +394,30 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                         }
                     }
                 }
-               
+
+
+                //added on 26/06/2022 for salahuddins changes to be done
+                e.Row.Cells[20].Text = getdt.GetUSP_DocumentAcceptedRejectedRemarks(new Guid(e.Row.Cells[0 + 2].Text));
+
+                DateTime? acceptedRejDate = getdt.GetDocumentAcceptedRecejtedDate(new Guid(e.Row.Cells[0 + 2].Text));
+                if (acceptedRejDate != null)
+                {
+                    e.Row.Cells[19].Text = Convert.ToDateTime(acceptedRejDate).ToString("dd/MM/yyyy");
+                }
+
+                if (e.Row.Cells[4 + 2].Text == "Accepted")
+                {
+                    e.Row.Cells[4 + 2].Text = "Accepted - (Under PMC Review)";
+                }
+                else if (e.Row.Cells[4 + 2].Text == "Accepted-PMC Comments")
+                {
+                    e.Row.Cells[4 + 2].Text = "Accepted" + "<br/>" + "(PMC Review Completed)"; ;
+                }
+                else if (e.Row.Cells[4 + 2].Text.ToLower().Contains("back to pmc"))
+                {
+                    e.Row.Cells[4 + 2].Text = e.Row.Cells[4 + 2].Text + "<br/>" + "(Under PMC Review)";
+
+                }
             }
         }
 
@@ -499,7 +552,7 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                         string status = rbSelect.SelectedValue;
                         string remarks = txtremarks.Text;
                         string EmailHeading = string.Empty;
-                        string DocumentUID = row.Cells[0].Text;
+                        string DocumentUID = row.Cells[0+2].Text;
                         string OriginatorRefNo = string.Empty;
                         string ProjectRefNo = string.Empty;
                         if (status == "Accept")
@@ -524,7 +577,7 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                         //
                         if (status =="Accept")
                     {
-                            if (row.Cells[4].Text == "Contractor Submitted 9 Copies")
+                            if (row.Cells[4+2].Text == "Contractor Submitted 9 Copies")
                             {
                                 status = "Accepted 9 Copies";
                             }
@@ -536,7 +589,7 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                     }
                     else
                     {
-                            if (row.Cells[4].Text == "Contractor Submitted 9 Copies")
+                            if (row.Cells[4+2].Text == "Contractor Submitted 9 Copies")
                             {
                                 status = "Rejected 9 Copies";
                             }
@@ -638,7 +691,7 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                                       "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + DateTime.Now.ToString("dd MMM yyyy") + "</td></tr>" +
                                                 "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + remarks + "</td></tr>";
                                 sHtmlString += "</table></div>";
-                                sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Monitoring Tool.</div></div></body></html>";
+                                sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
 
                                 //sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
                                 //       "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "</head>" +
@@ -686,7 +739,7 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                                 "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + DateTime.Now.ToString("dd MMM yyyy") + "</td></tr>" +
                                                 "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + remarks + "</td></tr>";
                                 sHtmlString += "</table><br /><br /><div style='color: red'>Kindly note that you are to act on this to complete the next step in document flow.</div></div>";
-                                sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Monitoring Tool.</div></div></body></html>";
+                                sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
                                 Subject = Subject + ".Kindly complete the next step !";
                                 string next = string.Empty;
                                 DataSet dsNxtUser = new DataSet();
@@ -739,7 +792,49 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                                 "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + DateTime.Now.ToString("dd MMM yyyy") + "</td></tr>" +
                                                 "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + remarks + "</td></tr>";
                                 sHtmlString += "</table></div>";
-                                sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> Project Monitoring Tool.</div></div></body></html>";
+                                sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
+                                getdt.StoreEmaildataToMailQueue(Guid.NewGuid(), new Guid(Session["UserUID"].ToString()), dtemailCred.Rows[0][0].ToString(), ToEmailID, Subject, sHtmlString, CC, "");
+
+                                //
+                                // mail to DTL and Project Co-ordinator after Accept/Reject
+                                Subject = "Document Status -" + status + " under PMC Process";
+                                DataSet dsMUSersPC = getdt.GetNextUser_By_DocumentUID(new Guid(DocumentUID), 3);
+                                if (dsMUSers.Tables[0].Rows.Count > 0)
+                                {
+                                    ToEmailID = string.Empty;
+                                    foreach (DataRow druser in dsMUSers.Tables[0].Rows)
+                                    {
+                                        ToEmailID = getdt.GetUserEmail_By_UserUID_New(new Guid(druser["Approver"].ToString())) + ",";
+                                    }
+                                }
+                                ToEmailID += "ns.rao04@gmail.com";
+                                ToEmailID = ToEmailID.TrimEnd(',');
+                                sHtmlString = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>" + "<html xmlns='http://www.w3.org/1999/xhtml'>" +
+                                "<head>" + "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + "<style>table, th, td {border: 1px solid black; padding:6px;}</style></head>" +
+                                   "<body style='font-family:Verdana, Arial, sans-serif; font-size:12px; font-style:normal;'>";
+                                sHtmlString += "<div style='width:80%; float:left; padding:1%; border:2px solid #011496; border-radius:5px;'>" +
+                                                   "<div style='float:left; width:100%; border-bottom:2px solid #011496;'>";
+                                if (WebConfigurationManager.AppSettings["Domain"] == "NJSEI")
+                                {
+                                    sHtmlString += "<div style='float:left; width:7%;'><img src='https://dm.njsei.com/_assets/images/NJSEI%20Logo.jpg' width='50' /></div>";
+                                }
+                                else
+                                {
+                                    sHtmlString += "<div style='float:left; width:7%;'><h2>" + WebConfigurationManager.AppSettings["Domain"] + "</h2></div>";
+                                }
+                                sHtmlString += "<div style='float:left; width:70%;'><h2 style='margin-top:10px;'>Project Monitoring Tool</h2></div>" +
+                                           "</div>";
+                                sHtmlString += "<div style='width:100%; float:left;'><br/>Dear User,<br/><br/><span style='font-weight:bold;'>Document " + documentname + " "  + status + " under PMC Process" + ".</span> <br/><br/></div>";
+                                sHtmlString += "<div style='width:100%; float:left;'><table style='width:100%;'>" +
+                                                "<tr><td><b>Document Name </b></td><td style='text-align:center;'><b>:</b></td><td>" + documentname + "</td></tr>" +
+                                                "<tr><td><b>Status </b></td><td style='text-align:center;'><b>:</b></td><td>" + status + "</td></tr>" +
+                                               "<tr><td><b>Originator Ref. Number </b></td><td style='text-align:center;'><b>:</b></td><td>" + OriginatorRefNo + "</td></tr>" +
+                                                    "<tr><td><b>ONTB Ref. Number</b></td><td style='text-align:center;'><b>:</b></td><td>" + ProjectRefNo + "</td></tr>" +
+
+                                                "<tr><td><b>Date </b></td><td style='text-align:center;'><b>:</b></td><td>" + DateTime.Now.ToString("dd MMM yyyy") + "</td></tr>" +
+                                                "<tr><td><b>Comments </b></td><td style='text-align:center;'><b>:</b></td><td>" + remarks + "</td></tr>";
+                                sHtmlString += "</table></div>";
+                                sHtmlString += "<div style='width:100%; float:left;'><br/><br/>Sincerely, <br/> MIS System.</div></div></body></html>";
                                 getdt.StoreEmaildataToMailQueue(Guid.NewGuid(), new Guid(Session["UserUID"].ToString()), dtemailCred.Rows[0][0].ToString(), ToEmailID, Subject, sHtmlString, CC, "");
 
                                 //

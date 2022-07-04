@@ -57,6 +57,13 @@
                                         <asp:GridView ID="grdDataList" EmptyDataText="No Data Found." runat="server" Width="100%" AutoGenerateColumns="false" CellPadding="6" CellSpacing="16" HeaderStyle-BackColor="#666666" HeaderStyle-ForeColor="White" AlternatingRowStyle-BackColor="#F5F5F5"
                                             CssClass="table table-bordered" OnRowDataBound="grdDataList_RowDataBound">
                                             <Columns>
+                                                <asp:BoundField DataField="SerialNo"  HeaderText="Serial No" >
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
+
+                                            <asp:BoundField DataField="ProjectName"  HeaderText="Project Name" >
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
                                                 <asp:BoundField DataField="DocName" HeaderText="Submittal Name">
                                                     <HeaderStyle HorizontalAlign="Left" />
                                                 </asp:BoundField>

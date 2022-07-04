@@ -198,7 +198,7 @@
 
                     <div class="form-group">
                         <label class="lblCss" for="txtcomments">Comments</label>
-                        <asp:TextBox ID="txtcomments" CssClass="form-control" TextMode="MultiLine" runat="server" ClientIDMode="Static"></asp:TextBox>
+                        <asp:TextBox ID="txtcomments" CssClass="form-control" TextMode="MultiLine" runat="server" ClientIDMode="Static" Height="150px" MaxLength="3000"></asp:TextBox>
                     </div>
                      <div class="form-group" id="divPassword" runat="server" visible="false">
                         <label class="lblCss" for="txtcomments">Enter Password</label>

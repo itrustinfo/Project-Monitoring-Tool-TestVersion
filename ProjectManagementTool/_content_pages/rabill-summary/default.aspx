@@ -248,9 +248,17 @@
                                             <asp:TextBox ID="txtRabill" runat="server" Text='<%#Eval("RABillNumber")%>'></asp:TextBox>
                                         </EditItemTemplate>
                                     </asp:TemplateField>
-
-
-
+                                    <asp:TemplateField>
+                                        <HeaderTemplate>
+                                            Entered RABill Value
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="LblEnteredBillValue" runat="server" Text='<%#Eval("RABill_Amount")%>'></asp:Label>
+                                        </ItemTemplate>
+                                        <EditItemTemplate>
+                                            <asp:TextBox ID="txtEnteredBillValue" runat="server" Text='<%#Eval("RABill_Amount")%>'></asp:TextBox>
+                                        </EditItemTemplate>
+                                    </asp:TemplateField>
                                     <asp:TemplateField>
                                         <HeaderTemplate>
                                             Bill Value
@@ -322,7 +330,7 @@
                     <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <iframe class="border-0 w-100" style="height: 350px;" loading="lazy"></iframe>
+                    <iframe class="border-0 w-100" style="height:450px;" loading="lazy"></iframe>
                 </div>
 
             </div>

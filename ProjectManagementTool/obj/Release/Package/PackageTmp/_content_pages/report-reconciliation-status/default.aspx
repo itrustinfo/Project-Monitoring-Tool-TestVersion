@@ -55,20 +55,27 @@
                                     <td>
                                         <h6 class="card-title text-muted text-uppercase font-weight-bold">Status</h6>
                                     </td>
+                                     <td>&nbsp;</td>
+                                    <td>
+                                        <h6 class="card-title text-muted text-uppercase font-weight-bold">Flow</h6>
+                                    </td>
                                 </tr>
                              <tr>
-                                 <td style="width:31%;">
+                                 <td style="width:22%;">
                                      <asp:TextBox ID="txtOntbReference" runat="server" CssClass="form-control" ></asp:TextBox>
                                 </td>
                                  <td>&nbsp;</td>
-                                 <td style="width:31%;">
+                                 <td style="width:22%;">
                                      <asp:TextBox ID="txtProjectRefernce" runat="server" CssClass="form-control" ></asp:TextBox>
                                  </td>
                                  <td>&nbsp;</td>
-                                 <td style="width:31%;">
+                                 <td style="width:22%;">
                                      <asp:DropDownList ID="DDLStatus" runat="server" CssClass="form-control" ></asp:DropDownList>
                                  </td>
                                  <td>&nbsp;</td>
+                                 <td style="width:22%;">
+                                     <asp:DropDownList ID="DDLFlow" runat="server" CssClass="form-control" ></asp:DropDownList>
+                                 </td>
                                  <td style="width:7%;">
                                      <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Submit" OnClick="btnSubmit_Click" />
                                  </td>
@@ -107,6 +114,13 @@
                                         <asp:GridView ID="grdDataList" EmptyDataText="No Data Found." runat="server" Width="100%" AutoGenerateColumns="false" CellPadding="6" CellSpacing="16" HeaderStyle-BackColor="#666666" HeaderStyle-ForeColor="White" AlternatingRowStyle-BackColor="#F5F5F5"
                                             CssClass="table table-bordered" OnRowDataBound="grdDataList_RowDataBound">
                                             <Columns>
+                                                <asp:BoundField DataField="SerialNo"  HeaderText="Serial No" >
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
+
+                                            <asp:BoundField DataField="ProjectName"  HeaderText="Project Name" >
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
                                                 <asp:BoundField DataField="ActualDocumentUID"  HeaderText="UID" ItemStyle-CssClass="hideItem" HeaderStyle-CssClass="hideItem">
                                                     <HeaderStyle HorizontalAlign="Left" />
                                                 </asp:BoundField>
@@ -128,14 +142,21 @@
                                                 <asp:BoundField DataField="Ref_Number" HeaderText="Originator Reference #">
                                                     <HeaderStyle HorizontalAlign="Left" />
                                                 </asp:BoundField>
-                                                <asp:BoundField DataField="IncomingRec_Date" HeaderText="Incoming Recv. Date" SortExpression="ActualDocument_CreatedDate" DataFormatString="{0:dd/MM/yyyy}">
+                                                <asp:BoundField DataField="Flow_Name" HeaderText="Flow Name" >
+                                                    <HeaderStyle HorizontalAlign="Left" />
+                                                </asp:BoundField>
+                                                <asp:BoundField DataField="Document_Date" HeaderText="Contractor Uploaded Date" SortExpression="Document_Date" DataFormatString="{0:dd/MM/yyyy}">
+                                                    <HeaderStyle HorizontalAlign="Left" />
+                                                </asp:BoundField>
+                                                <asp:BoundField DataField="CreatedDate" HeaderText="ONTB Accepted/Rejected Date" SortExpression="CreatedDate" DataFormatString="{0:dd/MM/yyyy}">
+                                                    <HeaderStyle HorizontalAlign="Left" />
+                                                </asp:BoundField>
+                                                <asp:BoundField DataField="Remarks" HeaderText="Remarks" SortExpression="Remarks">
                                                     <HeaderStyle HorizontalAlign="Left" />
                                                 </asp:BoundField>
 
-                                                <asp:BoundField DataField="Document_Date" HeaderText="Document Date" SortExpression="Document_Date" DataFormatString="{0:dd/MM/yyyy}">
-                                                    <HeaderStyle HorizontalAlign="Left" />
-                                                </asp:BoundField>
-
+                                                
+                                                
 
                                             </Columns>
                                         </asp:GridView>

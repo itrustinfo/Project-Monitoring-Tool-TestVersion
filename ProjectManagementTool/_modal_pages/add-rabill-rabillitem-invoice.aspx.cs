@@ -34,7 +34,7 @@ namespace ProjectManagementTool._modal_pages
                     invoice_RABill.Visible = true;
                     LinkBOQData.HRef = "/_modal_pages/boq-treeview.aspx?ProjectUID=" + Request.QueryString["ProjectUID"];
                 }
-
+                LblMessage.Text = string.Empty;
                 if (Session["BOQData"] != null)
                 {
                     lblActivityName.Visible = true;
@@ -91,98 +91,107 @@ namespace ProjectManagementTool._modal_pages
         {
             try
             {
-
-                string sDate1 = "";
-                DateTime CDate1 = DateTime.Now;
-
-                sDate1 = txtDate.Text;
-                //sDate1 = sDate1.Split('/')[1] + "/" + sDate1.Split('/')[0] + "/" + sDate1.Split('/')[2];
-                sDate1 = dbObj.ConvertDateFormat(sDate1);
-                CDate1 = Convert.ToDateTime(sDate1);
-
-                string rabillUid = dbObj.AddRABillNumber(txtaddrabillnumber.Text, new Guid(Request.QueryString["WorkpackageUID"]), CDate1);
-                if (rabillUid == "Exists")
+                if (txtBillAmount.Text != "" && !ImageUpload.HasFiles)
                 {
-                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('RA Bill Number already exists.');</script>");
-                }
-                else if (rabillUid == "Error1")
-                {
-                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('There is a problem with this feature. Please contact system admin.');</script>");
+                    LblMessage.Text = "Please choose a RABill File.";
                 }
                 else
                 {
-                    // file upload
-                    string sFileDirectory = "~/Documents/RABills/" + rabillUid;
+                    string sDate1 = "";
+                    DateTime CDate1 = DateTime.Now;
 
-                    if (!Directory.Exists(Server.MapPath(sFileDirectory)))
+                    sDate1 = txtDate.Text;
+                    //sDate1 = sDate1.Split('/')[1] + "/" + sDate1.Split('/')[0] + "/" + sDate1.Split('/')[2];
+                    sDate1 = dbObj.ConvertDateFormat(sDate1);
+                    CDate1 = Convert.ToDateTime(sDate1);
+                    string RABillAmount = txtBillAmount.Text != "" ? txtBillAmount.Text : "";
+                    string rabillUid = dbObj.AddRABillNumber(txtaddrabillnumber.Text, new Guid(Request.QueryString["WorkpackageUID"]), CDate1, RABillAmount);
+                    if (rabillUid == "Exists")
                     {
-                        Directory.CreateDirectory(Server.MapPath(sFileDirectory));
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('RA Bill Number already exists.');</script>");
                     }
-                    
-                    foreach (HttpPostedFile uploadedFile in ImageUpload.PostedFiles)
+                    else if (rabillUid == "Error1")
                     {
-                        if (uploadedFile.ContentLength > 0 && !String.IsNullOrEmpty(uploadedFile.FileName))
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('There is a problem with this feature. Please contact system admin.');</script>");
+                    }
+                    else
+                    {
+
+
+                        LblMessage.Text = "";
+                        // file upload
+                        string sFileDirectory = "~/Documents/RABills/" + rabillUid;
+
+                        if (!Directory.Exists(Server.MapPath(sFileDirectory)))
                         {
-                            string sFileName = Path.GetFileNameWithoutExtension(uploadedFile.FileName);
-                            string Extn = Path.GetExtension(uploadedFile.FileName);
-                            uploadedFile.SaveAs(Server.MapPath(sFileDirectory + "/" + sFileName + Extn));
-                            string savedPath = sFileDirectory + "/" + sFileName + Extn;
-                            string DecryptPagePath = sFileDirectory + "/" + sFileName + "_DE" + Extn;
-                            dbObj.EncryptFile(Server.MapPath(savedPath), Server.MapPath(DecryptPagePath));
-
-
-                            int Cnt = dbObj.RABill_Document_InsertUpdate(Guid.NewGuid(), new Guid(rabillUid), new Guid(Request.QueryString["WorkpackageUID"]), savedPath, txtInvoiceNumber.Text, new Guid(Session["UserUID"].ToString()));
-                            
+                            Directory.CreateDirectory(Server.MapPath(sFileDirectory));
                         }
-                    }
 
-
-                    int ErrorCount = 0;
-                    int ItemCount = 0;
-                    double totamount = 0;
-                    DataSet ds = dbObj.GetBOQDetails_by_projectuid(new Guid(Request.QueryString["ProjectUID"]));
-                    if (ds.Tables[0].Rows.Count > 0)
-                    {
-                        
-                        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                        foreach (HttpPostedFile uploadedFile in ImageUpload.PostedFiles)
                         {
-                            string sDate2 = "";
-                            DateTime CDate2 = DateTime.Now;
-
-                            sDate2 = DateTime.Now.ToString("dd/MM/yyyy");
-                            //sDate1 = sDate1.Split('/')[1] + "/" + sDate1.Split('/')[0] + "/" + sDate1.Split('/')[2];
-                            sDate2 = dbObj.ConvertDateFormat(sDate2);
-                            CDate2 = Convert.ToDateTime(sDate1);
-
-                            int cnt = dbObj.InsertRABillsItems(rabillUid, ds.Tables[0].Rows[i]["Item_Number"].ToString(), ds.Tables[0].Rows[i]["Description"].ToString(), CDate1.ToString(), "0", new Guid(Request.QueryString["ProjectUID"]), new Guid(Request.QueryString["WorkpackageUID"]), new Guid(ds.Tables[0].Rows[i]["BOQDetailsUID"].ToString()));
-                            if (cnt <= 0)
+                            if (uploadedFile.ContentLength > 0 && !String.IsNullOrEmpty(uploadedFile.FileName))
                             {
-                                ErrorCount += 1;
-                            }
-                            else {
-                                ItemCount += 1;
-                                totamount += ds.Tables[0].Rows[i]["INR-Amount"].ToString() == "" ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["INR-Amount"].ToString());
+                                string sFileName = Path.GetFileNameWithoutExtension(uploadedFile.FileName);
+                                string Extn = Path.GetExtension(uploadedFile.FileName);
+                                uploadedFile.SaveAs(Server.MapPath(sFileDirectory + "/" + sFileName + Extn));
+                                string savedPath = sFileDirectory + "/" + sFileName + Extn;
+                                string DecryptPagePath = sFileDirectory + "/" + sFileName + "_DE" + Extn;
+                                dbObj.EncryptFile(Server.MapPath(savedPath), Server.MapPath(DecryptPagePath));
+
+
+                                int Cnt = dbObj.RABill_Document_InsertUpdate(Guid.NewGuid(), new Guid(rabillUid), new Guid(Request.QueryString["WorkpackageUID"]), savedPath, txtInvoiceNumber.Text, new Guid(Session["UserUID"].ToString()));
+
                             }
                         }
-                    }
 
-                    if (ErrorCount > 0)
-                    {
-                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('There is a problem linking BOQ details to this RABill. Please contact system admin');</script>");
+
+                        int ErrorCount = 0;
+                        int ItemCount = 0;
+                        double totamount = 0;
+                        DataSet ds = dbObj.GetBOQDetails_by_projectuid(new Guid(Request.QueryString["ProjectUID"]));
+                        if (ds.Tables[0].Rows.Count > 0)
+                        {
+
+                            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                            {
+                                string sDate2 = "";
+                                DateTime CDate2 = DateTime.Now;
+
+                                sDate2 = DateTime.Now.ToString("dd/MM/yyyy");
+                                //sDate1 = sDate1.Split('/')[1] + "/" + sDate1.Split('/')[0] + "/" + sDate1.Split('/')[2];
+                                sDate2 = dbObj.ConvertDateFormat(sDate2);
+                                CDate2 = Convert.ToDateTime(sDate1);
+
+                                int cnt = dbObj.InsertRABillsItems(rabillUid, ds.Tables[0].Rows[i]["Item_Number"].ToString(), ds.Tables[0].Rows[i]["Description"].ToString(), CDate1.ToString(), "0", new Guid(Request.QueryString["ProjectUID"]), new Guid(Request.QueryString["WorkpackageUID"]), new Guid(ds.Tables[0].Rows[i]["BOQDetailsUID"].ToString()));
+                                if (cnt <= 0)
+                                {
+                                    ErrorCount += 1;
+                                }
+                                else
+                                {
+                                    ItemCount += 1;
+                                    totamount += ds.Tables[0].Rows[i]["INR-Amount"].ToString() == "" ? 0 : Convert.ToDouble(ds.Tables[0].Rows[i]["INR-Amount"].ToString());
+                                }
+                            }
+                        }
+
+                        if (ErrorCount > 0)
+                        {
+                            Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('There is a problem linking BOQ details to this RABill. Please contact system admin');</script>");
+                        }
+
+                        //AddRABillItem.Visible = true;
+                        //invoice_RABill.Visible = false;
+                        Session["RABillWorkpackgeUID"] = Request.QueryString["ProjectUID"] + "\\" + Request.QueryString["WorkpackageUID"];
+                        Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");
+                        //HiddenRABillUID.Value = rabillUid;
+                        //Session["RABillUID"] = rabillUid;
+                        //Session["RABillNumber"] = txtaddrabillnumber.Text;
+                        //LblRABillNumber.Text = txtaddrabillnumber.Text;
+
                     }
-                    
-                    
-                    
-                    //AddRABillItem.Visible = true;
-                    //invoice_RABill.Visible = false;
-                    Session["RABillWorkpackgeUID"] = Request.QueryString["ProjectUID"] + "\\" + Request.QueryString["WorkpackageUID"];
-                    Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>parent.location.href=parent.location.href;</script>");
-                    //HiddenRABillUID.Value = rabillUid;
-                    //Session["RABillUID"] = rabillUid;
-                    //Session["RABillNumber"] = txtaddrabillnumber.Text;
-                    //LblRABillNumber.Text = txtaddrabillnumber.Text;
                 }
-                    
+
             }
             catch (Exception ex)
             {

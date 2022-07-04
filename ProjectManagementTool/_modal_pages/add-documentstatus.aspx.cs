@@ -49,6 +49,10 @@ namespace ProjectManagementTool._modal_pages
                     if (getdata.GetFlowTypeBySubmittalUID(new Guid(getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"])))) == "STP")
                     {
                         dtStartdate.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                        spRef.Visible = false;
+                        spCoverDate.Visible = false;
+                        spCUpload.Visible = false;
+                        spIncmDate.Visible = false;
                         if (DDlStatus.SelectedItem.ToString().Contains("AE Approval") || DDlStatus.SelectedItem.ToString().Contains("AEE Approval") || DDlStatus.SelectedItem.ToString().Contains("EE Approval") || DDlStatus.SelectedItem.ToString().Contains("ACE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE GFC Approval"))
                         {
                             divRef.Visible = false;
@@ -60,25 +64,30 @@ namespace ProjectManagementTool._modal_pages
                         }
                         else
                         {
+                            //for PMC and DTL and PC from salahuddin on 21st MAy 2022...implemeted on 13/06/2022
+                            divRef.Visible = false;
+                            divCD.Visible = true;
+                            divCUpload.Visible = true;
+                            divReviewFile.Visible = true;
+                            divIncmDate.Visible = false;
+                            divUpdateStatus.Visible = false;
+                            DDlStatus.Enabled = true;
                             divforward.Visible = false;
                         }
 
                         if(DDlStatus.SelectedItem.ToString().Contains("Accepted-PMC"))
                         {
-                            divRef.Visible = false;
-                            divCD.Visible = false;
-                            divCUpload.Visible = false;
-                            divReviewFile.Visible = false;
-                            divIncmDate.Visible = false;
-                            divUpdateStatus.Visible = false;
+                            //divRef.Visible = false;
+                            //divCD.Visible = true;
+                            //divCUpload.Visible = true;
+                            //divReviewFile.Visible = false;
+                            //divIncmDate.Visible = false;
+                             divUpdateStatus.Visible = false;
                             DDlStatus.Enabled = false;
                         }
                         //if (DDlStatus.SelectedItem.ToString().Contains("Meeting with EE or CE") || DDlStatus.SelectedItem.ToString().Contains("Rejected") || DDlStatus.SelectedItem.ToString().Contains("PMC DTL Review"))
                         //{
-                            spRef.Visible = false;
-                            spCoverDate.Visible = false;
-                            spCUpload.Visible = false;
-                            spIncmDate.Visible = false;
+                           
                        // }
                     }
                     else
@@ -110,11 +119,18 @@ namespace ProjectManagementTool._modal_pages
         private void BindStatus()
         {
             DataSet ds1 = getdata.getTop1_DocumentStatusSelect(new Guid(Request.QueryString["DocID"]));
+            string SubmittalUID = getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"]));
+            string FlowType = getdata.GetFlowTypeBySubmittalUID((new Guid(SubmittalUID)));
             if (ds1.Tables[0].Rows.Count > 0)
             {
                 //int StepCount = getdata.GetFlowStep_by_FlowUID(new Guid(Request.QueryString["FlowUID"]));
                 //DataSet ds = getdata.GetStatus_by_UserType(Session["TypeOfUser"].ToString(), ds1.Tables[0].Rows[0]["ActivityType"].ToString(), StepCount);
                 DataSet ds = getdata.GetStatus_by_UserType_FlowUID(Session["TypeOfUser"].ToString(), ds1.Tables[0].Rows[0]["ActivityType"].ToString(), new Guid(ds1.Tables[0].Rows[0]["FlowUID"].ToString()));
+                if(FlowType == "STP")
+                {
+                    ds = getdata.GetStatus_by_UserType_FlowUID_STP(Session["TypeOfUser"].ToString(), ds1.Tables[0].Rows[0]["ActivityType"].ToString(), new Guid(ds1.Tables[0].Rows[0]["FlowUID"].ToString()),new Guid(SubmittalUID),new Guid(Session["UserUID"].ToString()));
+
+                }
                 DDlStatus.DataTextField = "Update_Status";
                 DDlStatus.DataValueField = "Update_Status";
                 DDlStatus.DataSource = ds;
@@ -235,18 +251,20 @@ namespace ProjectManagementTool._modal_pages
                     string pending = string.Empty;
                     if (DDlStatus.SelectedItem.ToString().Contains("Accepted-PMC"))
                     {
+                        DataSet getlateststatus = getdata.getTop1_DocumentStatusSelect(new Guid(Request.QueryString["DocID"].ToString()));
+
                         DataSet dsMUSers = getdata.GetNextUser_By_DocumentUID(new Guid(Request.QueryString["DocID"].ToString()), 3);
                         string FlowUID = getdata.GetFlowUIDBySubmittalUID(new Guid(getdata.GetSubmittalUID_By_ActualDocumentUID(new Guid(Request.QueryString["DocID"]))));
                         if (dsMUSers.Tables[0].Rows.Count > 0)
                         {
                             foreach (DataRow druser in dsMUSers.Tables[0].Rows)
                             {
-                                if(getdata.checkUserAddedDocumentstatus(new Guid(Request.QueryString["DocID"].ToString()), new Guid(druser["Approver"].ToString()),"Accepted") == 0)
+                                if(getdata.checkUserAddedDocumentstatus(new Guid(Request.QueryString["DocID"].ToString()), new Guid(druser["Approver"].ToString()), getlateststatus.Tables[0].Rows[0]["ActivityType"].ToString()) == 0)
                                 {
                                     DataSet dsuserf = getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(druser["Approver"].ToString()), new Guid(FlowUID));
                                     foreach (DataRow drf in dsuserf.Tables[0].Rows)
                                     {
-                                        pending = pending + drf["WorkPackageCategory_Name"].ToString() + " -- Pending <br/>";
+                                        pending = pending + drf["WorkPackageCategory_Name"].ToString() + " -- (" + getdata.getUserNameby_UID(new Guid(druser["Approver"].ToString())) + ") Pending <br/>";
                                     }
                                 }
                                 else
@@ -258,12 +276,13 @@ namespace ProjectManagementTool._modal_pages
                         commentsCount =commentsCount = commentsCount + 1;
                         if (dsMUSers.Tables[0].Rows.Count != commentsCount)
                         {
-                            Status = "Accepted";
+                           //  Status = "Accepted";
+                            Status = getlateststatus.Tables[0].Rows[0]["ActivityType"].ToString();
                             DataSet dsuserf = getdata.GetCategoryNameforUser(new Guid(Request.QueryString["ProjectUID"]), new Guid(Session["UserUID"].ToString()), new Guid(FlowUID));
                             foreach (DataRow drf in dsuserf.Tables[0].Rows)
                             {
                              categoryname = drf["WorkPackageCategory_Name"].ToString();
-                            pending = pending.Replace(categoryname + " -- Pending <br/>", "");
+                            pending = pending.Replace(categoryname + " -- (" + getdata.getUserNameby_UID(new Guid(Session["UserUID"].ToString())) + ") Pending <br/>", "");
                             }
                             Comments = Session["Username"].ToString() + " (" + categoryname + ") added - " + txtcomments.Text + "<br/>" + "--------------------" +  "<br/>" + pending  ;
 

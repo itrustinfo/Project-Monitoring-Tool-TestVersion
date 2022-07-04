@@ -12,7 +12,7 @@ namespace ProjectManagementTool
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string type = Security.Decrypt("fimziihQpuvxM9C2iQpsxA==");
+            string type = Security.Decrypt("UbSkafa4bWyr4xjfITkAEw==");
         }
     }
 }

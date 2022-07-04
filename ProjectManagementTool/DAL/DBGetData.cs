@@ -15362,51 +15362,51 @@ namespace ProjectManager.DAL
             return pUID;
         }
 
-        internal int InsertjointInspection(Guid inspectionUid,Guid BOQUid, string DiaPipe, string unit, string invoice_number, string invoicedate, string quantity, string Inspection_Type,
-            string Chainage_Number,string Chainage_Desc,float Chainage_StartPoint,float Chainage_Length,float Qty_in_RMT,double Qty_for_Unit,double Deduction,string Remarks,Guid ProjectUID,string PipeNumber)
-        {
-            int cnt = 0;
-            try
-            {
+        //internal int InsertjointInspection(Guid inspectionUid,Guid BOQUid, string DiaPipe, string unit, string invoice_number, string invoicedate, string quantity, string Inspection_Type,
+        //    string Chainage_Number,string Chainage_Desc,float Chainage_StartPoint,float Chainage_Length,float Qty_in_RMT,double Qty_for_Unit,double Deduction,string Remarks,Guid ProjectUID,string PipeNumber)
+        //{
+        //    int cnt = 0;
+        //    try
+        //    {
 
-                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
-                {
+        //        using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+        //        {
 
-                    using (SqlCommand cmd = new SqlCommand("usp_InsertJointInspection"))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = con;
-                        cmd.Parameters.AddWithValue("@inspectionUid", inspectionUid);
-                        cmd.Parameters.AddWithValue("@BOQUid", BOQUid);
-                        cmd.Parameters.AddWithValue("@DiaPipe", DiaPipe);
-                        cmd.Parameters.AddWithValue("@unit", unit);
-                        cmd.Parameters.AddWithValue("@invoice_number", invoice_number);
-                        cmd.Parameters.AddWithValue("@invoicedate", invoicedate);
-                        cmd.Parameters.AddWithValue("@quantity", quantity);
-                        cmd.Parameters.AddWithValue("@Inspection_Type", Inspection_Type);
-                        cmd.Parameters.AddWithValue("@Chainage_Number", Chainage_Number);
-                        cmd.Parameters.AddWithValue("@Chainage_Desc", Chainage_Desc);
-                        cmd.Parameters.AddWithValue("@Chainage_StartPoint", Chainage_StartPoint);
-                        cmd.Parameters.AddWithValue("@Chainage_Length", Chainage_Length);
-                        cmd.Parameters.AddWithValue("@Qty_in_RMT", Qty_in_RMT);
-                        cmd.Parameters.AddWithValue("@Qty_for_Unit", Qty_for_Unit);
-                        cmd.Parameters.AddWithValue("@Deduction", Deduction);
-                        cmd.Parameters.AddWithValue("@Remarks", Remarks);
-                        cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
-                        cmd.Parameters.AddWithValue("@PipeNumber", PipeNumber);
-                        con.Open();
-                        cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
-                        con.Close();
+        //            using (SqlCommand cmd = new SqlCommand("usp_InsertJointInspection"))
+        //            {
+        //                cmd.CommandType = CommandType.StoredProcedure;
+        //                cmd.Connection = con;
+        //                cmd.Parameters.AddWithValue("@inspectionUid", inspectionUid);
+        //                cmd.Parameters.AddWithValue("@BOQUid", BOQUid);
+        //                cmd.Parameters.AddWithValue("@DiaPipe", DiaPipe);
+        //                cmd.Parameters.AddWithValue("@unit", unit);
+        //                cmd.Parameters.AddWithValue("@invoice_number", invoice_number);
+        //                cmd.Parameters.AddWithValue("@invoicedate", invoicedate);
+        //                cmd.Parameters.AddWithValue("@quantity", quantity);
+        //                cmd.Parameters.AddWithValue("@Inspection_Type", Inspection_Type);
+        //                cmd.Parameters.AddWithValue("@Chainage_Number", Chainage_Number);
+        //                cmd.Parameters.AddWithValue("@Chainage_Desc", Chainage_Desc);
+        //                cmd.Parameters.AddWithValue("@Chainage_StartPoint", Chainage_StartPoint);
+        //                cmd.Parameters.AddWithValue("@Chainage_Length", Chainage_Length);
+        //                cmd.Parameters.AddWithValue("@Qty_in_RMT", Qty_in_RMT);
+        //                cmd.Parameters.AddWithValue("@Qty_for_Unit", Qty_for_Unit);
+        //                cmd.Parameters.AddWithValue("@Deduction", Deduction);
+        //                cmd.Parameters.AddWithValue("@Remarks", Remarks);
+        //                cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+        //                cmd.Parameters.AddWithValue("@PipeNumber", PipeNumber);
+        //                con.Open();
+        //                cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
+        //                con.Close();
 
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-            }
-            return cnt;
-        }
+        //    }
+        //    return cnt;
+        //}
         internal void deleteInspectionReport(string inspectionUid)
         {
 
@@ -15436,33 +15436,33 @@ namespace ProjectManager.DAL
             }
         }
 
-        internal void udpateRABillDetilas(string raBillUid, string rabillNumber)
-        {
-            int cnt = 0;
-            try
-            {
+        //internal void udpateRABillDetilas(string raBillUid, string rabillNumber)
+        //{
+        //    int cnt = 0;
+        //    try
+        //    {
 
-                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
-                {
+        //        using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+        //        {
 
-                    using (SqlCommand cmd = new SqlCommand("usp_updateRABills"))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = con;
+        //            using (SqlCommand cmd = new SqlCommand("usp_updateRABills"))
+        //            {
+        //                cmd.CommandType = CommandType.StoredProcedure;
+        //                cmd.Connection = con;
 
-                        cmd.Parameters.AddWithValue("@raBillUid", raBillUid);
-                        cmd.Parameters.AddWithValue("@rabillNumber", rabillNumber);
-                        con.Open();
-                        cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
-                        con.Close();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
+        //                cmd.Parameters.AddWithValue("@raBillUid", raBillUid);
+        //                cmd.Parameters.AddWithValue("@rabillNumber", rabillNumber);
+        //                con.Open();
+        //                cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
+        //                con.Close();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-            }
-        }
+        //    }
+        //}
         internal DataTable GetInvoiceDetails()
         {
             DataTable ds = new DataTable();
@@ -15553,34 +15553,34 @@ namespace ProjectManager.DAL
             }
 
         }
-        internal string AddRABillNumber(string rabillnumber,Guid WorkpackageUID,DateTime RABill_Date)
-        {
-            string rabillUid = "";
-            try
-            {
-                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
-                {
+        //internal string AddRABillNumber(string rabillnumber,Guid WorkpackageUID,DateTime RABill_Date)
+        //{
+        //    string rabillUid = "";
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+        //        {
 
-                    using (SqlCommand cmd = new SqlCommand("usp_AddRaBill"))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Connection = con;
-                        cmd.Parameters.AddWithValue("@rabillnumber", rabillnumber);
-                        cmd.Parameters.AddWithValue("@WorkpackageUID", WorkpackageUID);
-                        cmd.Parameters.AddWithValue("@RABill_Date", RABill_Date);
-                        con.Open();
-                        rabillUid = Convert.ToString(cmd.ExecuteScalar());
-                        con.Close();
-                    }
-                }
+        //            using (SqlCommand cmd = new SqlCommand("usp_AddRaBill"))
+        //            {
+        //                cmd.CommandType = CommandType.StoredProcedure;
+        //                cmd.Connection = con;
+        //                cmd.Parameters.AddWithValue("@rabillnumber", rabillnumber);
+        //                cmd.Parameters.AddWithValue("@WorkpackageUID", WorkpackageUID);
+        //                cmd.Parameters.AddWithValue("@RABill_Date", RABill_Date);
+        //                con.Open();
+        //                rabillUid = Convert.ToString(cmd.ExecuteScalar());
+        //                con.Close();
+        //            }
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                rabillUid = "Error1";
-            }
-            return rabillUid;
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        rabillUid = "Error1";
+        //    }
+        //    return rabillUid;
+        //}
         internal int InsertRABillsItems(object RABillUId, string item_number, string item_desc, string Date, string current_cost,Guid ProjectUID,Guid WorkpackageUID,Guid BOQUID)
         {
             int cnt = 0;
@@ -20259,7 +20259,7 @@ namespace ProjectManager.DAL
             return ds;
         }
 
-        public DataSet GetAllDocumentExceptReconciliation(Guid ProjectUID, string OntbRefNumber, string OriginatorRefNumber, string status)
+        public DataSet GetAllDocumentExceptReconciliation(Guid ProjectUID, string OntbRefNumber, string OriginatorRefNumber, string status,string FlowUID)
         {
             DataSet ds = new DataSet();
             try
@@ -20271,7 +20271,7 @@ namespace ProjectManager.DAL
                 cmd.SelectCommand.Parameters.AddWithValue("@OntbRefNumber", OntbRefNumber);
                 cmd.SelectCommand.Parameters.AddWithValue("@OriginatorRefNumber", OriginatorRefNumber);
                 cmd.SelectCommand.Parameters.AddWithValue("@Status", status);
-
+                cmd.SelectCommand.Parameters.AddWithValue("@FlowUID", FlowUID);
                 cmd.Fill(ds);
             }
             catch (Exception ex)
@@ -21003,5 +21003,433 @@ namespace ProjectManager.DAL
             return accpetedRejDate;
         }
 
+        public string GetUSP_DocumentAcceptedRejectedRemarks(Guid DocumentUID)
+        {
+            string accpetedRejremarks = "";
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+                    if (con.State == ConnectionState.Closed) con.Open();
+                    SqlCommand cmd = new SqlCommand("USP_DocumentAcceptedRejectedRemarks", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@DocumentUID", DocumentUID);
+                    accpetedRejremarks = (string)(cmd.ExecuteScalar());
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                accpetedRejremarks = "";
+            }
+            return accpetedRejremarks;
+        }
+
+        //added on 14/06/2022 for nakib
+
+        public int InsertorUpdateDailyProgressReportMaster(Guid UID, string Description, DateTime CreatedDate)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection SqlConn = new SqlConnection(db.GetConnectionString()))
+                {
+                    SqlCommand SqlCmd = new SqlCommand("usp_InsertorUpdateDailyProgreesReportMaster", SqlConn);
+                    SqlCmd.CommandType = CommandType.StoredProcedure;
+                    SqlCmd.Parameters.AddWithValue("@UID", UID);
+                    SqlCmd.Parameters.AddWithValue("@Description", Description);
+                    SqlCmd.Parameters.AddWithValue("@CreatedDate", CreatedDate);
+                    SqlConn.Open();
+                    cnt = SqlCmd.ExecuteNonQuery();
+                    SqlConn.Close();
+                }
+                return cnt;
+            }
+            catch (Exception ex)
+            {
+                return cnt;
+            }
+        }
+
+        public DataSet GetDailyProgressReport_by_UID(Guid UID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetDailyProgressReportMaster_by_UID", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@UID", UID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        public DataSet GetDailyProgressReport()
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetDailyProgressReportMasters", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+        public DataSet GetDailyProgress(Guid DPR_UID, Guid ProjectUID, Guid WorkPackageUID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetDailyProgressReport", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@DPR_UID", DPR_UID);
+                cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //public int InsertorUpdateDailyProgress(Guid UID, Guid DPR_UID, Guid ProjectUID, Guid WorkPackageUID, string VillageName, string PipeDia, string Quantity, string RevisedQuantity,
+        //    string PipesReceived, string PreviousQuantity, string TodaysQuantity, string TotalQuantity, string Balance, string Remarks, DateTime CreatedDate)
+        //{
+        //    int cnt = 0;
+        //    try
+        //    {
+        //        using (SqlConnection SqlConn = new SqlConnection(db.GetConnectionString()))
+        //        {
+        //            SqlCommand SqlCmd = new SqlCommand("usp_InsertorUpdateDailyProgreesReport", SqlConn);
+        //            SqlCmd.CommandType = CommandType.StoredProcedure;
+        //            SqlCmd.Parameters.AddWithValue("@UID", UID);
+        //            SqlCmd.Parameters.AddWithValue("@DPR_UID", DPR_UID);
+        //            SqlCmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+        //            SqlCmd.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+        //            SqlCmd.Parameters.AddWithValue("@VillageName", VillageName);
+        //            SqlCmd.Parameters.AddWithValue("@PipeDia", PipeDia);
+        //            SqlCmd.Parameters.AddWithValue("@Quantity", Quantity);
+        //            SqlCmd.Parameters.AddWithValue("@RevisedQuantity", RevisedQuantity);
+        //            SqlCmd.Parameters.AddWithValue("@PipesReceived", PipesReceived);
+        //            SqlCmd.Parameters.AddWithValue("@PreviousQuantity", PreviousQuantity);
+        //            SqlCmd.Parameters.AddWithValue("@TodaysQuantity", TodaysQuantity);
+        //            SqlCmd.Parameters.AddWithValue("@TotalQuantity", TotalQuantity);
+        //            SqlCmd.Parameters.AddWithValue("@Balance", Balance);
+        //            SqlCmd.Parameters.AddWithValue("@Remarks", Remarks);
+        //            SqlCmd.Parameters.AddWithValue("@CreatedDate", CreatedDate);
+        //            SqlConn.Open();
+        //            cnt = SqlCmd.ExecuteNonQuery();
+        //            SqlConn.Close();
+        //        }
+        //        return cnt;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return cnt;
+        //    }
+        //}
+
+        //added on 15/06/2022 for saji
+        public int UpdateTask(Guid WorkPackageUID, string task_uid, string task_column, int node_count)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("UpdateTaskSelectedFld"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        con.Open();
+                        cmd.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                        cmd.Parameters.AddWithValue("@task_uid", task_uid);
+                        cmd.Parameters.AddWithValue("@task_column", task_column);
+                        cmd.Parameters.AddWithValue("@task_count", node_count);
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult;
+            }
+        }
+
+        //added on 15/06/2022 for NAkib
+        public int InsertorUpdateDailyProgress(Guid UID, Guid DPR_UID, Guid ProjectUID, Guid WorkPackageUID, string ZoneName, string VillageName, string PipeDia, string Quantity, string RevisedQuantity,
+            string PipesReceived, string PreviousQuantity, string TodaysQuantity, string TotalQuantity, string Balance, string Remarks, DateTime CreatedDate)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection SqlConn = new SqlConnection(db.GetConnectionString()))
+                {
+                    SqlCommand SqlCmd = new SqlCommand("usp_InsertorUpdateDailyProgreesReport", SqlConn);
+                    SqlCmd.CommandType = CommandType.StoredProcedure;
+                    SqlCmd.Parameters.AddWithValue("@UID", UID);
+                    SqlCmd.Parameters.AddWithValue("@DPR_UID", DPR_UID);
+                    SqlCmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                    SqlCmd.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                    SqlCmd.Parameters.AddWithValue("@VillageName", VillageName);
+                    SqlCmd.Parameters.AddWithValue("@ZoneName", ZoneName);
+                    SqlCmd.Parameters.AddWithValue("@PipeDia", PipeDia);
+                    SqlCmd.Parameters.AddWithValue("@Quantity", Quantity);
+                    SqlCmd.Parameters.AddWithValue("@RevisedQuantity", RevisedQuantity);
+                    SqlCmd.Parameters.AddWithValue("@PipesReceived", PipesReceived);
+                    SqlCmd.Parameters.AddWithValue("@PreviousQuantity", PreviousQuantity);
+                    SqlCmd.Parameters.AddWithValue("@TodaysQuantity", TodaysQuantity);
+                    SqlCmd.Parameters.AddWithValue("@TotalQuantity", TotalQuantity);
+                    SqlCmd.Parameters.AddWithValue("@Balance", Balance);
+                    SqlCmd.Parameters.AddWithValue("@Remarks", Remarks);
+                    SqlCmd.Parameters.AddWithValue("@CreatedDate", CreatedDate);
+                    SqlConn.Open();
+                    cnt = SqlCmd.ExecuteNonQuery();
+                    SqlConn.Close();
+                }
+                return cnt;
+            }
+            catch (Exception ex)
+            {
+                return cnt;
+            }
+        }
+
+        public DataTable GetContractorDetails(Guid WorkpackageUID)
+        {
+            DataTable ds = new DataTable();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetContractorByWorkpackageUID", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkpackageUID", WorkpackageUID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+
+        public int DailyProgressDelete(string UID, string UserUID)
+        {
+            int cnt = 0;
+            try
+            {
+                using (SqlConnection SqlConn = new SqlConnection(db.GetConnectionString()))
+                {
+                    SqlCommand SqlCmd = new SqlCommand("usp_DailyProgress_Delete", SqlConn);
+                    SqlCmd.CommandType = CommandType.StoredProcedure;
+                    SqlCmd.Parameters.AddWithValue("@UID", UID);
+                    SqlCmd.Parameters.AddWithValue("@UserUID", UserUID);
+                    SqlConn.Open();
+                    cnt = SqlCmd.ExecuteNonQuery();
+                    SqlConn.Close();
+                }
+                return cnt;
+            }
+            catch (Exception ex)
+            {
+                return cnt;
+            }
+        }
+
+        //added on 23/06/2022
+        public DataSet GetStatus_by_UserType_FlowUID_STP(string UserType, string Current_Status, Guid FlowUID, Guid SubmittalUID, Guid UserUID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetStatus_by_UserType_FlowUID_STP", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@UserType", UserType);
+                cmd.SelectCommand.Parameters.AddWithValue("@CurrentStatus", Current_Status);
+                cmd.SelectCommand.Parameters.AddWithValue("@FlowUID", FlowUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@SubmittalUID", SubmittalUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@UserUID", UserUID);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //added on 27/06/2022
+        public string NextAction_ByCurrentStatus(Guid FlowUID,string CurrentStatus)
+        {
+            string nextAction = "";
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+                    if (con.State == ConnectionState.Closed) con.Open();
+                    SqlCommand cmd = new SqlCommand("usp_NextAction_ByCurrentStatus", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@FlowUID", FlowUID);
+                    cmd.Parameters.AddWithValue("@CurrentStatus", CurrentStatus);
+                    nextAction = (string)(cmd.ExecuteScalar());
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                nextAction = "";
+            }
+            return nextAction;
+        }
+
+        //added on 04/07/2022
+        internal string AddRABillNumber(string rabillnumber, Guid WorkpackageUID, DateTime RABill_Date, string RABill_Amount)
+        {
+            string rabillUid = "";
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_AddRaBill"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@rabillnumber", rabillnumber);
+                        cmd.Parameters.AddWithValue("@WorkpackageUID", WorkpackageUID);
+                        cmd.Parameters.AddWithValue("@RABill_Date", RABill_Date);
+                        cmd.Parameters.AddWithValue("@RABill_Amount", RABill_Amount);
+                        con.Open();
+                        rabillUid = Convert.ToString(cmd.ExecuteScalar());
+                        con.Close();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                rabillUid = "Error1";
+            }
+            return rabillUid;
+        }
+
+
+        internal void udpateRABillDetilas(string raBillUid, string rabillNumber, string EnteredRABillValue)
+        {
+            int cnt = 0;
+            try
+            {
+
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_updateRABills"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+
+                        cmd.Parameters.AddWithValue("@raBillUid", raBillUid);
+                        cmd.Parameters.AddWithValue("@rabillNumber", rabillNumber);
+                        cmd.Parameters.AddWithValue("@EnteredRABillValue", EnteredRABillValue);
+                        con.Open();
+                        cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
+                        con.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        internal int InsertjointInspection(Guid inspectionUid, Guid BOQUid, string DiaPipe, string unit, string invoice_number, string invoicedate, string quantity, string Inspection_Type,
+                    string Chainage_Number, string Chainage_Desc, float Chainage_StartPoint, float Chainage_Length, float Qty_in_RMT, double Qty_for_Unit, double Deduction, string Remarks, Guid ProjectUID, string PipeNumber, string Number, string Lenght, string Width, string Depth,Guid WorkpackageUID)
+        {
+            int cnt = 0;
+            try
+            {
+
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("usp_InsertJointInspection"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@inspectionUid", inspectionUid);
+                        cmd.Parameters.AddWithValue("@BOQUid", BOQUid);
+                        cmd.Parameters.AddWithValue("@DiaPipe", DiaPipe);
+                        cmd.Parameters.AddWithValue("@unit", unit);
+                        cmd.Parameters.AddWithValue("@invoice_number", invoice_number);
+                        cmd.Parameters.AddWithValue("@invoicedate", invoicedate);
+                        cmd.Parameters.AddWithValue("@quantity", quantity);
+                        cmd.Parameters.AddWithValue("@Inspection_Type", Inspection_Type);
+                        cmd.Parameters.AddWithValue("@Chainage_Number", Chainage_Number);
+                        cmd.Parameters.AddWithValue("@Chainage_Desc", Chainage_Desc);
+                        cmd.Parameters.AddWithValue("@Chainage_StartPoint", Chainage_StartPoint);
+                        cmd.Parameters.AddWithValue("@Chainage_Length", Chainage_Length);
+                        cmd.Parameters.AddWithValue("@Qty_in_RMT", Qty_in_RMT);
+                        cmd.Parameters.AddWithValue("@Qty_for_Unit", Qty_for_Unit);
+                        cmd.Parameters.AddWithValue("@Deduction", Deduction);
+                        cmd.Parameters.AddWithValue("@Remarks", Remarks);
+                        cmd.Parameters.AddWithValue("@ProjectUID", ProjectUID);
+                        cmd.Parameters.AddWithValue("@PipeNumber", PipeNumber);
+                        cmd.Parameters.AddWithValue("@Number", Number);
+                        cmd.Parameters.AddWithValue("@Lenght", Lenght);
+                        cmd.Parameters.AddWithValue("@Width", Width);
+                        cmd.Parameters.AddWithValue("@Depth", Depth);
+                        cmd.Parameters.AddWithValue("@WorkpackgeUID", WorkpackageUID);
+                        con.Open();
+                        cnt = Convert.ToInt32(cmd.ExecuteNonQuery());
+                        con.Close();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return cnt;
+        }
+
+        public DataTable DocumentStatusSummary_ByDate(DateTime documentDate)
+        {
+            DataTable ds = new DataTable();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("USP_DocumentStatusSummary_ByDate", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@DocumentDate", documentDate);
+                cmd.SelectCommand.CommandTimeout = 0;
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
     }
 }

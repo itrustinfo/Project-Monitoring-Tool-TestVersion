@@ -75,8 +75,8 @@ namespace ProjectManagementTool._content_pages.rabill_summary
             ViewState["isEdit"] = "false";
             ViewState["isDelete"] = "false";
             AddRABill.Visible = false;
-            GrdTreeView.Columns[4].Visible = false;
             GrdTreeView.Columns[5].Visible = false;
+            GrdTreeView.Columns[6].Visible = false;
             if (dscheck.Tables[0].Rows.Count > 0)
             {
                 foreach (DataRow dr in dscheck.Tables[0].Rows)
@@ -88,12 +88,12 @@ namespace ProjectManagementTool._content_pages.rabill_summary
                     if (dr["Code"].ToString() == "RA-E")
                     {
                         ViewState["isEdit"] = "true";
-                        GrdTreeView.Columns[4].Visible = true;
+                        GrdTreeView.Columns[5].Visible = true;
                     }
                     if (dr["Code"].ToString() == "RA-D")
                     {
                         ViewState["isDelete"] = "true";
-                        GrdTreeView.Columns[5].Visible = true;
+                        GrdTreeView.Columns[6].Visible = true;
                     }
                 }
             }
@@ -219,8 +219,18 @@ namespace ProjectManagementTool._content_pages.rabill_summary
         {
             HiddenField hidRAbuilluid = GrdTreeView.Rows[e.RowIndex].FindControl("hidrabilluid") as HiddenField;
             TextBox  txtrabillnumber = GrdTreeView.Rows[e.RowIndex].FindControl("txtRabill") as TextBox;
-          //  TextBox txtdate = GrdTreeView.Rows[e.RowIndex].FindControl("txtdate") as TextBox;
-            dbgetdata.udpateRABillDetilas(hidRAbuilluid.Value, txtrabillnumber.Text);
+            TextBox txtEnteredBillValue = GrdTreeView.Rows[e.RowIndex].FindControl("txtEnteredBillValue") as TextBox;
+            string EnteredRABillValue = "";
+
+            if (txtEnteredBillValue != null)
+            {
+                if (txtEnteredBillValue.Text != "")
+                {
+                    EnteredRABillValue = txtEnteredBillValue.Text;
+                }
+            }
+            //  TextBox txtdate = GrdTreeView.Rows[e.RowIndex].FindControl("txtdate") as TextBox;
+            dbgetdata.udpateRABillDetilas(hidRAbuilluid.Value, txtrabillnumber.Text, EnteredRABillValue);
             GrdTreeView.EditIndex = -1;
             BindDataforInvoice_RABills(DDLWorkPackage.SelectedValue);
         }
@@ -244,20 +254,31 @@ namespace ProjectManagementTool._content_pages.rabill_summary
             {
                 if (ViewState["isEdit"].ToString() == "false")
                 {
-                    e.Row.Cells[4].Visible = false;
+                    e.Row.Cells[5].Visible = false;
                 }
                 if (ViewState["isDelete"].ToString() == "false")
                 {
-                    e.Row.Cells[5].Visible = false;
+                    e.Row.Cells[6].Visible = false;
                 }
             }
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 Label LblBillValue = (Label)e.Row.FindControl("LblBillValue");
+                Label LblEnteredBillValue = (Label)e.Row.FindControl("LblEnteredBillValue");
                 string RABillUID= GrdTreeView.DataKeys[e.Row.RowIndex].Values[0].ToString();
                 //double BillValue = dbgetdata.GetRAbillValue_by_RABillUid(new Guid(RABillUID));
                 decimal BillValue = invoice.GetRAbillPresentTotalAmount_by_RABill_UID(new Guid(RABillUID));
+                if (LblEnteredBillValue !=null)
+                {
+                    if(LblEnteredBillValue.Text !="")
+                    {
+                        decimal EnteredBillValue = Convert.ToDecimal(LblEnteredBillValue.Text);
+                        LblEnteredBillValue.Text = EnteredBillValue.ToString("#,##.##", CultureInfo.CreateSpecificCulture("en-IN"));
+                    }
+                    
+                }
+                
                 if (BillValue == 0)
                 {
                     LblBillValue.Text = "NIL";
@@ -269,11 +290,11 @@ namespace ProjectManagementTool._content_pages.rabill_summary
 
                 if (ViewState["isEdit"].ToString() == "false")
                 {
-                    e.Row.Cells[4].Visible = false;
+                    e.Row.Cells[5].Visible = false;
                 }
                 if (ViewState["isDelete"].ToString() == "false")
                 {
-                    e.Row.Cells[5].Visible = false;
+                    e.Row.Cells[6].Visible = false;
                 }
 
                 //for db sync check

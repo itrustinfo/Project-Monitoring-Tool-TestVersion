@@ -248,6 +248,13 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                          <asp:GridView ID="GrdDocuments" EmptyDataText="No Documents Found." runat="server" Width="100%" AutoGenerateColumns="false" 
                                             AllowPaging="false" DataKeyNames="ActualDocumentUID" CssClass="table table-bordered" OnRowDataBound="GrdDocuments_RowDataBound" OnRowCommand="GrdDocuments_RowCommand" HeaderStyle-BackColor="#666666" HeaderStyle-ForeColor="White" AlternatingRowStyle-BackColor="#F5F5F5" OnDataBound="GrdDocuments_DataBound">
                                        <Columns>
+                                           <asp:BoundField DataField="SerialNo"  HeaderText="Serial No" >
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
+
+                                            <asp:BoundField DataField="ProjectName"  HeaderText="Project Name" >
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
                                              <asp:BoundField DataField="ActualDocumentUID"  HeaderText="UID" ItemStyle-CssClass="hideItem" HeaderStyle-CssClass="hideItem">
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
@@ -275,6 +282,9 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                            <asp:BoundField DataField="ActualDocument_CurrentStatus" HeaderText="Current Status" SortExpression="ActualDocument_CurrentStatus">
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
+                                            <asp:BoundField DataField="ActualDocument_CurrentStatus" HeaderText="Next Level Action" SortExpression="ActualDocument_CurrentStatus">
+                                            <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
                                            <asp:BoundField DataField="ProjectRef_Number" HeaderText="ONTB Reference #" SortExpression="ProjectRef_Number">
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
@@ -287,7 +297,7 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                                <asp:BoundField DataField="Document_Date" HeaderText="Document Date" SortExpression="Document_Date" DataFormatString="{0:dd/MM/yyyy}" >
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
-                                           <asp:TemplateField HeaderText="Flow Name">
+                                           <asp:TemplateField HeaderText="Flow Name" ItemStyle-Width="15%" HeaderStyle-Width="15%">
                                             <ItemTemplate>
                                                 <%#GetFlowName(Eval("DocumentUID").ToString())%>
                                             </ItemTemplate>
@@ -327,6 +337,12 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                                                  <asp:TextBox ID="txtONTBRefNo" TextMode="SingleLine" runat="server" MaxLength="75" AutoCompleteType="Disabled"></asp:TextBox>
                                                      </ItemTemplate>
                                                         </asp:TemplateField>
+                                           <asp:BoundField DataField="Document_Date" HeaderText="Accepted/Rejected Date" SortExpression="Document_Date" DataFormatString="{0:dd/MM/yyyy}">
+                                                    <HeaderStyle HorizontalAlign="Left" />
+                                                </asp:BoundField>
+                                                <asp:BoundField DataField="Remarks" HeaderText="Remarks" SortExpression="Remarks">
+                                                    <HeaderStyle HorizontalAlign="Left" />
+                                                </asp:BoundField>
                                            <%--   <asp:TemplateField>
                                                                     <ItemTemplate>
                                                                         <a class="showModalDocumentEdit" href="/_modal_pages/edit-document.aspx?DocID=<%#Eval("ActualDocumentUID")%>&pUID=<%#Eval("ProjectUID")%>&wUID=<%#Eval("WorkPackageUID")%>&type=search"><span title="Edit" class="fas fa-edit"></span></a>

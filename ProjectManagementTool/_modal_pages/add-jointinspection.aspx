@@ -52,6 +52,10 @@
                              <asp:ListItem Value="Guniting">Guniting</asp:ListItem>
                              <asp:ListItem Value="Laying & Jointing">Laying & Jointing</asp:ListItem>
                              <asp:ListItem Value="Hydro Testing">Hydro Testing</asp:ListItem>
+                             <asp:ListItem Value="EarthWork / Excavation">EarthWork / Excavation</asp:ListItem>
+                             <asp:ListItem Value="Barricading">Barricading</asp:ListItem>
+                             <asp:ListItem Value="DeWatering the Sewage">DeWatering the Sewage</asp:ListItem>
+                             <asp:ListItem Value="Shoring and Strutting">Shoring and Strutting</asp:ListItem>
                          </asp:DropDownList>
                     </div>
                     <div class="form-group" id="PipeNumber" runat="server">
@@ -73,7 +77,7 @@
                         <asp:TextBox ID="txtunit" CssClass="form-control" runat="server" autocomplete="off" required ClientIDMode="Static"></asp:TextBox>
                         
                     </div>
-                     <div class="form-group">
+                     <div class="form-group" id="DivQuantity" runat="server">
                         <label class="lblCss" for="txtquantity">Quantity</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
                         <asp:TextBox ID="txtquantity" CssClass="form-control" runat="server" autocomplete="off" required ClientIDMode="Static"></asp:TextBox>
                         
@@ -113,6 +117,26 @@
                             <%--<asp:FileUpload ID="FilDocument" CssClass="custom-file-input" runat="server" ClientIDMode="Static" /> --%>
                             <label class="custom-file-label" id="SelectedFiles" for="FilDocument">Choose document</label>
                         </div>
+                    </div>
+                    <div class="form-group" id="DivNumber" runat="server" visible="false">
+                        <label class="lblCss" for="txtNumber">Number</label> 
+                        <asp:TextBox ID="txtnumber" CssClass="form-control" runat="server" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                        
+                    </div>
+                    <div class="form-group" id="DivLenght" runat="server" visible="false">
+                        <label class="lblCss" for="txtLenght">Lenght</label> 
+                        <asp:TextBox ID="txtMLenght" CssClass="form-control" runat="server" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                        
+                    </div>
+                    <div class="form-group" id="DivWidth" runat="server" visible="false">
+                        <label class="lblCss" for="txtWidth">Width</label> 
+                        <asp:TextBox ID="txtWidth" CssClass="form-control" runat="server" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                        
+                    </div>
+                    <div class="form-group" id="DivDepth" runat="server" visible="false">
+                        <label class="lblCss" for="txtDepth">Depth</label> 
+                        <asp:TextBox ID="txtDepth" CssClass="form-control" runat="server" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                        
                     </div>
                     <div class="form-group">
                         <label class="lblCss" for="txtRemarks">Remarks</label> 

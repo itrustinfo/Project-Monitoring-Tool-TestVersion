@@ -596,6 +596,7 @@ namespace ProjectManagementTool._modal_pages
                                     //}
                                 }
                             }
+                          
                         }
                         else if ((FlowName == "Works B" || FlowName=="Vendor Approval"))
                         {
@@ -636,10 +637,10 @@ namespace ProjectManagementTool._modal_pages
                         {
                             e.Row.Cells[1].Text = "Approved GFC by BWSSB";
                         }
-                        else if (e.Row.Cells[3].Text == "Accepted-PMC Comments")
-                        {
-                            e.Row.Cells[3].Text = "Accepted";
-                        }
+                        //else if (e.Row.Cells[3].Text == "Accepted-PMC Comments")
+                        //{
+                        //    e.Row.Cells[3].Text = "Accepted";
+                        //}
 
 
                         if (e.Row.Cells[11].Text == "Y")
@@ -657,6 +658,35 @@ namespace ProjectManagementTool._modal_pages
                             e.Row.Cells[12].Text = (Convert.ToDateTime(e.Row.Cells[2].Text) - Convert.ToDateTime(next)).TotalDays.ToString() + " day(s)";
                             next = e.Row.Cells[2].Text;
                         }
+
+                        //added on 02/07/2022
+                        if (e.Row.Cells[3].Text == "Accepted" && prevstatus == "Reconciliation")
+                        {
+                           
+                        }
+                        else if (e.Row.Cells[3].Text == "Accepted")
+                        {
+                            e.Row.Cells[3].Text = "Accepted" + "<br/>" + "(Under PMC Review)";
+                        }
+                        else if (e.Row.Cells[3].Text == "Accepted-PMC Comments")
+                        {
+                            e.Row.Cells[3].Text = "Accepted" + "<br/>" + "(PMC Review Completed)"; ;
+                        }
+                        //
+                        if (e.Row.Cells[3].Text.ToLower().Contains("back to pmc") && !prevstatus.ToLower().Contains("back to pmc"))
+                        {
+
+                        }
+                        else if (e.Row.Cells[3].Text.ToLower().Contains("back to pmc"))
+                        {
+                            e.Row.Cells[3].Text = e.Row.Cells[3].Text + "<br/>" + "(Under PMC Review)";
+                            e.Row.Cells[1].Text = "Review by ONTB";
+                        }
+                        else if (e.Row.Cells[3].Text == "Accepted-PMC Comments")
+                        {
+                            e.Row.Cells[3].Text = e.Row.Cells[3].Text + "<br/>" + "(PMC Review Completed)";
+                            e.Row.Cells[1].Text = "Review by ONTB";
+                        }
                     }
                     //
                     if(e.Row.Cells[3].Text.Contains("-") && e.Row.Cells[3].Text.Contains("Approval"))
@@ -664,6 +694,8 @@ namespace ProjectManagementTool._modal_pages
                         string dataText = e.Row.Cells[3].Text.Split('-')[0]  + "-"  + "<br/>"  + e.Row.Cells[3].Text.Split('-')[1];
                         e.Row.Cells[3].Text = dataText;
                     }
+
+                  
                 }
                 //
                 prevstatus = e.Row.Cells[3].Text;
@@ -676,6 +708,7 @@ namespace ProjectManagementTool._modal_pages
                 //{
                 //    e.Row.Cells[10].Visible = true;
                 //}
+
             }
         }
 

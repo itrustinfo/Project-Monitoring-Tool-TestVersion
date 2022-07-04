@@ -139,6 +139,8 @@
     <Content Include="_content_pages\complaints-mom\default.aspx" />
     <Content Include="_content_pages\consolidated-activities\Default.aspx" />
     <Content Include="_content_pages\consolidated-monthly-activities\Default.aspx" />
+    <Content Include="_content_pages\daily-progress-reportmaster\default.aspx" />
+    <Content Include="_content_pages\daily-progress\default.aspx" />
     <Content Include="_content_pages\dashboard-measurment\default.aspx" />
     <Content Include="_content_pages\document-search-new\default.aspx" />
     <Content Include="_content_pages\document-search-updatepanel\default.aspx" />
@@ -164,9 +166,12 @@
     <Content Include="_content_pages\rabill-summary\default.aspx" />
     <Content Include="_content_pages\report-const-drawing-status\default.aspx" />
     <Content Include="_content_pages\report-contractdata\default.aspx" />
+    <Content Include="_content_pages\report-daily-progress\default.aspx" />
     <Content Include="_content_pages\report-document-status\default.aspx" />
     <Content Include="_content_pages\report-Financial-Progress\default.aspx" />
     <Content Include="_content_pages\report-issues\default.aspx" />
+    <Content Include="_content_pages\report-mis-details\default.aspx" />
+    <Content Include="_content_pages\report-mis-status-summary\default.aspx" />
     <Content Include="_content_pages\report-MonthlyPhysical-Progress\default.aspx" />
     <Content Include="_content_pages\report-physicalprogress\default.aspx" />
     <Content Include="_content_pages\report-projectphysicalprogress\default.aspx" />
@@ -196,6 +201,8 @@
     <Content Include="_modal_pages\add-caa-jica-claims.aspx" />
     <Content Include="_modal_pages\add-complianceofMOM.aspx" />
     <Content Include="_modal_pages\add-conactivity.aspx" />
+    <Content Include="_modal_pages\add-dailyprogress.aspx" />
+    <Content Include="_modal_pages\add-dailyprogressreport-master.aspx" />
     <Content Include="_modal_pages\add-document-flow.aspx" />
     <Content Include="_modal_pages\add-domaindetails.aspx" />
     <Content Include="_modal_pages\add-Fin-Month-data.aspx" />
@@ -510,6 +517,20 @@
     <Compile Include="_content_pages\consolidated-monthly-activities\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="_content_pages\daily-progress-reportmaster\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_content_pages\daily-progress-reportmaster\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_content_pages\daily-progress\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_content_pages\daily-progress\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="_content_pages\dashboard-measurment\default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -685,6 +706,13 @@
     <Compile Include="_content_pages\report-contractdata\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="_content_pages\report-daily-progress\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_content_pages\report-daily-progress\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="_content_pages\report-document-status\default.aspx.cs">
       <DependentUpon>default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -704,6 +732,20 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="_content_pages\report-issues\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_content_pages\report-mis-details\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_content_pages\report-mis-details\default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_content_pages\report-mis-status-summary\default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_content_pages\report-mis-status-summary\default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
     <Compile Include="_content_pages\report-MonthlyPhysical-Progress\default.aspx.cs">
@@ -908,6 +950,20 @@
     </Compile>
     <Compile Include="_modal_pages\add-conactivity.aspx.designer.cs">
       <DependentUpon>add-conactivity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_modal_pages\add-dailyprogress.aspx.cs">
+      <DependentUpon>add-dailyprogress.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_modal_pages\add-dailyprogress.aspx.designer.cs">
+      <DependentUpon>add-dailyprogress.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="_modal_pages\add-dailyprogressreport-master.aspx.cs">
+      <DependentUpon>add-dailyprogressreport-master.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="_modal_pages\add-dailyprogressreport-master.aspx.designer.cs">
+      <DependentUpon>add-dailyprogressreport-master.aspx</DependentUpon>
     </Compile>
     <Compile Include="_modal_pages\add-document-flow.aspx.cs">
       <DependentUpon>add-document-flow.aspx</DependentUpon>

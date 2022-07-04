@@ -160,7 +160,7 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
                                 </div>
 			                </li>--%>
 
-			                <li class="nav-item dropdown">
+			                <li class="nav-item dropdown" id="WorkPackage" runat="server">
                                 <a id="navLinkWorkPackages" href="/_content_pages/engineering-workpackage" title="Work packages" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/engineering-workpackage") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/financial-workpackage") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/work-packages") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
                                     <i class="nav-link--icon fas fa-box-open"></i>
                                     <span class="nav-link--text">Work Packages</span>
@@ -187,7 +187,7 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
                                 </div>
 			                </li>
 
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown" id="Documents" runat="server">
                                 <a id="navLinkDocuments" href="/_content_pages/documents" title="Documents" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/documents") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/document-history") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
                                     <i class="nav-link--icon fas fa-file-contract"></i>
                                     <span class="nav-link--text">Documents</span>
@@ -223,10 +223,13 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportProjectStatusofWorkProgress" runat="server" NavigateUrl="/_content_pages/project-progress" ToolTip="Project Status of Work Progress">Project Status of Work Progress</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportResourceDeployment" runat="server" NavigateUrl="/_content_pages/report-resourcedeployment" ToolTip="Status of Resource Deployment">Status of Resource Deployment</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportIssues" runat="server" NavigateUrl="/_content_pages/report-issues" ToolTip="Issues">Issues</asp:HyperLink>
-                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliation" runat="server" NavigateUrl="/_content_pages/report-reconciliation" ToolTip="Reconciliation">Reconciliation Documents</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliation" runat="server" NavigateUrl="/_content_pages/report-reconciliation" ToolTip="Reconciliation">Reconciliation Documents Pending</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliationStatus" runat="server" NavigateUrl="/_content_pages/report-reconciliation-status" ToolTip="Reconciliation">Reconciliation Approved or Rejected Documents</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportReconciliationPhase" runat="server" NavigateUrl="/_content_pages/report-reconciliation-phase" ToolTip="Reconciliation">Status of Documents for Contractor</asp:HyperLink>
                                     <asp:HyperLink CssClass="dropdown-item" ID="ReportPmcDocumentStatus" runat="server" NavigateUrl="/_content_pages/report-document-status" ToolTip="Status of STP Documents">Status of STP Documents</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportDailyProgress" runat="server" NavigateUrl="/_content_pages/report-daily-progress" ToolTip="Daily Progress">Daily Progress</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="ReportStatusSummaryReport" runat="server" NavigateUrl="/_content_pages/report-mis-status-summary" ToolTip="Summary Report STP">Summary Status Report STP</asp:HyperLink>
+                          
                                     
                                 </div>
 
@@ -309,7 +312,8 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
                                     <asp:HyperLink CssClass="dropdown-item" ID="Misc_Status_WasteWater" runat="server" NavigateUrl="/_content_pages/status-wastewater-forms" ToolTip="Status WasteWater ContractPackage">Status WasteWater ContractPackage</asp:HyperLink>
                                      <asp:HyperLink CssClass="dropdown-item" ID="Misc_OtherPoints" runat="server" NavigateUrl="~/_content_pages/other-points-discussion-insert" ToolTip="Other points for Discussion">Other points for Discussion</asp:HyperLink>
                                      <asp:HyperLink CssClass="dropdown-item" ID="TaskSelectionUpdate" runat="server" NavigateUrl="/_content_pages/task_report_selection" ToolTip="Camera">Task Selection Update</asp:HyperLink>
-                                  
+                                  <asp:HyperLink CssClass="dropdown-item" ID="Daily_progressreport_master" runat="server" NavigateUrl="/_content_pages/daily-progress-reportmaster" ToolTip="Daily Progress Report Master">Daily Progress Report Master</asp:HyperLink>
+                                    <asp:HyperLink CssClass="dropdown-item" ID="Daily_progress" runat="server" NavigateUrl="/_content_pages/daily-progress" ToolTip="Daily Progress">Daily Progress</asp:HyperLink>
                                     <%--<asp:HyperLink CssClass="dropdown-item" ID="HyperLink13" runat="server" NavigateUrl="/_content_pages/masters" ToolTip="Masters">Masters</asp:HyperLink>--%>
                                 </div>
 			                </li>

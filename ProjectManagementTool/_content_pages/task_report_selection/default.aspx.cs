@@ -154,10 +154,10 @@ namespace ProjectManagementTool._content_pages.task_report_selection
             }
         }
 
-        protected void TreeView1_SelectedNodeChanged(object sender, EventArgs e)
-        {
-           // getdata.UpdateTask(TreeView1.SelectedValue, DropDownList1.SelectedValue);
-        }
+        //protected void TreeView1_SelectedNodeChanged(object sender, EventArgs e)
+        //{
+        //   // getdata.UpdateTask(TreeView1.SelectedValue, DropDownList1.SelectedValue);
+        //}
 
         public void BindTreeview()
         {
@@ -184,6 +184,7 @@ namespace ProjectManagementTool._content_pages.task_report_selection
                 {
                     node.Expand();
                 }
+               
             }
         }
 
@@ -405,11 +406,17 @@ namespace ProjectManagementTool._content_pages.task_report_selection
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            if (TreeView1.CheckedNodes.Count >0 & DropDownList1.SelectedIndex > 0)
+            if (DropDownList1.SelectedIndex > 0)
             {
-                foreach(TreeNode node in TreeView1.CheckedNodes)
+                int nd_count = 0;  
+
+                if (TreeView1.CheckedNodes.Count == 0)
+                    getdata.UpdateTask(new Guid(ddlworkpackage.SelectedValue), "", DropDownList1.SelectedValue, 0);
+
+                foreach (TreeNode node in TreeView1.CheckedNodes)
                 {
-                    getdata.UpdateTask(node.Value, DropDownList1.SelectedValue);
+                    nd_count = nd_count + 1;
+                    getdata.UpdateTask(new Guid(ddlworkpackage.SelectedValue),  node.Value, DropDownList1.SelectedValue,nd_count);
                 }
 
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Selected Tasks are updated.');</script>");
@@ -441,31 +448,26 @@ namespace ProjectManagementTool._content_pages.task_report_selection
                 
         }
 
-        protected void chkBox1_CheckedChanged(object sender, EventArgs e)
+        protected void btnClearAll_Click(object sender, EventArgs e)
         {
-            if (ddlworkpackage.SelectedValue !="" & DropDownList1.SelectedIndex >0 )
+            foreach (TreeNode node in TreeView1.Nodes[0].ChildNodes)
             {
-                //foreach (TreeNode node in TreeView1.Nodes[0].ChildNodes)
-                //{
-                //    SelectAll(node,chkBox1.Checked);
-                //}
-
-                getdata.UpdateTaskAll(new Guid(ddlworkpackage.SelectedValue), DropDownList1.SelectedValue, chkBox1.Checked ? "Y" : "N");
-                BindTreeview();
-                
+                SelectAll(node);
             }
         }
 
-        public void SelectAll(TreeNode node,bool node_checked)
-        {
-            node.Checked = true;
 
-            foreach(TreeNode nd in node.ChildNodes)
+        public void SelectAll(TreeNode node)
+        {
+            node.Checked = false;
+            foreach (TreeNode nd in node.ChildNodes)
             {
                 if (nd.ChildNodes.Count > 0)
-                    SelectAll(nd,node_checked);
+                    SelectAll(nd);
                 else
-                    nd.Checked = node_checked;
+                {
+                    nd.Checked = false;
+                }
             }
         }
 
@@ -474,7 +476,6 @@ namespace ProjectManagementTool._content_pages.task_report_selection
             if (DropDownList1.SelectedIndex >0 )
             {
                 BindTreeview();
-                chkBox1.Checked = false;
             }
             else
             {

@@ -408,7 +408,7 @@ namespace ProjectManager._master_pages
                     }
                 }
 
-               
+
                 if (Session["IsContractor"].ToString() == "Y" || Session["TypeOfUser"].ToString() == "U")
                 {
                     ReportReconciliationPhase.Visible = true;
@@ -427,7 +427,7 @@ namespace ProjectManager._master_pages
                     ReportReconciliation.Visible = false;
                     ReportReconciliationStatus.Visible = false;
                     ReportReconciliationPhase.Visible = false;
-                    
+
                 }
                 //
                 if (Session["IsContractor"].ToString() == "Y")
@@ -435,7 +435,7 @@ namespace ProjectManager._master_pages
                     ReportReconciliation.Visible = false;
                     ReportReconciliationStatus.Visible = false;
                 }
-                if(Session["TypeOfUser"].ToString() == "U")
+                if (Session["TypeOfUser"].ToString() == "U")
                 {
                     navlinkFlowMaster.Visible = true;
                     navlinkDocumentFlowMaster.Visible = true;
@@ -475,8 +475,19 @@ namespace ProjectManager._master_pages
                     ReportReconciliationStatus.Visible = true;
                     ReportPmcDocumentStatus.Visible = true;
                 }
-                
-            }            //
+                if (Session["TypeOfUser"].ToString() == "SP")
+                {
+                    WorkPackage.Visible = false;
+                    Documents.Visible = false;
+                    TaskSelectionUpdate.Visible = false;
+                    Daily_progressreport_master.Visible = false;
+                    Daily_progress.Visible = false;
+                    ReportDailyProgress.Visible = false;
+                    ReportReconciliation.Visible = false;
+                    ReportReconciliationStatus.Visible = false;
+                    ReportPmcDocumentStatus.Visible = false;
+                }
+            }//
         }
     }
 }

@@ -306,8 +306,8 @@ namespace ProjectManager._content_pages
                     dummyONTBdashboard.Visible = true;
                     dummyNJSEIdashboard.Visible = false;
                     divNJSEIMIS.Visible = false;
-                    rdSelect.Items[3].Text = "";
-                    rdSelect.Items[3].Enabled = false;
+                   // rdSelect.Items[3].Text = "";
+                   // rdSelect.Items[3].Enabled = false;
                 }
             }
         }
@@ -1157,14 +1157,14 @@ vAxes: {
                 divMainblocks.Visible = true;
                 LoadFinancialGraph();
             }
-            else if (rdSelect.SelectedIndex == 3)
-            {
-                divProgresschart.Visible = false;
-                divFinProgressChart.Visible = false;
-                divNJSEIMIS.Visible = true;
-                divdashboardimage.Visible = true;
-                divMainblocks.Visible = false;
-            }
+            //else if (rdSelect.SelectedIndex == 3)
+            //{
+            //    divProgresschart.Visible = false;
+            //    divFinProgressChart.Visible = false;
+            //    divNJSEIMIS.Visible = true;
+            //    divdashboardimage.Visible = true;
+            //    divMainblocks.Visible = false;
+            //}
         }
         protected void RBLPhotographs_SelectedIndexChanged(object sender, EventArgs e)
         {

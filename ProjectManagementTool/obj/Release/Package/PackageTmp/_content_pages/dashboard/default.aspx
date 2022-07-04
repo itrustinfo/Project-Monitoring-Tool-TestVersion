@@ -177,7 +177,7 @@
                        <asp:ListItem Selected="True" Value="0">&nbsp;Without Progress Chart&nbsp;</asp:ListItem>
                        <asp:ListItem Value="1">&nbsp;With Physical Progress Chart&nbsp;</asp:ListItem>
                        <asp:ListItem Value="2">&nbsp;With Financial Progress Chart&nbsp;</asp:ListItem>
-                                 <asp:ListItem Value="3">&nbsp;NJSEI Project MIS&nbsp;</asp:ListItem>
+                                 
                     </asp:RadioButtonList>
 
                         </div>  

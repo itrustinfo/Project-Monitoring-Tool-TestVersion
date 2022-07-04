@@ -30,6 +30,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
                 ReportFilter.Visible = false;
                 BindStatus();
                 BindProject();
+                BindFlow();
                 DDlProject_SelectedIndexChanged(sender, e);
             }
         }
@@ -39,6 +40,20 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
             DDLStatus.Items.Add("All");
             DDLStatus.Items.Add("Accepted");
             DDLStatus.Items.Add("Rejected");
+        }
+
+        void BindFlow()
+        {
+            DataTable ds = getdt.GetDocumentFlow().AsEnumerable().Where(r => r.Field<string>("Flow_Name").Contains("Works A") || r.Field<string>("Flow_Name").Contains("Works B") ||  r.Field<string>("Flow_Name").Contains("Vendor Approval")).CopyToDataTable();
+            if (ds != null && ds.Rows.Count > 0)
+            {
+                DDLFlow.DataTextField = "Flow_Name";
+                DDLFlow.DataValueField = "FlowMasterUID";
+                DDLFlow.DataSource = ds;
+                DDLFlow.DataBind();
+                DDLFlow.Items.Insert(0, "All");
+                ViewState["Flow"] = ds;
+            }
         }
         private void BindProject()
         {
@@ -100,9 +115,12 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
         {
             if (DDlProject.SelectedValue != "")
             {
-                grdDataList.DataSource = getdt.GetAllDocumentExceptReconciliation(new Guid(DDlProject.SelectedValue), txtOntbReference.Text, txtProjectRefernce.Text, DDLStatus.SelectedValue);
-                grdDataList.DataBind();
-                divTabular.Visible = true;
+                grdDataList.DataSource = getdt.GetAllDocumentExceptReconciliation(new Guid(DDlProject.SelectedValue), txtOntbReference.Text, txtProjectRefernce.Text, DDLStatus.SelectedValue,DDLFlow.SelectedValue);
+                if (getdt.GetAllDocumentExceptReconciliation(new Guid(DDlProject.SelectedValue), txtOntbReference.Text, txtProjectRefernce.Text, DDLStatus.SelectedValue,DDLFlow.SelectedValue).Tables.Count != 0)
+                {
+                    grdDataList.DataBind();
+                    divTabular.Visible = true;
+                }
             }
 
 
@@ -112,20 +130,25 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
             if (e.Row.RowType == DataControlRowType.Header)
             {
                 if(WebConfigurationManager.AppSettings["Domain"].ToString().ToUpper() == "NJSEI")
-                    e.Row.Cells[5].Text = "NJSEI Reference #";
+                    e.Row.Cells[5+2].Text = "NJSEI Reference #";
                 else
-                    e.Row.Cells[5].Text = "ONTB Reference #";
+                    e.Row.Cells[5+2].Text = "ONTB Reference #";
             }
             else if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                if (!e.Row.Cells[4].Text.Contains("Rejected"))
+                if (!e.Row.Cells[4+2].Text.Contains("Rejected"))
                 {
-                    e.Row.Cells[4].Text = "Accepted";
+                    // e.Row.Cells[4].Text = "Accepted";
+                    e.Row.Cells[10+2].Text = getdt.GetUSP_DocumentAcceptedRejectedRemarks(new Guid(e.Row.Cells[0+2].Text));
                 }
-                DateTime? acceptedRejDate = getdt.GetDocumentAcceptedRecejtedDate(new Guid(e.Row.Cells[0].Text));
+                else
+                {
+                    e.Row.Cells[10+2].Text = getdt.GetUSP_DocumentAcceptedRejectedRemarks(new Guid(e.Row.Cells[0+2].Text));
+                }
+                DateTime? acceptedRejDate = getdt.GetDocumentAcceptedRecejtedDate(new Guid(e.Row.Cells[0+2].Text));
                 if(acceptedRejDate != null)
                 {
-                    e.Row.Cells[9].Text = Convert.ToDateTime(acceptedRejDate).ToString("dd/MM/yyyy");
+                    e.Row.Cells[9+2].Text = Convert.ToDateTime(acceptedRejDate).ToString("dd/MM/yyyy");
                 }
             }
         }
@@ -141,7 +164,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
                 htextw.AddStyleAttribute("font-size", "9pt");
                 htextw.AddStyleAttribute("color", "Black");
 
-
+                grdDataList.Columns[0].Visible = false;
                 grdDataList.RenderControl(htextw); //Name of the Panel
 
                 //var sb1 = new StringBuilder();
@@ -151,7 +174,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
 
                 string HTMLstring = "<html><body>" +
                     "<div style='width:100%; margin:auto;'><div style='width:100%; float:left; line-height:25px; font-size:12pt;' align='center'>" +
-                    "<asp:Label ID='Lbl1' runat='server' Font-Bold='true'>" + WebConfigurationManager.AppSettings["Domain"] + " Report Name: Reconciliation Approved or Rejected</asp:Label><br />" +
+                    "<asp:Label ID='Lbl1' runat='server' Font-Bold='true'>" + WebConfigurationManager.AppSettings["Domain"] + " Report Name: Reconciliation Approved or Rejected for " + DDlProject.SelectedItem.ToString() + "</asp:Label><br />" +
                     "</div> <div style='width:100%; float:left; height:10px;'>&nbsp;&nbsp;&nbsp;</div>" +
                     "<div style='width:100%; float:left;'>" +
                     s +
@@ -184,6 +207,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
 
         protected void btnPDF_Click(object sender, EventArgs e)
         {
+
             ExporttoPDF(grdDataList, 2, "No");
         }
 
@@ -195,7 +219,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
 
 
             gdRp = gd;
-
+            gd.Columns[0].Visible = false;
             int noOfColumns = 0, noOfRows = 0;
             DataTable tbl = null;
 
@@ -240,7 +264,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
             iTextSharp.text.pdf.PdfPTable headerTable = new iTextSharp.text.pdf.PdfPTable(1);
 
             // Creates a phrase to hold the application name at the left hand side of the header.
-            Phrase phApplicationName = new Phrase(Environment.NewLine + WebConfigurationManager.AppSettings["Domain"] + " Report Name: Reconciliation Approved or Rejected", FontFactory.GetFont("Arial", ApplicationNameSize, iTextSharp.text.Font.BOLD));
+            Phrase phApplicationName = new Phrase(Environment.NewLine + WebConfigurationManager.AppSettings["Domain"] + " Report Name: Reconciliation Approved or Rejected for "  + DDlProject.SelectedItem.ToString(), FontFactory.GetFont("Arial", ApplicationNameSize, iTextSharp.text.Font.BOLD));
 
             // Creates a PdfPCell which accepts a phrase as a parameter.
             PdfPCell clApplicationName = new PdfPCell(phApplicationName);

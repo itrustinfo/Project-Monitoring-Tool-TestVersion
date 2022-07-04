@@ -105,13 +105,13 @@ namespace ProjectManagementTool._content_pages.task_report_selection
         protected global::System.Web.UI.WebControls.Button btnCollapse;
 
         /// <summary>
-        /// chkBox1 control.
+        /// btnClearAll control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkBox1;
+        protected global::System.Web.UI.WebControls.Button btnClearAll;
 
         /// <summary>
         /// divStatus control.
