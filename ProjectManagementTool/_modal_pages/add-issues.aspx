@@ -70,8 +70,13 @@
                     <div class="form-group">
                         <label class="lblCss" for="ddlReportingUser">Reporting User</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
                         <asp:DropDownList ID="ddlReportingUser" CssClass="form-control"  runat="server"></asp:DropDownList>
-                        
-                    </div>
+                     </div>
+
+                   <%-- <div class="form-group">
+                        <label class="lblCss" for="ReportingUser">Reporting User</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
+                        <asp:TextBox ID="ReportingUser" CssClass="form-control" runat="server"  autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                    </div>--%>
+
                     <div class="form-group">
                         <label class="lblCss" for="dtReportingDate">Reporting Date</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>
                         <asp:TextBox ID="dtReportingDate" CssClass="form-control" required runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
@@ -80,7 +85,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <%--<label class="lblCss" for="ddlApprovingUser">Approving User</label> &nbsp;<span style="color:red; font-size:1.1rem;">*</span>--%>
-                         <asp:DropDownList ID="ddlApprovingUser" runat="server" CssClass="form-control" Visible="false">
+                         <asp:DropDownList ID="ddlApprovingUser" runat="server" CssClass="form-control" Visible="false" >
                      </asp:DropDownList>
                     </div>
 
@@ -109,11 +114,10 @@
                     <div class="form-group">
                         <label class="lblCss" for="FileUploadDoc">Issue Document</label>
                         <div class="custom-file">
-                            <asp:FileUpload ID="FileUploadDoc" runat="server" CssClass="custom-file-input"/>
+                            <asp:FileUpload ID="FileUploadDoc" AllowMultiple="true" runat="server" CssClass="custom-file-input"/>
                             <label class="custom-file-label" for="FilDocument">Choose document</label>
                         </div>
                     </div>
-
                 </div>
             </div> 
         </div>

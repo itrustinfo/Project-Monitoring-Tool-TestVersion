@@ -87,6 +87,15 @@ namespace ProjectManagementTool._modal_pages
         protected global::System.Web.UI.WebControls.DropDownList ddlAssignedUser;
 
         /// <summary>
+        /// CheckBoxList1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList1;
+
+        /// <summary>
         /// dtAssignedDate control.
         /// </summary>
         /// <remarks>
@@ -123,15 +132,6 @@ namespace ProjectManagementTool._modal_pages
         protected global::System.Web.UI.WebControls.DropDownList ddlApprovingUser;
 
         /// <summary>
-        /// dtApprovingDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox dtApprovingDate;
-
-        /// <summary>
         /// dtProposedCloserDate control.
         /// </summary>
         /// <remarks>
@@ -166,15 +166,6 @@ namespace ProjectManagementTool._modal_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRemarks;
-
-        /// <summary>
-        /// FileUploadDoc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUploadDoc;
 
         /// <summary>
         /// btnSubmit control.

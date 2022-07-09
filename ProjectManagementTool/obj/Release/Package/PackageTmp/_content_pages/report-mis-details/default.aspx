@@ -1,11 +1,62 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/_master_pages/default.Master" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="ProjectManagementTool._content_pages.report_mis_details._default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="default_master_head" runat="server">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style type="text/css">
         .hideItem {
             display: none;
         }
     </style>
+     <script type="text/javascript">
+        function BindEvents() {
+            $(".showModalPreviewDocument").click(function (e) {
+                jQuery.noConflict();
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $("#ModDocumentPreview iframe").attr("src", url);
+        $("#ModDocumentPreview").modal("show");
+            });
+
+            $(".showModalDocumentMail").click(function (e) {
+                  jQuery.noConflict();
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $("#ModDocumentMail iframe").attr("src", url);
+        $("#ModDocumentMail").modal("show");
+            });
+
+            $(".showModalDocumentView").click(function (e) {
+                 jQuery.noConflict();
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $("#ModViewDocument iframe").attr("src", url);
+        $("#ModViewDocument").modal("show");
+            });
+
+            $(".showModalDocumentEdit").click(function (e) {
+                 jQuery.noConflict();
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $("#ModEditDocument iframe").attr("src", url);
+        $("#ModEditDocument").modal("show");
+            });
+
+            $(".showModalGeneralDocumentEdit").click(function (e) {
+                 jQuery.noConflict();
+        e.preventDefault();
+        var url = $(this).attr("href");
+        $("#ModGeneralDocumentEdit iframe").attr("src", url);
+        $("#ModGeneralDocumentEdit").modal("show");
+            });
+
+        }
+        $(document).ready(function () {
+            BindEvents();
+            $('[data-toggle="tooltip"]').tooltip();   
+         });
+         </script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="default_master_body" runat="server">
@@ -108,7 +159,7 @@
                                                 </asp:BoundField>
                                                 <asp:TemplateField HeaderText="Submittal Name" SortExpression="DocName">
                                                     <ItemTemplate>
-                                                        <a href="#" data-toggle="tooltip" data-placement="top" title='<%#GetTaskHierarchy_By_DocumentUID(Eval("DocumentUID").ToString())%>'><i class="fa fa-info-circle" style="color: black;" aria-hidden="true"></i></a>&nbsp;&nbsp; <a href="/_content_pages/documents/Default.aspx?SubmittalUID=<%#Eval("DocumentUID")%>"><%#GetSubmittalName(Eval("DocumentUID").ToString())%></a>
+                                                        <a href="#"  data-toggle="tooltip" data-placement="top" title='<%#GetTaskHierarchy_By_DocumentUID(Eval("DocumentUID").ToString())%>'><i class="fa fa-info-circle" style="color:black;" aria-hidden="true"></i></a>&nbsp;&nbsp; <a href="/_content_pages/documents/Default.aspx?SubmittalUID=<%#Eval("DocumentUID")%>"><%#GetSubmittalName(Eval("DocumentUID").ToString())%></a>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField ItemStyle-Width="35%" HeaderStyle-Width="35%" HeaderText="Document Name" ItemStyle-HorizontalAlign="Left" SortExpression="ActualDocument_Name">
@@ -191,6 +242,82 @@
 
 
         </div>
+    </div>
+     <%--View document histroy modal--%>
+    <div id="ModDocumentPreview" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">Document Preview</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:500px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
+    </div>
+     <%--View document History  modal--%>
+    <div id="ModDocumentMail" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">Document History</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:500px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
+    </div>
+     <%--View document modal--%>
+    <div id="ModViewDocument" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">View Document Details</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:500px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
+    </div>
+       <%--edit document modal--%>
+    <div id="ModEditDocument" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">Edit Document</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:500px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
+    </div>
+
+    <%--edit general document modal--%>
+    <div id="ModGeneralDocumentEdit" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		    <div class="modal-content">
+			    <div class="modal-header">
+				    <h5 class="modal-title">Edit General Document</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+			    </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:500px;" loading="lazy"></iframe>
+			    </div>
+              
+		    </div>
+	    </div>
     </div>
 </asp:Content>
 

@@ -239,6 +239,51 @@ document.getElementById('DivFooterRowNew').scrollLeft = Scrollablediv.scrollLeft
                 </div>
                           </div>
                             </div>
+                         <div class="container-fluid" id="ReportFilter" runat="server" visible="false">
+            <div class="row">
+                <div class="col-sm-12 mb-4" runat="server">
+                     <div class="card">
+                        <div class="card-body" >   
+                            <div class="table-responsive">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td>
+                                         <h6 class="card-title text-muted text-uppercase font-weight-bold">Contractor Uploaded Date From</h6>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td>
+                                        <h6 class="card-title text-muted text-uppercase font-weight-bold">Contractor Uploaded Date To</h6>
+                                    </td>
+                                  
+                                     <td>&nbsp;</td>
+                                    <td>
+                                        <h6 class="card-title text-muted text-uppercase font-weight-bold">Flow</h6>
+                                    </td>
+                                </tr>
+                             <tr>
+                                 <td style="width:22%;">
+                                     <asp:TextBox ID="dtInDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                                </td>
+                                 <td>&nbsp;</td>
+                                 <td style="width:22%;">
+                                     <asp:TextBox ID="dtDocDate" CssClass="form-control" runat="server" placeholder="dd/mm/yyyy" autocomplete="off" ClientIDMode="Static"></asp:TextBox>
+                                 </td>
+                                
+                                 <td>&nbsp;</td>
+                                 <td style="width:22%;">
+                                     <asp:DropDownList ID="DDLFlow" runat="server" CssClass="form-control" ></asp:DropDownList>
+                                 </td>
+                                 <td style="width:7%;">
+                                     <asp:Button ID="btnsubmitfilter" runat="server" CssClass="btn btn-primary" Text="Submit" OnClick="btnsubmitfilter_Click"  />
+                                 </td>
+                             </tr>
+                        </table>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+        </div>
                         <div class="table-responsive" id="divMain" runat="server">
                             <asp:Label runat="server" Text="" ID="lblTotalcount"></asp:Label>
                              

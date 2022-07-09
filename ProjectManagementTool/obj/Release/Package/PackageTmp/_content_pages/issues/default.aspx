@@ -26,6 +26,8 @@
                      $("#ModAssignUser").modal("show");
                  });
 
+
+
                  $(".UpdateIssueStatus").click(function(e) {
                      e.preventDefault();                 
                 var url = $(this).attr("href");
@@ -168,9 +170,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="table-responsive">
-                                                <asp:GridView ID="GrdIssues" runat="server" AutoGenerateColumns="False" EmptyDataText="No Data Found" Width="100%" CssClass="table table-bordered" OnRowDataBound="GrdIssues_RowDataBound" OnRowCommand="GrdIssues_RowCommand" OnRowDeleting="GrdIssues_RowDeleting">
+                                        
+                                                                                 
+                                                    <div class="table-responsive">
+                                                <asp:GridView ID="GrdIssues" runat="server" AutoGenerateColumns="False" EmptyDataText="No Data Found" Width="100%" CssClass="table table-bordered" OnRowDataBound="GrdIssues_RowDataBound" OnRowCommand="GrdIssues_RowCommand" OnRowDeleting="GrdIssues_RowDeleting" >
                                                     <Columns>
+                                                        <%--<asp:BoundField DataField="Issue_Uid" ItemStyle-CssClass="hiddencol"  HeaderStyle-CssClass="hiddencol" HeaderText="LinkToReviewFile" >
+                                                        <HeaderStyle HorizontalAlign="Left" />
+                                                        </asp:BoundField>--%>
                                                         <asp:TemplateField HeaderText="S.No" ItemStyle-HorizontalAlign="Center">
                                                             <ItemTemplate>
                                                                 <%# Container.DataItemIndex + 1 %>
@@ -212,9 +219,9 @@
                                                       
                                                         <asp:TemplateField HeaderText="Issue Document">
                                                                  <ItemTemplate>
-                                                                         <asp:LinkButton ID="lnkdown" runat="server" CommandArgument='<%#Eval("Issue_Uid")%>' CausesValidation="false" CommandName="download">Download</asp:LinkButton>
+                                                                         <%--<asp:LinkButton ID="lnkdown" runat="server" CommandArgument='<%#Eval("Issue_Uid")%>' CausesValidation="false" CommandName="download">Download</asp:LinkButton>--%>
                                                                  </ItemTemplate>
-                                                        </asp:TemplateField>
+                                                        </asp:TemplateField>   
                                                         <asp:BoundField DataField="Issue_Document" ItemStyle-CssClass="hiddencol"  HeaderStyle-CssClass="hiddencol" HeaderText="IssueDocument" >
                                                     <HeaderStyle HorizontalAlign="Left" />
 
@@ -239,11 +246,11 @@
                                                 </asp:BoundField>
                                                     </Columns>
                                                 </asp:GridView>
-
-                                             <div id="printreport" runat="server" visible="false" style="text-align:right;">
+                                                    </div>
+                                     
+                                        <div id="printreport" runat="server" visible="false" style="text-align:right;padding-top:10px">
                                          <input type="button" value="Print Report" class="btn btn-primary" onclick="PrintDiv('myDiv')" />
                                         </div>
-                                            </div>
                                         </div>
                                     </div>
 

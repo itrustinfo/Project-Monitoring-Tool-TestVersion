@@ -44,7 +44,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
 
         void BindFlow()
         {
-            DataTable ds = getdt.GetDocumentFlow().AsEnumerable().Where(r => r.Field<string>("Flow_Name").Contains("Works A") || r.Field<string>("Flow_Name").Contains("Works B") ||  r.Field<string>("Flow_Name").Contains("Vendor Approval")).CopyToDataTable();
+            DataTable ds = getdt.GetDocumentFlow().AsEnumerable().Where(r => r.Field<string>("Flow_Name").Equals("Works A") || r.Field<string>("Flow_Name").Equals("Works B") ||  r.Field<string>("Flow_Name").Equals("Vendor Approval")).CopyToDataTable();
             if (ds != null && ds.Rows.Count > 0)
             {
                 DDLFlow.DataTextField = "Flow_Name";
@@ -164,7 +164,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation_status
                 htextw.AddStyleAttribute("font-size", "9pt");
                 htextw.AddStyleAttribute("color", "Black");
 
-                grdDataList.Columns[0].Visible = false;
+                grdDataList.Columns[2].Visible = false;
                 grdDataList.RenderControl(htextw); //Name of the Panel
 
                 //var sb1 = new StringBuilder();

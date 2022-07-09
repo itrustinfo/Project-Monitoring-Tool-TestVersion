@@ -115,6 +115,13 @@ namespace ProjectManagementTool._content_pages.report_mis_details
                                                  r.Field<string>("Flow_Name") == flowName &&
                                                  r.Field<string>("ActualDocument_CurrentStatus") == "Internal Meeting called by DTL");
             }
+            else if (type == "DTL Back To Contractor")
+            {
+                dataRows = dtStatus.AsEnumerable().Where(r =>
+                                                 r.Field<string>("ProjectName") == projectName &&
+                                                 r.Field<string>("Flow_Name") == flowName &&
+                                                  Constants.DTLBacktoContractor.Contains(r.Field<string>("ActualDocument_CurrentStatus")));
+            }
             else if(type == "AEE Approval")
             {
                 dataRows = dtStatus.AsEnumerable().Where(r =>
@@ -347,7 +354,11 @@ namespace ProjectManagementTool._content_pages.report_mis_details
                         }
                     }
                 }
-
+                //
+                if(e.Row.Cells[10].Text == "Mahadevpura" || e.Row.Cells[10].Text == "Mahadevpura")
+                {
+                    e.Row.Cells[10].Text = "Works B";
+                }
             }
         }
         protected void GrdDocuments_DataBound(object sender, EventArgs e)

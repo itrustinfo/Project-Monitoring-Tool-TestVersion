@@ -27,6 +27,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
             if (!IsPostBack)
             {
                 BindProject();
+                BindFlow();
                 DDlProject_SelectedIndexChanged(sender, e);
 
             }
@@ -90,7 +91,24 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
         {
             if (DDlProject.SelectedValue != "")
             {
-                grdDataList.DataSource = getdt.GetDashboardReconciliationDocs_Details(new Guid(DDlProject.SelectedValue)); ;
+                if (DDLFlow.SelectedValue != "All")
+                {
+                    try
+                    {
+                        grdDataList.DataSource = getdt.GetDashboardReconciliationDocs_Details(new Guid(DDlProject.SelectedValue)).Tables[0].AsEnumerable()
+                            .Where(r => r.Field<Guid>("FlowUID").ToString().Equals(DDLFlow.SelectedValue)).CopyToDataTable();
+                    }
+                    catch(Exception ex)
+                    {
+                        grdDataList.DataSource = null;
+                    }
+
+                }
+                else
+                {
+                    grdDataList.DataSource = getdt.GetDashboardReconciliationDocs_Details(new Guid(DDlProject.SelectedValue)); 
+                   
+                }
                 grdDataList.DataBind();
                 divTabular.Visible = true;
             }
@@ -519,6 +537,20 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
             else
             {
                 return retval;
+            }
+        }
+
+        void BindFlow()
+        {
+            DataTable ds = getdt.GetDocumentFlow().AsEnumerable().Where(r => r.Field<string>("Flow_Name").Equals("Works A") || r.Field<string>("Flow_Name").Equals("Works B") || r.Field<string>("Flow_Name").Equals("Vendor Approval")).CopyToDataTable();
+            if (ds != null && ds.Rows.Count > 0)
+            {
+                DDLFlow.DataTextField = "Flow_Name";
+                DDLFlow.DataValueField = "FlowMasterUID";
+                DDLFlow.DataSource = ds;
+                DDLFlow.DataBind();
+                DDLFlow.Items.Insert(0, "All");
+                ViewState["Flow"] = ds;
             }
         }
     }

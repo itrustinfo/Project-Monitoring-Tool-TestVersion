@@ -97,7 +97,7 @@ namespace ProjectManagementTool._modal_pages
             DataSet ds = getdata.GetDocumentProcess_in_Days(DocumentUID);
             if (ds.Tables[0].Rows.Count > 0)
             {
-                LblTotalDays.Text = "Total Numer of Days taken : " + ds.Tables[0].Rows[0]["TotDays"].ToString();
+                LblTotalDays.Text = "Total Number of Days taken : " + ds.Tables[0].Rows[0]["TotDays"].ToString();
             }
         }
         private void BindDocument()

@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="default_master_body" runat="server">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 col-lg-5 form-group">Reconciliation Report</div>
+            <div class="col-md-6 col-lg-3 form-group">Reconciliation Report</div>
             <div class="col-md-6 col-lg-3 form-group">
                 <label class="sr-only" for="DDLProject">Project</label>
                 <div class="input-group">
@@ -23,6 +23,15 @@
                         <span class="input-group-text">Work Package</span>
                     </div>
                     <asp:DropDownList ID="DDLWorkPackage" runat="server" CssClass="form-control"></asp:DropDownList>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-2 form-group">
+                <label class="sr-only" for="DDLWorkPackage">Flow</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Flow</span>
+                    </div>
+                    <asp:DropDownList ID="DDLFlow" runat="server" CssClass="form-control"></asp:DropDownList>
                 </div>
             </div>
             <div class="col-md-6 col-lg-1 form-group">

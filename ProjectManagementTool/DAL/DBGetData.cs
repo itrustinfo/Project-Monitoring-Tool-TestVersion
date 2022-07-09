@@ -21431,5 +21431,178 @@ namespace ProjectManager.DAL
             }
             return ds;
         }
+
+        //added for saji on 05/07/2022
+        public int InsertUploadedIssueDocument(string name, string path, string issue_uid)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("InsertUploadedIssueDocument"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        con.Open();
+                        cmd.Parameters.AddWithValue("@name", name);
+                        cmd.Parameters.AddWithValue("@path", path);
+                        cmd.Parameters.AddWithValue("@issue_uid", issue_uid);
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult;
+            }
+        }
+
+        //-------------------------------------------------
+
+        public DataSet GetUploadedIssueDocuments(string issue_uid)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("GetUploadedIssueDocuments", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@issue_uid", issue_uid);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //------------------------------------------------------
+        public int DeleteUploadedIssueDoc(int uploadedDocId)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("DeleteUploadedIssueDoc"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@docid", uploadedDocId);
+                        con.Open();
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = 0;
+            }
+        }
+
+        //-------------------------------------------------------------------------
+
+        public DataSet GetWorkPackageEmails(Guid ProjectUID, Guid WorkPackageUID)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("GetWorkPackageEmails", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@project_uid", ProjectUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@workpackage_uid", WorkPackageUID);
+
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //-----------------------------------------------------------------------
+
+        public DataSet GetIssueByIssueUid(string issue_uid)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetIssueByIssueUID", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@issue_uid", issue_uid);
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //-----------------------------------------------------------------------------------
+
+        public int Issues_Status_Remarks_Insert(Guid IssueRemarksUID, Guid Issue_Uid, string Issue_Status, string Issue_Remarks, string Issue_Document, DateTime approved_date)
+        {
+            int sresult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(db.GetConnectionString()))
+                {
+
+                    using (SqlCommand cmd = new SqlCommand("ups_Issue_Status_Remarks_Insert"))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@IssueRemarksUID", IssueRemarksUID);
+                        cmd.Parameters.AddWithValue("@Issue_Uid", Issue_Uid);
+                        cmd.Parameters.AddWithValue("@Issue_Status", Issue_Status);
+                        cmd.Parameters.AddWithValue("@Issue_Remarks", Issue_Remarks);
+                        cmd.Parameters.AddWithValue("@Issue_Document", Issue_Document);
+                        cmd.Parameters.AddWithValue("@ClosureDate", approved_date);
+                        con.Open();
+                        sresult = (int)cmd.ExecuteNonQuery();
+                        con.Close();
+
+                    }
+                }
+                return sresult;
+            }
+            catch (Exception ex)
+            {
+                return sresult = 0;
+            }
+        }
+
+        //------------------------------------------------------------------
+
+        public DataSet getAllIssueUsers()
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("usp_GetAllIssueUsers", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
     }
 }

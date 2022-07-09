@@ -47,7 +47,7 @@ namespace ProjectManagementTool._content_pages.report_mis_status_summary
             //DataTable dtSubmitted = getdt.DocumentSubmittedSummary_ByProject(startDate);
             DataTable dtStatus = getdt.DocumentStatusSummary_ByDate(startDate);
 
-            ReportName.InnerHtml = "MIS Status  Summary Report from June 1 to " + DateTime.Now.ToString("MMMM-dd");
+            ReportName.InnerHtml = "MIS Status  Summary Report from June-01 to " + DateTime.Now.ToString("MMMM-dd");
             ViewState["Export"] = "1";
             foreach (string projectName in this.projectFlows.Keys)
             {
@@ -62,7 +62,7 @@ namespace ProjectManagementTool._content_pages.report_mis_status_summary
                     string submitted = "-", reconciliationPending = "-", reconciliationAccepted = "-", reconciliationRejected = "";
                     string pmcReview = "-", projectCoordinator = "-", meetingWithEE = "-", review = "-";
                     
-                    string dtlRejected = "-", dtlInternalMeeting = "-", aeApproval = "-", aeeApproval = "-", eeApproval = "-", aceApproval = "-", ceApproval = "-", backToContractorStage = "-";
+                    string dtlRejected = "-", dtlInternalMeeting = "-", dtlInternalBackTo = "-", aeApproval = "-", aeeApproval = "-", eeApproval = "-", aceApproval = "-", ceApproval = "-", backToContractorStage = "-";
                     string codeA = "-", codeB = "-", codeC = "-", codeD = "-", clientApproved = "-";
                     submitted = dtStatus.AsEnumerable().Where(r =>
                                                             r.Field<string>("ProjectName") == projectName &&
@@ -130,7 +130,11 @@ namespace ProjectManagementTool._content_pages.report_mis_status_summary
                                                             r.Field<string>("ProjectName") == projectName &&
                                                             r.Field<string>("Flow_Name") == flowName &&
                                                             r.Field<string>("ActualDocument_CurrentStatus") == "Internal Meeting called by DTL").ToList().Count.ToString();
-
+                    dtlInternalBackTo = dtStatus.AsEnumerable().Where(r =>
+                                                           r.Field<string>("ProjectName") == projectName &&
+                                                           r.Field<string>("Flow_Name") == flowName &&
+                                                           Constants.DTLBacktoContractor.Contains(r.Field<string>("ActualDocument_CurrentStatus"))).ToList().Count.ToString();
+                    
                     //AEE Approval = Code A, Code B(WOrks A), Network Design DTL Reviewed, ONTB DTL Verified
                     //EE Approval = Contains AEE Approval (Works A), 
                     //ACE Approval = Contains EE Approval
@@ -143,10 +147,12 @@ namespace ProjectManagementTool._content_pages.report_mis_status_summary
                     eeApproval = dtStatus.AsEnumerable().Where(r =>
                                                             r.Field<string>("ProjectName") == projectName &&
                                                             r.Field<string>("Flow_Name") == flowName &&
+
                                                             r.Field<string>("ActualDocument_CurrentStatus").Contains("AEE Approval")).ToList().Count.ToString();
                     aceApproval = dtStatus.AsEnumerable().Where(r =>
                                                             r.Field<string>("ProjectName") == projectName &&
                                                             r.Field<string>("Flow_Name") == flowName &&
+                                                            r.Field<string>("ActualDocument_CurrentStatus") != "Network Design EE Approval" &&
                                                             r.Field<string>("ActualDocument_CurrentStatus").Contains(" EE Approval")).ToList().Count.ToString();
                     ceApproval = dtStatus.AsEnumerable().Where(r =>
                                                             r.Field<string>("ProjectName") == projectName &&
@@ -191,7 +197,7 @@ namespace ProjectManagementTool._content_pages.report_mis_status_summary
 
                     dataTable.Rows.Add(projectName, projectNameDisplay, flowName, submitted, 
                         reconciliationPending, reconciliationRejected, reconciliationAccepted, pmcReview, projectCoordinator, meetingWithEE, 
-                        review, dtlRejected, dtlInternalMeeting, aeApproval, aeeApproval, eeApproval, aceApproval, ceApproval, backToContractorStage,
+                        review, dtlRejected, dtlInternalMeeting,dtlInternalBackTo,aeApproval,aeeApproval, eeApproval, aceApproval, ceApproval, backToContractorStage,
                         clientApproved, codeA, codeB, codeC, codeD);
                 }
             }
@@ -215,6 +221,7 @@ namespace ProjectManagementTool._content_pages.report_mis_status_summary
             dataTable.Columns.Add("Review");
             dataTable.Columns.Add("DTL Rejected");
             dataTable.Columns.Add("DTL Internal Meeting");
+            dataTable.Columns.Add("DTL Back To Contractor");
             dataTable.Columns.Add("AE Approval");
             dataTable.Columns.Add("AEE Approval");
             dataTable.Columns.Add("EE Approval");
@@ -330,7 +337,7 @@ namespace ProjectManagementTool._content_pages.report_mis_status_summary
 
                 if (splitted.Length == 2)
                 {
-                    string header = "<tr style=\"color: White; background-color:#666666;\"><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"2\" >Project Co-ordinator</th><th colspan = \"3\" >DTL</th><th colspan = \"4\" >BWSSB</th><th colspan = \"1\" >Works B</th><th colspan = \"5\" >CE Approved Till Date</th></tr>";
+                    string header = "<tr style=\"color: White; background-color:#666666;\"><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"1\"></th><th colspan = \"2\" >Project Co-ordinator</th><th colspan = \"4\" >DTL</th><th colspan = \"4\" >BWSSB</th><th colspan = \"1\" >Works B</th><th colspan = \"5\" >CE Approved Till Date</th></tr>";
 
                     string finalOne = splitted[0] + "default_master_body_grdDataList\">" + header + splitted[1];
                     s = finalOne;
@@ -352,7 +359,7 @@ namespace ProjectManagementTool._content_pages.report_mis_status_summary
                 
                 string HTMLstring = "<html><body>" +
                     "<div style='width:100%; margin:auto;'><div style='width:100%; float:left; line-height:25px; font-size:12pt;' align='center'>" +
-                    "<asp:Label ID='Lbl1' runat='server' Font-Bold='true'> Report Name: MIS Status  Summary Report from 01-" + DateTime.Now.ToString("MMM") + " to " + DateTime.Now.ToString("dd-MMM") + "</asp:Label><br />" +
+                    "<asp:Label ID='Lbl1' runat='server' Font-Bold='true'> Report Name: MIS Status  Summary Report from 01-June" + " to " + DateTime.Now.ToString("dd-MMM") + "</asp:Label><br />" +
                     "</div> <div style='width:100%; float:left; height:10px;'>&nbsp;&nbsp;&nbsp;</div>" +
                     "<div style='width:100%; float:left;'>" +
                     s +
@@ -630,6 +637,11 @@ namespace ProjectManagementTool._content_pages.report_mis_status_summary
         protected void tnPrint_Click(object sender, EventArgs e)
         {
             ExporttoPDF(grdDataList, 2, "Yes");
+        }
+
+        protected void btnRefresh_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("default.aspx");
         }
     }
 }

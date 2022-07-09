@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectManagementTool._modal_pages {
-    
-    
-    public partial class add_issues {
-        
+namespace ProjectManagementTool._modal_pages
+{
+
+
+    public partial class add_issues
+    {
+
         /// <summary>
         /// frmAddIssuesModal control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm frmAddIssuesModal;
-        
+
         /// <summary>
         /// ProjectHiddenValue control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField ProjectHiddenValue;
-        
+
         /// <summary>
         /// WorkPackageHiddenValue control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField WorkPackageHiddenValue;
-        
+
         /// <summary>
         /// TaskHiddenValue control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField TaskHiddenValue;
-        
+
         /// <summary>
         /// AcvitityName control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl AcvitityName;
-        
+
         /// <summary>
         /// txtactivityname control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtactivityname;
-        
+
         /// <summary>
         /// txtIssue_Description control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtIssue_Description;
-        
+
         /// <summary>
         /// ddlAssignedUser control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlAssignedUser;
-        
+
         /// <summary>
         /// dtAssignedDate control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtAssignedDate;
-        
+
         /// <summary>
         /// ddlReportingUser control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlReportingUser;
-        
+
         /// <summary>
         /// dtReportingDate control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtReportingDate;
-        
+
         /// <summary>
         /// ddlApprovingUser control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlApprovingUser;
-        
+
         /// <summary>
         /// dtApprovingDate control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtApprovingDate;
-        
+
         /// <summary>
         /// dtProposedCloserDate control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox dtProposedCloserDate;
-        
+
         /// <summary>
         /// IssueStatus control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl IssueStatus;
-        
+
         /// <summary>
         /// ddlStatus control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
-        
+
         /// <summary>
         /// txtRemarks control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRemarks;
-        
+
         /// <summary>
         /// FileUploadDoc control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace ProjectManagementTool._modal_pages {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload FileUploadDoc;
-        
+
         /// <summary>
         /// btnSubmit control.
         /// </summary>

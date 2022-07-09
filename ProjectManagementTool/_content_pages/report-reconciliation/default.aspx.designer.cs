@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectManagementTool._content_pages.report_reconciliation
-{
-
-
-    public partial class _default
-    {
-
+namespace ProjectManagementTool._content_pages.report_reconciliation {
+    
+    
+    public partial class _default {
+        
         /// <summary>
         /// DDlProject control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDlProject;
-
+        
         /// <summary>
         /// DDLWorkPackage control.
         /// </summary>
@@ -31,7 +29,16 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDLWorkPackage;
-
+        
+        /// <summary>
+        /// DDLFlow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLFlow;
+        
         /// <summary>
         /// btnSubmit control.
         /// </summary>
@@ -40,7 +47,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSubmit;
-
+        
         /// <summary>
         /// divTabular control.
         /// </summary>
@@ -49,7 +56,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTabular;
-
+        
         /// <summary>
         /// btnExcel control.
         /// </summary>
@@ -58,7 +65,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnExcel;
-
+        
         /// <summary>
         /// btnPDF control.
         /// </summary>
@@ -67,7 +74,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPDF;
-
+        
         /// <summary>
         /// tnPrint control.
         /// </summary>
@@ -76,7 +83,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button tnPrint;
-
+        
         /// <summary>
         /// divsummary control.
         /// </summary>
@@ -85,7 +92,7 @@ namespace ProjectManagementTool._content_pages.report_reconciliation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divsummary;
-
+        
         /// <summary>
         /// grdDataList control.
         /// </summary>

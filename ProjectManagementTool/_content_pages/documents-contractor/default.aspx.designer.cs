@@ -40,6 +40,51 @@ namespace ProjectManagementTool._content_pages.documents_contractor {
         protected global::System.Web.UI.WebControls.Button btnback;
         
         /// <summary>
+        /// ReportFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ReportFilter;
+        
+        /// <summary>
+        /// dtInDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox dtInDate;
+        
+        /// <summary>
+        /// dtDocDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox dtDocDate;
+        
+        /// <summary>
+        /// DDLFlow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLFlow;
+        
+        /// <summary>
+        /// btnsubmitfilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnsubmitfilter;
+        
+        /// <summary>
         /// divMain control.
         /// </summary>
         /// <remarks>

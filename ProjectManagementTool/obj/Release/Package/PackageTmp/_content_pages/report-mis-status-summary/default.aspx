@@ -27,9 +27,10 @@
                                     <h6 class="text-muted">
                                     </h6>
                                     <div>
+                                        <asp:Button ID="btnRefresh" runat="server" Text="Refresh" CssClass="btn btn-primary" Visible="true" OnClick="btnRefresh_Click"></asp:Button>&nbsp;
                                         <asp:Button ID="btnExcel" runat="server" Text="Export to Excel" CssClass="btn btn-primary" Visible="true" OnClick="btnExcel_Click" />&nbsp;
-                                        <asp:Button ID="btnPDF" runat="server" Text="Export to PDF" CssClass="btn btn-primary" Visible="true" OnClick="btnPDF_Click" />&nbsp;
-                                        <asp:Button ID="tnPrint" runat="server" Text="Print" CssClass="btn btn-primary" Visible="true" OnClick="tnPrint_Click" />
+                                        <asp:Button ID="btnPDF" runat="server" Text="Export to PDF" CssClass="btn btn-primary" Visible="false" OnClick="btnPDF_Click" />&nbsp;
+                                        <asp:Button ID="tnPrint" runat="server" Text="Print" CssClass="btn btn-primary" Visible="false" OnClick="tnPrint_Click" />
                                     </div>
                                 </div>
                             </div>
@@ -69,17 +70,17 @@
                                                         <a class="showModalDocumentView" href="/_content_pages/report-mis-details?ProjectName=<%#Eval("Project")%>&FlowName=<%#Eval("DocumentType")%>&type=PMC Review"><%#Eval("PMC Review")%>   </a>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField  HeaderText="Project Co-ordinator" >
+                                                <asp:TemplateField  HeaderText="Project CO" >
                                                     <ItemTemplate>
                                                         <a class="showModalDocumentView" href="/_content_pages/report-mis-details?ProjectName=<%#Eval("Project")%>&FlowName=<%#Eval("DocumentType")%>&type=Project Co-ordinator"><%#Eval("Project Co-ordinator")%>   </a>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField  HeaderText="Meeting with EE" >
+                                                <asp:TemplateField  HeaderText="Project CO Meeting with EE" >
                                                     <ItemTemplate>
                                                         <a class="showModalDocumentView" href="/_content_pages/report-mis-details?ProjectName=<%#Eval("Project")%>&FlowName=<%#Eval("DocumentType")%>&type=Meeting with EE"><%#Eval("Meeting with EE")%>   </a>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField  HeaderText="Review" >
+                                                <asp:TemplateField  HeaderText="DTL Review" >
                                                     <ItemTemplate>
                                                         <a class="showModalDocumentView" href="/_content_pages/report-mis-details?ProjectName=<%#Eval("Project")%>&FlowName=<%#Eval("DocumentType")%>&type=Review"><%#Eval("Review")%>   </a>
                                                     </ItemTemplate>
@@ -94,7 +95,11 @@
                                                         <a class="showModalDocumentView" href="/_content_pages/report-mis-details?ProjectName=<%#Eval("Project")%>&FlowName=<%#Eval("DocumentType")%>&type=DTL Internal Meeting"><%#Eval("DTL Internal Meeting")%>   </a>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-
+                                                <asp:TemplateField  HeaderText="DTL Back To Contractor" >
+                                                    <ItemTemplate>
+                                                        <a class="showModalDocumentView" href="/_content_pages/report-mis-details?ProjectName=<%#Eval("Project")%>&FlowName=<%#Eval("DocumentType")%>&type=DTL Back To Contractor"><%#Eval("DTL Back To Contractor")%>   </a>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
 
                                                 <asp:TemplateField  HeaderText="AEE Approval" >
                                                     <ItemTemplate>

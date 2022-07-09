@@ -96,10 +96,11 @@ namespace ProjectManagementTool._modal_pages
                         obj_grdview.DataSource = ds.Tables[0];
                         obj_grdview.DataBind();
 
-
-
                         foreach (GridViewRow grd_view_row in obj_grdview.Rows)
                         {
+
+                            grd_view_row.Cells[0].Visible = false;
+                            grd_view_row.Cells[2].Visible = false;
                             LinkButton new_link1 = new LinkButton();
 
                             new_link1.ID = "upload_" + grd_view_row.Cells[1].Text;
@@ -122,6 +123,8 @@ namespace ProjectManagementTool._modal_pages
 
 
                         }
+
+                        obj_grdview.HeaderRow.Visible = false;
 
 
                         grd_row.Cells[5].Controls.Add(obj_grdview);

@@ -26,6 +26,7 @@ namespace ProjectManagementTool._content_pages.documents_contractor
             {
                 if (!IsPostBack)
                 {
+                   
                     if (Request.QueryString["UserUID"] != null)
                     {
                         DataSet ds = getdt.GetNextUserDocuments(new Guid(Request.QueryString["PrjUID"]), new Guid(Request.QueryString["WkpgUID"]));
@@ -69,6 +70,7 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                     }
                     else if (Request.QueryString["PrjUID"] != null)
                     {
+                        List<string> FlowUID = new List<string>();
                         if (Request.QueryString["type"].ToString() == "Contractor")
                         {
                             DataSet ds = getdt.GetDashboardContractotDocsSubmitted_Details(new Guid(Request.QueryString["PrjUID"]));
@@ -77,7 +79,16 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                                 GrdDocuments.DataSource = getdt.GetDashboardContractotDocsSubmitted_Details(new Guid(Request.QueryString["PrjUID"])).Tables[0].AsEnumerable()
                  .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date"))
                  .CopyToDataTable();
+
                                 GrdDocuments.DataBind();
+
+                                //
+                                foreach(DataRow dr in ds.Tables[0].Rows)
+                                {
+                                    FlowUID.Add(dr["FlowUID"].ToString());
+                                }
+                                BindFlow(FlowUID);
+                                //
                             }
                             else
                             {
@@ -99,8 +110,9 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                             lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
                             if (GrdDocuments.Rows.Count > 15)
                             {
-                                ScriptManager.RegisterStartupScript(Page, this.GetType(), "Key", "<script>MakeStaticHeader('" + GrdDocuments.ClientID + "', 700, 1300 , 45 ,true); </script>", false);
+                               // ScriptManager.RegisterStartupScript(Page, this.GetType(), "Key", "<script>MakeStaticHeader('" + GrdDocuments.ClientID + "', 700, 1300 , 45 ,true); </script>", false);
                             }
+                            ReportFilter.Visible = true;
                         }
                         else if (Request.QueryString["type"].ToString() == "Recon")
                         {
@@ -402,8 +414,17 @@ namespace ProjectManagementTool._content_pages.documents_contractor
                 DateTime? acceptedRejDate = getdt.GetDocumentAcceptedRecejtedDate(new Guid(e.Row.Cells[0 + 2].Text));
                 if (acceptedRejDate != null)
                 {
-                    e.Row.Cells[19].Text = Convert.ToDateTime(acceptedRejDate).ToString("dd/MM/yyyy");
+                    if (acceptedRejDate.ToString().Contains("1/1/0001"))
+                    {
+                        e.Row.Cells[19].Text = "N/A";
+                    }
+                    else
+                    {
+                        e.Row.Cells[19].Text = Convert.ToDateTime(acceptedRejDate).ToString("dd/MM/yyyy");
+                    }
                 }
+                
+
 
                 if (e.Row.Cells[4 + 2].Text == "Accepted")
                 {
@@ -856,6 +877,117 @@ namespace ProjectManagementTool._content_pages.documents_contractor
             {
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('Error:Please Contact System Admin !');</script>");
 
+            }
+        }
+
+        void BindFlow(List<string> Flow)
+        {
+            //string str[] = Flow.Distinct().ToList();
+            //DataTable ds = getdt.GetDocumentFlow().AsEnumerable().Where(r => r.Field<string>("Flow_Name").Equals("Works A") || r.Field<string>("Flow_Name").Equals("Works B") || r.Field<string>("Flow_Name").Equals("Vendor Approval")).CopyToDataTable();
+            DataTable ds = getdt.GetDocumentFlow();
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Flow_Name", typeof(string));
+            dt.Columns.Add("FlowMasterUID", typeof(string));
+
+            if (ds != null && ds.Rows.Count > 0)
+            {
+                DataRow drs ;
+                foreach (DataRow dr in ds.Rows)
+                {
+                    string result = Flow.FirstOrDefault(x => x == dr["FlowMasterUID"].ToString());
+                    if (result != null)
+                    {
+                        drs = dt.NewRow();
+                        drs["Flow_Name"] = dr["Flow_Name"]; // or dr[0]="Mohammad";
+                        drs["FlowMasterUID"] = dr["FlowMasterUID"]; // or dr[1]=24;
+                        dt.Rows.Add(drs);
+                    }
+                }
+                DDLFlow.DataTextField = "Flow_Name";
+                DDLFlow.DataValueField = "FlowMasterUID";
+                DDLFlow.DataSource = dt;
+                DDLFlow.DataBind();
+                DDLFlow.Items.Insert(0, "All");
+                //ViewState["Flow"] = ds;
+            }
+        }
+
+        protected void btnsubmitfilter_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DateTime FromDate = DateTime.Now;
+                DateTime ToDAte = DateTime.Now;
+               
+                if (!string.IsNullOrEmpty(dtInDate.Text))
+                {
+                    FromDate = Convert.ToDateTime(getdt.ConvertDateFormat(dtInDate.Text));
+                }
+                if (!string.IsNullOrEmpty(dtDocDate.Text))
+                {
+                    ToDAte = Convert.ToDateTime(getdt.ConvertDateFormat(dtDocDate.Text));
+
+                }
+                //
+                DataSet ds = getdt.GetDashboardContractotDocsSubmitted_Details(new Guid(Request.QueryString["PrjUID"]));
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    if(dtInDate.Text !="" && dtDocDate.Text !="" && DDLFlow.SelectedValue =="All")
+                    {
+                        GrdDocuments.DataSource = ds.Tables[0].AsEnumerable()
+         .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date")).Where(r => r.Field<DateTime>("IncomingRec_Date") >= FromDate && r.Field<DateTime>("IncomingRec_Date") <= ToDAte).CopyToDataTable();
+                    }
+                    else if (dtInDate.Text != "" && dtDocDate.Text != "" && DDLFlow.SelectedValue != "All")
+                    {
+                        GrdDocuments.DataSource = ds.Tables[0].AsEnumerable()
+         .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date")).Where(r => r.Field<DateTime>("IncomingRec_Date") >= FromDate && r.Field<DateTime>("IncomingRec_Date") <= ToDAte).Where(r => r.Field<Guid>("FlowUID").ToString().Equals(DDLFlow.SelectedValue)).CopyToDataTable();
+                    }
+                    else if (dtInDate.Text != "" && dtDocDate.Text == "" && DDLFlow.SelectedValue == "All")
+                    {
+                        GrdDocuments.DataSource = ds.Tables[0].AsEnumerable()
+         .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date")).Where(r => r.Field<DateTime>("IncomingRec_Date") >= FromDate).CopyToDataTable();
+                    }
+                    else if (dtInDate.Text != "" && dtDocDate.Text == "" && DDLFlow.SelectedValue != "All")
+                    {
+                        GrdDocuments.DataSource = ds.Tables[0].AsEnumerable()
+         .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date")).Where(r => r.Field<DateTime>("IncomingRec_Date") >= FromDate).Where(r => r.Field<Guid>("FlowUID").ToString().Equals(DDLFlow.SelectedValue)).CopyToDataTable();
+                    }
+                    else if (dtInDate.Text == "" && dtDocDate.Text != "" && DDLFlow.SelectedValue == "All")
+                    {
+                        GrdDocuments.DataSource = ds.Tables[0].AsEnumerable()
+         .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date")).Where(r => r.Field<DateTime>("IncomingRec_Date") <= ToDAte).CopyToDataTable();
+                    }
+                    else if (dtInDate.Text == "" && dtDocDate.Text != "" && DDLFlow.SelectedValue != "All")
+                    {
+                        GrdDocuments.DataSource = ds.Tables[0].AsEnumerable()
+         .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date")).Where(r => r.Field<DateTime>("IncomingRec_Date") <= ToDAte).Where(r => r.Field<Guid>("FlowUID").ToString().Equals(DDLFlow.SelectedValue)).CopyToDataTable();
+                    }
+                    else if (DDLFlow.SelectedValue != "All")
+                    {
+                        GrdDocuments.DataSource = ds.Tables[0].AsEnumerable()
+         .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date"))
+                        .Where(r => r.Field<Guid>("FlowUID").ToString().Equals(DDLFlow.SelectedValue)).CopyToDataTable();
+                    }
+                    else
+                    {
+                        GrdDocuments.DataSource = ds.Tables[0].AsEnumerable()
+         .OrderByDescending(r => r.Field<DateTime>("IncomingRec_Date")).CopyToDataTable();
+                    }
+
+                    GrdDocuments.DataBind();
+                }
+                else
+                {
+                    GrdDocuments.DataSource = ds;
+                    GrdDocuments.DataBind();
+                    lblTotalcount.Text = "Total Count : 0" ;
+                }
+                lblTotalcount.Text = "Total Count : " + GrdDocuments.Rows.Count.ToString();
+            }
+            catch(Exception ex)
+            {
+                GrdDocuments.DataSource = null;
+                GrdDocuments.DataBind();
             }
         }
     }

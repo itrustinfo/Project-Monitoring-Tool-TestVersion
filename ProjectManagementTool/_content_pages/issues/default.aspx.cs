@@ -35,10 +35,14 @@ namespace ProjectManagementTool._content_pages.issues
                     BindProject();
                     SelectedProject();
                     DDlProject_SelectedIndexChanged(sender, e);
-
+                    Session["ProjectUID"] = DDlProject.SelectedValue;
+                    Session["ProjectName"] = DDlProject.SelectedItem.Text;
+                }
+                else
+                {
+                    BindIssues("WorkPackage", TreeView1.SelectedNode.Value);
                 }
             }
-            
         }
 
 
@@ -67,7 +71,7 @@ namespace ProjectManagementTool._content_pages.issues
                         GrdIssues.Columns[10].Visible = true;
                         ViewState["isEdit"] = "true";
                     }
-                    if (dr["Code"].ToString() == "IAU")
+                    if (dr["Code"].ToString() == "IAU" || dr["Code"].ToString() == "ID")
                     {
                         GrdIssues.Columns[11].Visible = true;
                         ViewState["isAssignUser"] = "true";
@@ -251,11 +255,13 @@ namespace ProjectManagementTool._content_pages.issues
                     //BindActivities();
                     TreeView1_SelectedNodeChanged(sender, e);
                     GrdIssues.Visible = true;
+                    Session["WorkPackageUID"] = ds.Tables[0].Rows[0].ItemArray[0].ToString();
                 }
                 else
                 {
                     GrdIssues.Visible = false;
                 }
+
                 Session["Project_Workpackage"] = DDlProject.SelectedValue;
             }
             else
@@ -287,17 +293,19 @@ namespace ProjectManagementTool._content_pages.issues
             if (TreeView1.SelectedNode.Target == "WorkPackage")
             {
                 ActivityHeading.Text = TreeView1.SelectedNode.Text;
-                AddIssues.HRef = "/_modal_pages/add-issues.aspx?IssueFor=WorkPackage&ActivityID=" + TreeView1.SelectedNode.Value + "&AName=" + TreeView1.SelectedNode.Text + "&PrjID=" + DDlProject.SelectedValue;
+                AddIssues.HRef = "/_modal_pages/add-issues.aspx?IssueFor=WorkPackage&ActivityID=" + TreeView1.SelectedNode.Value + "&AName=" + TreeView1.SelectedNode.Text.Replace('&',' ') + "&PrjID=" + DDlProject.SelectedValue;
                 BindIssues("WorkPackage", TreeView1.SelectedNode.Value);
                 IssueCountLoad("WorkPackage", TreeView1.SelectedNode.Value);
             }
             else
             {
                 ActivityHeading.Text = TreeView1.SelectedNode.Text;
-                AddIssues.HRef = "/_modal_pages/add-issues.aspx?IssueFor=Taks&ActivityID=" + TreeView1.SelectedNode.Value + "&AName=" + TreeView1.SelectedNode.Text + "&PrjID=" + DDlProject.SelectedValue;
+                AddIssues.HRef = "/_modal_pages/add-issues.aspx?IssueFor=Taks&ActivityID=" + TreeView1.SelectedNode.Value + "&AName=" + TreeView1.SelectedNode.Text.Replace('&',' ') + "&PrjID=" + DDlProject.SelectedValue;
                 BindIssues("Task", TreeView1.SelectedNode.Value);
                 IssueCountLoad("Task", TreeView1.SelectedNode.Value);
             }
+
+            Session["ActivityName"] = ActivityHeading.Text;
         }
 
         protected void BindIssues(string IssuesFor, string ActivityUID)
@@ -364,7 +372,7 @@ namespace ProjectManagementTool._content_pages.issues
                 }
             }
         }
-
+           
         protected void GrdIssues_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.Header)
@@ -382,6 +390,7 @@ namespace ProjectManagementTool._content_pages.issues
                     e.Row.Cells[12].Visible = false;
                 }
             }
+
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 ds.Clear();
@@ -396,11 +405,80 @@ namespace ProjectManagementTool._content_pages.issues
                 //{
                 //    e.Row.Cells[2].Text = ds.Tables[0].Rows[0]["Name"].ToString();
                 //}
-                if (e.Row.Cells[9].Text == "&nbsp;")
+
+                if (e.Row.Cells[8].Controls.Count == 0)
                 {
-                    LinkButton lnk = (LinkButton)e.Row.FindControl("lnkdown");
-                    lnk.Enabled = false;
-                    lnk.Text = "No File";
+                    GridViewRow grd_row = e.Row;
+
+                    GridView obj_grdview = new GridView();
+                    obj_grdview.Visible = true;
+
+                    DataSet ds1 = getdt.GetUploadedIssueDocuments(e.Row.Cells[13].Text);
+
+                    ds1.Tables[0].Columns.Add("action-1");
+                    ds1.Tables[0].Columns.Add("action-2");
+
+
+                    int count = ds1.Tables[0].Rows.Count;
+
+                    if (count == 0)
+                    {
+                        LinkButton new_link = new LinkButton();
+
+                        new_link.ID = "No File";
+                        new_link.Text = "No File";
+                        new_link.Enabled = false;
+                        grd_row.Cells[8].Controls.Add(new_link);
+                    }
+                    else
+                    {
+                        obj_grdview.DataSource = ds1.Tables[0];
+                        obj_grdview.DataBind();
+
+                        foreach (GridViewRow grd_view_row in obj_grdview.Rows)
+                        {
+                            grd_view_row.Cells[0].Visible = false;
+                            grd_view_row.Cells[2].Visible = false;
+
+                            LinkButton linkUpload = new LinkButton();
+
+                            linkUpload.ID = "upload_" + grd_view_row.Cells[1].Text;
+                            linkUpload.CommandName = "download";
+                            linkUpload.Text = "Download";
+                            linkUpload.CommandArgument = grd_view_row.Cells[2].Text + "/" + grd_view_row.Cells[1].Text;
+
+                            linkUpload.Click += linkUpload_Click;
+
+
+                            grd_view_row.Cells[3].Controls.Add(linkUpload);
+
+                            LinkButton linkDelete = new LinkButton();
+
+                            linkDelete.ID = "delete_" + grd_view_row.Cells[1].Text;
+                            linkDelete.CommandName = grd_view_row.Cells[0].Text;
+                            linkDelete.Text = "Delete";
+                            linkDelete.CommandArgument = grd_view_row.Cells[2].Text + "/" + grd_view_row.Cells[1].Text;
+
+                            linkDelete.Click += linkDelete_Click;
+                           
+                            grd_view_row.Cells[4].Controls.Add(linkDelete);
+
+
+                        }
+
+                        obj_grdview.HeaderRow.Cells[3].Text = "";
+                        obj_grdview.HeaderRow.Cells[4].Text = "";
+                        obj_grdview.HeaderRow.Cells[2].Text = "File Name";
+
+                        obj_grdview.HeaderRow.Cells[0].Visible = false;
+                        obj_grdview.HeaderRow.Cells[2].Visible  = false;
+                        obj_grdview.HeaderRow.Cells[1].Visible = false;
+                        obj_grdview.HeaderRow.Visible = false;
+
+                        grd_row.Cells[8].Controls.Add(obj_grdview);
+                    }
+
+                   
                 }
 
                 if (ViewState["isEdit"].ToString() == "false")
@@ -431,6 +509,60 @@ namespace ProjectManagementTool._content_pages.issues
                         }
                     }
                 }
+            }
+        }
+
+        private void linkDelete_Click(object sender, EventArgs e)
+        {
+            LinkButton new_link = (LinkButton)sender;
+
+            int file_count = getdt.DeleteUploadedIssueDoc(Convert.ToInt32(new_link.CommandName));
+
+            if (file_count != 0)
+            {
+                string fileName = Server.MapPath(new_link.CommandArgument);
+
+                if (fileName != null || fileName != string.Empty)
+                {
+                    if ((System.IO.File.Exists(fileName)))
+                    {
+                        System.IO.File.Delete(fileName);
+                    }
+                }
+            }
+
+            BindIssues("WorkPackage", TreeView1.SelectedNode.Value);
+        }
+
+        private void linkUpload_Click(object sender, EventArgs e)
+        {
+            LinkButton new_link = (LinkButton)sender;
+
+            string path = Server.MapPath(new_link.CommandArgument);
+
+            string getExtension = System.IO.Path.GetExtension(path);
+            string outPath = path.Replace(getExtension, "") + "_download" + getExtension;
+            getdt.DecryptFile(path, outPath);
+            System.IO.FileInfo file = new System.IO.FileInfo(outPath);
+
+            if (file.Exists)
+            {
+                Response.Clear();
+
+                Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
+
+                Response.AddHeader("Content-Length", file.Length.ToString());
+
+                Response.ContentType = "application/octet-stream";
+
+                Response.TransmitFile(outPath);
+
+                Response.End();
+
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(Page.GetType(), "CLOSE", "<script language='javascript'>alert('File does not exist.');</script>");
             }
         }
 
@@ -497,6 +629,7 @@ namespace ProjectManagementTool._content_pages.issues
 
             if (e.CommandName == "delete")
             {
+
                 int cnt = getdt.Issue_Delete(new Guid(IssueUID), new Guid(Session["UserUID"].ToString()));
                 if (cnt > 0)
                 {
