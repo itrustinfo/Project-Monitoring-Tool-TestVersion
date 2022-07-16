@@ -19,6 +19,7 @@
                 jQuery.noConflict();
                 var url = $(this).attr("href");
                 $("#ModAddIssueStatus iframe").attr("src", url);
+                $('#ModAddIssueStatus').modal({ backdrop: 'static', keyboard: false })
                 $("#ModAddIssueStatus").modal("show");
             });
 
@@ -27,6 +28,7 @@
                 jQuery.noConflict();
                 var url = $(this).attr("href");
                 $("#ModEditIssueStatus iframe").attr("src", url);
+                $('#ModEditIssueStatus').modal({ backdrop: 'static', keyboard: false })
                 $("#ModEditIssueStatus").modal("show");
             });
         });

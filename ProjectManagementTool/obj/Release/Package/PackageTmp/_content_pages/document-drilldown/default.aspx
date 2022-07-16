@@ -228,7 +228,7 @@
                                              <asp:BoundField DataField="ActualDocumentUID" HeaderText="Approved Date">
                                             <HeaderStyle HorizontalAlign="Left" />
                                             </asp:BoundField>
-                                            <asp:TemplateField>
+                                            <asp:TemplateField ItemStyle-CssClass="hideItem" HeaderStyle-CssClass="hideItem">
                                             <ItemTemplate>              
                                                       <asp:LinkButton ID="LnkDownloadnew" runat="server" CausesValidation="false" CommandArgument='<%#Eval("ActualDocumentUID")%>' CommandName="download">Download</asp:LinkButton>               
                                             </ItemTemplate>

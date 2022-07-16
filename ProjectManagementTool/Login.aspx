@@ -36,9 +36,9 @@
                 <hr />
               <form id="form2" runat="server">
                 <div class="form-group">
-                  <label class="text-black">Username</label>
+                  <label style="font-family:Segoe UI, Tahoma, Geneva, Verdana, 'sans-serif';font-size:larger">Username</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" id="txtusername" autocomplete="off" runat="server" required placeholder="Username" />
+                    <input type="text" class="form-control" id="txtusername" autocomplete="off" runat="server" required placeholder="Username" style="font-family:Segoe UI, Tahoma, Geneva, Verdana, 'sans-serif';font-size:larger"/>
                     <div class="input-group-append">
                       <span class="input-group-text">
                         <i class="mdi mdi-check-circle-outline"></i>
@@ -47,9 +47,9 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="text-black" >Password</label>
+                  <label style="font-family:Segoe UI, Tahoma, Geneva, Verdana, 'sans-serif';font-size:larger" >Password</label>
                   <div class="input-group">
-                    <input type="password"  class="form-control" id="txtpassword" runat="server" required placeholder="password" />
+                    <input type="password"  class="form-control" id="txtpassword" runat="server" required placeholder="password" style="font-family:Segoe UI, Tahoma, Geneva, Verdana, 'sans-serif';font-size:larger"/>
                     <div class="input-group-append">
                       <span class="input-group-text">
                         <i class="mdi mdi-check-circle-outline"></i>

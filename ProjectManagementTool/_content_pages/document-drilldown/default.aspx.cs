@@ -120,6 +120,17 @@ namespace ProjectManagementTool._content_pages.document_drilldown
                 GrdClientApprovedDocuments.DataSource = ds;
                 GrdClientApprovedDocuments.DataBind();
             }
+            else if (ColLabel == "FlowAll")
+            {
+                LblDocumentHeading.Text = MyData;
+                GrdActualSubmittedDocuments.Visible = false;
+                GrdDocuments.Visible = false;
+                GrdReviewedDocuments.Visible = false;
+                GrdClientApprovedDocuments.Visible = true;
+                DataSet ds = getdt.ClientAllDocuments(new Guid(Request.QueryString["WorkPackageUID"]), MyData);
+                GrdClientApprovedDocuments.DataSource = ds;
+                GrdClientApprovedDocuments.DataBind();
+            }
             else
             {
                 if (ColLabel == "Ontime")
@@ -131,6 +142,8 @@ namespace ProjectManagementTool._content_pages.document_drilldown
                     GrdApprovedDocuments.Visible = false;
                     GrdClientApprovedDocuments.Visible = false;
                     DataSet ds = getdt.Reviewed_ActualDocuments_SelectBy_WorkPackageUID_NotDelayed(new Guid(Request.QueryString["WorkPackageUID"]), MyData);
+                    
+                    
                     GrdReviewedDocuments.DataSource = ds;
                     GrdReviewedDocuments.DataBind();
                 }

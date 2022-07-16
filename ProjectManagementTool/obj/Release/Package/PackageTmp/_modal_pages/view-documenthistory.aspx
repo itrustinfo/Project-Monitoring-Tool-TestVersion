@@ -21,6 +21,7 @@
                 jQuery.noConflict();
                 var url = $(this).attr("href");
                 $("#ModAddDocumentStatus iframe").attr("src", url);
+                $('#ModAddDocumentStatus').modal({ backdrop: 'static', keyboard: false })
                  $("#ModAddDocumentStatus").modal("show");
                
             });
@@ -30,7 +31,7 @@
                 jQuery.noConflict();
                 var url = $(this).attr("href");
                 $("#ModResubmitdocument iframe").attr("src", url);
-               
+               $('#ModResubmitdocument').modal({ backdrop: 'static', keyboard: false })
                 $("#ModResubmitdocument").modal("show");
             });
         });

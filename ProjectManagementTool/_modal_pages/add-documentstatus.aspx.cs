@@ -56,9 +56,9 @@ namespace ProjectManagementTool._modal_pages
                         if (DDlStatus.SelectedItem.ToString().Contains("AE Approval") || DDlStatus.SelectedItem.ToString().Contains("AEE Approval") || DDlStatus.SelectedItem.ToString().Contains("EE Approval") || DDlStatus.SelectedItem.ToString().Contains("ACE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE Approval") || DDlStatus.SelectedItem.ToString().Contains("CE GFC Approval"))
                         {
                             divRef.Visible = false;
-                            divCD.Visible = false;
-                            divCUpload.Visible = false;
-                            divReviewFile.Visible = false;
+                            divCD.Visible = true;
+                            divCUpload.Visible = true;
+                            divReviewFile.Visible = true;
                             divIncmDate.Visible = false;
                             divUpdateStatus.Visible = false;
                         }
@@ -135,7 +135,29 @@ namespace ProjectManagementTool._modal_pages
                 DDlStatus.DataValueField = "Update_Status";
                 DDlStatus.DataSource = ds;
                 DDlStatus.DataBind();
-                
+                //added on 13/07/2022
+                if(ds1.Tables[0].Rows[0]["ActivityType"].ToString().Contains("Code A") || ds1.Tables[0].Rows[0]["ActivityType"].ToString().Contains("Code B"))
+                {
+                   foreach(DataRow dr in ds.Tables[0].Rows)
+                    {
+                        if(dr["Update_Status"].ToString().Contains("Code A") || dr["Update_Status"].ToString().Contains("Code B"))
+                        {
+                            DDlStatus.SelectedValue = dr["Update_Status"].ToString();
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        if (!dr["Update_Status"].ToString().ToLower().Contains("back"))
+                        {
+                            DDlStatus.SelectedValue = dr["Update_Status"].ToString();
+                            return;
+                        }
+                    }
+                }
+                //
                 if (DDlStatus.Items.Count > 0)
                 {
                     Page.ClientScript.RegisterStartupScript(this.GetType(), "Tooltip", "getValueFromCodeBehind('" + DDlStatus.SelectedItem.Text + "')", true);

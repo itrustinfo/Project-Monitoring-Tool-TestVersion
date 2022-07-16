@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CashFlowExcelUpdate.aspx" />
+    <Content Include="ContractorMsg.html" />
     <Content Include="download-document.aspx" />
     <Content Include="Global.asax" />
     <Content Include="PDFPrint.aspx" />

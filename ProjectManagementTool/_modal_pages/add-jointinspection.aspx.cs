@@ -66,6 +66,7 @@ namespace ProjectManagementTool._modal_pages
         }
         private void BindJointInspection(string inspectionUid)
         {
+            double Qty = 0;
             DataTable dt = getdata.getJointInspection_by_inspectionUid(inspectionUid);
             if (dt.Rows.Count > 0)
             {
@@ -80,6 +81,7 @@ namespace ProjectManagementTool._modal_pages
                 SupplierNumber.Visible = false;
                 SupplierDate.Visible = false;
                 PipeNumber.Visible = false;
+                
                 //DDLBOQDesc.SelectedValue = dt.Rows[0]["BOQUid"].ToString();
                 //lblActivityName.Text = getdata.GetBOQDesc_by_BOQDetailsUID(new Guid(dt.Rows[0]["BOQUid"].ToString()));
                 //lblActivityName.Visible = true;
@@ -119,7 +121,7 @@ namespace ProjectManagementTool._modal_pages
                     PipeNumber.Visible = true;
                     txtpipenumber.Text = dt.Rows[0]["PipeNumber"].ToString();
                 }
-                else if (DDLInspectionType.SelectedValue == "Supply")
+                else if (dt.Rows[0]["Inspection_Type"].ToString() == "Supply")
                 {
                     DDLInspectionType.SelectedValue = "Supply";
                     ChainageNum.Visible = false;
@@ -130,29 +132,40 @@ namespace ProjectManagementTool._modal_pages
                     SupplierDate.Visible = true;
                     PipeNumber.Visible = false;
                 }
-                else if (DDLInspectionType.SelectedValue == "EarthWork / Excavation")
+                else if (dt.Rows[0]["Inspection_Type"].ToString() == "EarthWork / Excavation")
                 {
                     DDLInspectionType.SelectedValue = "EarthWork / Excavation";
                     DivNumber.Visible = true;
                     DivLenght.Visible = true;
                     DivWidth.Visible = true;
                     DivDepth.Visible = true;
+                    txtnumber.Text= dt.Rows[0]["Number"].ToString();
+                    txtMLenght.Text = dt.Rows[0]["Lenght"].ToString();
+                    txtWidth.Text = dt.Rows[0]["Width"].ToString();
+                    txtDepth.Text = dt.Rows[0]["Depth"].ToString();
+                    DivQuantity.Visible = false;
                 }
-                else if (DDLInspectionType.SelectedValue == "Barricading")
+                else if (dt.Rows[0]["Inspection_Type"].ToString() == "Barricading")
                 {
                     DDLInspectionType.SelectedValue = "Barricading";
                     DivNumber.Visible = true;
                     DivLenght.Visible = true;
                     DivWidth.Visible = false;
                     DivDepth.Visible = false;
+                    txtnumber.Text = dt.Rows[0]["Number"].ToString();
+                    txtMLenght.Text = dt.Rows[0]["Lenght"].ToString();
+                    DivQuantity.Visible = false;
                 }
-                else if (DDLInspectionType.SelectedValue == "DeWatering the Sewage")
+                else if (dt.Rows[0]["Inspection_Type"].ToString() == "DeWatering the Sewage")
                 {
                     DDLInspectionType.SelectedValue = "DeWatering the Sewage";
                     DivNumber.Visible = true;
                     DivLenght.Visible = true;
                     DivWidth.Visible = false;
                     DivDepth.Visible = false;
+                    txtnumber.Text = dt.Rows[0]["Number"].ToString();
+                    txtMLenght.Text = dt.Rows[0]["Lenght"].ToString();
+                    DivQuantity.Visible = false;
                 }
                 else
                 {
@@ -161,6 +174,10 @@ namespace ProjectManagementTool._modal_pages
                     DivLenght.Visible = true;
                     DivWidth.Visible = false;
                     DivDepth.Visible = true;
+                    txtnumber.Text = dt.Rows[0]["Number"].ToString();
+                    txtMLenght.Text = dt.Rows[0]["Lenght"].ToString();
+                    txtDepth.Text= dt.Rows[0]["Depth"].ToString();
+                    DivQuantity.Visible = false;
                 }
                 if (dt.Rows[0]["invoicedate"].ToString() != null && dt.Rows[0]["invoicedate"].ToString() != "")
                 {
@@ -200,6 +217,7 @@ namespace ProjectManagementTool._modal_pages
                 float Qty_in_RMT = 0;
                 double Qty_for_Unit = 0;
                 double Deductions = 0;
+                double Qty = 0;
                 if (DDLInspectionType.SelectedValue == "Laying & Jointing")
                 {
                     StartingPoint = float.Parse(txtstartingpoint.Text);
@@ -218,10 +236,29 @@ namespace ProjectManagementTool._modal_pages
                     Deductions = float.Parse(txtquantity.Text) * 0.3;
                     
                 }
-                
+                else if (DDLInspectionType.SelectedValue == "EarthWork / Excavation")
+                {
+                    Qty = (string.IsNullOrEmpty(txtnumber.Text) ? 1 : Convert.ToDouble(txtnumber.Text)) * (string.IsNullOrEmpty(txtMLenght.Text) ? 1 : Convert.ToDouble(txtMLenght.Text)) * (string.IsNullOrEmpty(txtWidth.Text) ? 1 : Convert.ToDouble(txtWidth.Text)) * (string.IsNullOrEmpty(txtDepth.Text) ? 1 : Convert.ToDouble(txtDepth.Text));
+                    txtquantity.Text = Math.Round(Qty, 2).ToString();
+                }
+                else if (DDLInspectionType.SelectedValue == "Barricading")
+                {
+                    Qty = (string.IsNullOrEmpty(txtnumber.Text) ? 1 : Convert.ToDouble(txtnumber.Text)) * (string.IsNullOrEmpty(txtMLenght.Text) ? 1 : Convert.ToDouble(txtMLenght.Text));
+                    txtquantity.Text = Math.Round(Qty, 2).ToString();
+                }
+                else if (DDLInspectionType.SelectedValue == "DeWatering the Sewage")
+                {
+                    Qty = (string.IsNullOrEmpty(txtnumber.Text) ? 1 : Convert.ToDouble(txtnumber.Text)) * (string.IsNullOrEmpty(txtMLenght.Text) ? 1 : Convert.ToDouble(txtMLenght.Text));
+                    txtquantity.Text = Math.Round(Qty, 2).ToString();
+                }
+                else if (DDLInspectionType.SelectedValue == "Shoring and Strutting")
+                {
+                    Qty = (string.IsNullOrEmpty(txtnumber.Text) ? 1 : Convert.ToDouble(txtnumber.Text)) * (string.IsNullOrEmpty(txtMLenght.Text) ? 1 : Convert.ToDouble(txtMLenght.Text)) * (string.IsNullOrEmpty(txtDepth.Text) ? 1 : Convert.ToDouble(txtDepth.Text));
+                    txtquantity.Text = Math.Round(Qty, 2).ToString();
+                }
                 if (Request.QueryString["type"] == "edit")
                 {
-                    int cnt = getdata.InsertjointInspection(inspectionUid, new Guid(Request.QueryString["BOQUID"]), txtdiaofpipe.Text, txtunit.Text, txtinvoicenumber.Text, CDate1.ToString(), txtquantity.Text,DDLInspectionType.SelectedValue,txtchainagenumber.Text,txtchainagedesc.Text, StartingPoint,Length, Qty_in_RMT, Qty_for_Unit, Deductions, txtRemarks.Text, new Guid(Request.QueryString["ProjectUID"]),txtpipenumber.Text,txtnumber.Text, txtMLenght.Text,txtWidth.Text,txtDepth.Text, new Guid(Request.QueryString["WorkpackageUID"]));
+                    int cnt = getdata.InsertjointInspection(inspectionUid, new Guid(Request.QueryString["BOQUID"]), txtdiaofpipe.Text, txtunit.Text, txtinvoicenumber.Text, CDate1.ToString(), txtquantity.Text,DDLInspectionType.SelectedValue,txtchainagenumber.Text,txtchainagedesc.Text, StartingPoint,Length, Qty_in_RMT, Qty_for_Unit, Deductions, txtRemarks.Text, Guid.Empty,txtpipenumber.Text,txtnumber.Text, txtMLenght.Text,txtWidth.Text,txtDepth.Text, Guid.Empty);
                     if (cnt > 0)
                     {
                         if (WebConfigurationManager.AppSettings["Dbsync"] == "Yes")
@@ -233,7 +270,7 @@ namespace ProjectManagementTool._modal_pages
                                 string WebAPIURL = copysite.Tables[0].Rows[0]["DataCopySiteURL"].ToString();
                                 WebAPIURL = WebAPIURL + "Activity/EditJointInspectionReport";
 
-                                string postData = "inspectionUid=" + inspectionUid + "&ProjectName=" + getdata.GetProjectName_by_BOQUID(new Guid(Request.QueryString["BOQUID"])) + "&BOQUID=" + Request.QueryString["BOQUID"] + "&DiaPipe=" + txtdiaofpipe.Text + "&PipeNumber=" + txtpipenumber.Text + "&invoice_number=" + txtinvoicenumber.Text + "&invoicedate=" + CDate1.ToString() + "&unit=" + txtunit.Text + "&quantity=" + txtquantity.Text + "&InspectionType=" + DDLInspectionType.SelectedValue + "&StartingPoint=" + StartingPoint + "&Lenght=" + Length + "&Chainage_Number=" + txtchainagenumber.Text + "&Chainage_Desc=" + txtchainagedesc.Text + "&Qty_in_RMT=" + Qty_in_RMT + "&Qty_for_Unit=" + Qty_for_Unit + "&Deductions=" + Deductions + "&Remarks=" + txtRemarks.Text;
+                                string postData = "inspectionUid=" + inspectionUid + "&ProjectName=" + getdata.GetProjectName_by_BOQUID(new Guid(Request.QueryString["BOQUID"])) + "&BOQUID=" + Request.QueryString["BOQUID"] + "&DiaPipe=" + txtdiaofpipe.Text + "&PipeNumber=" + txtpipenumber.Text + "&invoice_number=" + txtinvoicenumber.Text + "&invoicedate=" + CDate1.ToString() + "&unit=" + txtunit.Text + "&quantity=" + txtquantity.Text + "&InspectionType=" + DDLInspectionType.SelectedValue + "&StartingPoint=" + StartingPoint + "&Lenght=" + Length + "&Chainage_Number=" + txtchainagenumber.Text + "&Chainage_Desc=" + txtchainagedesc.Text + "&Qty_in_RMT=" + Qty_in_RMT + "&Qty_for_Unit=" + Qty_for_Unit + "&Deductions=" + Deductions + "&Remarks=" + txtRemarks.Text + "&Number=" + txtnumber.Text + "&MeasurementLength=" + txtMLenght.Text + "&Width=" + txtWidth.Text + "&Depth=" + txtDepth.Text;
                                 string sReturnStatus = webPostMethod(postData, WebAPIURL);
                                 if (!sReturnStatus.StartsWith("Error:"))
                                 {

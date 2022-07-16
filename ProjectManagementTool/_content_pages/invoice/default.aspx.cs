@@ -533,7 +533,24 @@ namespace ProjectManagementTool._content_pages.invoice
                 Label BillValue = (Label)e.Row.FindControl("LblBillValue");
                 string RABillUid = GrdRABillItems.DataKeys[e.Row.RowIndex].Values[0].ToString();
                 decimal bValue = invoice.GetRAbillPresentTotalAmount_by_RABill_UID(new Guid(RABillUid));
-                BillValue.Text= bValue.ToString("#,##.00", CultureInfo.CreateSpecificCulture("en-IN"));
+                if (bValue > 0)
+                {
+                    BillValue.Text = bValue.ToString("#,##.00", CultureInfo.CreateSpecificCulture("en-IN"));
+                }
+                else
+                {
+                    Label lblEnteredAmount = (Label)e.Row.FindControl("LblEnteredRABillValue");
+                    if (!string.IsNullOrEmpty(lblEnteredAmount.Text))
+                    {
+                        BillValue.Text = Convert.ToDecimal(lblEnteredAmount.Text).ToString("#,##.00", CultureInfo.CreateSpecificCulture("en-IN"));
+                    }
+                    else
+                    {
+                        BillValue.Text = "-";
+                    }
+
+                }
+                
                 //for db sync check
                 if (System.Web.Configuration.WebConfigurationManager.AppSettings["Dbsync"] == "Yes")
                 {

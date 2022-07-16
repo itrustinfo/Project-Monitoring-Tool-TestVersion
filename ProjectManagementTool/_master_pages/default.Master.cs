@@ -465,6 +465,7 @@ namespace ProjectManager._master_pages
                             ReportReconciliation.Visible = true;
                             ReportReconciliationStatus.Visible = true;
                             ReportPmcDocumentStatus.Visible = true;
+                            ReportStatusSummaryReport.Visible = true;
                         }
                     }
                 }
@@ -486,6 +487,31 @@ namespace ProjectManager._master_pages
                     ReportReconciliation.Visible = false;
                     ReportReconciliationStatus.Visible = false;
                     ReportPmcDocumentStatus.Visible = false;
+                    ReportStatusSummaryReport.Visible = false;
+                }
+                //added on 15/07/2022 for salahuddins chnages
+                if (Session["TypeOfUser"].ToString() == "DDE")
+                {
+                    TaskSelectionUpdate.Visible = false;
+                    Daily_progressreport_master.Visible = false;
+                    Daily_progress.Visible = false;
+                    ReportDailyProgress.Visible = false;
+                    ReportStatusSummaryReport.Visible = false;
+                    WorkPackage.Visible = false;
+                    HyperLink3.Visible = false;
+                    ReviewReports.Visible = false;
+                    StatusUpdate.Visible = false;
+                    MiscMenu.Visible = false;
+                }
+                else if (Session["IsClient"].ToString() == "Y")
+                {
+                    Daily_progressreport_master.Visible = false;
+                    Daily_progress.Visible = false;
+                    WorkPackage.Visible = false;
+                    HyperLink3.Visible = false;
+                    ReviewReports.Visible = false;
+                    StatusUpdate.Visible = false;
+                    MiscMenu.Visible = false;
                 }
             }//
         }

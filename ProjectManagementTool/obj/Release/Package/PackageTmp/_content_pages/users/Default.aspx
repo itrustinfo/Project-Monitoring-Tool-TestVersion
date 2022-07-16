@@ -35,11 +35,26 @@
     <div class="container-fluid">
 
         <div class="row">
+           
             <div class="col-lg-12 col-xl-12 form-group">
+
                 <div class="card mb-4">
+                    
                     <div class="card-body">
+                        
                         <div class="card-title">
                                             <div class="d-flex justify-content-between">
+            <div class="form-group">
+                                        <%--<label class="sr-only" for="TxtSearchDocuments">Search</label>--%>
+                                        <div class="input-group">
+                                            <input ID="TxtSearch" class="form-control" type="text" placeholder="User name" runat="server" />
+                                            <div class="input-group-append">
+                                                <asp:Button ID="BtnSearchName" CssClass="btn btn-primary" Text="Search" runat="server" OnClick="btnSearch_Click" />&nbsp;
+                                                <asp:Button ID="BtnCancel" runat="server"  CssClass="btn btn-primary" Text="Cancel" OnClick="BtnCancel_Click" ></asp:Button>
+                                            </div>
+                                        </div>
+             </div>
+
                                                 <h6 class="text-muted">
                                                     <asp:Label ID="ActivityHeading" Text="List of Users" CssClass="text-uppercase font-weight-bold" runat="server" />
                                                     <%--<asp:Label Text="Foo bar" CssClass="pl-1" runat="server" />--%>
@@ -51,7 +66,7 @@
                                         </div>
 
                         <div class="table-responsive">
-                                <asp:GridView ID="GrdUsers" runat="server" AutoGenerateColumns="False" EmptyDataText="No Data" PageSize="15" Width="100%" CssClass="table table-bordered"  OnPageIndexChanging="GrdUsers_PageIndexChanging" OnRowCommand="GrdUsers_RowCommand" OnRowDeleting="GrdUsers_RowDeleting">
+                                <asp:GridView ID="GrdUsers" runat="server" AutoGenerateColumns="False" EmptyDataText="No Data" PageSize="15" Width="100%" CssClass="table table-bordered"  OnPageIndexChanging="GrdUsers_PageIndexChanging" OnRowCommand="GrdUsers_RowCommand" OnRowDeleting="GrdUsers_RowDeleting" OnRowDataBound="GrdUser_OnRowDataBound">
                                 <Columns>
                                  <asp:BoundField DataField="UserName" HeaderText="User Name">
                                 <HeaderStyle HorizontalAlign="Left" />

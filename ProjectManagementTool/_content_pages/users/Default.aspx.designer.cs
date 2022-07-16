@@ -13,6 +13,33 @@ namespace ProjectManager._content_pages.users {
     public partial class Default {
         
         /// <summary>
+        /// TxtSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText TxtSearch;
+        
+        /// <summary>
+        /// BtnSearchName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnSearchName;
+        
+        /// <summary>
+        /// BtnCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCancel;
+        
+        /// <summary>
         /// ActivityHeading control.
         /// </summary>
         /// <remarks>

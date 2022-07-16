@@ -44,7 +44,12 @@
         </style>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
-          
+          function showModal() {
+                //e.preventDefault();
+                //var url = $(this).attr("href");
+                $("#ModViewContractor iframe").attr("src", "/ContractorMsg.html");
+                $("#ModViewContractor").modal('show');
+            }
 
             function BindEvents() {
                 $(".showModalUploadPhotograph").click(function (e) {
@@ -181,7 +186,7 @@
                     </asp:RadioButtonList>
 
                         </div>  
-                                    <div class="col-lg-4" align="right">
+                                    <div class="col-lg-4" align="right" id="divPhotographs" runat="server">
                                         <a id="UploadSitePhotograph" runat="server" href="/_modal_pages/upload-sitephotograph.aspx" class="showModalUploadPhotograph">Add Photographs&nbsp;&nbsp;&nbsp;</a>
                                         <a id="ViewSitePhotograph" runat="server"  href="/_modal_pages/view-sitephotographs.aspx" class="showModalViewSitePhotograph">View Photographs</a>
 
@@ -266,7 +271,7 @@
           
         <div id="divMainblocks" runat="server" class="container-fluid" style="opacity: 0.9 !important;background-color:none;font-weight:800">
             <div class="row">
-                  <div class="col-md-6 col-xl-4 mb-4">
+                  <div class="col-md-6 col-xl-4 mb-4" id="divCostChart" runat="server">
                     <div class="card h-100">
                         <div class="card-body">
                           
@@ -311,7 +316,7 @@
                         </div>
                     </div>  
                 </div>
-               <div class="col-md-6 col-xl-4 mb-4">
+               <div class="col-md-6 col-xl-4 mb-4" id="divIssues" runat="server">
                     <div class="card h-100">
                         <div class="card-body">
                             <h6 class="card-title text-muted text-uppercase font-weight-bold">Issues</h6>
@@ -392,7 +397,7 @@
                         </div>
                     </div>
                 </div>
-                    <div class="col-md-6 col-xl-4 mb-4">
+                    <div class="col-md-6 col-xl-4 mb-4" id="divAlerts" runat="server">
                     <div class="card h-100">
                         <div class="card-body" style="font-weight:800">
                             <h6 class="card-title text-muted text-uppercase font-weight-bold">Alerts</h6>
@@ -613,5 +618,23 @@ scrolldelay="100" style="height:275px; width:100%;">
 		    </div>
 	    </div>
     </div>
+        <%--View Terms and Conditions--%>
+    <div id="ModViewContractor" class="modal it-modal fade">
+	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+		    <div class="modal-content">
+			    <div class="modal-header" style="text-align:center">
+				   <div style="text-align:center"> <h5 class="modal-title">IMPORTANT</h5></div>
+                </div>
+			    <div class="modal-body">
+                    <iframe class="border-0 w-100" style="height:450px;" loading="lazy">
+                       
 
+                    </iframe>
+			    </div>
+              <div class="modal-footer" style="padding:5px;background-color:black">
+               <div style="padding:10px;background-color:black;text-align:center"><button type="button" class="btn btn-secondary" data-dismiss="modal" style="color:white">OK</button></div>
+              </div>
+		    </div>
+	    </div>
+    </div>
     </asp:Content>

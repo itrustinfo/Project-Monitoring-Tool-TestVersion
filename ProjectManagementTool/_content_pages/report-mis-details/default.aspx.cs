@@ -355,7 +355,7 @@ namespace ProjectManagementTool._content_pages.report_mis_details
                     }
                 }
                 //
-                if(e.Row.Cells[10].Text == "Mahadevpura" || e.Row.Cells[10].Text == "Mahadevpura")
+                if(e.Row.Cells[10].Text == "Mahadevpura" || e.Row.Cells[10].Text == "Bommanahalli")
                 {
                     e.Row.Cells[10].Text = "Works B";
                 }

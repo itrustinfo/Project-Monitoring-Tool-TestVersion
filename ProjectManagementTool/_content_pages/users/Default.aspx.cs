@@ -27,10 +27,15 @@ namespace ProjectManager._content_pages.users
         }
         private void BindUsers()
         {
+            
             if (Session["TypeOfUser"].ToString() == "U" || Session["TypeOfUser"].ToString() =="MD" || Session["TypeOfUser"].ToString() == "VP")
             {
                 GrdUsers.DataSource = getdt.getAllUsers();
+
                 GrdUsers.DataBind();
+
+                
+                
             }
             else if (Session["TypeOfUser"].ToString() == "PA")
             {
@@ -70,6 +75,31 @@ namespace ProjectManager._content_pages.users
         protected void GrdUsers_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
 
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+           
+                BindUsers();
+          
+        }
+
+        protected void GrdUser_OnRowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (string.IsNullOrEmpty(TxtSearch.Value)) return;
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+               if (!e.Row.Cells[0].Text.ToLower().Contains(TxtSearch.Value.ToLower()))
+                {
+                    e.Row.Visible = false;
+                }
+            }
+        }
+
+        protected void BtnCancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Default.aspx");
         }
     }
 }

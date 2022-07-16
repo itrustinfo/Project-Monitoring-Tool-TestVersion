@@ -288,7 +288,7 @@ background: url('../../_assets/images/pageloading.gif') 50% 50% no-repeat;
 
 			                </li>
 
-			                <li class="nav-item dropdown">
+			                <li class="nav-item dropdown" id="MiscMenu" runat="server">
                                 <a id="navLinkOthers" href="/_content_pages/reviews" title="Reviews" class="<%:Page.Request.Url.LocalPath.Contains("/_content_pages/reviews") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/issues") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/bank-guarantee") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/measurement-book") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/camera") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/project-physicalprogress") ? "nav-link dropdown-toggle active" : Page.Request.Url.LocalPath.Contains("/_content_pages/choose-sitephotographs") ? "nav-link dropdown-toggle active" : "nav-link dropdown-toggle" %>" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button">
                                     <i class="nav-link--icon fas fa-tasks"></i>
                                     <span class="nav-link--text">Miscellaneous</span>

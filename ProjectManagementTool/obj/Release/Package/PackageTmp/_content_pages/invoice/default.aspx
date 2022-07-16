@@ -249,6 +249,7 @@
                                                 <ItemTemplate>
                                                     <%--<%#Eval("Bill_Value")%>--%>
                                                     <asp:Label ID="LblBillValue" ForeColor="#006699" runat="server"></asp:Label>
+                                                    <asp:Label ID="LblEnteredRABillValue" runat="server" Text='<%#Eval("RABill_Amount")%>' CssClass="hiddencol"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="InvoiceRABill_Date" HeaderText="RA Bill Date" DataFormatString="{0:dd MMM yyyy}">

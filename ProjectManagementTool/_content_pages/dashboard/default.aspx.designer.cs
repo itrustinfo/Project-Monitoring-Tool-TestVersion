@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProjectManager._content_pages
-{
-
-
-    public partial class dashboard
-    {
-
+namespace ProjectManager._content_pages {
+    
+    
+    public partial class dashboard {
+        
         /// <summary>
         /// smMain control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager smMain;
-
+        
         /// <summary>
         /// divUsersdocs control.
         /// </summary>
@@ -31,7 +29,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divUsersdocs;
-
+        
         /// <summary>
         /// DDlProject control.
         /// </summary>
@@ -40,7 +38,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDlProject;
-
+        
         /// <summary>
         /// DDLWorkPackage control.
         /// </summary>
@@ -49,7 +47,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDLWorkPackage;
-
+        
         /// <summary>
         /// divdashboardimage control.
         /// </summary>
@@ -58,7 +56,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divdashboardimage;
-
+        
         /// <summary>
         /// rdSelect control.
         /// </summary>
@@ -67,7 +65,16 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList rdSelect;
-
+        
+        /// <summary>
+        /// divPhotographs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPhotographs;
+        
         /// <summary>
         /// UploadSitePhotograph control.
         /// </summary>
@@ -76,7 +83,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor UploadSitePhotograph;
-
+        
         /// <summary>
         /// ViewSitePhotograph control.
         /// </summary>
@@ -85,7 +92,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor ViewSitePhotograph;
-
+        
         /// <summary>
         /// DivSyncedData control.
         /// </summary>
@@ -94,7 +101,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivSyncedData;
-
+        
         /// <summary>
         /// LblLastSyncedDate control.
         /// </summary>
@@ -103,7 +110,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblLastSyncedDate;
-
+        
         /// <summary>
         /// LblSourceHeading control.
         /// </summary>
@@ -112,7 +119,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblSourceHeading;
-
+        
         /// <summary>
         /// divProgresschart control.
         /// </summary>
@@ -121,7 +128,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divProgresschart;
-
+        
         /// <summary>
         /// heading control.
         /// </summary>
@@ -130,7 +137,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl heading;
-
+        
         /// <summary>
         /// btnPrint control.
         /// </summary>
@@ -139,7 +146,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPrint;
-
+        
         /// <summary>
         /// ltScript_PhysicalProgress control.
         /// </summary>
@@ -148,7 +155,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltScript_PhysicalProgress;
-
+        
         /// <summary>
         /// divtable control.
         /// </summary>
@@ -157,7 +164,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divtable;
-
+        
         /// <summary>
         /// divFinProgressChart control.
         /// </summary>
@@ -166,7 +173,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFinProgressChart;
-
+        
         /// <summary>
         /// headingF control.
         /// </summary>
@@ -175,7 +182,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl headingF;
-
+        
         /// <summary>
         /// btnPrintFin control.
         /// </summary>
@@ -184,7 +191,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPrintFin;
-
+        
         /// <summary>
         /// ltScript_FinProgress control.
         /// </summary>
@@ -193,7 +200,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltScript_FinProgress;
-
+        
         /// <summary>
         /// divtableFin control.
         /// </summary>
@@ -202,7 +209,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divtableFin;
-
+        
         /// <summary>
         /// divMainblocks control.
         /// </summary>
@@ -211,7 +218,16 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMainblocks;
-
+        
+        /// <summary>
+        /// divCostChart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCostChart;
+        
         /// <summary>
         /// RdList control.
         /// </summary>
@@ -220,7 +236,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList RdList;
-
+        
         /// <summary>
         /// ltScript_Progress control.
         /// </summary>
@@ -229,7 +245,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltScript_Progress;
-
+        
         /// <summary>
         /// ltScript_Document control.
         /// </summary>
@@ -238,7 +254,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltScript_Document;
-
+        
         /// <summary>
         /// divsyncdetails control.
         /// </summary>
@@ -247,7 +263,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divsyncdetails;
-
+        
         /// <summary>
         /// hlReconciliationdocs control.
         /// </summary>
@@ -256,7 +272,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor hlReconciliationdocs;
-
+        
         /// <summary>
         /// lblReconDocs control.
         /// </summary>
@@ -265,7 +281,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblReconDocs;
-
+        
         /// <summary>
         /// lblReconDocsNo control.
         /// </summary>
@@ -274,7 +290,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblReconDocsNo;
-
+        
         /// <summary>
         /// hlContractor control.
         /// </summary>
@@ -283,7 +299,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor hlContractor;
-
+        
         /// <summary>
         /// lblContractorTo control.
         /// </summary>
@@ -292,7 +308,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblContractorTo;
-
+        
         /// <summary>
         /// lblContractorToNo control.
         /// </summary>
@@ -301,7 +317,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblContractorToNo;
-
+        
         /// <summary>
         /// hlONTB control.
         /// </summary>
@@ -310,7 +326,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor hlONTB;
-
+        
         /// <summary>
         /// lblONTBTo control.
         /// </summary>
@@ -319,7 +335,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblONTBTo;
-
+        
         /// <summary>
         /// lblONTBTo_No control.
         /// </summary>
@@ -328,7 +344,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblONTBTo_No;
-
+        
         /// <summary>
         /// hlMeasurement control.
         /// </summary>
@@ -337,7 +353,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor hlMeasurement;
-
+        
         /// <summary>
         /// lblMeasurements control.
         /// </summary>
@@ -346,7 +362,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMeasurements;
-
+        
         /// <summary>
         /// hlRABills control.
         /// </summary>
@@ -355,7 +371,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor hlRABills;
-
+        
         /// <summary>
         /// lblRABills control.
         /// </summary>
@@ -364,7 +380,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRABills;
-
+        
         /// <summary>
         /// hlInvoices control.
         /// </summary>
@@ -373,7 +389,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor hlInvoices;
-
+        
         /// <summary>
         /// lblInvoices control.
         /// </summary>
@@ -382,7 +398,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblInvoices;
-
+        
         /// <summary>
         /// hlBankGuarantee control.
         /// </summary>
@@ -391,7 +407,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor hlBankGuarantee;
-
+        
         /// <summary>
         /// lblBankG control.
         /// </summary>
@@ -400,7 +416,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblBankG;
-
+        
         /// <summary>
         /// hlInsurance control.
         /// </summary>
@@ -409,7 +425,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor hlInsurance;
-
+        
         /// <summary>
         /// lblInsurance control.
         /// </summary>
@@ -418,7 +434,16 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblInsurance;
-
+        
+        /// <summary>
+        /// divIssues control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divIssues;
+        
         /// <summary>
         /// ltScripts_piechart control.
         /// </summary>
@@ -427,7 +452,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltScripts_piechart;
-
+        
         /// <summary>
         /// DDlResource control.
         /// </summary>
@@ -436,7 +461,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDlResource;
-
+        
         /// <summary>
         /// ltScript_Resource control.
         /// </summary>
@@ -445,7 +470,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltScript_Resource;
-
+        
         /// <summary>
         /// divCamera control.
         /// </summary>
@@ -454,7 +479,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCamera;
-
+        
         /// <summary>
         /// DDLCamera control.
         /// </summary>
@@ -463,7 +488,16 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDLCamera;
-
+        
+        /// <summary>
+        /// divAlerts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAlerts;
+        
         /// <summary>
         /// Panel1 control.
         /// </summary>
@@ -472,7 +506,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel Panel1;
-
+        
         /// <summary>
         /// lt1 control.
         /// </summary>
@@ -481,7 +515,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal lt1;
-
+        
         /// <summary>
         /// divdummydashboard control.
         /// </summary>
@@ -490,7 +524,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divdummydashboard;
-
+        
         /// <summary>
         /// RadioButtonList2 control.
         /// </summary>
@@ -499,7 +533,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList2;
-
+        
         /// <summary>
         /// divdummyblock1 control.
         /// </summary>
@@ -508,7 +542,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divdummyblock1;
-
+        
         /// <summary>
         /// divdummyblock1_1 control.
         /// </summary>
@@ -517,7 +551,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divdummyblock1_1;
-
+        
         /// <summary>
         /// div7 control.
         /// </summary>
@@ -526,7 +560,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div7;
-
+        
         /// <summary>
         /// DropDownList2 control.
         /// </summary>
@@ -535,7 +569,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DropDownList2;
-
+        
         /// <summary>
         /// dummyNJSEIdashboard control.
         /// </summary>
@@ -544,7 +578,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dummyNJSEIdashboard;
-
+        
         /// <summary>
         /// dummyONTBdashboard control.
         /// </summary>
@@ -553,7 +587,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dummyONTBdashboard;
-
+        
         /// <summary>
         /// divNJSEIMIS control.
         /// </summary>
@@ -562,7 +596,7 @@ namespace ProjectManager._content_pages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divNJSEIMIS;
-
+        
         /// <summary>
         /// RadioButtonList1 control.
         /// </summary>

@@ -28,8 +28,15 @@ namespace ProjectManager._content_pages
             {
                 if (!IsPostBack)
                 {
-                    
-                    Session["ActivityUID"] = null;
+                    if (WebConfigurationManager.AppSettings["IsContractorPopUp"] == "Yes")
+                    {
+                        if (Session["IsContractor"].ToString() == "Y" & Session["MsgShown"].ToString() == "N")
+                        {
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "showModal();", true);
+                            Session["MsgShown"] = "Y";
+                        }
+                    }
+                        Session["ActivityUID"] = null;
                     BindProject();
                     SelectedProjectWorkpackage("Project");
                     DDlProject_SelectedIndexChanged(sender, e);
@@ -79,8 +86,16 @@ namespace ProjectManager._content_pages
 
                         }
                     }
-
-                 
+                    //added on 15/07/2022 for slahuddins new requirements
+                    if(Session["TypeOfUser"].ToString() == "DDE")
+                    {
+                        rdSelect.Items[1].Enabled = false;
+                        divAlerts.Visible = false;
+                        divIssues.Visible = false;
+                        divCostChart.Visible = false;
+                        divPhotographs.Visible = false;
+                    }
+                    //
                 }
             }
         }
@@ -414,76 +429,163 @@ namespace ProjectManager._content_pages
                 DDLCamera.DataBind();
             }
         }
+
+        // old commented out for saji
+        //private void Bind_DocumentsChart()
+        //{
+        //    if (DDLWorkPackage.SelectedValue != "--Select--")
+        //    {
+        //        DataSet ds = getdt.getDocumentCount_by_ProjectUID_WorkPackageUID(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue));
+        //        if (ds.Tables[0].Rows.Count > 0)
+        //        {
+        //            StringBuilder strScript = new StringBuilder();
+        //            strScript.Append(@"<script type='text/javascript'>
+        //        google.charts.load('current', { packages: ['corechart', 'bar'] });
+        //        google.charts.setOnLoadCallback(drawBasic);
+
+        //        function drawBasic() {
+        //            var data = google.visualization.arrayToDataTable([
+        //              ['Document', 'Ontime','Delayed', { role: 'annotation' }],");
+        //            strScript.Append("['Tot. Documents', " + ds.Tables[0].Rows[0]["DocCount"].ToString() + ", 0,'" + ds.Tables[0].Rows[0]["DocCount"].ToString() + "'],");
+        //            strScript.Append("['Submitted', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status1"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status1Delay"].ToString())) + ", " + ds.Tables[0].Rows[0]["Status1Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status1"].ToString() + "'],");
+        //            strScript.Append("['Code A', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status3"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status3Delay"].ToString())) + ", " + ds.Tables[0].Rows[0]["Status3Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status3"].ToString() + "'],");
+        //            strScript.Append("['Code B', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status2"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status2Delay"].ToString())) + ", " + ds.Tables[0].Rows[0]["Status2Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status2"].ToString() + "'],");
+        //            strScript.Append("['Code C', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeC"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeCDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeCDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeC"].ToString() + "'],");
+        //            strScript.Append("['Code D', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeD"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeDDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeDDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeD"].ToString() + "'],");
+        //            strScript.Append("['Code E', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeE"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeEDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeEDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeE"].ToString() + "'],");
+        //            strScript.Append("['Code F', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeF"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeFDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeFDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeF"].ToString() + "'],");
+        //            strScript.Append("['Code G', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeG"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeGDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeGDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeG"].ToString() + "'],");
+        //            strScript.Append("['Code H', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeH"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeHDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeHDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeH"].ToString() + "'],");
+        //            strScript.Append("['Client Approved', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status4"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status4Delay"].ToString())) + "," + ds.Tables[0].Rows[0]["Status4Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status4"].ToString() + "'],");
+        //            strScript.Remove(strScript.Length - 1, 1);
+        //            strScript.Append("]);");
+        //            strScript.Append(@"var options = {
+        //                is3D: true,
+        //                legend: { position: 'none' },
+        //                fontSize: 13,
+        //                isStacked: true,
+        //                chartArea: {
+        //                    left: '25%',
+        //                    top: '5%',
+        //                    height: '88%',
+        //                    width: '61%'
+        //                },
+        //                bars: 'horizontal',
+        //                annotations: {
+        //                alwaysOutside:true,
+        //                },
+        //                axes: {
+        //                    x: {
+        //                        0: { side: 'top', label: 'Percentage' } // Top x-axis.
+        //                    }
+        //                },
+        //                hAxis: {
+        //                    minValue: 0
+        //                }
+        //            };
+        //            function selectHandler()
+        //            {
+        //                var selection = chart.getSelection();
+        //                if (selection.length > 0)
+        //                {
+        //                    var colLabel = data.getColumnLabel(selection[0].column);
+        //                    var mydata = data.getValue(selection[0].row,0);
+        //                    ");
+        //            strScript.Append("window.open('/_content_pages/document-drilldown/default.aspx?DocumentType=' + (colLabel + '_' + mydata) + '&ProjectUID=" + DDlProject.SelectedValue + "&WorkPackageUID=" + DDLWorkPackage.SelectedValue + "', '_self', true);");
+        //            //alert('The user selected ' + topping);
+        //            strScript.Append(@"}
+        //            }
+
+        //            var chart = new google.visualization.BarChart(document.getElementById('DocChart_Div'));
+        //            google.visualization.events.addListener(chart, 'select', selectHandler);
+        //            chart.draw(data, options);
+        //        }
+        //    </script>");
+        //            ltScript_Document.Text = strScript.ToString();
+        //        }
+        //        else
+        //        {
+        //            ltScript_Document.Text = "<h4>No data</h4>";
+        //        }
+        //    }
+        //}
+
         private void Bind_DocumentsChart()
         {
-            if (DDLWorkPackage.SelectedValue != "--Select--")
+
+            DataSet ds = getdt.getDocumentCount_by_ProjectUID_WorkPackageUID(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue));
+
+            if (ds == null)
             {
-                DataSet ds = getdt.getDocumentCount_by_ProjectUID_WorkPackageUID(new Guid(DDlProject.SelectedValue), new Guid(DDLWorkPackage.SelectedValue));
+                ltScript_Document.Text = "<h4>No data</h4>";
+            }
+            else
+            {
                 if (ds.Tables[0].Rows.Count > 0)
                 {
                     StringBuilder strScript = new StringBuilder();
-                    strScript.Append(@"<script type='text/javascript'>
-                google.charts.load('current', { packages: ['corechart', 'bar'] });
-                google.charts.setOnLoadCallback(drawBasic);
 
-                function drawBasic() {
-                    var data = google.visualization.arrayToDataTable([
-                      ['Document', 'Ontime','Delayed', { role: 'annotation' }],");
-                    strScript.Append("['Tot. Documents', " + ds.Tables[0].Rows[0]["DocCount"].ToString() + ", 0,'" + ds.Tables[0].Rows[0]["DocCount"].ToString() + "'],");
-                    strScript.Append("['Submitted', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status1"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status1Delay"].ToString())) + ", " + ds.Tables[0].Rows[0]["Status1Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status1"].ToString() + "'],");
-                    strScript.Append("['Code A', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status3"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status3Delay"].ToString())) + ", " + ds.Tables[0].Rows[0]["Status3Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status3"].ToString() + "'],");
-                    strScript.Append("['Code B', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status2"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status2Delay"].ToString())) + ", " + ds.Tables[0].Rows[0]["Status2Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status2"].ToString() + "'],");
-                    strScript.Append("['Code C', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeC"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeCDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeCDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeC"].ToString() + "'],");
-                    strScript.Append("['Code D', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeD"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeDDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeDDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeD"].ToString() + "'],");
-                    strScript.Append("['Code E', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeE"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeEDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeEDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeE"].ToString() + "'],");
-                    strScript.Append("['Code F', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeF"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeFDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeFDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeF"].ToString() + "'],");
-                    strScript.Append("['Code G', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeG"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeGDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeGDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeG"].ToString() + "'],");
-                    strScript.Append("['Code H', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["CodeH"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["CodeHDelay"].ToString())) + ", " + ds.Tables[0].Rows[0]["CodeHDelay"].ToString() + ",'" + ds.Tables[0].Rows[0]["CodeH"].ToString() + "'],");
-                    strScript.Append("['Client Approved', " + (Convert.ToInt32(ds.Tables[0].Rows[0]["Status4"].ToString()) - Convert.ToInt32(ds.Tables[0].Rows[0]["Status4Delay"].ToString())) + "," + ds.Tables[0].Rows[0]["Status4Delay"].ToString() + ",'" + ds.Tables[0].Rows[0]["Status4"].ToString() + "'],");
+                    strScript.Append(@"<script type='text/javascript'>
+                                google.charts.load('current', { packages: ['corechart', 'bar'] });
+                                google.charts.setOnLoadCallback(drawBasic);
+
+                            function drawBasic() {
+                                var data = google.visualization.arrayToDataTable([
+                                    ['Document','FlowAll','Delayed', { role: 'annotation' }],");
+
+                    string total_docs = ds.Tables[0].Rows[0][1].ToString();
+
+                    foreach (DataRow rw in ds.Tables[0].Rows)
+                    {
+                        strScript.Append("['" + rw[2].ToString() + "', " + Convert.ToInt32(rw[1].ToString()) + ", " + "0" + ",'" + Convert.ToInt32(rw[1].ToString()) + "'],");
+                    }
+
                     strScript.Remove(strScript.Length - 1, 1);
                     strScript.Append("]);");
                     strScript.Append(@"var options = {
-                        is3D: true,
-                        legend: { position: 'none' },
-                        fontSize: 13,
-                        isStacked: true,
-                        chartArea: {
-                            left: '25%',
-                            top: '5%',
-                            height: '88%',
-                            width: '61%'
-                        },
-                        bars: 'horizontal',
-                        annotations: {
-                        alwaysOutside:true,
-                        },
-                        axes: {
-                            x: {
-                                0: { side: 'top', label: 'Percentage' } // Top x-axis.
-                            }
-                        },
-                        hAxis: {
-                            minValue: 0
-                        }
-                    };
-                    function selectHandler()
-                    {
-                        var selection = chart.getSelection();
-                        if (selection.length > 0)
-                        {
-                            var colLabel = data.getColumnLabel(selection[0].column);
-                            var mydata = data.getValue(selection[0].row,0);
-                            ");
+                                is3D: true,
+                                legend: { position: 'none' },
+                                fontSize: 11,
+                                isStacked: true,
+                                height : 300,
+                                chartArea: {
+                                    left: '25%',
+                                    top: '5%',
+                                    height: '100%',
+                                    width: '61%'
+                                },
+                                bars: 'horizontal',
+                                annotations: {
+                                alwaysOutside:false,
+                                },
+                                axes: {
+                                    x: {
+                                        0: { side: 'top', label: 'Percentage' } // Top x-axis.
+                                    }
+                                },
+                                hAxis: {
+                                    minValue: 0
+                                }
+                            };
+
+                            function selectHandler()
+                            {
+                                var selection = chart.getSelection();
+                                if (selection.length > 0)
+                                {
+                                    var colLabel = data.getColumnLabel(selection[0].column);
+                                    var mydata = data.getValue(selection[0].row,0);
+                                    ");
                     strScript.Append("window.open('/_content_pages/document-drilldown/default.aspx?DocumentType=' + (colLabel + '_' + mydata) + '&ProjectUID=" + DDlProject.SelectedValue + "&WorkPackageUID=" + DDLWorkPackage.SelectedValue + "', '_self', true);");
-                    //alert('The user selected ' + topping);
+
                     strScript.Append(@"}
-                    }
-                    
-                    var chart = new google.visualization.BarChart(document.getElementById('DocChart_Div'));
-                    google.visualization.events.addListener(chart, 'select', selectHandler);
-                    chart.draw(data, options);
-                }
-            </script>");
+                            }
+
+                            var chart = new google.visualization.BarChart(document.getElementById('DocChart_Div'));
+                            google.visualization.events.addListener(chart, 'select', selectHandler);
+                            chart.draw(data, options);
+                        }
+                    </script>");
                     ltScript_Document.Text = strScript.ToString();
                 }
                 else

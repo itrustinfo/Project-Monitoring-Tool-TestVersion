@@ -77,8 +77,8 @@ namespace ProjectManagementTool
                 {
                     Maxusers = int.Parse(dsdomain.Tables[0].Rows[0]["MaxUsers"].ToString());
                 }
-                    if ((int)Application["UsersCount"] <= Maxusers)
-                {
+                   // if ((int)Application["UsersCount"] <= Maxusers)
+               // {
                     ds = getdt.CheckLogin(txtusername.Value, Security.Encrypt(txtpassword.Value));
                     if (ds.Tables[0].Rows.Count > 0)
                     {
@@ -102,6 +102,7 @@ namespace ProjectManagementTool
                             Session["UserUID"] = ds.Tables[0].Rows[0]["UserUID"].ToString();
                             Session["TypeOfUser"] = ds.Tables[0].Rows[0]["TypeOfUser"].ToString();
                             Session["IsContractor"] = ds.Tables[0].Rows[0]["IsContractor"].ToString();
+                            Session["MsgShown"] = "N";
                             // added on 25/03/2022 for nakib
                             string userTypeID = ds.Tables[0].Rows[0]["UserTypeID"].ToString();
                             if (!string.IsNullOrEmpty(userTypeID))
@@ -166,12 +167,12 @@ namespace ProjectManagementTool
                         lblMsg.Visible = true;
                         lblMsg.Text = "Username/Password is incorrect !"; 
                     }
-                }
-                else
-                {
-                    lblMsg.Visible = true;
-                    lblMsg.Text = "Maximum simultineous usage count (as per licence exceded).Please try later";
-                }
+               // }
+                //else
+                //{
+                //    lblMsg.Visible = true;
+                //    lblMsg.Text = "Maximum simultineous usage count (as per licence exceded).Please try later";
+                //}
                     
             }
             catch (Exception ex)

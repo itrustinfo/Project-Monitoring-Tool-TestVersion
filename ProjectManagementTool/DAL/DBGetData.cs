@@ -3761,7 +3761,7 @@ namespace ProjectManager.DAL
             try
             {
                 SqlConnection con = new SqlConnection(db.GetConnectionString());
-                SqlDataAdapter cmd = new SqlDataAdapter("ups_getDocumentCount_by_ProjectUID_WorkPackageUID", con);
+                SqlDataAdapter cmd = new SqlDataAdapter("ups_getDocumentCount_by_ProjectUID_WorkPackageUID_Test1", con);
                 cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
                 cmd.SelectCommand.Parameters.AddWithValue("@ProjectUID", ProjectUID);
                 cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
@@ -21596,6 +21596,26 @@ namespace ProjectManager.DAL
                 SqlConnection con = new SqlConnection(db.GetConnectionString());
                 SqlDataAdapter cmd = new SqlDataAdapter("usp_GetAllIssueUsers", con);
                 cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.Fill(ds);
+            }
+            catch (Exception ex)
+            {
+                ds = null;
+            }
+            return ds;
+        }
+
+        //added on 16/07/2022 for saji
+        public DataSet ClientAllDocuments(Guid WorkPackageUID, String FlowName)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(db.GetConnectionString());
+                SqlDataAdapter cmd = new SqlDataAdapter("ClientAllDocuments", con);
+                cmd.SelectCommand.CommandType = CommandType.StoredProcedure;
+                cmd.SelectCommand.Parameters.AddWithValue("@WorkPackageUID", WorkPackageUID);
+                cmd.SelectCommand.Parameters.AddWithValue("@FlowName", FlowName);
                 cmd.Fill(ds);
             }
             catch (Exception ex)

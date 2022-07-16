@@ -82,13 +82,15 @@ namespace ProjectManagementTool._content_pages.report_mis_status_summary
                                                             r.Field<string>("ProjectName") == projectName &&
                                                             r.Field<string>("Flow_Name") == flowName &&
                                                             !Constants.ReconciliationPendingStatus.Contains(r.Field<string>("ActualDocument_CurrentStatus")) &&
-                                                            !r.Field<string>("ActualDocument_CurrentStatus").Contains("Rejected")
+                                                            !Constants.ReconciliationRejectedStatus.Contains(r.Field<string>("ActualDocument_CurrentStatus"))
                                                             ).ToList().Count.ToString();
 
                     reconciliationRejected = dtStatus.AsEnumerable().Where(r =>
                                                             r.Field<string>("ProjectName") == projectName &&
                                                             r.Field<string>("Flow_Name") == flowName &&
                                                             !Constants.ReconciliationPendingStatus.Contains(r.Field<string>("ActualDocument_CurrentStatus")) &&
+                                                             r.Field<string>("ActualDocument_CurrentStatus") != "Rejected by Client" &&
+                                                              r.Field<string>("ActualDocument_CurrentStatus") != "Rejected by PMC" &&
                                                             Constants.ReconciliationRejectedStatus.Contains(r.Field<string>("ActualDocument_CurrentStatus"))
                                                             ).ToList().Count.ToString();
 
@@ -99,6 +101,7 @@ namespace ProjectManagementTool._content_pages.report_mis_status_summary
                     pmcReview = dtStatus.AsEnumerable().Where(r =>
                                                             r.Field<string>("ProjectName") == projectName &&
                                                             r.Field<string>("Flow_Name") == flowName &&
+                                                            r.Field<string>("ActualDocument_CurrentStatus") != "Accepted-PMC Comments" &&
                                                             Constants.PmcReview.Contains(r.Field<string>("ActualDocument_CurrentStatus"))).ToList().Count.ToString();
 
                     projectCoordinator = dtStatus.AsEnumerable().Where(r =>
